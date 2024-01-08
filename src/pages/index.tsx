@@ -1,8 +1,16 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import Seo from '@/components/Seo';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
-  return <div>안녕하세요</div>;
-}
+const Home = () => {
+  return (
+    <div className='container'>
+      <Seo title='Home' />
+      HomePage
+    </div>
+  );
+};
+
+export default Home;
