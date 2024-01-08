@@ -1,5 +1,6 @@
 import MainWrapper from '@/components/layout/MainWrapper';
 import CommentInput from '@/components/review_details/CommentInput';
+import CommentList from '@/components/review_details/CommentList';
 import ReviewBody from '@/components/review_details/ReviewBody';
 import React from 'react';
 
@@ -10,7 +11,7 @@ const ReviewPage = () => {
       <section className='h-72 bg-slate-100'>캐러셀 들어갈 부분</section>
       <ReviewBody reviewId={REVIEW_ID} />
       <CommentInput />
-      <section>댓글 list</section>
+      <CommentList reviewId={REVIEW_ID} />
     </MainWrapper>
   );
 };
