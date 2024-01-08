@@ -9,7 +9,7 @@ const ReviewPage = () => {
       <section className='h-72 bg-slate-100'>캐러셀 들어갈 부분</section>
       <ReviewBody reviewId={REVIEW_ID} />
       <section>댓글 입력</section>
-      <section>댓글 list </section>
+      <section>댓글 list</section>
     </MainWrapper>
   );
 };

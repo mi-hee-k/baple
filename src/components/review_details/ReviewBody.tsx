@@ -1,6 +1,5 @@
 import { getReviewById } from '@/apis/reviews';
 import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 import React from 'react';
 
 interface Props {
