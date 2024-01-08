@@ -1,8 +1,8 @@
 import { supabase } from '@/libs/supabase';
 
-export const fetchReview = async (id: string) => {
+export const getReviewById = async (id: string) => {
   console.log('id', id);
-  let { data: review, error } = await supabase
+  const { data: review, error } = await supabase
     .from('reviews')
     .select('*')
     .eq('id', id);
