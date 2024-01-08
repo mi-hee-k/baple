@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
+import React, { ReactNode } from 'react';
+import Header from './layout/Header';
+import Footer from './layout/Footer';
 type Props = {
   children: ReactNode;
 };
@@ -8,9 +8,13 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <>
-      <Header />
-      {children}
-      <Footer />
+      <div className='flex flex-col justify-between h-[100vh]'>
+        <div>
+          <Header />
+          {children}
+        </div>
+        <Footer />
+      </div>
     </>
   );
 };

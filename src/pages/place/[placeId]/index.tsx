@@ -1,8 +1,9 @@
+import MainWrapper from '@/components/layout/MainWrapper';
 import React from 'react';
 
 const PlacePage = () => {
   return (
-    <div>
+    <MainWrapper>
       <section className='flex justify-between p-6'>
         <div className='w-[15%] h-[100px] bg-slate-300'>Image</div>
         <div className='w-[15%] h-[100px] bg-slate-300'>Image</div>
@@ -77,7 +78,7 @@ const PlacePage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </MainWrapper>
   );
 };
 
