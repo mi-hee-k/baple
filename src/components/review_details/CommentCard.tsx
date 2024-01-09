@@ -5,6 +5,7 @@ import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteComment } from '@/apis/comments';
+import { toast } from 'react-toastify';
 
 // Readonly<{ comment: Tables<'comments'> }> --> TS 타입지정 추후 적용 예정. 현재는 any
 
@@ -13,6 +14,12 @@ const CommentCard = ({ comment }: any) => {
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
+      toast.error('삭제완료', {
+        position: 'top-right',
+        autoClose: 2000,
+        progress: undefined,
+        theme: 'light',
+      });
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
@@ -21,7 +28,7 @@ const CommentCard = ({ comment }: any) => {
     deleteMutate.mutate(commentId);
   };
 
-  console.log('코멘트?', comment);
+  // console.log('코멘트?', comment);
   return (
     <Card className=' max-w-[1000px]'>
       <CardBody>
@@ -39,9 +46,13 @@ const CommentCard = ({ comment }: any) => {
           <Divider orientation='vertical' className='border-gray-800' />
           <div className='w-full flex justify-between'>
             <span>{comment.content}</span>
-            <div>
+            <div className='flex flex-col gap-3'>
               <span>{formatDate(comment.created_at)}</span>
-              <Button onClick={deleteBtnHandler.bind(null, comment.id)}>
+              <Button
+                variant='ghost'
+                color='danger'
+                onClick={deleteBtnHandler.bind(null, comment.id)}
+              >
                 삭제
               </Button>
             </div>

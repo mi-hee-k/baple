@@ -3,6 +3,7 @@ import { Button, Input } from '@nextui-org/react';
 import newComment from '@/utils/newComment';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { insertNewComment } from '@/apis/comments';
+import { toast } from 'react-toastify';
 
 interface Props {
   reviewId: string;
@@ -17,6 +18,12 @@ const CommentInput = ({ reviewId }: Props) => {
   const InsertMutate = useMutation({
     mutationFn: insertNewComment,
     onSuccess: () => {
+      toast.success('댓글이 성공적으로 등록되었습니다!', {
+        position: 'top-right',
+        autoClose: 2000,
+        progress: undefined,
+        theme: 'light',
+      });
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });

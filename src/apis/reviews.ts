@@ -1,7 +1,6 @@
 import { supabase } from '@/libs/supabase';
 
 export const getReviewById = async (id: string) => {
-  console.log('id', id);
   const { data: review, error } = await supabase
     .from('reviews')
     .select('*')
