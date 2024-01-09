@@ -19,10 +19,12 @@ const SignupPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormValues>();
+    trigger,
+  } = useForm<FormValues>({ mode: 'onChange' });
+  console.log('errors', errors);
 
-  const passwordRef = useRef<string | null>(null);
-  passwordRef.current = watch('password');
+  const watchPassword = watch('password');
+  const watchConfirmPassword = watch('confirmPassword');
 
   const [isVisible1, setIsVisible1] = useState(false);
   const [isVisible2, setIsVisible2] = useState(false);
@@ -46,6 +48,7 @@ const SignupPage = () => {
       console.error(error);
     }
   };
+
   return (
     <>
       <Seo title='SignUp' />
@@ -71,7 +74,7 @@ const SignupPage = () => {
           <Input
             label='비밀번호'
             variant='bordered'
-            placeholder='비밀번호를 입력해주세요'
+            placeholder='비밀번호는 영문, 숫자 포함 최소 8자 이상 입력해주세요'
             endContent={
               <button
                 className='focus:outline-none'
@@ -119,7 +122,7 @@ const SignupPage = () => {
             className='max-w-xs'
             {...register('confirmPassword', {
               required: '비밀번호를 입력해주세요',
-              validate: (value) => value === passwordRef.current,
+              validate: (value) => value === watchPassword,
             })}
           />
           {errors.confirmPassword && (
@@ -150,7 +153,7 @@ const SignupPage = () => {
           {errors.nickname && (
             <p className='text-red-500 text-xs'>{errors.nickname.message}</p>
           )}
-          <Button color='primary' type='submit'>
+          <Button color='primary' type='submit' isDisabled={false}>
             회원 가입
           </Button>
         </form>
