@@ -6,8 +6,8 @@ const ReviewWrite = () => {
   const [reviewText, setReviewText] = useState('');
   const [images, setImages] = useState<File[]>([]);
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
     if (files) {
       const imagesArray = Array.from(files);
       setImages(imagesArray);
