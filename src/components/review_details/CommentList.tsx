@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAllComments } from '@/apis/comments';
 import CommentCard from './CommentCard';
+import { Tables } from '@/types/supabase';
 
 interface Props {
   reviewId: string;
@@ -16,7 +17,9 @@ const CommentList = ({ reviewId }: Props) => {
 
   return (
     <>
-      <CommentCard />
+      {comments?.map((comment) => (
+        <CommentCard key={comment.id} comment={comment} />
+      ))}
     </>
   );
 };
