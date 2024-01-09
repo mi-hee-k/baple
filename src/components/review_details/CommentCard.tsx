@@ -23,7 +23,7 @@ const CommentCard = ({ comment }: any) => {
             <p className='text-md'>{comment.users.nickname}</p>
           </div>
           <Divider orientation='vertical' className='border-gray-800' />
-          <div className='w-full flex justify-between'>
+          <div>
             <span>{comment.content}</span>
             <span>{formatDate(comment.created_at)}</span>
           </div>
