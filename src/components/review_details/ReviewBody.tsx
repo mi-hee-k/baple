@@ -23,7 +23,7 @@ const ReviewBody = ({ reviewId }: Props) => {
     return (
       <>
         <p>{review[0].content}</p>
-        <img src={imgUrl} alt='리뷰어가 올린 사진' className='w-[50%]' />
+        {/* <img src={imgUrl} alt='리뷰어가 올린 사진' className='w-[50%]' /> */}
         <p>placeid:{review[0].place_id}</p>
         <p>userid:{review[0].user_id}</p>
       </>
