@@ -2,70 +2,35 @@ import Seo from '@/components/Seo';
 import { Button, Input } from '@nextui-org/react';
 import { EyeFilledIcon } from '@/components/login/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '@/components/login/EyeSlashFilledIcon';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { supabase } from '@/libs/supabase';
 
+interface FormValues {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  nickname: string;
+}
+
 const SignupPage = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [nicknameError, setNicknameError] = useState('');
+  const passwordRef = useRef<string | null>(null);
+  passwordRef.current = watch('password');
 
-  const toggleVisibility = () => setIsVisible(!isVisible);
+  const [isVisible1, setIsVisible1] = useState(false);
+  const [isVisible2, setIsVisible2] = useState(false);
+  const toggleVisibility1 = () => setIsVisible1(!isVisible1);
+  const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
-  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(() => {
-      const newEmail = e.target.value;
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!newEmail) setEmailError('이메일 아이디를 입력해주세요.');
-      else if (!emailRegex.test(newEmail))
-        setEmailError('올바른 이메일 형식이 아닙니다.');
-      else setEmailError('');
-      return newEmail;
-    });
-  };
-
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(() => {
-      const newPassword = e.target.value;
-      if (!newPassword) setPasswordError('비밀번호를 입력해주세요.');
-      else setPasswordError('');
-      return newPassword;
-    });
-  };
-
-  const onChangeConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(() => {
-      const newConfirmPassword = e.target.value;
-      if (!newConfirmPassword)
-        setConfirmPasswordError('비밀번호 확인을 입력해주세요.');
-      else if (password !== newConfirmPassword)
-        setConfirmPasswordError('비밀번호를 잘못 입력하셨습니다.');
-      else setConfirmPasswordError('');
-      return newConfirmPassword;
-    });
-  };
-
-  const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(() => {
-      const newNickname = e.target.value;
-      if (!newNickname) setNicknameError('닉네임을 입력해주세요.');
-      else if (newNickname.length < 2)
-        setNicknameError('닉네임은 2자 이상이어야 합니다.');
-      else setNicknameError('');
-      return newNickname;
-    });
-  };
-  console.log(email, password, confirmPassword, nickname);
-  const signUpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const signUpHandler: SubmitHandler<FormValues> = async (formData) => {
+    const { email, password, nickname, confirmPassword } = formData;
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -84,19 +49,25 @@ const SignupPage = () => {
   return (
     <>
       <Seo title='SignUp' />
-      <div className='h-screen flex flex-col justify-center items-center gap-2'>
-        <form onSubmit={signUpHandler}>
+      <div className='h-screen flex flex-col justify-center items-center'>
+        <form onSubmit={handleSubmit(signUpHandler)}>
           <Input
             type='email'
             label='이메일'
             variant='bordered'
             placeholder='이메일 아이디를 입력해주세요'
-            onClear={() => setEmail('')}
             className='max-w-xs'
-            onChange={onChangeEmail}
-            value={email}
+            {...register('email', {
+              required: '이메일을 입력하세요',
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: '올바른 메일 형식이 아닙니다',
+              },
+            })}
           />
-          <div className='text-red-500 text-center'>{emailError}</div>
+          {errors.email && (
+            <p className='text-red-500 text-xs'>{errors.email.message}</p>
+          )}
           <Input
             label='비밀번호'
             variant='bordered'
@@ -105,21 +76,28 @@ const SignupPage = () => {
               <button
                 className='focus:outline-none'
                 type='button'
-                onClick={toggleVisibility}
+                onClick={toggleVisibility1}
               >
-                {isVisible ? (
+                {isVisible1 ? (
                   <EyeSlashFilledIcon className='text-2xl text-default-400 pointer-events-none' />
                 ) : (
                   <EyeFilledIcon className='text-2xl text-default-400 pointer-events-none' />
                 )}
               </button>
             }
-            type={isVisible ? 'text' : 'password'}
+            type={isVisible1 ? 'text' : 'password'}
             className='max-w-xs'
-            onChange={onChangePassword}
-            value={password}
+            {...register('password', {
+              required: '비밀번호를 입력해주세요',
+              pattern: {
+                value: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
+                message: '비밀번호 조건에 맞게 입력해주세요',
+              },
+            })}
           />
-          <div className='text-red-500 text-center'>{passwordError}</div>
+          {errors.password && (
+            <p className='text-red-500 text-xs'>{errors.password.message}</p>
+          )}
           <Input
             label='비밀번호 확인'
             variant='bordered'
@@ -128,32 +106,50 @@ const SignupPage = () => {
               <button
                 className='focus:outline-none'
                 type='button'
-                onClick={toggleVisibility}
+                onClick={toggleVisibility2}
               >
-                {isVisible ? (
+                {isVisible2 ? (
                   <EyeSlashFilledIcon className='text-2xl text-default-400 pointer-events-none' />
                 ) : (
                   <EyeFilledIcon className='text-2xl text-default-400 pointer-events-none' />
                 )}
               </button>
             }
-            type={isVisible ? 'text' : 'password'}
+            type={isVisible2 ? 'text' : 'password'}
             className='max-w-xs'
-            onChange={onChangeConfirmPassword}
-            value={confirmPassword}
+            {...register('confirmPassword', {
+              required: '비밀번호를 입력해주세요',
+              validate: (value) => value === passwordRef.current,
+            })}
           />
-          <div className='text-red-500 text-center'>{confirmPasswordError}</div>
+          {errors.confirmPassword && (
+            <p className='text-red-500 text-xs'>
+              {errors.confirmPassword.message}
+            </p>
+          )}
+          {errors.confirmPassword &&
+            errors.confirmPassword.type === 'validate' && (
+              <p className='text-red-500 text-xs'>
+                비밀번호가 일치하지 않습니다
+              </p>
+            )}
           <Input
             type='text'
             label='닉네임'
             variant='bordered'
             placeholder='닉네임을 입력해주세요'
-            onClear={() => setNickname('')}
             className='max-w-xs'
-            onChange={onChangeNickname}
-            value={nickname}
+            {...register('nickname', {
+              required: '닉네임을 입력해주세요',
+              maxLength: {
+                value: 20,
+                message: '20글자를 초과할 수 없습니다',
+              },
+            })}
           />
-          <div className='text-red-500 text-center'>{nicknameError}</div>
+          {errors.nickname && (
+            <p className='text-red-500 text-xs'>{errors.nickname.message}</p>
+          )}
           <Button color='primary' type='submit'>
             회원 가입
           </Button>
