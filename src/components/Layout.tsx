@@ -9,8 +9,10 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <div className='flex flex-col justify-between h-[100vh]'>
-      <Header />
-      {children}
+      <div>
+        <Header />
+        {children}
+      </div>
       <Footer />
     </div>
   );
