@@ -1,12 +1,26 @@
 import React from 'react';
-import { Card, CardBody, Divider } from '@nextui-org/react';
+import { Button, Card, CardBody, Divider } from '@nextui-org/react';
 import { Tables } from '@/types/supabase';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteComment } from '@/apis/comments';
 
 // Readonly<{ comment: Tables<'comments'> }> --> TS 타입지정 추후 적용 예정. 현재는 any
 
 const CommentCard = ({ comment }: any) => {
+  const queryClient = useQueryClient();
+  const deleteMutate = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    },
+  });
+
+  const deleteBtnHandler = (commentId: string) => {
+    deleteMutate.mutate(commentId);
+  };
+
   console.log('코멘트?', comment);
   return (
     <Card className=' max-w-[1000px]'>
@@ -25,7 +39,12 @@ const CommentCard = ({ comment }: any) => {
           <Divider orientation='vertical' className='border-gray-800' />
           <div className='w-full flex justify-between'>
             <span>{comment.content}</span>
-            <span>{formatDate(comment.created_at)}</span>
+            <div>
+              <span>{formatDate(comment.created_at)}</span>
+              <Button onClick={deleteBtnHandler.bind(null, comment.id)}>
+                삭제
+              </Button>
+            </div>
           </div>
         </div>
       </CardBody>

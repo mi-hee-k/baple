@@ -26,3 +26,12 @@ export const insertNewComment = async (comment: newComment) => {
 
   console.log('insert data>>', data, 'insert error>>', error);
 };
+
+export const deleteComment = async (commentId: string) => {
+  const { error } = await supabase
+    .from('comments')
+    .delete()
+    .eq('id', commentId);
+
+  console.log('delete error>>', error);
+};
