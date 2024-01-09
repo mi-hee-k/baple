@@ -19,12 +19,12 @@ const SignupPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-    trigger,
   } = useForm<FormValues>({ mode: 'onChange' });
-  console.log('errors', errors);
 
+  const watchEmail = watch('email');
   const watchPassword = watch('password');
   const watchConfirmPassword = watch('confirmPassword');
+  const watchNickname = watch('nickname');
 
   const [isVisible1, setIsVisible1] = useState(false);
   const [isVisible2, setIsVisible2] = useState(false);
@@ -153,7 +153,16 @@ const SignupPage = () => {
           {errors.nickname && (
             <p className='text-red-500 text-xs'>{errors.nickname.message}</p>
           )}
-          <Button color='primary' type='submit' isDisabled={false}>
+          <Button
+            color='primary'
+            type='submit'
+            isDisabled={
+              !watchEmail ||
+              !watchPassword ||
+              !watchConfirmPassword ||
+              !watchNickname
+            }
+          >
             회원 가입
           </Button>
         </form>

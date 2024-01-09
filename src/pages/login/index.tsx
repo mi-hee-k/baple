@@ -4,28 +4,43 @@ import { EyeSlashFilledIcon } from '@/components/login/EyeSlashFilledIcon';
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Seo from '@/components/Seo';
+import { supabase } from '@/libs/supabase';
 
 interface FormValues {
   email: string;
   password: string;
 }
 
-const LoginPage = () => {
-  const [isVisible, setIsVisible] = useState(false);
+const LogInPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({ mode: 'onChange' });
-  console.log(errors);
 
+  const watchEmail = watch('email');
+  const watchPassword = watch('password');
+
+  const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const logInHandler: SubmitHandler<FormValues> = async (formData) => {
+    const { email, password } = formData;
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    console.log('data', data);
+    if (error) {
+      console.error('error', error);
+    }
+  };
   return (
     <>
       <Seo title='Login' />
       <div className='h-screen flex flex-col justify-center items-center gap-2'>
-        <form>
+        <form onSubmit={handleSubmit(logInHandler)}>
           <Input
             isClearable
             type='email'
@@ -74,11 +89,17 @@ const LoginPage = () => {
           {errors.password && (
             <p className='text-red-500 text-xs'>{errors.password.message}</p>
           )}
-          <Button color='primary'>Login</Button>
+          <Button
+            color='primary'
+            type='submit'
+            isDisabled={!watchEmail || !watchPassword}
+          >
+            Login
+          </Button>
         </form>
       </div>
     </>
   );
 };
 
-export default LoginPage;
+export default LogInPage;
