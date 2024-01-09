@@ -14,7 +14,7 @@ const CommentCard = ({ comment }: any) => {
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
-      toast.error('삭제완료', {
+      toast.success('삭제 완료', {
         position: 'top-right',
         autoClose: 2000,
         progress: undefined,

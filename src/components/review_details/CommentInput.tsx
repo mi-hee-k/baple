@@ -28,7 +28,7 @@ const CommentInput = ({ reviewId }: Props) => {
     },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submitComment = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('연결됨');
 
@@ -41,7 +41,7 @@ const CommentInput = ({ reviewId }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={submitComment}>
       <p>댓글</p>
       <Input
         type='text'
