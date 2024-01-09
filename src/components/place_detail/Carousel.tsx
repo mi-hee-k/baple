@@ -6,10 +6,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 
-interface Slide {
-  images_url: string;
-}
-
 const Carousel = ({
   slidesPerView,
   slideHeight,
@@ -17,8 +13,9 @@ const Carousel = ({
 }: {
   slidesPerView: number;
   slideHeight: string;
-  slideData: Slide[];
+  slideData: string[];
 }) => {
+  console.log('여기!', slideData);
   SwiperCore.use([Navigation, Scrollbar, Autoplay]);
 
   return (
@@ -34,8 +31,8 @@ const Carousel = ({
         }}
         scrollbar={{ draggable: true }}
       >
-        {slideData.map((slide) => (
-          <SwiperSlide key={slide.images_url}>
+        {slideData.map((slide: string) => (
+          <SwiperSlide key={slide}>
             <div className={`bg-slate-400 h-[${slideHeight}]`}>
               <img
                 src={slide}

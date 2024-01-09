@@ -3,48 +3,45 @@ import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/place_detail/Carousel';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import React, { useEffect } from 'react';
 
-interface Slide {
-  id: number;
-  img: string;
-}
+// interface Slide {
+//   id: number;
+//   img: string;
+// }
 
-const slideData: Slide[] = [
-  {
-    id: 1,
-    img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
-  },
-  {
-    id: 2,
-    img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
-  },
-  {
-    id: 3,
-    img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
-  },
-  {
-    id: 4,
-    img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
-  },
-  {
-    id: 5,
-    img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
-  },
-];
+// const slideData: Slide[] = [
+//   {
+//     id: 1,
+//     img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
+//   },
+//   {
+//     id: 2,
+//     img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
+//   },
+//   {
+//     id: 3,
+//     img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
+//   },
+//   {
+//     id: 4,
+//     img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
+//   },
+//   {
+//     id: 5,
+//     img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
+//   },
+// ];
 
 const PlacePage = () => {
   const { placeId } = useParams<{ placeId: string }>();
   console.log(placeId);
-
-  // const placeId = 'bf2dafff-f2a1-41ff-942f-056a242e53f1';
 
   const { data: imgList, isLoading } = useQuery({
     queryKey: ['imgList'],
     queryFn: () => getImgList(placeId),
   });
 
-  // console.log(imgList?.images_url);
+  console.log('쿼리 결과', imgList);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -53,14 +50,14 @@ const PlacePage = () => {
   return (
     <MainWrapper>
       <Carousel
-        slideData={imgList?.images_url}
+        slideData={imgList ?? []}
         slidesPerView={4}
         slideHeight={'200px'}
       />
 
       <section>
-        <div className='flex justify-between'>
-          <h1 className='text-2xl text-bold mb-[10px]'>국립중앙박물관 🏷</h1>
+        <div className=' flex justify-between'>
+          <h1 className='text-2xl text-bold mb-[10px] '>국립중앙박물관 🏷</h1>
           <div>icons</div>
         </div>
         <div className='mb-[10px]'>
@@ -81,11 +78,9 @@ const PlacePage = () => {
           <span className='bg-green-300 rounded-xl px-2'>오디오 가이드</span>
         </div>
       </section>
-
       <section className='mb-[30px]'>
         <div className='w-[80%] h-[300px] bg-blue-400 mx-auto'>지도</div>
       </section>
-
       <section className='mb-[30px] text-center'>
         <button className='bg-red-400 p-4 rounded-md text-white'>
           리뷰 작성하기
