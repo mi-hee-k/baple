@@ -2,7 +2,11 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className='g-gray-100 relative bottom-0 w-screen'>Footer</footer>
+    <footer className='bg-yellow-300 py-6'>
+      <div className='container m-auto max-w-[1200px] min-h-[40px] w-[90%] flex justify-center'>
+        Copyright &copy; 2024 BAPLE All rights reserved
+      </div>
+    </footer>
   );
 };
 

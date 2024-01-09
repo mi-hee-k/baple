@@ -1,16 +1,39 @@
 import MainWrapper from '@/components/layout/MainWrapper';
+import Carousel from '@/components/place_detail/Carousel';
 import React from 'react';
+
+interface Slide {
+  id: number;
+  img: string;
+}
+
+const slideData: Slide[] = [
+  {
+    id: 1,
+    img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
+  },
+  {
+    id: 2,
+    img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
+  },
+  {
+    id: 3,
+    img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
+  },
+  {
+    id: 4,
+    img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
+  },
+  {
+    id: 5,
+    img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
+  },
+];
 
 const PlacePage = () => {
   return (
     <MainWrapper>
-      <section className='flex justify-between p-6'>
-        <div className='w-[15%] h-[100px] bg-slate-300'>Image</div>
-        <div className='w-[15%] h-[100px] bg-slate-300'>Image</div>
-        <div className='w-[15%] h-[100px] bg-slate-300'>Image</div>
-        <div className='w-[15%] h-[100px] bg-slate-300'>Image</div>
-        <div className='w-[15%] h-[100px] bg-slate-300'>Image</div>
-      </section>
+      <Carousel slideData={slideData} slidesPerView={4} slideHeight={'200px'} />
 
       <section>
         <div className='flex justify-between'>
