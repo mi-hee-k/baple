@@ -1,6 +1,9 @@
+import { getImgList } from '@/apis/place_detail';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/place_detail/Carousel';
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 interface Slide {
   id: number;
@@ -31,9 +34,29 @@ const slideData: Slide[] = [
 ];
 
 const PlacePage = () => {
+  const { placeId } = useParams<{ placeId: string }>();
+  console.log(placeId);
+
+  // const placeId = 'bf2dafff-f2a1-41ff-942f-056a242e53f1';
+
+  const { data: imgList, isLoading } = useQuery({
+    queryKey: ['imgList'],
+    queryFn: () => getImgList(placeId),
+  });
+
+  // console.log(imgList?.images_url);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <MainWrapper>
-      <Carousel slideData={slideData} slidesPerView={4} slideHeight={'200px'} />
+      <Carousel
+        slideData={imgList?.images_url}
+        slidesPerView={4}
+        slideHeight={'200px'}
+      />
 
       <section>
         <div className='flex justify-between'>

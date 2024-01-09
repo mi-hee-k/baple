@@ -7,11 +7,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
 
 interface Slide {
-  id: number;
-  img: string;
+  images_url: string;
 }
 
-const Crousel = ({
+const Carousel = ({
   slidesPerView,
   slideHeight,
   slideData,
@@ -21,6 +20,7 @@ const Crousel = ({
   slideData: Slide[];
 }) => {
   SwiperCore.use([Navigation, Scrollbar, Autoplay]);
+
   return (
     <div className='swiper-container'>
       <Swiper
@@ -35,11 +35,11 @@ const Crousel = ({
         scrollbar={{ draggable: true }}
       >
         {slideData.map((slide) => (
-          <SwiperSlide key={slide.id}>
+          <SwiperSlide key={slide.images_url}>
             <div className={`bg-slate-400 h-[${slideHeight}]`}>
               <img
-                src={slide.img}
-                className='object-cover w-full h-full'
+                src={slide}
+                className='object-fill w-full h-full'
                 alt='img'
               />
             </div>
@@ -50,4 +50,4 @@ const Crousel = ({
   );
 };
 
-export default Crousel;
+export default Carousel;
