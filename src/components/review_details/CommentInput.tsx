@@ -51,7 +51,12 @@ const CommentInput = ({ reviewId }: Props) => {
           setComment(e.target.value);
         }}
       />
-      <Button color='primary' variant='ghost' type='submit'>
+      <Button
+        color='primary'
+        variant='ghost'
+        type='submit'
+        className='w-[100px]'
+      >
         등록
       </Button>
     </form>

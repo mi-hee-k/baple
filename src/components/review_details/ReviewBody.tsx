@@ -18,14 +18,14 @@ const ReviewBody = ({ reviewId }: Props) => {
   }
 
   if (review) {
-    const imgUrl = review[0].images_url[0];
+    const imgUrl = review.images_url[0];
     console.log(imgUrl);
     return (
       <>
-        <p>{review[0].content}</p>
+        <p>{review.content}</p>
         {/* <img src={imgUrl} alt='리뷰어가 올린 사진' className='w-[50%]' /> */}
-        <p>placeid:{review[0].place_id}</p>
-        <p>userid:{review[0].user_id}</p>
+        <p>placeid:{review.place_id}</p>
+        <p>userid:{review.user_id}</p>
       </>
     );
   }
