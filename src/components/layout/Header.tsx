@@ -9,7 +9,9 @@ const Header = () => {
           <Link href='/'>BAPLE</Link>
           <Link href='/nearby'>주변 장소</Link>
           <Link href='/places'>장소 목록</Link>
-          <Link href='/place/1234'>장소 상세</Link>
+          <Link href='/place/bf2dafff-f2a1-41ff-942f-056a242e53f1'>
+            장소 상세
+          </Link>
           <Link href='/review/1234'>리뷰 상세</Link>
           <Link href='/review/write'>리뷰 작성</Link>
           <Link href='/login'>로그인</Link>
