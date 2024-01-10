@@ -1,8 +1,10 @@
+import { getPlaceInfo } from '@/apis/places';
 import { getReviewImgList } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
-import Carousel from '@/components/place_detail/Carousel';
+import Carousel from '@/components/carousel/Carousel';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
+import PlaceDetail from '@/components/place_detail/placeDetail';
 
 const PlacePage = () => {
   const { placeId } = useParams<{ placeId: string }>();
@@ -13,44 +15,32 @@ const PlacePage = () => {
     queryFn: () => getReviewImgList(placeId),
   });
 
-  console.log('쿼리 결과', imgList);
+  const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
+    queryKey: ['placeInfo'],
+    queryFn: () => getPlaceInfo(placeId),
+  });
 
-  if (isLoading) {
+  // console.log('쿼리 결과', imgList);
+  // console.log('장소정보', placeInfo);
+
+  if (isLoading || placeInfoLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <MainWrapper>
-      <Carousel
-        slideData={imgList ?? []} // imgList가 없으면 빈배열
-        slidesPerView={4} // 보여줄 슬라이스 수
-        slideHeight={'200px'} // 캐러셀 높이
-      />
+      <section className='mb-[20px]'>
+        <Carousel
+          slideData={imgList ?? []} // imgList가 없으면 빈배열
+          slidesPerView={4} // 보여줄 슬라이스 수
+          slideHeight={'200px'} // 캐러셀 높이
+        />
+      </section>
 
       {/* 장소 상세정보 */}
-      <section>
-        <div className=' flex justify-between'>
-          <h1 className='text-2xl text-bold mb-[10px] '>국립중앙박물관 🏷</h1>
-          <div>icons</div>
-        </div>
-        <div className='mb-[10px]'>
-          <p>홈페이지 : www.google.com</p>
-          <p>전화 : 02-000-0000</p>
-          <p>주소 : 서울특별시 용산구 용산동6가 168-6</p>
-          <p>운영시간 : 월, 화, 목, 금, 일요일: 10:00-18:00</p>
-          <p>휴무일 : 공휴일</p>
-        </div>
+      <PlaceDetail placeInfo={placeInfo} />
 
-        <div className='flex gap-6 mb-[20px]'>
-          <span className='bg-green-300 rounded-xl px-2'>입장료무료</span>
-          <span className='bg-green-300 rounded-xl px-2'>장애인용 출입문</span>
-          <span className='bg-green-300 rounded-xl px-2'>휠체어 대여</span>
-          <span className='bg-green-300 rounded-xl px-2'>장애인 화장실</span>
-          <span className='bg-green-300 rounded-xl px-2'>안내견 동반</span>
-          <span className='bg-green-300 rounded-xl px-2'>안내 점자</span>
-          <span className='bg-green-300 rounded-xl px-2'>오디오 가이드</span>
-        </div>
-      </section>
+      {/* 지도 */}
       <section className='mb-[30px]'>
         <div className='w-[80%] h-[300px] bg-blue-400 mx-auto'>지도</div>
       </section>

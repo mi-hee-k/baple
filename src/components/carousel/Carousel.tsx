@@ -18,7 +18,7 @@ const Carousel = ({
   SwiperCore.use([Navigation, Scrollbar, Autoplay]);
 
   return (
-    <div className='swiper-container'>
+    <section className='swiper-container'>
       <Swiper
         loop={true} // 슬라이드 루프
         spaceBetween={10} // 슬라이스 사이 간격
@@ -42,7 +42,7 @@ const Carousel = ({
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </section>
   );
 };
 
