@@ -20,9 +20,6 @@ const PlacePage = () => {
     queryFn: () => getPlaceInfo(placeId),
   });
 
-  // console.log('쿼리 결과', imgList);
-  // console.log('장소정보', placeInfo);
-
   if (isLoading || placeInfoLoading) {
     return <div>Loading...</div>;
   }
