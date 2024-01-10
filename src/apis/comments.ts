@@ -1,6 +1,13 @@
 import { supabase } from '@/libs/supabase';
-import { Tables } from '@/types/supabase';
 import newComment from '@/utils/newComment';
+import { Tables } from '@/types/supabase';
+
+export interface CommentsWithUser extends Tables<'comments'> {
+  users: {
+    avatar_url: string;
+    nickname: string;
+  };
+}
 
 export const getAllComments = async (id: string) => {
   let { data: comments, error } = await supabase
@@ -15,7 +22,7 @@ export const getAllComments = async (id: string) => {
     )
     .eq('review_id', id);
 
-  return comments;
+  return comments as CommentsWithUser[];
 };
 
 export const insertNewComment = async (comment: newComment) => {

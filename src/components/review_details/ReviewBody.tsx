@@ -1,34 +1,21 @@
-import { getReviewById } from '@/apis/reviews';
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
+import type { Tables } from '@/types/supabase';
+
 interface Props {
-  reviewId: string;
+  review: Tables<'reviews'>;
 }
 
-const ReviewBody = ({ reviewId }: Props) => {
-  const { data: review, isLoading } = useQuery({
-    queryKey: ['review'],
-    queryFn: () => getReviewById(reviewId),
-  });
+const ReviewBody = ({ review }: Props) => {
+  const { id, created_at, content, user_id, place_id } = review;
 
-  console.log('쿼리에서 읽어온 부분', review);
-  if (isLoading) {
-    return <p>로딩중...</p>;
-  }
-
-  if (review) {
-    const imgUrl = review.images_url[0];
-    console.log(imgUrl);
-    return (
-      <>
-        <p>{review.content}</p>
-        {/* <img src={imgUrl} alt='리뷰어가 올린 사진' className='w-[50%]' /> */}
-        <p>placeid:{review.place_id}</p>
-        <p>userid:{review.user_id}</p>
-      </>
-    );
-  }
+  return (
+    <>
+      <p>{content}</p>
+      <p>placeid:{place_id}</p>
+      <p>userid:{user_id}</p>
+    </>
+  );
 };
 
 export default ReviewBody;

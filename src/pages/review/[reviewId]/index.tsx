@@ -1,19 +1,54 @@
+import Carousel from '@/components/common/Carousel';
 import MainWrapper from '@/components/layout/MainWrapper';
 import CommentInput from '@/components/review_details/CommentInput';
 import CommentList from '@/components/review_details/CommentList';
 import ReviewBody from '@/components/review_details/ReviewBody';
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { REVIEW_ID } from '@/constants/temp_develop';
+import { getReviewById } from '@/apis/reviews';
+import { Spacer } from '@nextui-org/react';
 
 const ReviewPage = () => {
-  const REVIEW_ID = '4f65baa2-4677-4ac0-b1dc-ce075aa6e501';
-  return (
-    <MainWrapper>
-      <section className='h-72 bg-slate-100'>캐러셀 들어갈 부분</section>
-      <ReviewBody reviewId={REVIEW_ID} />
-      <CommentInput reviewId={REVIEW_ID} />
-      <CommentList reviewId={REVIEW_ID} />
-    </MainWrapper>
-  );
+  const {
+    data: review,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['review'],
+    queryFn: () => getReviewById(REVIEW_ID),
+  });
+
+  console.log('에헤에', review);
+
+  if (isLoading) {
+    return <p>리뷰 데이터 로딩중...</p>;
+  }
+
+  if (error) {
+    return <p>오류 발생...</p>;
+  }
+
+  if (review) {
+    const imgUrl = review.images_url as string[];
+
+    return (
+      <MainWrapper>
+        {review?.images_url && (
+          <Carousel
+            slideData={imgUrl}
+            slideHeight={'200px'}
+            slidesPerView={4}
+          />
+        )}
+        <Spacer y={10} />
+        <ReviewBody review={review} />
+        <Spacer y={10} />
+        <CommentInput reviewId={review.id} />
+        <CommentList reviewId={review.id} />
+      </MainWrapper>
+    );
+  }
 };
 
 export default ReviewPage;

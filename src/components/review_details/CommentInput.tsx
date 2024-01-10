@@ -4,6 +4,7 @@ import newComment from '@/utils/newComment';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { insertNewComment } from '@/apis/comments';
 import { toast } from 'react-toastify';
+import { USER_ID } from '@/constants/temp_develop';
 
 interface Props {
   reviewId: string;
@@ -11,8 +12,6 @@ interface Props {
 
 const CommentInput = ({ reviewId }: Props) => {
   const [comment, setComment] = useState('');
-
-  const USER_ID = '05a23d3d-a573-4f95-b7af-6b03779eb74b'; //AUTH 생길때까지 임시로 하드코딩
 
   const queryClient = useQueryClient();
   const InsertMutate = useMutation({
@@ -43,22 +42,24 @@ const CommentInput = ({ reviewId }: Props) => {
   return (
     <form onSubmit={submitComment}>
       <p>댓글</p>
-      <Input
-        type='text'
-        placeholder='댓글을 입력해 주세요'
-        value={comment}
-        onChange={(e) => {
-          setComment(e.target.value);
-        }}
-      />
-      <Button
-        color='primary'
-        variant='ghost'
-        type='submit'
-        className='w-[100px]'
-      >
-        등록
-      </Button>
+      <div className='flex gap-5 items-center'>
+        <Input
+          type='text'
+          placeholder='댓글을 입력해 주세요'
+          value={comment}
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
+        />
+        <Button
+          color='primary'
+          variant='ghost'
+          type='submit'
+          className='w-[100px] h-[60px]'
+        >
+          등록
+        </Button>
+      </div>
     </form>
   );
 };

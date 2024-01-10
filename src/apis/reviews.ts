@@ -1,5 +1,6 @@
 import { supabase } from '@/libs/supabase';
 
+import type { Tables } from '@/types/supabase';
 // 리뷰 아이디 가져오기
 export const getReviewById = async (id: string) => {
   const { data: review, error } = await supabase
@@ -11,7 +12,7 @@ export const getReviewById = async (id: string) => {
   if (error) {
     throw error;
   }
-  return review;
+  return review as Tables<'reviews'>;
 };
 
 // 리뷰 이미지 가져오기
