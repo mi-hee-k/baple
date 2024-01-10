@@ -6,6 +6,7 @@ import store from '@/redux/config/configStore';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PersistGate } from 'redux-persist/integration/react';
 
 type Props = {
   children: React.ReactNode;
@@ -17,8 +18,10 @@ const Providers = ({ children }: Props) => {
     <QueryClientProvider client={client}>
       <NextUIProvider>
         <Provider store={store}>
+          {/* <PersistGate loading={null} persistor={persistor}> */}
           {children}
           <ReactQueryDevtools initialIsOpen={false} />
+          {/* </PersistGate> */}
           <ToastContainer />
         </Provider>
       </NextUIProvider>

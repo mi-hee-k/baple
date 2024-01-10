@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Seo from '@/components/Seo';
 import { supabase } from '@/libs/supabase';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 interface FormValues {
   email: string;
@@ -12,6 +14,7 @@ interface FormValues {
 }
 
 const LogInPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -31,9 +34,14 @@ const LogInPage = () => {
       email,
       password,
     });
-    console.log('data', data);
+
     if (error) {
       console.error('error', error);
+      toast.error('로그인에 실패하였습니다.');
+    } else {
+      console.log('data', data);
+      toast.success('로그인 되었습니다!');
+      router.push('/');
     }
   };
   return (
