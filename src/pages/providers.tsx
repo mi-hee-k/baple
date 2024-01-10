@@ -4,6 +4,8 @@ import React from 'react';
 import { NextUIProvider } from '@nextui-org/react';
 import store from '@/redux/config/configStore';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {
   children: React.ReactNode;
@@ -17,6 +19,7 @@ const Providers = ({ children }: Props) => {
         <Provider store={store}>
           {children}
           <ReactQueryDevtools initialIsOpen={false} />
+          <ToastContainer />
         </Provider>
       </NextUIProvider>
     </QueryClientProvider>
