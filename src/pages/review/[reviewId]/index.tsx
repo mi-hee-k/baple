@@ -10,7 +10,7 @@ const ReviewPage = () => {
     <MainWrapper>
       <section className='h-72 bg-slate-100'>캐러셀 들어갈 부분</section>
       <ReviewBody reviewId={REVIEW_ID} />
-      <CommentInput />
+      <CommentInput reviewId={REVIEW_ID} />
       <CommentList reviewId={REVIEW_ID} />
     </MainWrapper>
   );
