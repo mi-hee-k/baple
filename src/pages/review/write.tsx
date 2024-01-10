@@ -19,17 +19,19 @@ const ReviewWrite = () => {
       <h1 className='text-2xl font-bold mb-4'>
         사진 올리기(최대 5장까지 가능합니다)
       </h1>
-
       <div className='mb-20'>
-        <label className='text-lg font-semibold mb-2 block'>
-          사진 업로드
+        <label htmlFor='file-input' className='relative cursor-pointer'>
           <Input
+            id='file-input'
             type='file'
             accept='image/*'
             multiple
             onChange={handleImageChange}
             className='hidden'
           />
+          <div className='w-20 h-20 bg-gray-200 flex items-center justify-center rounded'>
+            <span className='text-3xl'>+</span>
+          </div>
         </label>
       </div>
       <div>
@@ -38,7 +40,7 @@ const ReviewWrite = () => {
       <div className='mb-10'>
         <Textarea
           value={reviewText}
-          onChange={(e) => setReviewText(e.target.value)}
+          onChange={(event) => setReviewText(event.target.value)}
           placeholder='이용자님의 소중한 경험을 남겨 주세요. 자세히 작성할수록 다른 이용자에게 큰 도움이 됩니다.'
           className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
         />
