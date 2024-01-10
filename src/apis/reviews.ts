@@ -21,10 +21,6 @@ export const getReviewImgList = async (id: string) => {
     .select('images_url')
     .eq('place_id', id);
 
-  console.log(
-    'getData후 결과',
-    reviewImgList?.map((item) => item.images_url).flat(),
-  );
   if (error) {
     throw error;
   }
