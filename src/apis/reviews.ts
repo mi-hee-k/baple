@@ -1,5 +1,6 @@
 import { supabase } from '@/libs/supabase';
 
+// 리뷰 아이디 가져오기
 export const getReviewById = async (id: string) => {
   console.log('id', id);
   const { data: review, error } = await supabase
@@ -11,4 +12,21 @@ export const getReviewById = async (id: string) => {
     throw error;
   }
   return review;
+};
+
+// 리뷰 이미지 가져오기
+export const getReviewImgList = async (id: string) => {
+  const { data: reviewImgList, error } = await supabase
+    .from('reviews')
+    .select('images_url')
+    .eq('place_id', id);
+
+  console.log(
+    'getData후 결과',
+    reviewImgList?.map((item) => item.images_url).flat(),
+  );
+  if (error) {
+    throw error;
+  }
+  return reviewImgList?.map((item) => item.images_url).flat() as string[];
 };

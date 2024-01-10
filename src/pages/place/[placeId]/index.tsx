@@ -1,36 +1,8 @@
-import { getImgList } from '@/apis/place_detail';
+import { getReviewImgList } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/place_detail/Carousel';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-
-// interface Slide {
-//   id: number;
-//   img: string;
-// }
-
-// const slideData: Slide[] = [
-//   {
-//     id: 1,
-//     img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
-//   },
-//   {
-//     id: 2,
-//     img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
-//   },
-//   {
-//     id: 3,
-//     img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
-//   },
-//   {
-//     id: 4,
-//     img: 'https://mblogthumb-phinf.pstatic.net/MjAxNzA1MjNfMjE2/MDAxNDk1NTI5NjAzMTg2.xBtUxURqSfVkj4PQvpHFhXUXfo8_8Oz0ZO5W3xE_l00g.ZxxTHEYUScpC6MuH0vorMjC9C-txie9GmRY56YDvCFkg.JPEG.suwonloves/%EC%B0%BD%EB%A3%A1%EB%AC%B8%EB%8C%80%EB%A1%9C_%EA%BD%83%EB%B0%AD_18.jpg?type=w800',
-//   },
-//   {
-//     id: 5,
-//     img: 'https://image.edaily.co.kr/images/photo/files/NP/S/2023/03/PS23033001084.jpg',
-//   },
-// ];
 
 const PlacePage = () => {
   const { placeId } = useParams<{ placeId: string }>();
@@ -38,7 +10,7 @@ const PlacePage = () => {
 
   const { data: imgList, isLoading } = useQuery({
     queryKey: ['imgList'],
-    queryFn: () => getImgList(placeId),
+    queryFn: () => getReviewImgList(placeId),
   });
 
   console.log('쿼리 결과', imgList);
@@ -50,11 +22,12 @@ const PlacePage = () => {
   return (
     <MainWrapper>
       <Carousel
-        slideData={imgList ?? []}
-        slidesPerView={4}
-        slideHeight={'200px'}
+        slideData={imgList ?? []} // imgList가 없으면 빈배열
+        slidesPerView={4} // 보여줄 슬라이스 수
+        slideHeight={'200px'} // 캐러셀 높이
       />
 
+      {/* 장소 상세정보 */}
       <section>
         <div className=' flex justify-between'>
           <h1 className='text-2xl text-bold mb-[10px] '>국립중앙박물관 🏷</h1>
@@ -87,9 +60,10 @@ const PlacePage = () => {
         </button>
       </section>
 
+      {/* 리뷰 */}
       <section>
         <h2 className='mb-[50px] text-3xl font-bold text-center'>방문 후기</h2>
-        {/* 리뷰섹션 */}
+        {/* 리뷰 wrapper */}
         <div className='flex gap-6 px-6 mb-[20px]'>
           {/* 리뷰카드 */}
           <div className='w-[300px] bg-slate-200 p-4 rounded-xl shadow-md'>
