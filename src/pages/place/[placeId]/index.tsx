@@ -1,10 +1,10 @@
 import { getPlaceInfo } from '@/apis/places';
 import { getReviewImgList } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
-import Carousel from '@/components/carousel/Carousel';
+import Carousel from '@/components/common/Carousel';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import PlaceDetail from '@/components/place_detail/placeDetail';
+import PlaceDetail from '@/components/place_detail/PlaceDetail';
 
 const PlacePage = () => {
   const { placeId } = useParams<{ placeId: string }>();
