@@ -2,7 +2,6 @@ import { supabase } from '@/libs/supabase';
 
 // 리뷰 아이디 가져오기
 export const getReviewById = async (id: string) => {
-  console.log('id', id);
   const { data: review, error } = await supabase
     .from('reviews')
     .select('*')
