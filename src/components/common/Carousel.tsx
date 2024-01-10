@@ -15,19 +15,20 @@ const Carousel = ({
   slideHeight: string;
   slideData: string[];
 }) => {
+  console.log({ slideHeight });
   SwiperCore.use([Navigation, Scrollbar, Autoplay]);
 
   return (
-    <section className='swiper-container'>
+    <section className={`swiper-container mb-[20px]`}>
       <Swiper
         loop={true} // 슬라이드 루프
         spaceBetween={10} // 슬라이스 사이 간격
         slidesPerView={slidesPerView} // 보여질 슬라이스 수
         navigation={true} // prev, next button
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false, // 사용자 상호작용시 슬라이더 일시 정지 비활성
-        }}
+        // autoplay={{
+        //   delay: 2500,
+        //   disableOnInteraction: false, // 사용자 상호작용시 슬라이더 일시 정지 비활성
+        // }}
         scrollbar={{ draggable: true }}
       >
         {slideData.map((slide: string) => (
