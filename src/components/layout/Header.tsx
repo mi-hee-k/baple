@@ -30,15 +30,15 @@ const Header = () => {
   //   }
   // }, []);
 
-  // const [isAuth, setIsAuth] = useState(!!auth.currentUser);
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       console.log(event, session);
-      const userId = session?.user.id;
+      const userId = session?.user.id as string;
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const nickname = session?.user.user_metadata.nickname;
       setNickname(nickname);
+      setUserId(userId);
 
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
@@ -86,18 +86,11 @@ const Header = () => {
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label='Static Actions'>
-                  <DropdownItem key='mypage' href='/user/1234'>
+                  <DropdownItem key='mypage' href={`/user/${userId}`}>
                     마이페이지
                   </DropdownItem>
                   <DropdownItem key='logout' onClick={logOutHandler}>
                     로그아웃
-                  </DropdownItem>
-                  <DropdownItem
-                    key='delete'
-                    className='text-danger'
-                    color='danger'
-                  >
-                    Delete file
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
