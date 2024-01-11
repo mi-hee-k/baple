@@ -1,6 +1,7 @@
 import { supabase } from '@/libs/supabase';
 
 import type { Tables } from '@/types/supabase';
+import { ReviewUpdateParams } from '@/types/types';
 // 리뷰 아이디 가져오기
 export const getReviewById = async (id: string) => {
   const { data: review, error } = await supabase
@@ -8,7 +9,7 @@ export const getReviewById = async (id: string) => {
     .select('*')
     .eq('id', id)
     .single();
-  console.log('reviews.ts 에서 읽은 부분>>', review, '에러>>', error);
+  // console.log('reviews.ts 에서 읽은 부분>>', review, '에러>>', error);
   if (error) {
     throw error;
   }
@@ -26,4 +27,19 @@ export const getReviewImgList = async (id: string) => {
     throw error;
   }
   return reviewImgList?.map((item) => item.images_url).flat() as string[];
+};
+
+export const updateReviewContent = async ({
+  id,
+  editValue,
+}: ReviewUpdateParams) => {
+  console.log('editvalue >> ', editValue);
+  const { data, error } = await supabase
+    .from('reviews')
+    .update({ content: editValue })
+    .eq('id', id)
+    .select();
+
+  console.log('수정시도됨');
+  console.log('수정 data>>', data, '수정 error>>', error);
 };

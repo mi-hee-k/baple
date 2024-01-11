@@ -25,3 +25,8 @@ export interface User {
   avatarUrl: string;
   nickname: string;
 }
+
+export interface ReviewUpdateParams {
+  id: string;
+  editValue: string;
+}
