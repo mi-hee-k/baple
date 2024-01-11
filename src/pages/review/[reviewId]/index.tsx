@@ -37,7 +37,7 @@ const ReviewPage = () => {
         {review?.images_url && (
           <Carousel
             slideData={imgUrl}
-            slideHeight={'200px'}
+            slideHeight={'300px'}
             slidesPerView={4}
           />
         )}
