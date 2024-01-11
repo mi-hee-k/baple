@@ -7,6 +7,7 @@ import Seo from '@/components/layout/Seo';
 import { supabase } from '@/libs/supabase';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface FormValues {
   email: string;
@@ -47,7 +48,9 @@ const LogInPage = () => {
   return (
     <>
       <Seo title='Login' />
+
       <div className='h-screen flex flex-col justify-center items-center gap-2'>
+        <Link href='/'>BAPLE</Link>
         <form onSubmit={handleSubmit(logInHandler)}>
           <Input
             isClearable
@@ -55,7 +58,7 @@ const LogInPage = () => {
             label='Email'
             variant='bordered'
             placeholder='이메일 아이디를 입력해주세요'
-            className='max-w-xs'
+            className='w-96'
             {...register('email', {
               required: '이메일을 입력하세요',
               pattern: {
@@ -65,7 +68,9 @@ const LogInPage = () => {
             })}
           />
           {errors.email && (
-            <p className='text-red-500 text-xs'>{errors.email.message}</p>
+            <p className='text-red-500 text-xs text-center'>
+              {errors.email.message}
+            </p>
           )}
           <Input
             label='Password'
@@ -85,7 +90,7 @@ const LogInPage = () => {
               </button>
             }
             type={isVisible ? 'text' : 'password'}
-            className='max-w-xs'
+            className='w-96'
             {...register('password', {
               required: '비밀번호를 입력해주세요',
               pattern: {
@@ -95,12 +100,15 @@ const LogInPage = () => {
             })}
           />
           {errors.password && (
-            <p className='text-red-500 text-xs'>{errors.password.message}</p>
+            <p className='text-red-500 text-xs text-center'>
+              {errors.password.message}
+            </p>
           )}
           <Button
             color='primary'
             type='submit'
             isDisabled={!watchEmail || !watchPassword}
+            className=''
           >
             Login
           </Button>

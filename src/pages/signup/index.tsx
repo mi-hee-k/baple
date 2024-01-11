@@ -5,6 +5,7 @@ import { EyeSlashFilledIcon } from '@/components/login/EyeSlashFilledIcon';
 import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { supabase } from '@/libs/supabase';
+import Link from 'next/link';
 
 interface FormValues {
   email: string;
@@ -53,13 +54,14 @@ const SignupPage = () => {
     <>
       <Seo title='SignUp' />
       <div className='h-screen flex flex-col justify-center items-center'>
+        <Link href='/'>BAPLE</Link>
         <form onSubmit={handleSubmit(signUpHandler)}>
           <Input
             type='email'
             label='이메일'
             variant='bordered'
             placeholder='이메일 아이디를 입력해주세요'
-            className='max-w-xs'
+            className='w-96'
             {...register('email', {
               required: '이메일을 입력하세요',
               pattern: {
@@ -69,7 +71,9 @@ const SignupPage = () => {
             })}
           />
           {errors.email && (
-            <p className='text-red-500 text-xs'>{errors.email.message}</p>
+            <p className='text-red-500 text-xs text-center'>
+              {errors.email.message}
+            </p>
           )}
           <Input
             label='비밀번호'
@@ -89,7 +93,7 @@ const SignupPage = () => {
               </button>
             }
             type={isVisible1 ? 'text' : 'password'}
-            className='max-w-xs'
+            className='w-96'
             {...register('password', {
               required: '비밀번호를 입력해주세요',
               pattern: {
@@ -99,7 +103,9 @@ const SignupPage = () => {
             })}
           />
           {errors.password && (
-            <p className='text-red-500 text-xs'>{errors.password.message}</p>
+            <p className='text-red-500 text-xs text-center'>
+              {errors.password.message}
+            </p>
           )}
           <Input
             label='비밀번호 확인'
@@ -119,14 +125,14 @@ const SignupPage = () => {
               </button>
             }
             type={isVisible2 ? 'text' : 'password'}
-            className='max-w-xs'
+            className='w-96'
             {...register('confirmPassword', {
               required: '비밀번호를 입력해주세요',
               validate: (value) => value === watchPassword,
             })}
           />
           {errors.confirmPassword && (
-            <p className='text-red-500 text-xs'>
+            <p className='text-red-500 text-xs text-center'>
               {errors.confirmPassword.message}
             </p>
           )}
@@ -141,7 +147,7 @@ const SignupPage = () => {
             label='닉네임'
             variant='bordered'
             placeholder='닉네임을 입력해주세요'
-            className='max-w-xs'
+            className='w-96'
             {...register('nickname', {
               required: '닉네임을 입력해주세요',
               maxLength: {
@@ -151,7 +157,9 @@ const SignupPage = () => {
             })}
           />
           {errors.nickname && (
-            <p className='text-red-500 text-xs'>{errors.nickname.message}</p>
+            <p className='text-red-500 text-xs text-center'>
+              {errors.nickname.message}
+            </p>
           )}
           <Button
             color='primary'
