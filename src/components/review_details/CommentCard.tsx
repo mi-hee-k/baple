@@ -1,15 +1,25 @@
 import React from 'react';
-import { Button, Card, CardBody, Divider } from '@nextui-org/react';
-import { Tables } from '@/types/supabase';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  Divider,
+  avatar,
+} from '@nextui-org/react';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteComment } from '@/apis/comments';
 import { toast } from 'react-toastify';
 
-// Readonly<{ comment: Tables<'comments'> }> --> TS 타입지정 추후 적용 예정. 현재는 any
+import type { CommentsWithUser } from '@/apis/comments';
 
-const CommentCard = ({ comment }: any) => {
+interface Props {
+  comment: CommentsWithUser;
+}
+
+const CommentCard = ({ comment }: Props) => {
   const queryClient = useQueryClient();
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
@@ -24,23 +34,18 @@ const CommentCard = ({ comment }: any) => {
     },
   });
 
+  // const avatarUrl=comment.users.nickname |
+
   const deleteBtnHandler = (commentId: string) => {
     deleteMutate.mutate(commentId);
   };
 
-  // console.log('코멘트?', comment);
   return (
     <Card className=' max-w-[1000px]'>
       <CardBody>
         <div className='flex gap-4'>
           <div className='flex flex-col'>
-            <Image
-              src={comment.users.avatar_url}
-              alt='유저 프사'
-              className='h-11 w-11'
-              width={50}
-              height={50}
-            />
+            <Avatar src='comment.users.avatar_url' showFallback />
             <p className='text-md'>{comment.users.nickname}</p>
           </div>
           <Divider orientation='vertical' className='border-gray-800' />

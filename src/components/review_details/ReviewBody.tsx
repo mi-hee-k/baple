@@ -1,34 +1,89 @@
-import { getReviewById } from '@/apis/reviews';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Spacer } from '@nextui-org/react';
+import dynamic from 'next/dynamic';
+import { updateReviewContent } from '@/apis/reviews';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import type { Tables } from '@/types/supabase';
 
 interface Props {
-  reviewId: string;
+  review: Tables<'reviews'>;
 }
 
-const ReviewBody = ({ reviewId }: Props) => {
-  const { data: review, isLoading } = useQuery({
-    queryKey: ['review'],
-    queryFn: () => getReviewById(reviewId),
+const NoSsrEditor = dynamic(() => import('../common/TuiEditor'), {
+  ssr: false,
+});
+const NoSsrViewer = dynamic(() => import('../common/TuiViewer'), {
+  ssr: false,
+});
+
+const ReviewBody = ({ review }: Props) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const { id, created_at, content, user_id, place_id } = review;
+
+  const queryClient = useQueryClient();
+  const updateReviewMutate = useMutation({
+    mutationFn: updateReviewContent,
+    onMutate: async (updateReviewParams) => {
+      await queryClient.cancelQueries({ queryKey: ['review', id] });
+      const prevReview: object | undefined = queryClient.getQueryData([
+        'review',
+        id,
+      ]);
+      const updatedReview = {
+        ...prevReview,
+        content: updateReviewParams.editValue,
+      };
+      queryClient.setQueryData(['review', id], updatedReview);
+
+      return { prevReview };
+    },
+    onError: (error, updateReviewParams, context) => {
+      // Rollback to the previous review data in case of an error
+      if (context?.prevReview) {
+        queryClient.setQueryData(['review', id], context.prevReview);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['review', id] });
+      setIsEditing(false);
+    },
   });
 
-  console.log('쿼리에서 읽어온 부분', review);
-  if (isLoading) {
-    return <p>로딩중...</p>;
-  }
+  const ref = useRef<any>(null);
 
-  if (review) {
-    const imgUrl = review[0].images_url[0];
-    console.log(imgUrl);
-    return (
-      <>
-        <p>{review[0].content}</p>
-        {/* <img src={imgUrl} alt='리뷰어가 올린 사진' className='w-[50%]' /> */}
-        <p>placeid:{review[0].place_id}</p>
-        <p>userid:{review[0].user_id}</p>
-      </>
-    );
-  }
+  const editDoneButtonHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const editorIns = ref?.current?.getInstance();
+      const editValue = editorIns.getMarkdown();
+      updateReviewMutate.mutate({ id, editValue });
+    } catch {
+      console.error('알수 없는 오류 발생');
+    }
+  };
+
+  return (
+    <>
+      {!isEditing && <NoSsrViewer content={content} />}
+      {isEditing && (
+        <form onSubmit={editDoneButtonHandler}>
+          <NoSsrEditor content={content} editorRef={ref} />
+          <Button type='submit'>수정완료</Button>
+        </form>
+      )}
+      <Button
+        onClick={() => {
+          setIsEditing((prev) => !prev);
+        }}
+      >
+        수정state토글
+      </Button>
+      <Spacer y={10} />
+      <p>placeid:{place_id}</p>
+      <p>userid:{user_id}</p>
+    </>
+  );
 };
 
 export default ReviewBody;
