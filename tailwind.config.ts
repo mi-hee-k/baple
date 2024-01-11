@@ -18,6 +18,6 @@ const config: Config = {
     },
   },
   plugins: [nextui()],
-  safelist: ['h-[200px]'],
+  safelist: ['h-[200px]', 'h-[300px]'],
 };
 export default config;
