@@ -30,8 +30,6 @@ export const insertNewComment = async (comment: newComment) => {
     .from('comments')
     .insert([comment])
     .select();
-
-  console.log('insert data>>', data, 'insert error>>', error);
 };
 
 export const deleteComment = async (commentId: string) => {
@@ -39,6 +37,4 @@ export const deleteComment = async (commentId: string) => {
     .from('comments')
     .delete()
     .eq('id', commentId);
-
-  console.log('delete error>>', error);
 };

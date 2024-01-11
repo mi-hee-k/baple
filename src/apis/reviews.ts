@@ -1,7 +1,7 @@
 import { supabase } from '@/libs/supabase';
 
 import type { Tables } from '@/types/supabase';
-import { ReviewUpdateParams } from '@/types/types';
+import type { ReviewUpdateParams } from '@/types/types';
 // 리뷰 아이디 가져오기
 export const getReviewById = async (id: string) => {
   const { data: review, error } = await supabase
@@ -9,7 +9,6 @@ export const getReviewById = async (id: string) => {
     .select('*')
     .eq('id', id)
     .single();
-  // console.log('reviews.ts 에서 읽은 부분>>', review, '에러>>', error);
   if (error) {
     throw error;
   }
@@ -38,6 +37,4 @@ export const updateReviewContent = async ({
     .update({ content: editValue })
     .eq('id', id)
     .select();
-
-  console.log('수정 data>>', data, '수정 error>>', error);
 };

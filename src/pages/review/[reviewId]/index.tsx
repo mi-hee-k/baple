@@ -19,8 +19,6 @@ const ReviewPage = () => {
     queryFn: () => getReviewById(REVIEW_ID),
   });
 
-  console.log('에헤에', review);
-
   if (isLoading) {
     return <p>리뷰 데이터 로딩중...</p>;
   }
