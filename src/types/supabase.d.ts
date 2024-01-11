@@ -188,7 +188,7 @@ export interface Database {
       };
       reviews: {
         Row: {
-          content: string | null;
+          content: string;
           created_at: string;
           id: string;
           images_url: Json | null;

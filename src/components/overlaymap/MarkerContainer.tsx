@@ -30,20 +30,20 @@ const EventMarkerContainer = ({ item }: { item: Tables<'places'> }) => {
         }}
       />
       {isVisible && (
-        <Link href={`/place/${item.id}`}>
-          <CustomOverlayMap
-            position={{ lat: item.lat, lng: item.lng }}
-            key={item.id}
-            yAnchor={2}
-          >
-            <div className='bg-white' ref={overlayRef}>
-              <div
-                className='close w-4 h-4 bg-black text-white text-xs flex items-center justify-center'
-                onClick={() => setIsVisible(false)}
-                title='닫기'
-              >
-                X
-              </div>
+        <CustomOverlayMap
+          position={{ lat: item.lat, lng: item.lng }}
+          key={item.id}
+          yAnchor={2}
+        >
+          <div className='bg-white' ref={overlayRef}>
+            <div
+              className='close w-4 h-4 bg-black text-white text-xs flex items-center justify-center'
+              onClick={() => setIsVisible(false)}
+              title='닫기'
+            >
+              X
+            </div>
+            <Link href={`/place/${item.id}`}>
               <div className='info'>
                 <div className='title'>{item.place_name}</div>
                 <div className='body'>
@@ -52,9 +52,9 @@ const EventMarkerContainer = ({ item }: { item: Tables<'places'> }) => {
                   </div>
                 </div>
               </div>
-            </div>
-          </CustomOverlayMap>
-        </Link>
+            </Link>
+          </div>
+        </CustomOverlayMap>
       )}
     </>
   );
