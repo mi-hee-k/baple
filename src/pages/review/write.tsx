@@ -15,7 +15,7 @@ const ReviewWrite = () => {
   };
   console.log(reviewText);
   return (
-    <div className='p-6 max-w-screen-md mx-auto'>
+    <div className='p-10 max-w-screen-md mx-auto'>
       <h1 className='text-2xl font-bold mb-4'>
         사진 올리기(최대 5장까지 가능합니다)
       </h1>
@@ -29,15 +29,15 @@ const ReviewWrite = () => {
             onChange={handleImageChange}
             className='hidden'
           />
-          <div className='w-20 h-20 bg-gray-200 flex items-center justify-center rounded'>
-            <span className='text-3xl'>+</span>
+          <div className='w-24 h-24 bg-gray-200 flex items-center justify-center rounded'>
+            <span className='text-3x1'>+</span>
           </div>
         </label>
       </div>
       <div>
-        <h2 className='font-bold mb-6'>후기</h2>
+        <h2 className='text-xl font-bold mb-6'>후기</h2>
       </div>
-      <div className='mb-10'>
+      <div className='mb-7'>
         <Textarea
           value={reviewText}
           onChange={(event) => setReviewText(event.target.value)}
@@ -45,9 +45,9 @@ const ReviewWrite = () => {
           className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
         />
       </div>
-      <div>
-        <Spacer y={2} />
-        <Button color='primary' variant='solid'>
+      <div className='flex itmes-center justify-center'>
+        <Spacer x={2} />
+        <Button color='primary' variant='solid' className='px-8'>
           등록하기
         </Button>
       </div>
