@@ -1,32 +1,18 @@
+import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmark';
 import { RootState } from '@/redux/config/configStore';
-import { Bookmark } from 'iconoir-react';
+import { Tables } from '@/types/supabase';
+import { Bookmark, BookmarkSolid } from 'iconoir-react';
 import { useSelector } from 'react-redux';
 
-interface PlaceInfoData {
-  place_name: string;
-  tel: string;
-  address: string;
-  working_hours: string;
-  holidays: string;
-  is_audio_guide: boolean;
-  is_braille_guide: boolean;
-  is_disabled_parking: boolean;
-  is_disabled_toilet: boolean;
-  is_easy_door: boolean;
-  is_guide_dog: boolean;
-  is_paid: boolean;
-  is_wheelchair_rental: boolean;
+interface PlaceInfoAllData {
+  placeId: string;
+  placeInfo: Tables<'places'>;
 }
 
-interface PlaceDetailProps {
-  placeInfo: PlaceInfoData;
-}
-
-const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
+const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   const userInfo = useSelector((state: RootState) => state.auth);
   console.log(userInfo);
-  const { place_name, tel, address, working_hours, holidays } =
-    placeInfo as PlaceInfoData;
+  const { place_name, tel, address, working_hours, holidays } = placeInfo;
 
   const isInfoArray = [
     placeInfo.is_audio_guide,
@@ -50,6 +36,17 @@ const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
     '휠체어 대여',
   ];
 
+  const findBookmark = async () => {
+    const res = await getBookmark(userInfo.userId);
+    res.filter((item) => {
+      if (item.place_id === placeId) {
+        console.log(item.place_id, '이미 북마크');
+      } else {
+        return item;
+      }
+    });
+  };
+
   return (
     <section>
       <div className=' flex justify-between'>
@@ -57,9 +54,17 @@ const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
           <h1 className='text-2xl text-bold mb-[10px] mr-[4px]'>
             {place_name}
           </h1>
+
           <Bookmark
             className='cursor-pointer'
-            onClick={() => console.log('gg')}
+            onClick={() => insertBookmark(userInfo.userId, placeId)}
+          />
+
+          <Bookmark className='cursor-pointer' onClick={findBookmark} />
+
+          <BookmarkSolid
+            className='cursor-pointer'
+            onClick={() => deleteBookmark(placeId)}
           />
         </div>
         <div>icons</div>

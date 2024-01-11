@@ -41,7 +41,7 @@ const PlacePage = () => {
       )}
 
       {/* 장소 상세정보 */}
-      <PlaceDetail placeInfo={placeInfo} />
+      <PlaceDetail placeInfo={placeInfo} placeId={placeId} />
 
       {/* 지도 */}
       <section className='mb-[30px]'>
