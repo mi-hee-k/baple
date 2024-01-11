@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { Tables } from '@/types/supabase';
 import { Button, Spacer } from '@nextui-org/react';
 import dynamic from 'next/dynamic';
 import { updateReviewContent } from '@/apis/reviews';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import TuiViewer from '../common/TuiViewer';
 
 interface Props {
   review: Tables<'reviews'>;
@@ -12,23 +13,29 @@ interface Props {
 const NoSsrEditor = dynamic(() => import('../common/TuiEditor'), {
   ssr: false,
 });
+const NoSsrViewer = dynamic(() => import('../common/TuiViewer'), {
+  ssr: false,
+});
 
 const ReviewBody = ({ review }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isRender, setIsRender] = useState(false);
   // const [editValue, setEditValue] = useState('');
   const { id, created_at, content, user_id, place_id } = review;
+
+  console.log('content >>', content, 'id>>', id);
 
   const queryClient = useQueryClient();
   const updateReviewMutate = useMutation({
     mutationFn: updateReviewContent,
     onSuccess: () => {
-      // toast.success('삭제 완료', {
+      // toast.success('수정 완료', {
       //   position: 'top-right',
       //   autoClose: 2000,
       //   progress: undefined,
       //   theme: 'light',
       // });
-      queryClient.invalidateQueries({ queryKey: ['review'] });
+      queryClient.invalidateQueries({ queryKey: ['review', id] });
       setIsEditing(false);
     },
   });
@@ -38,7 +45,6 @@ const ReviewBody = ({ review }: Props) => {
 
   const editDoneButtonHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('수정완료버튼 연결');
     try {
       const editorIns = ref?.current?.getInstance();
       const editContentHTML = editorIns.getHTML();
@@ -50,12 +56,20 @@ const ReviewBody = ({ review }: Props) => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsRender((prev) => !prev);
+    }, 1000);
+  }, []);
+
   return (
     <>
       {!isEditing && (
-        <textarea className='w-[100%] h-[300px] resize-none'>
-          {content}
-        </textarea>
+        // <textarea className='w-[100%] h-[300px] resize-none'>
+        //   {content}
+        // </textarea>
+        <NoSsrViewer content={content} />
+        // <TuiViewer content={content} />
       )}
       {isEditing && (
         <form onSubmit={editDoneButtonHandler}>

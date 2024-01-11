@@ -15,7 +15,7 @@ const ReviewPage = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['review'],
+    queryKey: ['review', REVIEW_ID],
     queryFn: () => getReviewById(REVIEW_ID),
   });
 

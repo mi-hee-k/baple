@@ -10,11 +10,7 @@ const TuiEditor = ({ content = '', editorRef }: Props) => {
   const toolbarItems = [
     ['heading', 'bold', 'italic', 'strike'],
     ['hr'],
-    ['ul', 'ol', 'task'],
-    ['table', 'link'],
-
-    ['code'],
-    ['scrollSync'],
+    ['ul', 'ol'],
   ];
 
   return (

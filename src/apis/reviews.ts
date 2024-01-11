@@ -33,13 +33,11 @@ export const updateReviewContent = async ({
   id,
   editValue,
 }: ReviewUpdateParams) => {
-  console.log('editvalue >> ', editValue);
   const { data, error } = await supabase
     .from('reviews')
     .update({ content: editValue })
     .eq('id', id)
     .select();
 
-  console.log('수정시도됨');
   console.log('수정 data>>', data, '수정 error>>', error);
 };

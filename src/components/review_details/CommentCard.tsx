@@ -1,5 +1,12 @@
 import React from 'react';
-import { Button, Card, CardBody, Divider } from '@nextui-org/react';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  Divider,
+  avatar,
+} from '@nextui-org/react';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -27,6 +34,8 @@ const CommentCard = ({ comment }: Props) => {
     },
   });
 
+  // const avatarUrl=comment.users.nickname |
+
   const deleteBtnHandler = (commentId: string) => {
     deleteMutate.mutate(commentId);
   };
@@ -36,13 +45,7 @@ const CommentCard = ({ comment }: Props) => {
       <CardBody>
         <div className='flex gap-4'>
           <div className='flex flex-col'>
-            <Image
-              src={comment.users.avatar_url}
-              alt='유저 프사'
-              className='h-11 w-11'
-              width={50}
-              height={50}
-            />
+            <Avatar src='comment.users.avatar_url' showFallback />
             <p className='text-md'>{comment.users.nickname}</p>
           </div>
           <Divider orientation='vertical' className='border-gray-800' />
