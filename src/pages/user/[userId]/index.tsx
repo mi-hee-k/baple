@@ -75,15 +75,7 @@ const UserPage = () => {
       <div className='flex justify-center'>
         <Card className='w-[400px]'>
           <CardBody className='flex gap-3 items-center'>
-            {user?.avatar_url === null ? (
-              <Avatar
-                showFallback
-                src='https://images.unsplash.com/broken'
-                className='w-24 h-24'
-              />
-            ) : (
-              <Avatar src={user?.avatar_url} className='w-24 h-24' />
-            )}
+            <Avatar showFallback src={user?.avatar_url} className='w-24 h-24' />
             <div className='flex flex-col'>
               <div className='flex gap-3'>
                 <label>닉네임</label>

@@ -22,8 +22,4 @@ export const updateUser = async (userId: string, newNickname: string) => {
     .from('users')
     .update({ nickname: newNickname })
     .eq('id', userId);
-
-  console.log('메타데이터 업뎃데이터', data);
-  console.log('메타데이터 업뎃에러', error);
-  console.log('users 테이블 업뎃에러', usersError);
 };
