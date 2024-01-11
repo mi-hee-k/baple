@@ -6,7 +6,7 @@ export const getReviewById = async (id: string) => {
     .from('reviews')
     .select('*')
     .eq('id', id);
-  console.log('id', review);
+  // console.log('id', review);
   // console.log('reviews.ts 에서 읽은 부분>>', reviewId, '에러>>', error);
   if (error) {
     throw error;
@@ -20,7 +20,7 @@ export const getReviewByPlaceId = async (placeId: string) => {
     .from('reviews')
     .select('*')
     .eq('place_id', placeId);
-  console.log('review', review);
+  // console.log('review', review);
   if (error) {
     throw error;
   }
