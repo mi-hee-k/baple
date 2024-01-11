@@ -138,7 +138,7 @@ const SignupPage = () => {
           )}
           {errors.confirmPassword &&
             errors.confirmPassword.type === 'validate' && (
-              <p className='text-red-500 text-xs'>
+              <p className='text-red-500 text-xs text-center'>
                 비밀번호가 일치하지 않습니다
               </p>
             )}
