@@ -13,7 +13,6 @@ const ReviewWrite = () => {
       setImages(imagesArray);
     }
   };
-  console.log(images);
 
   return (
     <div className='p-10 max-w-screen-md mx-auto'>
