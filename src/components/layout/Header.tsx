@@ -1,5 +1,5 @@
 import { supabase } from '@/libs/supabase';
-import { loginUser } from '@/redux/modules/authSlice';
+import { logInUser, logOutUser, updateUser } from '@/redux/modules/authSlice';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,13 +29,13 @@ const Header = () => {
 
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
-        dispatch(loginUser({ userId, email, avatarUrl, nickname }));
+        dispatch(logInUser({ userId, email, avatarUrl, nickname }));
       } else if (event === 'SIGNED_IN') {
         // handle sign in event
         setCurrentUser(session?.user);
-        dispatch(loginUser({ userId, email, avatarUrl, nickname }));
+        dispatch(logInUser({ userId, email, avatarUrl, nickname }));
       } else if (event === 'SIGNED_OUT') {
-        // handle sign out event
+        dispatch(logOutUser());
         setCurrentUser(null);
       } else if (event === 'PASSWORD_RECOVERY') {
         // handle password recovery event
@@ -43,12 +43,14 @@ const Header = () => {
         // handle token refreshed event
       } else if (event === 'USER_UPDATED') {
         // handle user updated event
+        dispatch(updateUser({ avatarUrl, nickname }));
       }
     });
   }, [dispatch]);
 
   const logOutHandler = async () => {
     const { error } = await supabase.auth.signOut();
+    if (error) throw error;
   };
 
   return (
