@@ -15,7 +15,6 @@ const Carousel = ({
   slideHeight: string;
   slideData: string[];
 }) => {
-  console.log({ slideHeight });
   SwiperCore.use([Navigation, Scrollbar, Autoplay]);
 
   return (

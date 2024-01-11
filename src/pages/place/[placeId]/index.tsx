@@ -3,20 +3,13 @@ import { getReviewByPlaceId } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/common/Carousel';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import { useRouter } from 'next/router';
 
 const PlacePage = () => {
-  // const {place} = useParams<{ placeId: string }>();
-  // console.log(params);
-
-  // const placeId = params.placeId;
   const router = useRouter();
-  console.log('router', router);
-
   const placeId: string = router.query.placeId as string;
 
   const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
@@ -35,7 +28,7 @@ const PlacePage = () => {
     return <div>Loading...</div>;
   }
 
-  console.log('reviews', reviews);
+  // console.log('reviews', reviews);
 
   return (
     <MainWrapper>

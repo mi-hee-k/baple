@@ -1,4 +1,4 @@
-import React from 'react';
+import { Bookmark } from 'iconoir-react';
 
 interface PlaceInfoData {
   place_name: string;
@@ -49,7 +49,12 @@ const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
   return (
     <section>
       <div className=' flex justify-between'>
-        <h1 className='text-2xl text-bold mb-[10px] '>{place_name} 🏷</h1>
+        <div className='flex'>
+          <h1 className='text-2xl text-bold mb-[10px] mr-[4px]'>
+            {place_name}
+          </h1>
+          <Bookmark className='cursor-pointer' />
+        </div>
         <div>icons</div>
       </div>
       <div className='mb-[10px]'>
