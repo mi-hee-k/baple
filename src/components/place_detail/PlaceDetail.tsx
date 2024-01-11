@@ -1,4 +1,6 @@
+import { RootState } from '@/redux/config/configStore';
 import { Bookmark } from 'iconoir-react';
+import { useSelector } from 'react-redux';
 
 interface PlaceInfoData {
   place_name: string;
@@ -21,6 +23,8 @@ interface PlaceDetailProps {
 }
 
 const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
+  const userInfo = useSelector((state: RootState) => state.auth);
+  console.log(userInfo);
   const { place_name, tel, address, working_hours, holidays } =
     placeInfo as PlaceInfoData;
 
@@ -53,7 +57,10 @@ const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
           <h1 className='text-2xl text-bold mb-[10px] mr-[4px]'>
             {place_name}
           </h1>
-          <Bookmark className='cursor-pointer' />
+          <Bookmark
+            className='cursor-pointer'
+            onClick={() => console.log('gg')}
+          />
         </div>
         <div>icons</div>
       </div>
