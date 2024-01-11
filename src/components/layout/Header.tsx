@@ -18,21 +18,6 @@ const Header = () => {
     (state: RootState) => state.auth,
   );
   const [currentUser, setCurrentUser] = useState<any>(null);
-  // const [nickname, setNickname] = useState('');
-  // const [avatarUrl, setAvatarUrl] = useState('');
-  // const [userId, setUserId] = useState('');
-
-  // useEffect(() => {
-  //   // 브라우저 환경에서만 localStorage 사용
-  //   if (typeof window !== 'undefined') {
-  //     const session = JSON.parse(
-  //       localStorage.getItem('sb-viqpcjrcqjtetxqetmpo-auth-token') as string,
-  //     );
-  //     console.log('localStorage', session as string);
-  //     if (session) {
-  //     }
-  //   }
-  // }, []);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -41,17 +26,14 @@ const Header = () => {
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const nickname = session?.user.user_metadata.nickname;
-      // setNickname(nickname);
-      // setUserId(userId);
 
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
-        // dispatch(loginUser({ userId, email, avatarUrl, nickname }));
+        dispatch(loginUser({ userId, email, avatarUrl, nickname }));
       } else if (event === 'SIGNED_IN') {
         // handle sign in event
         setCurrentUser(session?.user);
         dispatch(loginUser({ userId, email, avatarUrl, nickname }));
-        // dispatch(loginUser({ userInfo: session?.user }));
       } else if (event === 'SIGNED_OUT') {
         // handle sign out event
         setCurrentUser(null);
@@ -88,10 +70,18 @@ const Header = () => {
               <span>반가워요 {nickname}님!</span>
               <Dropdown>
                 <DropdownTrigger>
-                  <Avatar
-                    src='/images/avatar_default.jpg'
-                    className='hover:brightness-50 transition'
-                  />
+                  {avatarUrl === null ? (
+                    <Avatar
+                      showFallback
+                      src='https://images.unsplash.com/broken'
+                      className='hover:brightness-50 transition cursor-pointer'
+                    />
+                  ) : (
+                    <Avatar
+                      src={avatarUrl}
+                      className='hover:brightness-50 transition cursor-pointer'
+                    />
+                  )}
                 </DropdownTrigger>
                 <DropdownMenu aria-label='Static Actions'>
                   <DropdownItem key='mypage' href={`/user/${userId}`}>

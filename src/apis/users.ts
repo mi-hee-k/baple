@@ -6,7 +6,6 @@ export const getUserDataById = async (id: string) => {
     .select('*')
     .eq('id', id)
     .single();
-  console.log('users.ts 에서 읽은 부분>>', user);
   if (error) {
     throw error;
   }

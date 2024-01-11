@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div className='container'>
       <Seo title='Home' />
-      {/* <span>{nickname}</span> */}
+      <span>{nickname}</span>
     </div>
   );
 };

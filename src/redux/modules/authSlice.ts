@@ -14,7 +14,6 @@ const isLocalStorage =
 
 const initialState = {
   isLoggedIn: isLocalStorage ? true : false,
-  // userInfo: isLocalStorage ? session.user : null,
   userId: isLocalStorage ? session.user.id : null,
   email: isLocalStorage ? session.user.email : null,
   avatarUrl: isLocalStorage ? session.user.user_metadata.avatar_url : null,
@@ -29,7 +28,6 @@ const authSlice = createSlice({
       console.log('리덕스페이로드', action.payload);
       const { userId, email, avatarUrl, nickname } = action.payload;
       state.isLoggedIn = true;
-      // state.userInfo = userInfo;
       state.userId = userId;
       state.email = email;
       state.avatarUrl = avatarUrl;
