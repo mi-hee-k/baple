@@ -10,13 +10,17 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@nextui-org/react';
+import { RootState } from '@/redux/config/configStore';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { nickname, userId, avatarUrl } = useSelector(
+    (state: RootState) => state.auth,
+  );
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [nickname, setNickname] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [userId, setUserId] = useState('');
+  // const [nickname, setNickname] = useState('');
+  // const [avatarUrl, setAvatarUrl] = useState('');
+  // const [userId, setUserId] = useState('');
 
   // useEffect(() => {
   //   // 브라우저 환경에서만 localStorage 사용
@@ -37,8 +41,8 @@ const Header = () => {
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const nickname = session?.user.user_metadata.nickname;
-      setNickname(nickname);
-      setUserId(userId);
+      // setNickname(nickname);
+      // setUserId(userId);
 
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
@@ -67,9 +71,10 @@ const Header = () => {
 
   return (
     <header className='bg-yellow-300 py-2 font-bold mb-8 sticky top-0 z-20 shadow-md'>
-      <div className='container m-auto flex flex-row items-center max-w-[1200px] min-h-[48px] w-[90%]'>
-        <nav className='flex flex-row gap-6'>
+      <div className='container m-auto flex items-center max-w-[1200px] min-h-[48px] w-[90%]'>
+        <nav className='flex gap-6 w-full justify-between'>
           <Link href='/'>BAPLE</Link>
+
           <Link href='/nearby'>주변 장소</Link>
           <Link href='/places'>장소 목록</Link>
           <Link href='/place/bf2dafff-f2a1-41ff-942f-056a242e53f1'>
@@ -77,6 +82,7 @@ const Header = () => {
           </Link>
           <Link href='/review/1234'>리뷰 상세</Link>
           <Link href='/review/write'>리뷰 작성</Link>
+
           {currentUser ? (
             <>
               <span>반가워요 {nickname}님!</span>

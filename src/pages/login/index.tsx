@@ -3,7 +3,7 @@ import { EyeFilledIcon } from '@/components/login/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '@/components/login/EyeSlashFilledIcon';
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import Seo from '@/components/Seo';
+import Seo from '@/components/layout/Seo';
 import { supabase } from '@/libs/supabase';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';

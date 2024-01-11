@@ -3,12 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 const session =
   typeof window !== 'undefined' &&
   JSON.parse(
-    localStorage.getItem('sb-viqpcjrcqjtetxqetmpo-auth-token') as string,
+    localStorage.getItem(
+      process.env.NEXT_PUBLIC_LOCALSTORAGE_KEY as string,
+    ) as string,
   );
 
 const isLocalStorage =
   typeof window !== 'undefined' &&
-  !!localStorage.getItem('sb-viqpcjrcqjtetxqetmpo-auth-token');
+  !!localStorage.getItem(process.env.NEXT_PUBLIC_LOCALSTORAGE_KEY as string);
 
 const initialState = {
   isLoggedIn: isLocalStorage ? true : false,

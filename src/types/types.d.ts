@@ -18,3 +18,10 @@ export type Database = MergeDeep<
     };
   }
 >;
+
+export interface User {
+  userId: string;
+  email: string;
+  avatarUrl: string;
+  nickname: string;
+}

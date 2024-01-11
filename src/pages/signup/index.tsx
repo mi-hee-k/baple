@@ -1,4 +1,4 @@
-import Seo from '@/components/Seo';
+import Seo from '@/components/layout/Seo';
 import { Button, Input } from '@nextui-org/react';
 import { EyeFilledIcon } from '@/components/login/EyeFilledIcon';
 import { EyeSlashFilledIcon } from '@/components/login/EyeSlashFilledIcon';
