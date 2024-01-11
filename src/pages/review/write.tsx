@@ -13,7 +13,8 @@ const ReviewWrite = () => {
       setImages(imagesArray);
     }
   };
-  console.log(reviewText);
+  console.log(images);
+
   return (
     <div className='p-10 max-w-screen-md mx-auto'>
       <h1 className='text-2xl font-bold mb-4'>
@@ -30,7 +31,7 @@ const ReviewWrite = () => {
             className='hidden'
           />
           <div className='w-24 h-24 bg-gray-200 flex items-center justify-center rounded'>
-            <span className='text-3x1'>+</span>
+            <span className='text-3xl'>+</span>
           </div>
         </label>
       </div>
