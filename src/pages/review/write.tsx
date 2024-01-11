@@ -13,7 +13,7 @@ const ReviewWrite = () => {
       setImages(imagesArray);
     }
   };
-
+  console.log(reviewText);
   return (
     <div className='p-6 max-w-screen-md mx-auto'>
       <h1 className='text-2xl font-bold mb-4'>
