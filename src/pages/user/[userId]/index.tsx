@@ -27,6 +27,8 @@ const UserPage = () => {
   // const [userId, setUserId] = useState<string>('');
   const [isEditing, setIsEditing] = useState(false);
   const [newNickname, setNewNickname] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
+  const [newAvatar, setNewAvatar] = useState<File | null>(null);
 
   const { userId } = router.query as { userId: string };
 
@@ -67,6 +69,15 @@ const UserPage = () => {
     // refetch();
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const selectedFile = e.target.files[0];
+      const imgUrl = URL.createObjectURL(selectedFile);
+      setImagePreview(imgUrl);
+      setNewAvatar(selectedFile);
+    }
+  };
+
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>에러 발생!</div>;
   return (
@@ -76,6 +87,13 @@ const UserPage = () => {
         <Card className='w-[400px]'>
           <CardBody className='flex gap-3 items-center'>
             <Avatar showFallback src={user?.avatar_url} className='w-24 h-24' />
+            <input
+              type='file'
+              id='fileInput'
+              accept='image/*'
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
             <div className='flex flex-col'>
               <div className='flex gap-3'>
                 <label>닉네임</label>
