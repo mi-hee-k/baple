@@ -8,6 +8,7 @@ import { supabase } from '@/libs/supabase';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface FormValues {
   email: string;
@@ -112,6 +113,14 @@ const LogInPage = () => {
           >
             Login
           </Button>
+          <button>
+            <Image
+              src='/images/kakao_login.png'
+              alt='kakao login'
+              width={300}
+              height={300}
+            />
+          </button>
         </form>
       </div>
     </>
