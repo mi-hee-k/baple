@@ -29,7 +29,6 @@ export const getBookmark = async (userId: string, placeId: string) => {
   if (error) {
     throw error;
   }
-  console.log('북마크상태', data);
   return data;
 };
 
