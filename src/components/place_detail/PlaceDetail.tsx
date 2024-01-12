@@ -21,7 +21,9 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const userInfo = useSelector((state: RootState) => state.auth);
   console.log(userInfo);
-  const { place_name, tel, address, working_hours, holidays } = placeInfo;
+  const { place_name, tel, address, working_hours, holidays, lat, lng } =
+    placeInfo;
+  console.log(lat, lng);
 
   const isInfoArray = [
     placeInfo.is_audio_guide,

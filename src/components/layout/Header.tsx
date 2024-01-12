@@ -61,7 +61,7 @@ const Header = () => {
   };
   console.log('currentUser', currentUser);
   return (
-    <header className='bg-yellow-300 py-2 font-bold mb-8 sticky top-0 z-20 shadow-md'>
+    <header className='bg-yellow-300 py-2 font-bold sticky top-0 z-20 shadow-md'>
       <div className='container m-auto flex items-center max-w-[1200px] min-h-[48px] w-[90%]'>
         <nav className='flex gap-6 w-full justify-between'>
           <Link href='/'>BAPLE</Link>
