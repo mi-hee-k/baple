@@ -38,3 +38,20 @@ export const updateReviewContent = async ({
     .eq('id', id)
     .select();
 };
+
+interface InsertReviewParams {
+  content: string;
+  placeID: string;
+  userID: string;
+}
+
+export const insertNewReview = async ({
+  content,
+  placeID,
+  userID,
+}: InsertReviewParams) => {
+  const { data, error } = await supabase
+    .from('reviews')
+    .insert([{ content: content, place_id: placeID, user_id: userID }])
+    .select();
+};

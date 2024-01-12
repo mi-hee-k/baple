@@ -49,7 +49,7 @@ const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
   return (
     <section>
       <div className=' flex justify-between'>
-        <h1 className='text-2xl text-bold mb-[10px] '>{place_name} 🏷</h1>
+        <h1 className='text-2xl text-bold mb-[10px] '>{place_name} </h1>
         <div>icons</div>
       </div>
       <div className='mb-[10px]'>

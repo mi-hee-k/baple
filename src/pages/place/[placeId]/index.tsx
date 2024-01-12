@@ -6,10 +6,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const PlacePage = () => {
   const { placeId } = useParams<{ placeId: string }>();
   console.log(placeId);
+
+  const router = useRouter();
 
   const { data: imgList, isLoading } = useQuery({
     queryKey: ['imgList'],
@@ -43,7 +46,10 @@ const PlacePage = () => {
         <div className='w-[80%] h-[300px] bg-blue-400 mx-auto'>지도</div>
       </section>
       <section className='mb-[30px] text-center'>
-        <button className='bg-red-400 p-4 rounded-md text-white'>
+        <button
+          className='bg-red-400 p-4 rounded-md text-white'
+          onClick={() => router.push(`/review/write/${placeId}`)}
+        >
           리뷰 작성하기
         </button>
       </section>

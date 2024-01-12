@@ -7,12 +7,12 @@ import { RootState } from '@/redux/config/configStore';
 const inter = Inter({ subsets: ['latin'] });
 
 const Home = () => {
-  const { nickname, userId } = useSelector((state: RootState) => state.auth);
-  console.log('nickname', nickname);
+  // const { nickname, userId } = useSelector((state: RootState) => state.auth);
+  // console.log('nickname', nickname);
   return (
     <div className='container'>
       <Seo title='Home' />
-      <span>{nickname}</span>
+      {/* <span>{nickname}</span> */}
     </div>
   );
 };
