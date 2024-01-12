@@ -132,8 +132,8 @@ export interface Database {
           is_guide_dog: boolean | null;
           is_paid: boolean | null;
           is_wheelchair_rental: boolean | null;
-          lat: number | null;
-          lng: number | null;
+          lat: number;
+          lng: number;
           place_name: string | null;
           tel: string | null;
           working_hours: string | null;
@@ -155,8 +155,8 @@ export interface Database {
           is_guide_dog?: boolean | null;
           is_paid?: boolean | null;
           is_wheelchair_rental?: boolean | null;
-          lat?: number | null;
-          lng?: number | null;
+          lat?: number;
+          lng?: number;
           place_name?: string | null;
           tel?: string | null;
           working_hours?: string | null;
@@ -178,8 +178,8 @@ export interface Database {
           is_guide_dog?: boolean | null;
           is_paid?: boolean | null;
           is_wheelchair_rental?: boolean | null;
-          lat?: number | null;
-          lng?: number | null;
+          lat?: number;
+          lng?: number;
           place_name?: string | null;
           tel?: string | null;
           working_hours?: string | null;
