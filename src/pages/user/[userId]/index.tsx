@@ -34,7 +34,7 @@ const UserPage = () => {
     if (typeof userId === 'string') {
       setUserId(userId);
     }
-  }, [router.isReady]);
+  }, [router.isReady, router.query]);
 
   const {
     data: user,
