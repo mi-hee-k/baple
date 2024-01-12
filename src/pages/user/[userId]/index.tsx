@@ -12,6 +12,10 @@ import {
 import { Avatar, Button, Card, CardBody, Input } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
 import { supabase } from '@/libs/supabase';
+import { toast } from 'react-toastify';
+import { MdPhotoCameraBack } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
 
 // interface UserProfileProps {
 //   userData: User;
@@ -24,21 +28,22 @@ import { supabase } from '@/libs/supabase';
 
 const UserPage = () => {
   const router = useRouter();
-  // const [userId, setUserId] = useState<string>('');
+  const { nickname, avatarUrl } = useSelector((state: RootState) => state.auth);
+  const [userId, setUserId] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [newNickname, setNewNickname] = useState('');
-  const [imagePreview, setImagePreview] = useState('');
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
 
-  const { userId } = router.query as { userId: string };
+  // const { userId } = router.query as { userId: string };
+  const [imagePreview, setImagePreview] = useState(avatarUrl);
 
-  // useEffect(() => {
-  //   if (!router.isReady) return;
-  //   const { userId } = router.query;
-  //   if (typeof userId === 'string') {
-  //     setUserId(userId);
-  //   }
-  // }, [router.isReady]);
+  useEffect(() => {
+    if (!router.isReady) return;
+    const { userId } = router.query;
+    if (typeof userId === 'string') {
+      setUserId(userId);
+    }
+  }, [router.isReady]);
 
   const {
     data: user,
@@ -53,31 +58,51 @@ const UserPage = () => {
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: () => updateUser(userId, newNickname),
+    mutationFn: updateUser,
     onSuccess: async () => {
       await queryClient.invalidateQueries([
         'user',
         userId,
       ] as InvalidateQueryFilters);
-      await refetch();
-      setIsEditing(false);
+      // await refetch();
     },
   });
 
-  const onEditDone = () => {
-    mutate();
-    // refetch();
-  };
+  const onEditDone = async () => {
+    // storage 업로드
+    if (newAvatar) {
+      const { data: fileData, error: fileError } = await supabase.storage
+        .from('avatars')
+        .upload(`${Date.now()}`, newAvatar);
+      if (fileError) {
+        console.error('이미지 업로드 에러', fileError.message);
+        return;
+      }
+      const { data: imageData } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(fileData.path);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selectedFile = e.target.files[0];
-      const imgUrl = URL.createObjectURL(selectedFile);
-      setImagePreview(imgUrl);
-      setNewAvatar(selectedFile);
+      const newAvatarUrl = imageData.publicUrl;
+      console.log('newAvatarUrl', newAvatarUrl);
+      mutate({ userId, newNickname, newAvatarUrl });
+      setIsEditing(false);
     }
   };
 
+  const previewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const selectedFile = e.target.files[0];
+      if (selectedFile.size > 1024 * 1024) {
+        return toast.warn('최대 1MB까지 업로드 가능합니다.');
+      }
+      const imgUrl = URL.createObjectURL(selectedFile);
+      setNewAvatar(selectedFile);
+      setImagePreview(imgUrl);
+    }
+  };
+
+  console.log('imagePreview', imagePreview);
+  console.log('newAvatar', newAvatar);
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>에러 발생!</div>;
   return (
@@ -85,18 +110,35 @@ const UserPage = () => {
       <Seo title={`${user?.nickname}님의 페이지`} />
       <div className='flex justify-center'>
         <Card className='w-[400px]'>
-          <CardBody className='flex gap-3 items-center'>
-            <Avatar showFallback src={user?.avatar_url} className='w-24 h-24' />
-            <input
-              type='file'
-              id='fileInput'
-              accept='image/*'
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
-            />
-            <div className='flex flex-col'>
+          <CardBody className='flex gap-6 items-center'>
+            {isEditing ? (
+              <label className='relative'>
+                <Avatar
+                  showFallback
+                  src={imagePreview}
+                  className='w-36 h-36 '
+                />
+                <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center text-white transition-opacity cursor-pointer  rounded-full backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100'>
+                  <MdPhotoCameraBack className='text-[4rem] mx-auto ' />
+                  <p className='font-bold'>이미지 변경</p>
+                </div>
+                <input
+                  type='file'
+                  accept='image/*'
+                  style={{ display: 'none' }}
+                  onChange={previewImg}
+                />
+              </label>
+            ) : (
+              <Avatar
+                showFallback
+                src={user?.avatar_url}
+                className='w-24 h-24'
+              />
+            )}
+            <div className='flex flex-col gap-6'>
               <div className='flex gap-3'>
-                <label>닉네임</label>
+                <label className='w-16'>닉네임</label>
                 {isEditing ? (
                   <Input
                     defaultValue={user?.nickname}
@@ -107,7 +149,7 @@ const UserPage = () => {
                 )}
               </div>
               <div className='flex gap-3'>
-                <label>이메일</label>
+                <label className='w-16'>이메일</label>
                 <span className='text-small text-default-500'>
                   {user?.email}
                 </span>
@@ -115,7 +157,14 @@ const UserPage = () => {
               {isEditing ? (
                 <div className='flex gap-4'>
                   <Button onClick={onEditDone}>수정완료</Button>
-                  <Button onClick={() => setIsEditing(false)}>취소</Button>
+                  <Button
+                    onClick={() => {
+                      setIsEditing(false);
+                      // setImagePreview('');
+                    }}
+                  >
+                    취소
+                  </Button>
                 </div>
               ) : (
                 <Button onClick={() => setIsEditing(true)}>
