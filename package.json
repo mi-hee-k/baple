@@ -17,6 +17,7 @@
     "@toast-ui/react-editor": "^3.2.3",
     "axios": "^1.6.5",
     "framer-motion": "^10.17.9",
+    "iconoir-react": "^7.3.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
