@@ -1,7 +1,12 @@
 import { supabase } from '@/libs/supabase';
 
+interface Props {
+  userId: string;
+  placeId: string;
+}
+
 // 북마크 추가
-export const insertBookmark = async (userId: string, placeId: string) => {
+export const insertBookmark = async ({ userId, placeId }: Props) => {
   const { data, error } = await supabase
     .from('bookmarks')
     .insert({ user_id: userId, place_id: placeId })
@@ -18,11 +23,12 @@ export const getBookmark = async (userId: string) => {
   const { data, error } = await supabase
     .from('bookmarks')
     .select()
-    .eq('user_id', userId);
+    .match({ user_id: userId });
 
   if (error) {
     throw error;
   }
+  // console.log(data);
   console.log(data);
   return data;
 };

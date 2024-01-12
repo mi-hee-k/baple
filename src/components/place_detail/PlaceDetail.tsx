@@ -1,8 +1,16 @@
 import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmark';
 import { RootState } from '@/redux/config/configStore';
 import { Tables } from '@/types/supabase';
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { Bookmark, BookmarkSolid } from 'iconoir-react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -10,6 +18,7 @@ interface PlaceInfoAllData {
 }
 
 const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const userInfo = useSelector((state: RootState) => state.auth);
   console.log(userInfo);
   const { place_name, tel, address, working_hours, holidays } = placeInfo;
@@ -36,16 +45,33 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     '휠체어 대여',
   ];
 
-  const findBookmark = async () => {
-    const res = await getBookmark(userInfo.userId);
-    res.filter((item) => {
-      if (item.place_id === placeId) {
-        console.log(item.place_id, '이미 북마크');
-      } else {
-        return item;
-      }
-    });
+  const queryClient = new QueryClient();
+
+  const toggleBookmark = () => {
+    if (isBookmarked) {
+      setIsBookmarked(false);
+      addBookmark({ userId: userInfo.userId, placeId });
+      console.log(isBookmarked);
+    } else {
+      setIsBookmarked(true);
+      delBookmark(placeId);
+      console.log(isBookmarked);
+    }
   };
+
+  const { mutate: addBookmark } = useMutation({
+    mutationFn: insertBookmark,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
+    },
+  });
+
+  const { mutate: delBookmark } = useMutation({
+    mutationFn: deleteBookmark,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
+    },
+  });
 
   return (
     <section>
@@ -55,17 +81,14 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
             {place_name}
           </h1>
 
-          <Bookmark
-            className='cursor-pointer'
-            onClick={() => insertBookmark(userInfo.userId, placeId)}
-          />
-
-          <Bookmark className='cursor-pointer' onClick={findBookmark} />
-
-          <BookmarkSolid
-            className='cursor-pointer'
-            onClick={() => deleteBookmark(placeId)}
-          />
+          {isBookmarked ? (
+            <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
+          ) : (
+            <BookmarkSolid
+              className='cursor-pointer'
+              onClick={toggleBookmark}
+            />
+          )}
         </div>
         <div>icons</div>
       </div>
