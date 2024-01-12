@@ -7,12 +7,15 @@ import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
+
+
 
 const PlacePage = () => {
   const { placeId } = useParams<{ placeId: string }>();
   console.log(placeId);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const { data: imgList, isLoading } = useQuery({
     queryKey: ['imgList'],
