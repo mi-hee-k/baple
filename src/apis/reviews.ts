@@ -15,17 +15,17 @@ export const getReviewById = async (id: string) => {
   return review as Tables<'reviews'>;
 };
 
-// 리뷰 이미지 가져오기
-export const getReviewImgList = async (id: string) => {
-  const { data: reviewImgList, error } = await supabase
+// 리뷰 정보 (by placeId)
+export const getReviewByPlaceId = async (placeId: string) => {
+  const { data: review, error } = await supabase
     .from('reviews')
-    .select('images_url')
-    .eq('place_id', id);
-
+    .select('*')
+    .eq('place_id', placeId);
+  // console.log('review', review);
   if (error) {
     throw error;
   }
-  return reviewImgList?.map((item) => item.images_url).flat() as string[];
+  return review;
 };
 
 export const updateReviewContent = async ({

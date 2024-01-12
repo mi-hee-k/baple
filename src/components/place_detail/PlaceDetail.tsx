@@ -1,28 +1,27 @@
-import React from 'react';
+import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmark';
+import { RootState } from '@/redux/config/configStore';
+import { Tables } from '@/types/supabase';
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { Bookmark, BookmarkSolid } from 'iconoir-react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
-interface PlaceInfoData {
-  place_name: string;
-  tel: string;
-  address: string;
-  working_hours: string;
-  holidays: string;
-  is_audio_guide: boolean;
-  is_braille_guide: boolean;
-  is_disabled_parking: boolean;
-  is_disabled_toilet: boolean;
-  is_easy_door: boolean;
-  is_guide_dog: boolean;
-  is_paid: boolean;
-  is_wheelchair_rental: boolean;
+interface PlaceInfoAllData {
+  placeId: string;
+  placeInfo: Tables<'places'>;
 }
 
-interface PlaceDetailProps {
-  placeInfo: PlaceInfoData;
-}
-
-const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
-  const { place_name, tel, address, working_hours, holidays } =
-    placeInfo as PlaceInfoData;
+const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const userInfo = useSelector((state: RootState) => state.auth);
+  console.log(userInfo);
+  const { place_name, tel, address, working_hours, holidays } = placeInfo;
 
   const isInfoArray = [
     placeInfo.is_audio_guide,
@@ -46,10 +45,51 @@ const PlaceDetail = ({ placeInfo }: PlaceDetailProps) => {
     '휠체어 대여',
   ];
 
+  const queryClient = new QueryClient();
+
+  const toggleBookmark = () => {
+    if (isBookmarked) {
+      setIsBookmarked(false);
+      addBookmark({ userId: userInfo.userId, placeId });
+      console.log(isBookmarked);
+    } else {
+      setIsBookmarked(true);
+      delBookmark(placeId);
+      console.log(isBookmarked);
+    }
+  };
+
+  const { mutate: addBookmark } = useMutation({
+    mutationFn: insertBookmark,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
+    },
+  });
+
+  const { mutate: delBookmark } = useMutation({
+    mutationFn: deleteBookmark,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
+    },
+  });
+
   return (
     <section>
       <div className=' flex justify-between'>
-        <h1 className='text-2xl text-bold mb-[10px] '>{place_name} 🏷</h1>
+        <div className='flex'>
+          <h1 className='text-2xl text-bold mb-[10px] mr-[4px]'>
+            {place_name}
+          </h1>
+
+          {isBookmarked ? (
+            <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
+          ) : (
+            <BookmarkSolid
+              className='cursor-pointer'
+              onClick={toggleBookmark}
+            />
+          )}
+        </div>
         <div>icons</div>
       </div>
       <div className='mb-[10px]'>
