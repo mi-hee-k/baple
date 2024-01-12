@@ -60,8 +60,9 @@ const UserPage = () => {
   });
 
   const onEditDone = async () => {
-    // storage 업로드
+    // avatar 수정이 있을 때
     if (newAvatar) {
+      // storage 업로드
       const { data: fileData, error: fileError } = await supabase.storage
         .from('avatars')
         .upload(`${Date.now()}`, newAvatar);
@@ -74,8 +75,11 @@ const UserPage = () => {
         .getPublicUrl(fileData.path);
 
       const newAvatarUrl = imageData.publicUrl;
-      console.log('newAvatarUrl', newAvatarUrl);
       mutate({ userId, newNickname, newAvatarUrl });
+      setIsEditing(false);
+    } else {
+      // 닉네임만 수정할 때
+      mutate({ userId, newNickname });
       setIsEditing(false);
     }
   };
@@ -104,11 +108,7 @@ const UserPage = () => {
           <CardBody className='flex gap-6 items-center'>
             {isEditing ? (
               <label className='relative'>
-                <Avatar
-                  showFallback
-                  src={imagePreview}
-                  className='w-36 h-36 '
-                />
+                <Avatar showFallback src={imagePreview} className='w-36 h-36' />
                 <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center text-white transition-opacity cursor-pointer  rounded-full backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100'>
                   <MdPhotoCameraBack className='text-[4rem] mx-auto ' />
                   <p className='font-bold'>이미지 변경</p>

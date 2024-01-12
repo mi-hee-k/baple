@@ -16,7 +16,7 @@ export const getUserDataById = async (userId: string) => {
 type Props = {
   userId: string;
   newNickname: string;
-  newAvatarUrl: string;
+  newAvatarUrl?: string;
 };
 
 // mutateFn
