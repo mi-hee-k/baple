@@ -95,7 +95,7 @@ const LogInPage = () => {
               required: '비밀번호를 입력해주세요',
               pattern: {
                 value: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
-                message: '비밀번호 조건에 맞게 입력해주세요',
+                message: '비밀번호는 영문, 숫자 포함 8자 이상 입니다.',
               },
             })}
           />
