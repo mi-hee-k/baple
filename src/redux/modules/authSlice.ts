@@ -24,7 +24,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginUser: (state, action) => {
+    logInUser: (state, action) => {
       console.log('리덕스페이로드', action.payload);
       const { userId, email, avatarUrl, nickname } = action.payload;
       state.isLoggedIn = true;
@@ -33,8 +33,20 @@ const authSlice = createSlice({
       state.avatarUrl = avatarUrl;
       state.nickname = nickname;
     },
+    logOutUser: (state) => {
+      state.isLoggedIn = false;
+      state.userId = null;
+      state.email = null;
+      state.avatarUrl = null;
+      state.nickname = null;
+    },
+    updateUser: (state, action) => {
+      const { avatarUrl, nickname } = action.payload;
+      state.avatarUrl = avatarUrl;
+      state.nickname - nickname;
+    },
   },
 });
 
-export const { loginUser } = authSlice.actions;
+export const { logInUser, logOutUser, updateUser } = authSlice.actions;
 export default authSlice.reducer;
