@@ -1,5 +1,5 @@
 import { supabase } from '@/libs/supabase';
-import { loginUser } from '@/redux/modules/authSlice';
+import { logInUser, logOutUser, updateUser } from '@/redux/modules/authSlice';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,12 +11,15 @@ import {
   DropdownItem,
 } from '@nextui-org/react';
 import { RootState } from '@/redux/config/configStore';
+import { useRouter } from 'next/router';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { nickname, userId, avatarUrl } = useSelector(
-    (state: RootState) => state.auth,
-  );
+  const router = useRouter();
+  // const { nickname, userId, avatarUrl } = useSelector(
+  //   (state: RootState) => state.auth,
+  // );
+  // const [nickname, setNickname] = useState('');
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   useEffect(() => {
@@ -29,13 +32,14 @@ const Header = () => {
 
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
-        dispatch(loginUser({ userId, email, avatarUrl, nickname }));
+        dispatch(logInUser({ userId, email, avatarUrl, nickname }));
+        // setNickname(nickname);
       } else if (event === 'SIGNED_IN') {
         // handle sign in event
         setCurrentUser(session?.user);
-        dispatch(loginUser({ userId, email, avatarUrl, nickname }));
+        dispatch(logInUser({ userId, email, avatarUrl, nickname }));
       } else if (event === 'SIGNED_OUT') {
-        // handle sign out event
+        dispatch(logOutUser());
         setCurrentUser(null);
       } else if (event === 'PASSWORD_RECOVERY') {
         // handle password recovery event
@@ -43,20 +47,24 @@ const Header = () => {
         // handle token refreshed event
       } else if (event === 'USER_UPDATED') {
         // handle user updated event
+        dispatch(updateUser({ avatarUrl, nickname }));
+        setCurrentUser(session?.user);
+        // setNickname(nickname);
       }
     });
   }, [dispatch]);
 
   const logOutHandler = async () => {
     const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    router.push('/');
   };
-
+  console.log('currentUser', currentUser);
   return (
     <header className='bg-yellow-300 py-2 font-bold mb-8 sticky top-0 z-20 shadow-md'>
       <div className='container m-auto flex items-center max-w-[1200px] min-h-[48px] w-[90%]'>
         <nav className='flex gap-6 w-full justify-between'>
           <Link href='/'>BAPLE</Link>
-
           <Link href='/nearby'>주변 장소</Link>
           <Link href='/places'>장소 목록</Link>
           <Link href='/place/bf2dafff-f2a1-41ff-942f-056a242e53f1'>
@@ -67,24 +75,17 @@ const Header = () => {
 
           {currentUser ? (
             <>
-              <span>반가워요 {nickname}님!</span>
+              <span>반가워요 {currentUser.user_metadata.nickname}님!</span>
               <Dropdown>
                 <DropdownTrigger>
-                  {avatarUrl === null ? (
-                    <Avatar
-                      showFallback
-                      src='https://images.unsplash.com/broken'
-                      className='hover:brightness-50 transition cursor-pointer'
-                    />
-                  ) : (
-                    <Avatar
-                      src={avatarUrl}
-                      className='hover:brightness-50 transition cursor-pointer'
-                    />
-                  )}
+                  <Avatar
+                    showFallback
+                    src={currentUser.user_metadata.avatar_url}
+                    className='hover:brightness-50 transition cursor-pointer'
+                  />
                 </DropdownTrigger>
                 <DropdownMenu aria-label='Static Actions'>
-                  <DropdownItem key='mypage' href={`/user/${userId}`}>
+                  <DropdownItem key='mypage' href={`/user/${currentUser.id}`}>
                     마이페이지
                   </DropdownItem>
                   <DropdownItem key='logout' onClick={logOutHandler}>

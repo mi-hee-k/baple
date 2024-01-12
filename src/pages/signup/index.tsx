@@ -6,6 +6,8 @@ import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { supabase } from '@/libs/supabase';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 interface FormValues {
   email: string;
@@ -15,6 +17,7 @@ interface FormValues {
 }
 
 const SignupPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -34,6 +37,7 @@ const SignupPage = () => {
 
   const signUpHandler: SubmitHandler<FormValues> = async (formData) => {
     const { email, password, nickname, confirmPassword } = formData;
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -45,8 +49,14 @@ const SignupPage = () => {
       },
     });
     console.log('data', data);
+
     if (error) {
-      console.error(error);
+      console.error('error.message', error.message);
+      if (error.message === 'User already registered')
+        toast.error('이미 존재하는 아이디 입니다.');
+    } else {
+      toast.success('회원 가입 성공!');
+      router.push('/');
     }
   };
 
