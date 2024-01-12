@@ -13,7 +13,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteComment } from '@/apis/comments';
 import { toast } from 'react-toastify';
 
-import type { CommentsWithUser } from '@/apis/comments';
+import type { CommentsWithUser } from '@/types/types';
 
 interface Props {
   comment: CommentsWithUser;

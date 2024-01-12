@@ -1,4 +1,5 @@
 import EventMarkerContainer from '@/components/overlaymap/MarkerContainer';
+import MylocationButton from '@/components/overlaymap/MylocationButton';
 import { supabase } from '@/libs/supabase';
 import { Tables } from '@/types/supabase';
 import axios from 'axios';
@@ -139,16 +140,18 @@ const NearByPage = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ position: 'relative', display: 'flex' }}>
       <Map // 지도를 표시할 Container
         center={location.center}
         style={{
           // 지도의 크기
           width: '100%',
-          height: '90vh',
+          height: '93vh',
+          marginBottom: 0,
         }}
         level={5} // 지도의 확대 레벨
         zoomable={false}
+        keyboardShortcuts={true}
         onDragEnd={(map) =>
           setLocation({
             center: {
@@ -172,11 +175,11 @@ const NearByPage = () => {
         {place?.map((item) => (
           <EventMarkerContainer key={item.id} item={item} />
         ))}
-
+        <MylocationButton mylocation={mylocation} />
         <MapTypeControl position={'TOPRIGHT'} />
         <ZoomControl position={'RIGHT'} />
       </Map>
-    </>
+    </div>
   );
 };
 
