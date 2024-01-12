@@ -17,15 +17,6 @@ import { MdPhotoCameraBack } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 
-// interface UserProfileProps {
-//   userData: User;
-// }
-
-// type Props = {
-//   userId: string;
-//   userData: string[];
-// };
-
 const UserPage = () => {
   const router = useRouter();
   const { nickname, avatarUrl } = useSelector((state: RootState) => state.auth);
