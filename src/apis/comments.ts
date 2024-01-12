@@ -1,13 +1,7 @@
 import { supabase } from '@/libs/supabase';
-import newComment from '@/utils/newComment';
-import { Tables } from '@/types/supabase';
 
-export interface CommentsWithUser extends Tables<'comments'> {
-  users: {
-    avatar_url: string;
-    nickname: string;
-  };
-}
+import type newComment from '@/utils/newComment';
+import type { CommentsWithUser } from '@/types/types';
 
 export const getAllComments = async (id: string) => {
   let { data: comments, error } = await supabase
