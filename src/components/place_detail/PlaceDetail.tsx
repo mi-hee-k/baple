@@ -169,7 +169,9 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
       <div className='mb-[10px]'>
         <p>전화 : {tel}</p>
         <p>주소 : {address}</p>
-        <p>운영시간 : {working_hours}</p>
+        <p>
+          운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
+        </p>
         <p>휴무일 : {holidays === 'null' ? '정보없음' : holidays}</p>
       </div>
       <div className='flex gap-2 mb-[30px] flex-wrap'>
