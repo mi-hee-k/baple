@@ -48,11 +48,12 @@ const PlacePage = () => {
         <div className='w-[80%] h-[300px] bg-blue-400 mx-auto'>지도</div>
       </section>
       <section className='mb-[30px] text-center'>
-        <Link href={'/review/write'}>
-          <button className='bg-red-400 p-4 rounded-md text-white'>
-            리뷰 작성하기
-          </button>
-        </Link>
+        <button
+          className='bg-red-400 p-4 rounded-md text-white'
+          onClick={() => router.push(`/review/write/${placeId}`)}
+        >
+          리뷰 작성하기
+        </button>
       </section>
 
       {/* 리뷰 */}
