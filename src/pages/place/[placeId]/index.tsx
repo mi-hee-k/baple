@@ -29,7 +29,7 @@ const PlacePage = () => {
     return <div>Loading...</div>;
   }
 
-  // console.log('reviews', reviews);
+  console.log('reviews', reviews);
 
   return (
     <MainWrapper>
@@ -64,7 +64,7 @@ const PlacePage = () => {
         <div className='flex gap-6 px-6 mb-[20px]'>
           {/* 리뷰카드 */}
           {reviews?.map((review) => (
-            <Link href={'/review/1234'} key={review.id}>
+            <Link href={`/review/${review.id}`} key={review.id}>
               <div className='w-[300px] bg-slate-200 p-4 rounded-xl shadow-md'>
                 <div className='flex items-center justify-between'>
                   {/* 리뷰헤더1 */}

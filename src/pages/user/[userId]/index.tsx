@@ -116,7 +116,7 @@ const UserPage = () => {
                 <input
                   type='file'
                   accept='image/*'
-                  style={{ display: 'none' }}
+                  className='hidden'
                   onChange={previewImg}
                 />
               </label>
