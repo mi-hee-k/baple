@@ -1,10 +1,11 @@
-import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmark';
+import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmarks';
 import { RootState } from '@/redux/config/configStore';
 import { Tables } from '@/types/supabase';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Bookmark, BookmarkSolid } from 'iconoir-react';
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -126,6 +127,15 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     }
   };
 
+  const showAlert = () => {
+    toast.warn('로그인 후 이용해 주세요', {
+      position: 'top-right',
+      autoClose: 2000,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
   return (
     <section>
       <div className=' flex justify-between'>
@@ -136,17 +146,23 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
 
           {userInfo.isLoggedIn ? (
             isBookmarked ? (
-              <BookmarkSolid
+              <FaBookmark
                 className='cursor-pointer'
+                size={20}
                 onClick={toggleBookmark}
               />
             ) : (
-              <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
+              <FaRegBookmark
+                className='cursor-pointer'
+                size={20}
+                onClick={toggleBookmark}
+              />
             )
           ) : (
-            <Bookmark
+            <FaRegBookmark
               className='cursor-pointer'
-              onClick={() => alert('로그인 후 이용가능합니다')}
+              size={20}
+              onClick={showAlert}
             />
           )}
         </div>

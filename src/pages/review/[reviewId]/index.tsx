@@ -8,6 +8,7 @@ import React from 'react';
 import { REVIEW_ID } from '@/constants/temp_develop';
 import { getReviewById } from '@/apis/reviews';
 import { Spacer } from '@nextui-org/react';
+import ReviewLikes from '@/components/review_details/ReviewLikes';
 
 const ReviewPage = () => {
   const {
@@ -31,20 +32,23 @@ const ReviewPage = () => {
     const imgUrl = review.images_url as string[];
 
     return (
-      <MainWrapper>
-        {review?.images_url && (
-          <Carousel
-            slideData={imgUrl}
-            slideHeight={'300px'}
-            slidesPerView={4}
-          />
-        )}
-        <Spacer y={10} />
-        <ReviewBody review={review} />
-        <Spacer y={10} />
-        <CommentInput reviewId={review.id} />
-        <CommentList reviewId={review.id} />
-      </MainWrapper>
+      <>
+        <ReviewLikes />
+        <MainWrapper>
+          {review?.images_url && (
+            <Carousel
+              slideData={imgUrl}
+              slideHeight={'300px'}
+              slidesPerView={4}
+            />
+          )}
+          <Spacer y={10} />
+          <ReviewBody review={review} />
+          <Spacer y={10} />
+          <CommentInput reviewId={review.id} />
+          <CommentList reviewId={review.id} />
+        </MainWrapper>
+      </>
     );
   }
 };
