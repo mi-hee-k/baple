@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
 const Home = () => {
-  const { nickname, userId } = useSelector((state: RootState) => state.auth);
+  const { username, userId } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Home = () => {
       {isLoaded && (
         <div className='container'>
           <Seo title='Home' />
-          <span>{nickname}</span>
+          <span>{username}</span>
         </div>
       )}
     </>

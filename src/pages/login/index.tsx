@@ -8,6 +8,7 @@ import { supabase } from '@/libs/supabase';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface FormValues {
   email: string;
@@ -45,6 +46,14 @@ const LogInPage = () => {
       router.push('/');
     }
   };
+
+  const logInWithKakao = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'kakao',
+    });
+    console.log('KakaoLoginData', data);
+    console.log('kakaoLoginError', error);
+  };
   return (
     <>
       <Seo title='Login' />
@@ -58,7 +67,7 @@ const LogInPage = () => {
             label='Email'
             variant='bordered'
             placeholder='이메일 아이디를 입력해주세요'
-            className='w-96'
+            className='w-80'
             {...register('email', {
               required: '이메일을 입력하세요',
               pattern: {
@@ -90,7 +99,7 @@ const LogInPage = () => {
               </button>
             }
             type={isVisible ? 'text' : 'password'}
-            className='w-96'
+            className='w-80'
             {...register('password', {
               required: '비밀번호를 입력해주세요',
               pattern: {
@@ -104,14 +113,29 @@ const LogInPage = () => {
               {errors.password.message}
             </p>
           )}
-          <Button
-            color='primary'
-            type='submit'
-            isDisabled={!watchEmail || !watchPassword}
-            className=''
-          >
-            Login
-          </Button>
+          <div className='flex flex-col gap-2'>
+            <Button
+              color='primary'
+              type='submit'
+              isDisabled={!watchEmail || !watchPassword}
+              className=''
+            >
+              Login
+            </Button>
+            <Link href={'/signup'}>
+              <p className='w-full text-right text-gray-600 text-sm'>
+                회원가입 하러 가기 &rarr;
+              </p>
+            </Link>
+            <button onClick={logInWithKakao}>
+              <Image
+                src='/images/kakao_login.png'
+                alt='kakao login'
+                width={320}
+                height={300}
+              />
+            </button>
+          </div>
         </form>
       </div>
     </>

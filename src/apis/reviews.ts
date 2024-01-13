@@ -41,17 +41,26 @@ export const updateReviewContent = async ({
 
 interface InsertReviewParams {
   content: string;
-  placeID: string;
-  userID: string;
+  placeId: string;
+  userId: string;
+  publicUrlList: string[];
 }
 
 export const insertNewReview = async ({
   content,
-  placeID,
-  userID,
+  placeId,
+  userId,
+  publicUrlList,
 }: InsertReviewParams) => {
-  const { data, error } = await supabase
-    .from('reviews')
-    .insert([{ content: content, place_id: placeID, user_id: userID }])
-    .select();
+  const { data, error } = await supabase.from('reviews').insert([
+    {
+      content: content,
+      place_id: placeId,
+      user_id: userId,
+      images_url: publicUrlList,
+    },
+  ]);
+  // .select();
+  console.log('리뷰 삽입 데이터 > ', data);
+  if (error) throw error;
 };

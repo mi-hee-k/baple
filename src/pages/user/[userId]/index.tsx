@@ -19,10 +19,10 @@ import { RootState } from '@/redux/config/configStore';
 
 const UserPage = () => {
   const router = useRouter();
-  const { nickname, avatarUrl } = useSelector((state: RootState) => state.auth);
+  const { username, avatarUrl } = useSelector((state: RootState) => state.auth);
   const [userId, setUserId] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [newNickname, setNewNickname] = useState('');
+  const [newUsername, setNewUsername] = useState(username);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
 
   // const { userId } = router.query as { userId: string };
@@ -75,11 +75,11 @@ const UserPage = () => {
         .getPublicUrl(fileData.path);
 
       const newAvatarUrl = imageData.publicUrl;
-      mutate({ userId, newNickname, newAvatarUrl });
+      mutate({ userId, newUsername, newAvatarUrl });
       setIsEditing(false);
     } else {
       // 닉네임만 수정할 때
-      mutate({ userId, newNickname });
+      mutate({ userId, newUsername });
       setIsEditing(false);
     }
   };
@@ -102,7 +102,7 @@ const UserPage = () => {
   if (error) return <div>에러 발생!</div>;
   return (
     <>
-      <Seo title={`${user?.nickname}님의 페이지`} />
+      <Seo title={`${user?.user_name}님의 페이지`} />
       <div className='flex justify-center'>
         <Card className='w-[400px]'>
           <CardBody className='flex gap-6 items-center'>
@@ -116,7 +116,7 @@ const UserPage = () => {
                 <input
                   type='file'
                   accept='image/*'
-                  style={{ display: 'none' }}
+                  className='hidden'
                   onChange={previewImg}
                 />
               </label>
@@ -132,11 +132,11 @@ const UserPage = () => {
                 <label className='w-16'>닉네임</label>
                 {isEditing ? (
                   <Input
-                    defaultValue={user?.nickname}
-                    onChange={(e) => setNewNickname(e.target.value)}
+                    defaultValue={user?.user_name}
+                    onChange={(e) => setNewUsername(e.target.value)}
                   />
                 ) : (
-                  <span className='text-md'>{user?.nickname}</span>
+                  <span className='text-md'>{user?.user_name}</span>
                 )}
               </div>
               <div className='flex gap-3'>

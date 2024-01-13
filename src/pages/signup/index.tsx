@@ -13,7 +13,7 @@ interface FormValues {
   email: string;
   password: string;
   confirmPassword: string;
-  nickname: string;
+  username: string;
 }
 
 const SignupPage = () => {
@@ -28,7 +28,7 @@ const SignupPage = () => {
   const watchEmail = watch('email');
   const watchPassword = watch('password');
   const watchConfirmPassword = watch('confirmPassword');
-  const watchNickname = watch('nickname');
+  const watchUsername = watch('username');
 
   const [isVisible1, setIsVisible1] = useState(false);
   const [isVisible2, setIsVisible2] = useState(false);
@@ -36,14 +36,14 @@ const SignupPage = () => {
   const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
   const signUpHandler: SubmitHandler<FormValues> = async (formData) => {
-    const { email, password, nickname, confirmPassword } = formData;
+    const { email, password, username, confirmPassword } = formData;
 
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
-          nickname,
+          user_name: username,
           avatar_url: null,
         },
       },
@@ -158,7 +158,7 @@ const SignupPage = () => {
             variant='bordered'
             placeholder='닉네임을 입력해주세요'
             className='w-96'
-            {...register('nickname', {
+            {...register('username', {
               required: '닉네임을 입력해주세요',
               maxLength: {
                 value: 20,
@@ -166,9 +166,9 @@ const SignupPage = () => {
               },
             })}
           />
-          {errors.nickname && (
+          {errors.username && (
             <p className='text-red-500 text-xs text-center'>
-              {errors.nickname.message}
+              {errors.username.message}
             </p>
           )}
           <Button
@@ -178,7 +178,7 @@ const SignupPage = () => {
               !watchEmail ||
               !watchPassword ||
               !watchConfirmPassword ||
-              !watchNickname
+              !watchUsername
             }
           >
             회원 가입

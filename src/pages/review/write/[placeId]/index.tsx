@@ -3,38 +3,101 @@ import { Button, Spacer, Textarea, Input } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
-import { useMutation } from '@tanstack/react-query';
+import {
+  InvalidateQueryFilters,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { insertNewReview } from '@/apis/reviews';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { supabase } from '@/libs/supabase';
 
-const ReviewWrite = () => {
+const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
-  const [images, setImages] = useState<File[]>([]);
-  const { placeId } = useParams();
+  const [selectedImages, setSelectedImages] = useState<
+    { file: File; imageUrl: string }[]
+  >([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
+  const { placeId } = router.query;
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    const selectedImageArray = [...selectedImages];
+    const selectedFileArray = [...selectedFiles];
     if (files) {
-      const imagesArray = Array.from(files);
-      setImages(imagesArray);
+      console.log('files', files);
+      // const imagesArray = Array.from(files);
+      // setImages(imagesArray);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.size > 1024 * 1024) {
+          return toast.warn('최대 1MB까지 업로드 가능합니다.');
+        }
+        const imageUrl = URL.createObjectURL(file);
+        console.log('imageUrl', imageUrl);
+        if (selectedImageArray.length < 5) {
+          selectedImageArray.push({ file, imageUrl });
+          selectedFileArray.push(file);
+        } else {
+          toast.warn('이미지는 최대 5장까지만 업로드 가능합니다.');
+        }
+      }
+      setSelectedImages(selectedImageArray);
+      setSelectedFiles(selectedFileArray);
     }
   };
-
-  const newReviewMutate = useMutation({
+  console.log('selectedImages', selectedImages);
+  console.log('selectedFiles', selectedFiles);
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
     mutationFn: insertNewReview,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([
+        'reviews',
+        placeId,
+      ] as InvalidateQueryFilters);
+    },
   });
 
-  const submitNewReview = () => {
-    // console.log('연결확인');
+  const handleRemoveImage = (index: number) => {
+    const updatedImages = [...selectedImages];
+    updatedImages.splice(index, 1);
+    setSelectedImages(updatedImages);
+    const updatedFiles = [...selectedFiles];
+    updatedFiles.splice(index, 1);
+    setSelectedFiles(updatedFiles);
+  };
+
+  const onSubmitReview = async () => {
+    const publicUrlList: string[] = [];
+    if (selectedFiles) {
+      for (const file of selectedFiles) {
+        const { data: fileData, error: fileError } = await supabase.storage
+          .from('review_images')
+          .upload(`${Date.now()}`, file);
+        if (fileError) {
+          console.error('이미지 업로드 에러', fileError.message);
+          return;
+        }
+        const { data: imageData } = supabase.storage
+          .from('review_images')
+          .getPublicUrl(fileData.path);
+        console.log('imageData', imageData);
+        publicUrlList.push(imageData.publicUrl);
+      }
+    }
     const args = {
       content: reviewText,
-      placeID: placeId as string,
-      userID: userId,
+      placeId: placeId as string,
+      userId,
+      publicUrlList,
     };
-    newReviewMutate.mutate(args);
+    mutate(args);
 
     toast.success('등록되었습니다.');
     setReviewText('');
@@ -44,12 +107,11 @@ const ReviewWrite = () => {
   return (
     <div className='p-10 max-w-screen-md mx-auto'>
       <h1 className='text-2xl font-bold mb-4'>
-        사진 올리기(최대 5장까지 가능합니다)
+        사진 올리기(최대 5장까지 가능합니다) *
       </h1>
-      <div className='mb-20'>
-        <label htmlFor='file-input' className='relative cursor-pointer'>
-          <Input
-            id='file-input'
+      <div className='mb-20 flex gap-2'>
+        <label className='relative cursor-pointer'>
+          <input
             type='file'
             accept='image/*'
             multiple
@@ -60,9 +122,20 @@ const ReviewWrite = () => {
             <span className='text-3xl'>+</span>
           </div>
         </label>
+        {selectedImages.map((image, index) => (
+          <div key={index} className='image-preview'>
+            <Image
+              src={image.imageUrl}
+              alt={`Selected Image ${index}`}
+              width={100}
+              height={100}
+            />
+            <button onClick={() => handleRemoveImage(index)}>삭제</button>
+          </div>
+        ))}
       </div>
       <div>
-        <h2 className='text-xl font-bold mb-6'>후기</h2>
+        <h2 className='text-xl font-bold mb-6'>후기 *</h2>
       </div>
       <div className='mb-7'>
         <Textarea
@@ -78,7 +151,8 @@ const ReviewWrite = () => {
           color='primary'
           variant='solid'
           className='px-8'
-          onClick={submitNewReview}
+          onClick={onSubmitReview}
+          isDisabled={!selectedImages || !reviewText}
         >
           등록하기
         </Button>
@@ -87,4 +161,4 @@ const ReviewWrite = () => {
   );
 };
 
-export default ReviewWrite;
+export default ReviewWritePage;
