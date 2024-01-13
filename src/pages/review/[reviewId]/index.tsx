@@ -33,7 +33,7 @@ const ReviewPage = () => {
 
     return (
       <>
-        <ReviewLikes />
+        <ReviewLikes reviewId={review.id} />
         <MainWrapper>
           {review?.images_url && (
             <Carousel

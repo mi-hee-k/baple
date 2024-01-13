@@ -70,7 +70,9 @@ const Header = () => {
           <Link href='/place/bf2dafff-f2a1-41ff-942f-056a242e53f1'>
             장소 상세
           </Link>
-          <Link href='/review/1234'>리뷰 상세</Link>
+          <Link href='/review/53e08a2f-6048-48cb-b369-3ebb27fa0d33'>
+            리뷰 상세
+          </Link>
           <Link href='/review/write'>리뷰 작성</Link>
 
           {currentUser ? (

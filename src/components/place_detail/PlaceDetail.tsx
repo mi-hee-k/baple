@@ -13,21 +13,20 @@ interface PlaceInfoAllData {
 }
 
 const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
+  const queryClient = useQueryClient();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const userInfo = useSelector((state: RootState) => state.auth);
-  console.log(userInfo);
   const { place_name, tel, address, working_hours, holidays, lat, lng } =
     placeInfo;
-  const queryClient = useQueryClient();
 
-  const { data: bookmarkList } = useQuery({
+  const { data: bookmarkState } = useQuery({
     queryKey: ['bookmark', userInfo.userId, placeId],
-    queryFn: () => getBookmark(userInfo.userId, placeId),
+    queryFn: () => getBookmark({ userId: userInfo.userId, placeId }),
   });
 
   useEffect(() => {
-    setIsBookmarked(bookmarkList ? bookmarkList.length > 0 : false);
-  }, [bookmarkList]);
+    setIsBookmarked(bookmarkState ? bookmarkState.length > 0 : false);
+  }, [bookmarkState]);
 
   const isInfoArray = [
     placeInfo.is_audio_guide,
@@ -51,6 +50,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     '휠체어 대여',
   ];
 
+  // 낙관적 업데이트 (추가)
   const addBookmark = useMutation({
     mutationFn: insertBookmark,
     onMutate: async () => {
@@ -84,6 +84,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     },
   });
 
+  // 낙관적 업데이트 (삭제)
   const delBookmark = useMutation({
     mutationFn: deleteBookmark,
     onMutate: async () => {
@@ -117,6 +118,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     },
   });
 
+  // 버튼 토글
   const toggleBookmark = () => {
     if (isBookmarked) {
       setIsBookmarked(false);
@@ -127,6 +129,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     }
   };
 
+  // 모달
   const showAlert = () => {
     toast.warn('로그인 후 이용해 주세요', {
       position: 'top-right',
