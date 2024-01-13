@@ -10,7 +10,7 @@ export const getAllComments = async (id: string) => {
       `
     *,
     users (
-      nickname, avatar_url
+      user_name, avatar_url
     )
   `,
     )

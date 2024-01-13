@@ -34,8 +34,6 @@ const CommentCard = ({ comment }: Props) => {
     },
   });
 
-  // const avatarUrl=comment.users.nickname |
-
   const deleteBtnHandler = (commentId: string) => {
     deleteMutate.mutate(commentId);
   };
@@ -46,7 +44,7 @@ const CommentCard = ({ comment }: Props) => {
         <div className='flex gap-4'>
           <div className='flex flex-col'>
             <Avatar src='comment.users.avatar_url' showFallback />
-            <p className='text-md'>{comment.users.nickname}</p>
+            <p className='text-md'>{comment.users.username}</p>
           </div>
           <Divider orientation='vertical' className='border-gray-800' />
           <div className='w-full flex justify-between'>

@@ -26,7 +26,7 @@ export interface User {
   userId: string;
   email: string;
   avatarUrl: string;
-  nickname: string;
+  username: string;
 }
 
 export interface ReviewUpdateParams {
@@ -37,6 +37,6 @@ export interface ReviewUpdateParams {
 export interface CommentsWithUser extends Tables<'comments'> {
   users: {
     avatar_url: string;
-    nickname: string;
+    username: string;
   };
 }

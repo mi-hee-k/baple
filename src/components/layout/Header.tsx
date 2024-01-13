@@ -16,10 +16,6 @@ import { useRouter } from 'next/router';
 const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // const { nickname, userId, avatarUrl } = useSelector(
-  //   (state: RootState) => state.auth,
-  // );
-  // const [nickname, setNickname] = useState('');
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   useEffect(() => {
@@ -28,16 +24,16 @@ const Header = () => {
       const userId = session?.user.id as string;
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
-      const nickname = session?.user.user_metadata.nickname;
+      const username = session?.user.user_metadata.username;
 
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
-        dispatch(logInUser({ userId, email, avatarUrl, nickname }));
-        // setNickname(nickname);
+        dispatch(logInUser({ userId, email, avatarUrl, username }));
+        // setusername(username);
       } else if (event === 'SIGNED_IN') {
         // handle sign in event
         setCurrentUser(session?.user);
-        dispatch(logInUser({ userId, email, avatarUrl, nickname }));
+        dispatch(logInUser({ userId, email, avatarUrl, username }));
       } else if (event === 'SIGNED_OUT') {
         dispatch(logOutUser());
         setCurrentUser(null);
@@ -47,9 +43,9 @@ const Header = () => {
         // handle token refreshed event
       } else if (event === 'USER_UPDATED') {
         // handle user updated event
-        dispatch(updateUser({ avatarUrl, nickname }));
+        dispatch(updateUser({ avatarUrl, username }));
         setCurrentUser(session?.user);
-        // setNickname(nickname);
+        // setusername(username);
       }
     });
   }, [dispatch]);
@@ -75,7 +71,7 @@ const Header = () => {
 
           {currentUser ? (
             <>
-              <span>반가워요 {currentUser.user_metadata.nickname}님!</span>
+              <span>반가워요 {currentUser.user_metadata.user_name}님!</span>
               <Dropdown>
                 <DropdownTrigger>
                   <Avatar

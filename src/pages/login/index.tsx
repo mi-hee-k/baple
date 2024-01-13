@@ -122,6 +122,11 @@ const LogInPage = () => {
             >
               Login
             </Button>
+            <Link href={'/signup'}>
+              <p className='w-full text-right text-gray-600 text-sm'>
+                회원가입 하러 가기 &rarr;
+              </p>
+            </Link>
             <button onClick={logInWithKakao}>
               <Image
                 src='/images/kakao_login.png'
