@@ -97,7 +97,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
         userInfo.userId,
         placeId,
       ]);
-      const updateBookmark = [{ user_id: userInfo.userId, place_id: placeId }];
+      const updateBookmark = undefined;
       queryClient.setQueryData(
         ['bookmark', userInfo.userId, placeId],
         updateBookmark,
