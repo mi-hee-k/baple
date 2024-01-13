@@ -1,10 +1,19 @@
-// pages/review/write.tsx
 import React, { useState, ChangeEvent } from 'react';
 import { Button, Spacer, Textarea, Input } from '@nextui-org/react';
+import { useParams } from 'next/navigation';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
+import { useMutation } from '@tanstack/react-query';
+import { insertNewReview } from '@/apis/reviews';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const ReviewWrite = () => {
   const [reviewText, setReviewText] = useState('');
   const [images, setImages] = useState<File[]>([]);
+  const { placeId } = useParams();
+  const { userId } = useSelector((state: RootState) => state.auth);
+  const router = useRouter();
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -12,6 +21,24 @@ const ReviewWrite = () => {
       const imagesArray = Array.from(files);
       setImages(imagesArray);
     }
+  };
+
+  const newReviewMutate = useMutation({
+    mutationFn: insertNewReview,
+  });
+
+  const submitNewReview = () => {
+    // console.log('연결확인');
+    const args = {
+      content: reviewText,
+      placeID: placeId as string,
+      userID: userId,
+    };
+    newReviewMutate.mutate(args);
+
+    toast.success('등록되었습니다.');
+    setReviewText('');
+    router.replace(`/place/${placeId}`);
   };
 
   return (
@@ -47,7 +74,12 @@ const ReviewWrite = () => {
       </div>
       <div className='flex itmes-center justify-center'>
         <Spacer x={2} />
-        <Button color='primary' variant='solid' className='px-8'>
+        <Button
+          color='primary'
+          variant='solid'
+          className='px-8'
+          onClick={submitNewReview}
+        >
           등록하기
         </Button>
       </div>

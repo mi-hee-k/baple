@@ -1,16 +1,10 @@
 import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmark';
 import { RootState } from '@/redux/config/configStore';
 import { Tables } from '@/types/supabase';
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Bookmark, BookmarkSolid } from 'iconoir-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -18,10 +12,24 @@ interface PlaceInfoAllData {
 }
 
 const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const userInfo = useSelector((state: RootState) => state.auth);
-  console.log(userInfo);
-  const { place_name, tel, address, working_hours, holidays } = placeInfo;
+  const { place_name, tel, address, working_hours, holidays, lat, lng } =
+    placeInfo;
+  const queryClient = useQueryClient();
+
+  const {
+    data: bookmarkList,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['bookmark', userInfo.userId, placeId],
+    queryFn: () => getBookmark(userInfo.userId, placeId),
+  });
+
+  useEffect(() => {
+    setIsBookmarked(bookmarkList ? bookmarkList.length > 0 : false);
+  }, [bookmarkList]);
 
   const isInfoArray = [
     placeInfo.is_audio_guide,
@@ -45,33 +53,99 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     '휠체어 대여',
   ];
 
-  const queryClient = new QueryClient();
+  const addBookmark = useMutation({
+    mutationFn: insertBookmark,
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+      const prev = queryClient.getQueryData([
+        'bookmark',
+        userInfo.userId,
+        placeId,
+      ]);
+      const updateBookmark = [{ user_id: userInfo.userId, place_id: placeId }];
+      queryClient.setQueryData(
+        ['bookmark', userInfo.userId, placeId],
+        updateBookmark,
+      );
+      return { prev };
+    },
+    onError: (error, updateReviewParams, context) => {
+      if (context?.prev) {
+        queryClient.setQueryData(
+          ['bookmark', userInfo.userId, placeId],
+          context.prev,
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+    },
+  });
+
+  const delBookmark = useMutation({
+    mutationFn: deleteBookmark,
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+      const prev = queryClient.getQueryData([
+        'bookmark',
+        userInfo.userId,
+        placeId,
+      ]);
+      const updateBookmark = [{ user_id: userInfo.userId, place_id: placeId }];
+      queryClient.setQueryData(
+        ['bookmark', userInfo.userId, placeId],
+        updateBookmark,
+      );
+      return { prev };
+    },
+    onError: (error, updateReviewParams, context) => {
+      if (context?.prev) {
+        queryClient.setQueryData(
+          ['bookmark', userInfo.userId, placeId],
+          context.prev,
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+    },
+  });
 
   const toggleBookmark = () => {
     if (isBookmarked) {
       setIsBookmarked(false);
-      addBookmark({ userId: userInfo.userId, placeId });
-      console.log(isBookmarked);
+      delBookmark.mutate({ userId: userInfo.userId, placeId });
     } else {
       setIsBookmarked(true);
-      delBookmark(placeId);
-      console.log(isBookmarked);
+      addBookmark.mutate({ userId: userInfo.userId, placeId });
     }
   };
 
-  const { mutate: addBookmark } = useMutation({
-    mutationFn: insertBookmark,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
-    },
-  });
+  // const { mutate: addBookmark } = useMutation({
+  //   mutationFn: insertBookmark,
+  //   onSuccess: async () => {
+  //     await queryClient.invalidateQueries({
+  //       queryKey: ['bookmark', userInfo.userId, placeId],
+  //     });
+  //   },
+  // });
 
-  const { mutate: delBookmark } = useMutation({
-    mutationFn: deleteBookmark,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
-    },
-  });
+  // const { mutate: delBookmark } = useMutation({
+  //   mutationFn: deleteBookmark,
+  //   onSuccess: async () => {
+  //     await queryClient.invalidateQueries({
+  //       queryKey: ['bookmark', userInfo.userId, placeId],
+  //     });
+  //   },
+  // });
 
   return (
     <section>
@@ -82,12 +156,12 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
           </h1>
 
           {isBookmarked ? (
-            <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
-          ) : (
             <BookmarkSolid
               className='cursor-pointer'
               onClick={toggleBookmark}
             />
+          ) : (
+            <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
           )}
         </div>
         <div>icons</div>
