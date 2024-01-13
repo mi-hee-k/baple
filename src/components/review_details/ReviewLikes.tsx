@@ -6,6 +6,7 @@ import { RootState } from '@/redux/config/configStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 interface Props {
   reviewId: string;
@@ -13,6 +14,10 @@ interface Props {
 
 const ReviewLikes = ({ reviewId }: Props) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
+
+  console.log(router.asPath);
+
   const userInfo = useSelector((state: RootState) => state.auth);
   const [isLiked, setIsLiked] = useState<boolean>(false);
 
@@ -106,14 +111,32 @@ const ReviewLikes = ({ reviewId }: Props) => {
     }
   };
 
-  // 모달
-  const showAlert = () => {
-    toast.warn('로그인 후 이용해 주세요', {
+  // 로그인 안내 모달
+  const showLoginAlert = () => {
+    toast.warn('로그인 후 이용해주세요', {
       position: 'top-right',
       autoClose: 2000,
       progress: undefined,
       theme: 'light',
     });
+  };
+
+  // 클립보드 성공 모달
+  const showCopyAlert = () => {
+    toast.success('클립보드에 복사 성공', {
+      position: 'top-right',
+      autoClose: 2000,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
+  // 클립보드 url 복사
+  const copyClipboard = () => {
+    const baseUrl = 'http://localhost:3000';
+    const currentPath = router.asPath;
+    navigator.clipboard.writeText(`${baseUrl}${currentPath}`);
+    showCopyAlert();
   };
 
   return (
@@ -137,12 +160,16 @@ const ReviewLikes = ({ reviewId }: Props) => {
         <FcLikePlaceholder
           className='cursor-pointer mb-[10px]'
           size={30}
-          onClick={showAlert}
+          onClick={showLoginAlert}
         />
       )}
 
       {/* 공유하기 */}
-      <FaShareAlt size={30} className='cursor-pointer' />
+      <FaShareAlt
+        size={30}
+        className='cursor-pointer'
+        onClick={copyClipboard}
+      />
     </div>
   );
 };
