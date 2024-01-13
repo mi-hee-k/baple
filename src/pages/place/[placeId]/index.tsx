@@ -7,6 +7,7 @@ import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import { useRouter } from 'next/router';
+import Seo from '@/components/layout/Seo';
 
 const PlacePage = () => {
   const router = useRouter();
@@ -32,6 +33,7 @@ const PlacePage = () => {
 
   return (
     <MainWrapper>
+      <Seo title={placeInfo.place_name} />
       {imgList && (
         <Carousel
           slideData={imgList ?? []} // imgList가 없으면 빈배열

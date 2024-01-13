@@ -8,6 +8,7 @@ import React from 'react';
 import { REVIEW_ID } from '@/constants/temp_develop';
 import { getReviewById } from '@/apis/reviews';
 import { Spacer } from '@nextui-org/react';
+import Seo from '@/components/layout/Seo';
 
 const ReviewPage = () => {
   const {
@@ -29,9 +30,9 @@ const ReviewPage = () => {
 
   if (review) {
     const imgUrl = review.images_url as string[];
-
     return (
       <MainWrapper>
+        <Seo title='Review' />
         {review?.images_url && (
           <Carousel
             slideData={imgUrl}
