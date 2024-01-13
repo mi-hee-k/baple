@@ -19,7 +19,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const { userId } = useSelector((state: RootState) => state.auth);
+  const [userId, setUserId] = useState('');
 
   const {
     data: user,
@@ -30,15 +30,16 @@ const Header = () => {
     queryFn: () => getUserDataById(userId),
     enabled: userId !== undefined,
   });
-
+  console.log('리액트쿼리로 가져온 user', user);
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       console.log(event, session);
-      // const userId = session?.user.id as string;
+      const userId = session?.user.id as string;
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const username = session?.user.user_metadata.user_name;
 
+      setUserId(userId);
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
         dispatch(
