@@ -16,7 +16,7 @@ const ReviewLikes = ({ reviewId }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  console.log(router.asPath);
+  // console.log(router.asPath);
 
   const userInfo = useSelector((state: RootState) => state.auth);
   const [isLiked, setIsLiked] = useState<boolean>(false);
