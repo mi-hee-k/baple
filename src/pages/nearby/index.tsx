@@ -1,3 +1,4 @@
+import Seo from '@/components/layout/Seo';
 import EventMarkerContainer from '@/components/overlaymap/MarkerContainer';
 import MylocationButton from '@/components/overlaymap/MylocationButton';
 import { supabase } from '@/libs/supabase';
@@ -141,6 +142,7 @@ const NearByPage = () => {
 
   return (
     <div style={{ position: 'relative', display: 'flex' }}>
+      <Seo title='내 근처 장소' />
       <Map // 지도를 표시할 Container
         center={location.center}
         style={{

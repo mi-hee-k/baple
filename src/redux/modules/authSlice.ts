@@ -17,7 +17,7 @@ const initialState = {
   userId: isLocalStorage ? session.user.id : null,
   email: isLocalStorage ? session.user.email : null,
   avatarUrl: isLocalStorage ? session.user.user_metadata.avatar_url : null,
-  nickname: isLocalStorage ? session.user.user_metadata.nickname : null,
+  username: isLocalStorage ? session.user.user_metadata.username : null,
 };
 
 const authSlice = createSlice({
@@ -26,24 +26,24 @@ const authSlice = createSlice({
   reducers: {
     logInUser: (state, action) => {
       console.log('리덕스페이로드', action.payload);
-      const { userId, email, avatarUrl, nickname } = action.payload;
+      const { userId, email, avatarUrl, username } = action.payload;
       state.isLoggedIn = true;
       state.userId = userId;
       state.email = email;
       state.avatarUrl = avatarUrl;
-      state.nickname = nickname;
+      state.username = username;
     },
     logOutUser: (state) => {
       state.isLoggedIn = false;
       state.userId = null;
       state.email = null;
       state.avatarUrl = null;
-      state.nickname = null;
+      state.username = null;
     },
     updateUser: (state, action) => {
-      const { avatarUrl, nickname } = action.payload;
+      const { avatarUrl, username } = action.payload;
       state.avatarUrl = avatarUrl;
-      state.nickname - nickname;
+      state.username = username;
     },
   },
 });

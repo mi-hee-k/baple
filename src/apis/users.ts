@@ -15,24 +15,24 @@ export const getUserDataById = async (userId: string) => {
 
 type Props = {
   userId: string;
-  newNickname: string;
+  newUsername: string;
   newAvatarUrl?: string;
 };
 
 // mutateFn
 export const updateUser = async ({
   userId,
-  newNickname,
+  newUsername,
   newAvatarUrl,
 }: Props) => {
   // 메타데이터 업데이트
   const { data, error } = await supabase.auth.updateUser({
-    data: { nickname: newNickname, avatar_url: newAvatarUrl },
+    data: { user_name: newUsername, avatar_url: newAvatarUrl },
   });
   // users 테이블 업데이트
   const { error: usersError } = await supabase
     .from('users')
-    .update({ nickname: newNickname, avatar_url: newAvatarUrl })
+    .update({ user_name: newUsername, avatar_url: newAvatarUrl })
     .eq('id', userId);
   if (error) throw error;
   if (usersError) throw usersError;
