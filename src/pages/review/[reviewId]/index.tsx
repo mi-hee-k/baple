@@ -33,9 +33,9 @@ const ReviewPage = () => {
     const imgUrl = review.images_url as string[];
     return (
       <>
-        <ReviewLikes reviewId={review.id} />
         <MainWrapper>
           <Seo title='Review' />
+          <ReviewLikes reviewId={review.id} />
           {review?.images_url && (
             <Carousel
               slideData={imgUrl}

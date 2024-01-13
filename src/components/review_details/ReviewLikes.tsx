@@ -140,36 +140,39 @@ const ReviewLikes = ({ reviewId }: Props) => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center w-[50px] h-[100px] p-3 rounded-full bg-slate-200 fixed top-[100px] left-[50px] z-10'>
-      {/* 좋아요 */}
-      {userInfo.isLoggedIn ? (
-        isLiked ? (
-          <FcLike
-            className='cursor-pointer mb-[10px]'
+    <div className='relative'>
+      <div className='absolute left-[-70px] z-10'>
+        {/* 좋아요 */}
+        <div className='flex flex-col justify-center items-center fixed top-[120px] w-[50px] h-[100px] p-3 rounded-full bg-slate-200'>
+          {userInfo.isLoggedIn ? (
+            isLiked ? (
+              <FcLike
+                className='cursor-pointer mb-[10px]'
+                size={30}
+                onClick={toggleLikes}
+              />
+            ) : (
+              <FcLikePlaceholder
+                className='cursor-pointer mb-[10px]'
+                size={30}
+                onClick={toggleLikes}
+              />
+            )
+          ) : (
+            <FcLikePlaceholder
+              className='cursor-pointer mb-[10px]'
+              size={30}
+              onClick={showLoginAlert}
+            />
+          )}
+          {/* 공유하기 */}
+          <FaShareAlt
             size={30}
-            onClick={toggleLikes}
+            className='cursor-pointer'
+            onClick={copyClipboard}
           />
-        ) : (
-          <FcLikePlaceholder
-            className='cursor-pointer mb-[10px]'
-            size={30}
-            onClick={toggleLikes}
-          />
-        )
-      ) : (
-        <FcLikePlaceholder
-          className='cursor-pointer mb-[10px]'
-          size={30}
-          onClick={showLoginAlert}
-        />
-      )}
-
-      {/* 공유하기 */}
-      <FaShareAlt
-        size={30}
-        className='cursor-pointer'
-        onClick={copyClipboard}
-      />
+        </div>
+      </div>
     </div>
   );
 };
