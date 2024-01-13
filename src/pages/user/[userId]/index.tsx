@@ -22,7 +22,7 @@ const UserPage = () => {
   const { username, avatarUrl } = useSelector((state: RootState) => state.auth);
   const [userId, setUserId] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [newUsername, setNewUsername] = useState('');
+  const [newUsername, setNewUsername] = useState(username);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
 
   // const { userId } = router.query as { userId: string };
