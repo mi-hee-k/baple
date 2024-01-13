@@ -1,5 +1,3 @@
-import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
-import { FaShareAlt } from 'react-icons/fa';
 import { deleteLikes, getLikes, insertLikes } from '@/apis/likes';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
@@ -7,6 +5,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+
+import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
+import { FaShareAlt } from 'react-icons/fa';
+import { RiKakaoTalkFill } from 'react-icons/ri';
+import { FaPaperclip } from 'react-icons/fa';
 
 interface Props {
   reviewId: string;
@@ -20,6 +23,7 @@ const ReviewLikes = ({ reviewId }: Props) => {
 
   const userInfo = useSelector((state: RootState) => state.auth);
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isShown, setIsShown] = useState(false);
 
   const { data: likeState } = useQuery({
     queryKey: ['likes', userInfo.userId, reviewId],
@@ -131,6 +135,11 @@ const ReviewLikes = ({ reviewId }: Props) => {
     });
   };
 
+  // 토글 공유 버튼
+  const toggleShareBtn = () => {
+    setIsShown((prev) => !prev);
+  };
+
   // 클립보드 url 복사
   const copyClipboard = () => {
     const baseUrl = 'http://localhost:3000';
@@ -166,10 +175,32 @@ const ReviewLikes = ({ reviewId }: Props) => {
             />
           )}
           {/* 공유하기 */}
+          <div className='z-[5] relative w-full'>
+            <div className='absolute'>
+              <div
+                className={`opacity-[${
+                  isShown ? 100 : 0
+                }] absolute w-[50px] h-[50px] bg-slate-300 top-[-40px] left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
+              >
+                <RiKakaoTalkFill size={24} className='cursor-pointer' />
+              </div>
+              <div
+                className={`opacity-[${
+                  isShown ? 100 : 0
+                }] absolute w-[50px] h-[50px] bg-slate-300 top-[20px] left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
+              >
+                <FaPaperclip
+                  size={24}
+                  className='cursor-pointer'
+                  onClick={copyClipboard}
+                />
+              </div>
+            </div>
+          </div>
           <FaShareAlt
             size={30}
             className='cursor-pointer'
-            onClick={copyClipboard}
+            onClick={toggleShareBtn}
           />
         </div>
       </div>
