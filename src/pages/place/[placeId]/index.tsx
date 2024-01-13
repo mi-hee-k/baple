@@ -23,7 +23,7 @@ const PlacePage = () => {
   });
 
   const imgList = reviews?.map((item) => item.images_url).flat() as string[];
-  console.log(imgList);
+  // console.log(imgList);
 
   if (placeInfoLoading || reviewLoading) {
     return <div>Loading...</div>;

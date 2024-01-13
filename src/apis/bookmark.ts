@@ -14,7 +14,7 @@ export const insertBookmark = async ({ userId, placeId }: Props) => {
   if (error) {
     throw error;
   }
-  console.log('북마크 성공', data);
+  // console.log('북마크 성공', data);
   return data;
 };
 
@@ -43,5 +43,5 @@ export const deleteBookmark = async ({ userId, placeId }: Props) => {
   if (error) {
     console.log(error);
   }
-  console.log('북마크 삭제');
+  // console.log('북마크 삭제');
 };

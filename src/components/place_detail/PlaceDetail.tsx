@@ -14,15 +14,12 @@ interface PlaceInfoAllData {
 const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const userInfo = useSelector((state: RootState) => state.auth);
+  console.log(userInfo);
   const { place_name, tel, address, working_hours, holidays, lat, lng } =
     placeInfo;
   const queryClient = useQueryClient();
 
-  const {
-    data: bookmarkList,
-    isError,
-    error,
-  } = useQuery({
+  const { data: bookmarkList } = useQuery({
     queryKey: ['bookmark', userInfo.userId, placeId],
     queryFn: () => getBookmark(userInfo.userId, placeId),
   });
@@ -55,7 +52,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
 
   const addBookmark = useMutation({
     mutationFn: insertBookmark,
-    onMutate: async (data) => {
+    onMutate: async () => {
       await queryClient.cancelQueries({
         queryKey: ['bookmark', userInfo.userId, placeId],
       });
@@ -88,7 +85,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
 
   const delBookmark = useMutation({
     mutationFn: deleteBookmark,
-    onMutate: async (data) => {
+    onMutate: async () => {
       await queryClient.cancelQueries({
         queryKey: ['bookmark', userInfo.userId, placeId],
       });
@@ -129,24 +126,6 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     }
   };
 
-  // const { mutate: addBookmark } = useMutation({
-  //   mutationFn: insertBookmark,
-  //   onSuccess: async () => {
-  //     await queryClient.invalidateQueries({
-  //       queryKey: ['bookmark', userInfo.userId, placeId],
-  //     });
-  //   },
-  // });
-
-  // const { mutate: delBookmark } = useMutation({
-  //   mutationFn: deleteBookmark,
-  //   onSuccess: async () => {
-  //     await queryClient.invalidateQueries({
-  //       queryKey: ['bookmark', userInfo.userId, placeId],
-  //     });
-  //   },
-  // });
-
   return (
     <section>
       <div className=' flex justify-between'>
@@ -155,13 +134,20 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
             {place_name}
           </h1>
 
-          {isBookmarked ? (
-            <BookmarkSolid
-              className='cursor-pointer'
-              onClick={toggleBookmark}
-            />
+          {userInfo.isLoggedIn ? (
+            isBookmarked ? (
+              <BookmarkSolid
+                className='cursor-pointer'
+                onClick={toggleBookmark}
+              />
+            ) : (
+              <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
+            )
           ) : (
-            <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
+            <Bookmark
+              className='cursor-pointer'
+              onClick={() => alert('로그인 후 이용가능합니다')}
+            />
           )}
         </div>
         <div>icons</div>
