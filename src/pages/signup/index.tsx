@@ -8,6 +8,7 @@ import { supabase } from '@/libs/supabase';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import { toastError, toastSuccess } from '@/libs/toastifyAlert';
 
 interface FormValues {
   email: string;
@@ -53,9 +54,9 @@ const SignupPage = () => {
     if (error) {
       console.error('error.message', error.message);
       if (error.message === 'User already registered')
-        toast.error('이미 존재하는 아이디 입니다.');
+        toastError('이미 존재하는 아이디 입니다.');
     } else {
-      toast.success('회원 가입 성공!');
+      toastSuccess('회원 가입 성공!');
       router.push('/');
     }
   };

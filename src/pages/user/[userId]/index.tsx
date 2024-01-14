@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { MdPhotoCameraBack } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
+import { toastWarn } from '@/libs/toastifyAlert';
 
 const UserPage = () => {
   const router = useRouter();
@@ -88,7 +89,7 @@ const UserPage = () => {
     if (e.target.files) {
       const selectedFile = e.target.files[0];
       if (selectedFile.size > 1024 * 1024) {
-        return toast.warn('최대 1MB까지 업로드 가능합니다.');
+        return toastWarn('최대 1MB까지 업로드 가능합니다.');
       }
       const imgUrl = URL.createObjectURL(selectedFile);
       setNewAvatar(selectedFile);

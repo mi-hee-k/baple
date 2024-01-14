@@ -14,6 +14,7 @@ import { deleteComment } from '@/apis/comments';
 import { toast } from 'react-toastify';
 
 import type { CommentsWithUser } from '@/types/types';
+import { toastSuccess } from '@/libs/toastifyAlert';
 
 interface Props {
   comment: CommentsWithUser;
@@ -24,12 +25,7 @@ const CommentCard = ({ comment }: Props) => {
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
-      toast.success('삭제 완료', {
-        position: 'top-right',
-        autoClose: 2000,
-        progress: undefined,
-        theme: 'light',
-      });
+      toastSuccess('삭제 완료');
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
