@@ -10,24 +10,29 @@ import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
 import { FaShareAlt } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { FaPaperclip } from 'react-icons/fa';
+import { Tables } from '@/types/supabase';
+import { getPlaceInfo } from '@/apis/places';
 
 interface Props {
-  reviewId: string;
+  review: Tables<'reviews'>;
 }
 
-const ReviewLikes = ({ reviewId }: Props) => {
+const ReviewLikes = ({ review }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-
-  // console.log(router.asPath);
-
   const userInfo = useSelector((state: RootState) => state.auth);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isShown, setIsShown] = useState(false);
 
+  const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
+    queryKey: ['placeInfo', review.place_id],
+    queryFn: () => getPlaceInfo(review.place_id),
+    staleTime: Infinity,
+  });
+
   const { data: likeState } = useQuery({
-    queryKey: ['likes', userInfo.userId, reviewId],
-    queryFn: () => getLikes({ userId: userInfo.userId, reviewId }),
+    queryKey: ['likes', userInfo.userId, review.id],
+    queryFn: () => getLikes({ userId: userInfo.userId, reviewId: review.id }),
   });
 
   useEffect(() => {
@@ -39,18 +44,18 @@ const ReviewLikes = ({ reviewId }: Props) => {
     mutationFn: insertLikes,
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: ['likes', userInfo.userId, reviewId],
+        queryKey: ['likes', userInfo.userId, review.id],
       });
       const prev = queryClient.getQueryData([
         'likes',
         userInfo.userId,
-        reviewId,
+        review.id,
       ]);
       const updateBookmark = [
-        { user_id: userInfo.userId, review_id: reviewId },
+        { user_id: userInfo.userId, review_id: review.id },
       ];
       queryClient.setQueryData(
-        ['likes', userInfo.userId, reviewId],
+        ['likes', userInfo.userId, review.id],
         updateBookmark,
       );
       return { prev };
@@ -58,14 +63,14 @@ const ReviewLikes = ({ reviewId }: Props) => {
     onError: (error, updateReviewParams, context) => {
       if (context?.prev) {
         queryClient.setQueryData(
-          ['likes', userInfo.userId, reviewId],
+          ['likes', userInfo.userId, review.id],
           context.prev,
         );
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['likes', userInfo.userId, reviewId],
+        queryKey: ['likes', userInfo.userId, review.id],
       });
     },
   });
@@ -75,16 +80,16 @@ const ReviewLikes = ({ reviewId }: Props) => {
     mutationFn: deleteLikes,
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: ['likes', userInfo.userId, reviewId],
+        queryKey: ['likes', userInfo.userId, review.id],
       });
       const prev = queryClient.getQueryData([
         'likes',
         userInfo.userId,
-        reviewId,
+        review.id,
       ]);
       const updateBookmark = undefined;
       queryClient.setQueryData(
-        ['likes', userInfo.userId, reviewId],
+        ['likes', userInfo.userId, review.id],
         updateBookmark,
       );
       return { prev };
@@ -92,14 +97,14 @@ const ReviewLikes = ({ reviewId }: Props) => {
     onError: (error, updateReviewParams, context) => {
       if (context?.prev) {
         queryClient.setQueryData(
-          ['likes', userInfo.userId, reviewId],
+          ['likes', userInfo.userId, review.id],
           context.prev,
         );
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['likes', userInfo.userId, reviewId],
+        queryKey: ['likes', userInfo.userId, review.id],
       });
     },
   });
@@ -108,10 +113,10 @@ const ReviewLikes = ({ reviewId }: Props) => {
   const toggleLikes = () => {
     if (isLiked) {
       setIsLiked(false);
-      delLikes.mutate({ userId: userInfo.userId, reviewId });
+      delLikes.mutate({ userId: userInfo.userId, reviewId: review.id });
     } else {
       setIsLiked(true);
-      addLikes.mutate({ userId: userInfo.userId, reviewId });
+      addLikes.mutate({ userId: userInfo.userId, reviewId: review.id });
     }
   };
 
@@ -143,12 +148,26 @@ const ReviewLikes = ({ reviewId }: Props) => {
   // 카카오 공유
   const shareKaKao = async () => {
     await window.Kakao.Share.sendDefault({
-      objectType: 'text',
-      text: `공유되었습니다.`,
-      link: {
-        // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-        webUrl: 'http://localhost:3000',
+      objectType: 'location',
+      address: `${placeInfo?.address}`,
+      addressTitle: `${placeInfo?.place_name}`,
+      content: {
+        title: 'Baple',
+        description: `${placeInfo?.place_name}`,
+        imageUrl:
+          'https://velog.velcdn.com/images/jetiiin/post/3e477527-5e73-4a52-a8de-c0d1dec00f8a/image.png',
+        link: {
+          webUrl: `http://localhost:3000/place/${review.place_id}`,
+        },
       },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            webUrl: `http://localhost:3000/place/${review.place_id}`,
+          },
+        },
+      ],
     });
   };
 
