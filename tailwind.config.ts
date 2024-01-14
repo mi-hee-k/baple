@@ -52,7 +52,7 @@ module.exports = {
         baple: {
           extend: 'light',
           colors: {
-            // background: '#white',
+            background: '#white',
             foreground: 'black',
             primary: {
               100: '#FFE074',
@@ -61,6 +61,7 @@ module.exports = {
               DEFAULT: '#FFD029',
               foreground: '#1E1E1E',
             },
+
             secondary: {
               DEFAULT: '#FF518F',
               foreground: 'black',
