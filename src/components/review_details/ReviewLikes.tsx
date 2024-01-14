@@ -140,6 +140,18 @@ const ReviewLikes = ({ reviewId }: Props) => {
     setIsShown((prev) => !prev);
   };
 
+  // 카카오 공유
+  const shareKaKao = async () => {
+    await window.Kakao.Share.sendDefault({
+      objectType: 'text',
+      text: `공유되었습니다.`,
+      link: {
+        // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+        webUrl: 'http://localhost:3000',
+      },
+    });
+  };
+
   // 클립보드 url 복사
   const copyClipboard = () => {
     const baseUrl = 'http://localhost:3000';
@@ -182,7 +194,11 @@ const ReviewLikes = ({ reviewId }: Props) => {
                   isShown ? 100 : 0
                 }] absolute w-[50px] h-[50px] bg-slate-300 top-[-40px] left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
               >
-                <RiKakaoTalkFill size={24} className='cursor-pointer' />
+                <RiKakaoTalkFill
+                  size={24}
+                  className='cursor-pointer'
+                  onClick={shareKaKao}
+                />
               </div>
               <div
                 className={`opacity-[${
