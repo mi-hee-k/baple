@@ -9,15 +9,19 @@ import { REVIEW_ID } from '@/constants/temp_develop';
 import { getReviewById } from '@/apis/reviews';
 import { Spacer } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
+import { useRouter } from 'next/router';
 
 const ReviewPage = () => {
+  const router = useRouter();
+  const reviewId = router.query.reviewId as string;
+
   const {
     data: review,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['review', REVIEW_ID],
-    queryFn: () => getReviewById(REVIEW_ID),
+    queryKey: ['review', reviewId],
+    queryFn: () => getReviewById(reviewId),
   });
 
   if (isLoading) {
