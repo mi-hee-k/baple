@@ -28,6 +28,7 @@ export const getLikes = async (reviewId: string) => {
   if (error) {
     throw error;
   }
+
   return data;
 };
 

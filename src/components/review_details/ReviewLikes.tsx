@@ -16,6 +16,11 @@ import { getPlaceInfo } from '@/apis/places';
 interface Props {
   review: Tables<'reviews'>;
 }
+interface Likes {
+  id: string;
+  user_id: string;
+  review_id: string;
+}
 
 const ReviewLikes = ({ review }: Props) => {
   const queryClient = useQueryClient();
@@ -113,12 +118,6 @@ const ReviewLikes = ({ review }: Props) => {
       });
     },
   });
-
-  interface Likes {
-    id: string;
-    user_id: string;
-    review_id: string;
-  }
 
   // 낙관적 업데이트 (좋아요 개수 추가)
   const plusLikesCount = useMutation({
