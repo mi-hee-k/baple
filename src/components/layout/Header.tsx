@@ -71,7 +71,12 @@ const Header = () => {
         // handle token refreshed event
       } else if (event === 'USER_UPDATED') {
         // handle user updated event
-        dispatch(updateUser({ avatarUrl, username }));
+        dispatch(
+          updateUser({
+            avatarUrl: user?.avatar_url,
+            username: user?.user_name,
+          }),
+        );
         setCurrentUser(session?.user);
         // setusername(username);
       }

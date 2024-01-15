@@ -52,8 +52,7 @@ const LogInPage = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'kakao',
     });
-    console.log('KakaoLoginData', data);
-    console.log('kakaoLoginError', error);
+    if (error) throw error.message;
   };
   return (
     <>

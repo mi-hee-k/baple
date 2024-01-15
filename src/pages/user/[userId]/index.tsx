@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import React, { useEffect, useState } from 'react';
-import type { User } from '@/types/types';
 import { getUserDataById, updateUser } from '@/apis/users';
 import {
   InvalidateQueryFilters,
@@ -12,7 +11,6 @@ import {
 import { Avatar, Button, Card, CardBody, Input } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
 import { supabase } from '@/libs/supabase';
-import { toast } from 'react-toastify';
 import { MdPhotoCameraBack } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
@@ -25,9 +23,9 @@ const UserPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState(username);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState(avatarUrl);
 
   // const { userId } = router.query as { userId: string };
-  const [imagePreview, setImagePreview] = useState(avatarUrl);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -41,7 +39,6 @@ const UserPage = () => {
     data: user,
     error,
     isLoading,
-    refetch,
   } = useQuery({
     queryKey: ['user', userId],
     queryFn: () => getUserDataById(userId),
@@ -99,6 +96,7 @@ const UserPage = () => {
 
   console.log('imagePreview', imagePreview);
   console.log('newAvatar', newAvatar);
+  console.log('avatarUrl', avatarUrl);
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>에러 발생!</div>;
   return (

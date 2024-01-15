@@ -8,7 +8,7 @@ import { Noto_Sans_KR } from 'next/font/google';
 // const inter = Inter({ subsets: ['latin'] });
 
 const notoSansKr = Noto_Sans_KR({
-  weight: ['500'],
+  weight: ['500', '700'],
   subsets: ['latin'],
 });
 
