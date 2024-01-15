@@ -134,7 +134,7 @@ export interface Database {
           is_wheelchair_rental: boolean | null;
           lat: number;
           lng: number;
-          place_name: string | null;
+          place_name: string;
           tel: string | null;
           working_hours: string | null;
         };
