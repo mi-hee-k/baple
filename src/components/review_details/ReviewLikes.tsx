@@ -214,7 +214,7 @@ const ReviewLikes = ({ review }: Props) => {
     setIsShown((prev) => !prev);
   };
 
-  // 카카오 공유
+  // 카카오 공유 - 중복 (통일해야함)
   const shareKaKao = async () => {
     await window.Kakao.Share.sendDefault({
       objectType: 'location',

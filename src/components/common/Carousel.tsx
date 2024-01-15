@@ -18,7 +18,7 @@ const Carousel = ({
   SwiperCore.use([Navigation, Scrollbar, Autoplay]);
 
   return (
-    <section className={`swiper-container mb-[20px]`}>
+    <section id='imgCarousel' className={`swiper-container mb-[20px]`}>
       <Swiper
         loop={true} // 슬라이드 루프
         spaceBetween={10} // 슬라이스 사이 간격

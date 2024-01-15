@@ -71,38 +71,41 @@ const PlacePage = () => {
           ) : (
             reviews?.map((review) => (
               <Link href={`/review/${review.id}`} key={review.id}>
-                <div className='w-[300px] bg-slate-200 p-4 rounded-xl shadow-md'>
+                <div className='w-[230px] p-4 rounded-xl shadow-xl'>
                   <div className='flex flex-col'>
                     {/* 이미지파트 */}
-                    <div className='bg-slate-300 w-full h-[150px] mb-[10px]'>
+                    <div className='bg-slate-300 rounded-md w-full h-[180px] mb-[10px]'>
                       Image
                     </div>
 
                     {/* 유저정보 파트 */}
-                    <div className=' flex mb-[10px] items-center justify-between'>
+                    <div className=' flex mb-[6px] items-center justify-between'>
                       <div className='flex items-center'>
-                        {/* <div className='rounded-full w-[40px] h-[40px] mr-[6px] bg-slate-300'>
-                          img
-                        </div> */}
-                        <span className='inline-block'>닉네임</span>
+                        <span className='inline-block font-bold text-xl'>
+                          {review.users.user_name}
+                        </span>
                       </div>
                       <div>
-                        <span>{formatDate(review.created_at)}</span>
+                        <span className='text-gray-500'>
+                          {formatDate(review.created_at)}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* 내용파트 */}
                   <div>
+                    <div className='mb-[10px]'>
+                      <p className='w-[100%] h-[100px] p-2 mt-2 bg-white'>
+                        {review.content}
+                      </p>
+                    </div>
                     <div className='text-right'>
                       <span className='mr-[6px]'>❤ {review.likes.length} </span>
                       <span className='mr-[6px]'>
                         💬 {review.comments.length}
                       </span>
                     </div>
-                    <p className='w-[100%] h-[100px] p-2 mt-2 bg-white'>
-                      {review.content}
-                    </p>
                   </div>
                 </div>
               </Link>
