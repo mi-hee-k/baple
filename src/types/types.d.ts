@@ -37,6 +37,6 @@ export interface ReviewUpdateParams {
 export interface CommentsWithUser extends Tables<'comments'> {
   users: {
     avatar_url: string;
-    username: string;
+    user_name: string;
   };
 }
