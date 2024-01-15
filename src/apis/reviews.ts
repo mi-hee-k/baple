@@ -2,7 +2,8 @@ import { supabase } from '@/libs/supabase';
 
 import type { Tables } from '@/types/supabase';
 import type { ReviewUpdateParams } from '@/types/types';
-// 리뷰 아이디 가져오기
+
+// 리뷰 가져오기 (by Id)
 export const getReviewById = async (id: string) => {
   const { data: review, error } = await supabase
     .from('reviews')
@@ -26,6 +27,28 @@ export const getReviewByPlaceId = async (placeId: string) => {
     throw error;
   }
   return review;
+};
+
+export const getLikesWithCommentsByPlaceId = async (placeId: string) => {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select(
+      `
+    *,
+    likes(*),
+    comments(*),
+    users (
+      user_name
+    )
+  `,
+    )
+    .eq('place_id', placeId);
+
+  if (error) {
+    throw error;
+  }
+  console.log('여기!!!!!!!!!', data);
+  return data;
 };
 
 export const updateReviewContent = async ({
@@ -63,4 +86,14 @@ export const insertNewReview = async ({
   // .select();
   console.log('리뷰 삽입 데이터 > ', data);
   if (error) throw error;
+};
+
+//리뷰가 많은 상위 8개 장소의 place_id 조회(remote procedure call)
+export const getPlacesByReviewCount = async () => {
+  let { data, error } = await supabase.rpc('get_top_place_ids');
+  if (error) console.error(error);
+  else {
+    console.log(data);
+    return data;
+  }
 };

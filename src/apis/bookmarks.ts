@@ -61,3 +61,12 @@ export const getBookmarksByUserId = async (userId: string) => {
 
   return data;
 };
+//북마크가 많은 상위 8개 장소의 place_id 조회(remote procedure call)
+export const getPlacesByBookmarkCount = async () => {
+  let { data, error } = await supabase.rpc('get_top_bookmarked_places');
+  if (error) console.error(error);
+  else {
+    console.log(data);
+    return data;
+  }
+};

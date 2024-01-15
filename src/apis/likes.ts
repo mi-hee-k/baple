@@ -19,8 +19,22 @@ export const insertLikes = async ({ userId, reviewId }: Props) => {
   return data;
 };
 
-// 좋아요 가져오기
-export const getLikes = async ({ userId, reviewId }: Props) => {
+// 좋아요 모두 가져오기
+export const getLikes = async (reviewId: string) => {
+  const { data, error } = await supabase
+    .from('likes')
+    .select()
+    .eq('review_id', reviewId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+// 현재 유저가 누른 좋아요 상태
+export const getLike = async ({ userId, reviewId }: Props) => {
   const { data, error } = await supabase
     .from('likes')
     .select()

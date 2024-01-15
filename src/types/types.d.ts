@@ -40,3 +40,18 @@ export interface LikedReviews {
   created_at: Date;
   images_url: string[];
 }
+export interface PlacesWithBookmarksReviews extends Tables<'places'> {
+  bookmarks: {
+    id: string;
+    place_id: string;
+    user_id: string;
+  }[];
+  reviews: {
+    content: string;
+    created_at: string;
+    id: string;
+    images_url: string[];
+    place_id: string;
+    user_id: string;
+  }[];
+}
