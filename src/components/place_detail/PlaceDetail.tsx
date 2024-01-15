@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Chip } from '@nextui-org/react';
+import { RiKakaoTalkFill } from 'react-icons/ri';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -140,6 +141,32 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     });
   };
 
+  // 카카오 공유
+  const shareKaKao = async () => {
+    await window.Kakao.Share.sendDefault({
+      objectType: 'location',
+      address: `${placeInfo?.address}`,
+      addressTitle: `${placeInfo?.place_name}`,
+      content: {
+        title: 'Baple',
+        description: `${placeInfo?.place_name}`,
+        imageUrl:
+          'https://velog.velcdn.com/images/jetiiin/post/3e477527-5e73-4a52-a8de-c0d1dec00f8a/image.png',
+        link: {
+          webUrl: `http://localhost:3000/place/${placeId}`,
+        },
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            webUrl: `http://localhost:3000/place/${placeId}`,
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <section>
       <div className=' flex justify-between'>
@@ -147,30 +174,51 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
           <h1 className='text-2xl text-bold mb-[10px] mr-[4px]'>
             {place_name}
           </h1>
-
+        </div>
+        <div className='flex'>
           {userInfo.isLoggedIn ? (
             isBookmarked ? (
-              <FaBookmark
-                className='cursor-pointer'
-                size={20}
-                onClick={toggleBookmark}
-              />
+              <>
+                <FaBookmark
+                  className='cursor-pointer mr-[10px]'
+                  size={30}
+                  onClick={toggleBookmark}
+                />
+                <RiKakaoTalkFill
+                  className='cursor-pointer '
+                  size={30}
+                  onClick={shareKaKao}
+                />
+              </>
             ) : (
-              <FaRegBookmark
-                className='cursor-pointer'
-                size={20}
-                onClick={toggleBookmark}
-              />
+              <>
+                <FaRegBookmark
+                  className='cursor-pointer mr-[10px]'
+                  size={30}
+                  onClick={toggleBookmark}
+                />
+                <RiKakaoTalkFill
+                  className='cursor-pointer '
+                  size={30}
+                  onClick={shareKaKao}
+                />
+              </>
             )
           ) : (
-            <FaRegBookmark
-              className='cursor-pointer'
-              size={20}
-              onClick={showAlert}
-            />
+            <>
+              <FaRegBookmark
+                className='cursor-pointer'
+                size={30}
+                onClick={showAlert}
+              />
+              <RiKakaoTalkFill
+                className='cursor-pointer '
+                size={30}
+                onClick={shareKaKao}
+              />
+            </>
           )}
         </div>
-        <div>icons</div>
       </div>
       <div className='mb-[10px]'>
         <p>전화 : {tel === '' ? '정보없음' : tel}</p>
