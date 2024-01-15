@@ -14,12 +14,12 @@ export const insertBookmark = async ({ userId, placeId }: Props) => {
   if (error) {
     throw error;
   }
-  console.log('북마크 성공', data);
+  // console.log('북마크 성공', data);
   return data;
 };
 
 // 북마크 가져오기
-export const getBookmark = async (userId: string, placeId: string) => {
+export const getBookmark = async ({ userId, placeId }: Props) => {
   const { data, error } = await supabase
     .from('bookmarks')
     .select()
@@ -43,5 +43,5 @@ export const deleteBookmark = async ({ userId, placeId }: Props) => {
   if (error) {
     console.log(error);
   }
-  console.log('북마크 삭제');
+  // console.log('북마크 삭제');
 };

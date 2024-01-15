@@ -9,15 +9,20 @@ import { REVIEW_ID } from '@/constants/temp_develop';
 import { getReviewById } from '@/apis/reviews';
 import { Spacer } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
+import { useRouter } from 'next/router';
+import ReviewLikes from '@/components/review_details/ReviewLikes';
 
 const ReviewPage = () => {
+  const router = useRouter();
+  const reviewId = router.query.reviewId as string;
+
   const {
     data: review,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['review', REVIEW_ID],
-    queryFn: () => getReviewById(REVIEW_ID),
+    queryKey: ['review', reviewId],
+    queryFn: () => getReviewById(reviewId),
   });
 
   if (isLoading) {
@@ -31,21 +36,24 @@ const ReviewPage = () => {
   if (review) {
     const imgUrl = review.images_url as string[];
     return (
-      <MainWrapper>
-        <Seo title='Review' />
-        {review?.images_url && (
-          <Carousel
-            slideData={imgUrl}
-            slideHeight={'300px'}
-            slidesPerView={4}
-          />
-        )}
-        <Spacer y={10} />
-        <ReviewBody review={review} />
-        <Spacer y={10} />
-        <CommentInput reviewId={review.id} />
-        <CommentList reviewId={review.id} />
-      </MainWrapper>
+      <>
+        <MainWrapper>
+          <Seo title='Review' />
+          <ReviewLikes review={review} />
+          {review?.images_url && (
+            <Carousel
+              slideData={imgUrl}
+              slideHeight={'300px'}
+              slidesPerView={4}
+            />
+          )}
+          <Spacer y={10} />
+          <ReviewBody review={review} />
+          <Spacer y={10} />
+          <CommentInput reviewId={review.id} />
+          <CommentList reviewId={review.id} />
+        </MainWrapper>
+      </>
     );
   }
 };

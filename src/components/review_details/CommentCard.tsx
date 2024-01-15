@@ -39,8 +39,8 @@ const CommentCard = ({ comment }: Props) => {
       <CardBody>
         <div className='flex gap-4'>
           <div className='flex flex-col'>
-            <Avatar src='comment.users.avatar_url' showFallback />
-            <p className='text-md'>{comment.users.username}</p>
+            <Avatar src={comment.users.avatar_url} showFallback />
+            <p className='text-md'>{comment.users.user_name}</p>
           </div>
           <Divider orientation='vertical' className='border-gray-800' />
           <div className='w-full flex justify-between'>

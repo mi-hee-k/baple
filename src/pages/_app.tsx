@@ -11,6 +11,20 @@ const notoSansKr = Noto_Sans_KR({
   weight: ['500', '700'],
   subsets: ['latin'],
 });
+import Script from 'next/script';
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+
+const kakaoInit = () => {
+  // 페이지가 로드시 실행
+  if (!window.Kakao.isInitialized())
+    // 선언되지 않았을 때만 실행하도록 if문 추가
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_SHARE_KEY);
+};
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -20,6 +34,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <main className={notoSansKr.className}>
         <Providers>
           <Component {...pageProps} />
+          <Script
+            src='https://developers.kakao.com/sdk/js/kakao.js'
+            onLoad={kakaoInit}
+          />
         </Providers>
       </main>
     );
@@ -29,6 +47,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <Providers>
         <Layout>
           <Component {...pageProps} />
+          <Script
+            src='https://developers.kakao.com/sdk/js/kakao.js'
+            onLoad={kakaoInit}
+          />
         </Layout>
       </Providers>
     </main>
