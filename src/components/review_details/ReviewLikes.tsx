@@ -284,9 +284,9 @@ const ReviewLikes = ({ review }: Props) => {
           <div className='z-[5] relative w-full'>
             <div className='absolute'>
               <div
-                className={`opacity-[${
+                className={`opacity-${
                   isShown ? 100 : 0
-                }] absolute w-[50px] h-[50px] bg-slate-300 top-[-40px] left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
+                } absolute w-[50px] h-[50px] bg-slate-300 top-[-40px] left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
               >
                 <RiKakaoTalkFill
                   size={24}
@@ -295,9 +295,9 @@ const ReviewLikes = ({ review }: Props) => {
                 />
               </div>
               <div
-                className={`opacity-[${
+                className={`opacity-${
                   isShown ? 100 : 0
-                }] absolute w-[50px] h-[50px] bg-slate-300 top-[20px] left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
+                } absolute w-[50px] h-[50px] bg-slate-300 top-[20px] left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
               >
                 <FaPaperclip
                   size={24}
