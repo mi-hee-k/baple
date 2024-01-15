@@ -192,7 +192,7 @@ export interface Database {
           created_at: string;
           id: string;
           images_url: Json | null;
-          place_id: string | null;
+          place_id: string;
           user_id: string | null;
         };
         Insert: {
