@@ -21,7 +21,7 @@ export const getReviewByPlaceId = async (placeId: string) => {
     .from('reviews')
     .select('*')
     .eq('place_id', placeId);
-  // console.log('review', review);
+  console.log('review', review);
   if (error) {
     throw error;
   }

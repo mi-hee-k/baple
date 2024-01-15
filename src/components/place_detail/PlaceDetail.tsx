@@ -172,7 +172,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
         <div>icons</div>
       </div>
       <div className='mb-[10px]'>
-        <p>전화 : {tel}</p>
+        <p>전화 : {tel === '' ? '정보없음' : tel}</p>
         <p>주소 : {address}</p>
         <p>
           운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
