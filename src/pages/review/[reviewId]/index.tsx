@@ -51,7 +51,10 @@ const ReviewPage = () => {
           <ReviewBody review={review} />
           <Spacer y={10} />
           <CommentInput reviewId={review.id} />
-          <CommentList reviewId={review.id} />
+          <Spacer y={10} />
+          <div className='flex flex-col gap-4'>
+            <CommentList reviewId={review.id} />
+          </div>
         </MainWrapper>
       </>
     );

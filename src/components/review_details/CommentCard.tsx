@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Avatar,
-  Button,
-  Card,
-  CardBody,
-  Divider,
-  avatar,
-} from '@nextui-org/react';
+import { Avatar, Button, Card, CardBody } from '@nextui-org/react';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -39,25 +32,36 @@ const CommentCard = ({ comment }: Props) => {
   };
 
   return (
-    <Card className=' max-w-[1000px]'>
+    <Card className=' max-w-[1200px] rounded-full'>
       <CardBody>
-        <div className='flex gap-4'>
-          <div className='flex flex-col'>
-            <Avatar src={comment.users.avatar_url} showFallback />
-            <p className='text-md'>{comment.users.user_name}</p>
-          </div>
-          <Divider orientation='vertical' className='border-gray-800' />
+        <div className='flex gap-4 items-center'>
+          <Avatar
+            src={comment.users.avatar_url}
+            showFallback
+            className='h-100px ml-2 w-[60px]'
+            radius='full'
+            size='lg'
+          />
           <div className='w-full flex justify-between'>
-            <span>{comment.content}</span>
-            <div className='flex flex-col gap-3'>
+            <div className='flex flex-col'>
+              <p className='text-md'>{comment.users.user_name}</p>
+              <span>{comment.content}</span>
+            </div>
+
+            <div className='flex flex-col gap-3 items-end mr-6'>
               <span>{formatDate(comment.created_at)}</span>
-              <Button
+              {/* <Button
                 variant='ghost'
                 color='danger'
                 onClick={deleteBtnHandler.bind(null, comment.id)}
+                fullWidth={false}
+                size='sm'
               >
-                삭제
-              </Button>
+                X
+              </Button> */}
+              <button className='border w-7 border-primary text-primary'>
+                X
+              </button>
             </div>
           </div>
         </div>
