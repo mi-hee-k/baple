@@ -39,6 +39,13 @@ export interface LikedReviews {
   content: string;
   created_at: Date;
   images_url: string[];
+  users: {
+    avatar_url: string | undefined;
+    created_at: string;
+    email: string | null;
+    id: string;
+    user_name: string | null;
+  };
 }
 export interface PlacesWithBookmarksReviews extends Tables<'places'> {
   bookmarks: {

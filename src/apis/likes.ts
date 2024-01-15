@@ -65,14 +65,14 @@ export const getLikesByUserId = async (userId: string) => {
   const { data, error } = await supabase
     .from('likes')
     .select(
-      ` reviews (
-      id,
-      content,
-      images_url,
-      created_at
+      `
+    reviews (
+      *,
+      users(*)
     )`,
     )
     .eq('user_id', userId);
   if (error) throw error;
+  console.log('data!~!', data);
   return data?.flatMap((item) => item.reviews) || [];
 };

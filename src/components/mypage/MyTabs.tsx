@@ -37,10 +37,6 @@ const MyTabs = ({ userId }: Props) => {
 
   console.log('내가 북마크한 장소', bookmarksPlace);
   console.log('내가 좋아요한 리뷰', likedReview);
-  // const likedReview = likedReviewData?.map((review) => review.reviews);
-  // const formatedLikedReview = likedReview?.map((review)=> {
-  //   return {content: review.content}
-  // })
 
   if (isBookmarksLoading || isLikesLoading) return <div>로딩중...</div>;
 
@@ -59,11 +55,7 @@ const MyTabs = ({ userId }: Props) => {
         </Tab>
         <Tab key='music' title='내가 좋아요한 리뷰'>
           <Card>
-            <CardBody>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+            <CardBody className='grid grid-cols-3  gap-4'>
               {likedReview?.map((review, idx) => (
                 <ReviewCard key={idx} review={review} />
               ))}
