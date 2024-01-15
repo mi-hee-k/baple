@@ -107,9 +107,9 @@ const ReviewWritePage = () => {
   return (
     <div className='p-10 max-w-screen-md mx-auto'>
       <h1 className='text-2xl font-bold mb-4'>
-        사진 올리기(최대 5장까지 가능합니다) *
+        사진 올리기(최대 5장까지 가능합니다)
       </h1>
-      <div className='mb-20 flex gap-2'>
+      <div className='mb-20 flex gap-6 mt-7'>
         <label className='relative cursor-pointer'>
           <input
             type='file'
@@ -123,19 +123,28 @@ const ReviewWritePage = () => {
           </div>
         </label>
         {selectedImages.map((image, index) => (
-          <div key={index} className='image-preview'>
+          <div
+            key={index}
+            className='image-preview relative inline-block w-24 h-24'
+          >
             <Image
               src={image.imageUrl}
               alt={`Selected Image ${index}`}
-              width={100}
-              height={100}
+              fill
+              style={{ objectFit: 'cover' }}
             />
-            <button onClick={() => handleRemoveImage(index)}>삭제</button>
+            <button
+              onClick={() => handleRemoveImage(index)}
+              className='delete-button absolute font-bold -top-5 right-0 text-red-400 hover:text-red-800 cursor-pointer '
+            >
+              x
+            </button>
           </div>
         ))}
       </div>
-      <div>
-        <h2 className='text-xl font-bold mb-6'>후기 *</h2>
+      <div className='flex items-center mb-8'>
+        <h2 className='text-xl font-bold mr-1'>후기</h2>
+        <span className='text-red-500 text-2xl font-bold'>*</span>
       </div>
       <div className='mb-7'>
         <Textarea
