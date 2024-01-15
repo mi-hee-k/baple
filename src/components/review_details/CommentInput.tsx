@@ -20,8 +20,8 @@ const CommentInput = ({ reviewId }: Props) => {
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
   const { isLoggedIn, userId } = useSelector((state: RootState) => state.auth);
-  console.log('로그인됨?>>', isLoggedIn, 'uid >>', userId);
-  console.log('리액트훅폼 에러>>', errors);
+  // console.log('로그인됨?>>', isLoggedIn, 'uid >>', userId);
+  // console.log('리액트훅폼 에러>>', errors);
 
   const [comment, setComment] = useState('');
 
@@ -94,7 +94,7 @@ const CommentInput = ({ reviewId }: Props) => {
           color='primary'
           variant='ghost'
           type='submit'
-          className='w-[100px] h-[60px]'
+          className='w-[100px] h-[60px] '
         >
           등록
         </Button>

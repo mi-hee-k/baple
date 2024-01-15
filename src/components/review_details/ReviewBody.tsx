@@ -73,6 +73,7 @@ const ReviewBody = ({ review }: Props) => {
         </form>
       )}
       <Button
+        color='primary'
         onClick={() => {
           setIsEditing((prev) => !prev);
         }}
