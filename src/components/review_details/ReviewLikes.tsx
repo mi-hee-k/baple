@@ -12,6 +12,7 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 import { FaPaperclip } from 'react-icons/fa';
 import { Tables } from '@/types/supabase';
 import { getPlaceInfo } from '@/apis/places';
+import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 
 interface Props {
   review: Tables<'reviews'>;
@@ -122,22 +123,12 @@ const ReviewLikes = ({ review }: Props) => {
 
   // 로그인 안내 모달
   const showLoginAlert = () => {
-    toast.warn('로그인 후 이용해주세요', {
-      position: 'top-right',
-      autoClose: 2000,
-      progress: undefined,
-      theme: 'light',
-    });
+    toastWarn('로그인 후 이용해주세요');
   };
 
   // 클립보드 성공 모달
   const showCopyAlert = () => {
-    toast.success('클립보드에 복사 성공', {
-      position: 'top-right',
-      autoClose: 2000,
-      progress: undefined,
-      theme: 'light',
-    });
+    toastSuccess('클립보드에 복사 성공');
   };
 
   // 토글 공유 버튼
