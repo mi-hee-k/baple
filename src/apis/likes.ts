@@ -1,4 +1,5 @@
 import { supabase } from '@/libs/supabase';
+import { LikedReviews } from '@/types/types';
 
 interface Props {
   userId: string;
@@ -53,10 +54,11 @@ export const getLikesByUserId = async (userId: string) => {
       ` reviews (
       id,
       content,
-      images_url
+      images_url,
+      created_at
     )`,
     )
     .eq('user_id', userId);
   if (error) throw error;
-  return data;
+  return data?.flatMap((item) => item.reviews) || [];
 };

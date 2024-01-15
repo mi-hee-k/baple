@@ -12,17 +12,17 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { getBookmarksByUserId } from '@/apis/bookmarks';
 import { getLikesByUserId } from '@/apis/likes';
-// import Image from 'next/image';
+import ReviewCard from '../common/ReviewCard';
+import { Tables } from '@/types/supabase';
+import { LikedReviews } from '@/types/types';
 
 type Props = {
   userId: string;
 };
 
 const MyTabs = ({ userId }: Props) => {
-  // const [selected, setSelected] = useState('photos');
-  console.log('userId', userId);
   const {
-    data: bookmarks,
+    data: bookmarksPlace,
     error,
     isLoading: isBookmarksLoading,
   } = useQuery({
@@ -30,13 +30,17 @@ const MyTabs = ({ userId }: Props) => {
     queryFn: () => getBookmarksByUserId(userId),
   });
 
-  const { data: likes, isLoading: isLikesLoading } = useQuery({
+  const { data: likedReview, isLoading: isLikesLoading } = useQuery({
     queryKey: ['likes', userId],
     queryFn: () => getLikesByUserId(userId),
   });
 
-  console.log('내가 북마크한 장소', bookmarks);
-  console.log('내가 좋아요한 리뷰', likes);
+  console.log('내가 북마크한 장소', bookmarksPlace);
+  console.log('내가 좋아요한 리뷰', likedReview);
+  // const likedReview = likedReviewData?.map((review) => review.reviews);
+  // const formatedLikedReview = likedReview?.map((review)=> {
+  //   return {content: review.content}
+  // })
 
   if (isBookmarksLoading || isLikesLoading) return <div>로딩중...</div>;
 
@@ -60,6 +64,9 @@ const MyTabs = ({ userId }: Props) => {
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
               reprehenderit in voluptate velit esse cillum dolore eu fugiat
               nulla pariatur.
+              {likedReview?.map((review, idx) => (
+                <ReviewCard key={idx} review={review} />
+              ))}
             </CardBody>
           </Card>
         </Tab>

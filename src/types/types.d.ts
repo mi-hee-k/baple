@@ -33,3 +33,10 @@ export interface CommentsWithUser extends Tables<'comments'> {
     user_name: string;
   };
 }
+
+export interface LikedReviews {
+  id: string;
+  content: string;
+  created_at: Date;
+  images_url: string[];
+}
