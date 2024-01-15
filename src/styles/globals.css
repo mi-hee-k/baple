@@ -29,7 +29,7 @@ body {
 /* swiper */
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  color: #fff;
+  color: #5c5c5c;
 }
 
 /* .swiper-scrollbar {
