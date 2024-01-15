@@ -96,7 +96,7 @@ const PlacePage = () => {
                   {/* 내용파트 */}
                   <div>
                     <div className='mb-[10px]'>
-                      <p className='w-[100%] h-[100px] p-2 mt-2 bg-white'>
+                      <p className='w-[100%] h-[100px] p-2 mt-2 bg-white overflow-hidden whitespace-pre-line overflow-ellipsis break-all line-clamp-4'>
                         {review.content}
                       </p>
                     </div>
