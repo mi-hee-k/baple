@@ -23,8 +23,11 @@ const PlacePage = () => {
     queryFn: () => getReviewByPlaceId(placeId),
   });
 
-  const imgList = reviews?.map((item) => item.images_url).flat() as string[];
-  // console.log(imgList);
+  const imgList = reviews
+    ?.map((item) => item.images_url)
+    .flat()
+    .filter((url) => url !== null) as string[];
+  // console.log('imgList', imgList);
 
   if (placeInfoLoading || reviewLoading) {
     return <div>Loading...</div>;
