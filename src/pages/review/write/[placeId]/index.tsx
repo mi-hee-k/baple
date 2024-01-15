@@ -135,7 +135,7 @@ const ReviewWritePage = () => {
             />
             <button
               onClick={() => handleRemoveImage(index)}
-              className='delete-button absolute font-bold -top-5 right-0 text-red-400 hover:text-red-800 cursor-pointer '
+              className='delete-button absolute font-bold -top-5 right-0 text-red-400 hover:text-red-800 cursor-pointer'
             >
               x
             </button>
