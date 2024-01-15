@@ -17,7 +17,14 @@ export const getPlaceInfo = async (id: string) => {
 export const getPlaceInfoList = async (ids: string[]) => {
   const { data: placeInfoList, error } = await supabase
     .from('places')
-    .select()
+    .select(
+      `
+    *,
+    bookmarks(*),
+    reviews(*)
+
+  `,
+    )
     .in('id', ids);
 
   if (error) {

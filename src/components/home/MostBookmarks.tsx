@@ -1,26 +1,26 @@
-import { getPlacesByReviewCount } from '@/apis/reviews';
 import { useQuery } from '@tanstack/react-query';
 import { getPlaceInfoList } from '@/apis/places';
 import PlaceCard from '../common/PlaceCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
+import { getPlacesByBookmarkCount } from '@/apis/bookmarks';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 
-const MostReviews = () => {
-  const { data: topReviewedPlaces, isLoading } = useQuery({
-    queryKey: ['topReviewedPlaces'],
-    queryFn: getPlacesByReviewCount,
+const MostBookmarks = () => {
+  const { data: topBookmarkedPlaces, isLoading } = useQuery({
+    queryKey: ['topBookmarkedPlaces'],
+    queryFn: getPlacesByBookmarkCount,
   });
 
-  const { data: topReviewedPlacesList, isLoading: placesListLoading } =
+  const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
     useQuery({
-      queryKey: ['topReviewedPlacesList'],
-      queryFn: () => getPlaceInfoList(topReviewedPlaces),
-      enabled: !!topReviewedPlaces,
+      queryKey: ['topBookmarkedPlacesList'],
+      queryFn: () => getPlaceInfoList(topBookmarkedPlaces),
+      enabled: !!topBookmarkedPlaces,
     });
 
   if (isLoading || placesListLoading) {
@@ -29,7 +29,7 @@ const MostReviews = () => {
 
   return (
     <div className='w-[1050px] p-1'>
-      <p>가장 많은 리뷰가 달린 장소</p>
+      <p>가장 많이 북마크 된 장소</p>
       <Spacer y={4} />
       <Swiper
         loop={true} // 슬라이드 루프
@@ -40,7 +40,7 @@ const MostReviews = () => {
         autoplay={true}
         className='w-full h-full'
       >
-        {topReviewedPlacesList?.map((place) => {
+        {topBookmarkedPlacesList?.map((place) => {
           return (
             <SwiperSlide key={place.id}>
               <PlaceCard key={place.id} place={place} />
@@ -52,4 +52,4 @@ const MostReviews = () => {
   );
 };
 
-export default MostReviews;
+export default MostBookmarks;
