@@ -41,14 +41,14 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   ];
 
   const infoDetails = [
-    '오디오 가이드 있음',
-    '점자 가이드 있음',
-    '장애인 주차장 있음',
-    '장애인 화장실 있음',
-    '장애인용 출입문 있음',
-    '안내견 동반 가능',
-    '입장료 있음',
-    '휠체어 대여 가능',
+    '오디오 가이드',
+    '점자 가이드',
+    '장애인 주차장',
+    '장애인 화장실',
+    '장애인용 출입문',
+    '안내견 동반',
+    '입장료',
+    '휠체어 대여',
   ];
 
   // 낙관적 업데이트 (추가)
@@ -184,10 +184,12 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
         <div>편의시설</div>
         {isInfoArray.map((item, index) => (
           <div key={index}>
-            {item && (
+            {item ? (
               <Chip className='bg-primary rounded-xl px-4 py-1'>
                 {infoDetails[index]}
               </Chip>
+            ) : (
+              <Chip className='rounded-xl px-4 py-1'>{infoDetails[index]}</Chip>
             )}
           </div>
         ))}
