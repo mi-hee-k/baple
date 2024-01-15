@@ -4,6 +4,8 @@ import Seo from '@/components/layout/Seo';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useEffect, useState } from 'react';
+import { getPlacesByReviewCount } from '@/apis/reviews';
+import MostReviews from '@/components/home/MostReviews';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,6 +24,9 @@ const Home = () => {
           <span>{username}</span>
         </div>
       )}
+      <div className='flex w-[100vw] justify-center'>
+        <MostReviews />
+      </div>
     </>
   );
 };
