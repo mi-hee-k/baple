@@ -40,3 +40,19 @@ export interface CommentsWithUser extends Tables<'comments'> {
     user_name: string;
   };
 }
+
+export interface PlacesWithBookmarksReviews extends Tables<'places'> {
+  bookmarks: {
+    id: string;
+    place_id: string;
+    user_id: string;
+  }[];
+  reviews: {
+    content: string;
+    created_at: string;
+    id: string;
+    images_url: string[];
+    place_id: string;
+    user_id: string;
+  }[];
+}

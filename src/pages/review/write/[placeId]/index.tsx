@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useRef } from 'react';
 import { Button, Spacer, Textarea, Input } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
+import TuiEditor from '@/components/common/TuiEditor';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -20,6 +21,8 @@ const ReviewWritePage = () => {
     { file: File; imageUrl: string }[]
   >([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [editorContent, setEditorContent] = useState('');
+  const editorRef = useRef(null);
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const { placeId } = router.query;
@@ -63,6 +66,10 @@ const ReviewWritePage = () => {
       ] as InvalidateQueryFilters);
     },
   });
+
+  const handleEditorChange = (value: string) => {
+    setEditorContent(value);
+  };
 
   const handleRemoveImage = (index: number) => {
     const updatedImages = [...selectedImages];
@@ -147,11 +154,16 @@ const ReviewWritePage = () => {
         <span className='text-red-500 text-2xl font-bold'>*</span>
       </div>
       <div className='mb-7'>
-        <Textarea
+        {/* <Textarea
           value={reviewText}
           onChange={(event) => setReviewText(event.target.value)}
           placeholder='이용자님의 소중한 경험을 남겨 주세요. 자세히 작성할수록 다른 이용자에게 큰 도움이 됩니다.'
           className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
+        /> */}
+        <TuiEditor
+          content={editorContent}
+          editorRef={editorRef}
+          onChange={handleEditorChange}
         />
       </div>
       <div className='flex itmes-center justify-center'>

@@ -64,3 +64,13 @@ export const insertNewReview = async ({
   console.log('리뷰 삽입 데이터 > ', data);
   if (error) throw error;
 };
+
+//리뷰가 많은 상위 8개 장소의 place_id 조회(remote procedure call)
+export const getPlacesByReviewCount = async () => {
+  let { data, error } = await supabase.rpc('get_top_place_ids');
+  if (error) console.error(error);
+  else {
+    console.log(data);
+    return data;
+  }
+};
