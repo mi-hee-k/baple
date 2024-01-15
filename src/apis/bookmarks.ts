@@ -45,3 +45,19 @@ export const deleteBookmark = async ({ userId, placeId }: Props) => {
   }
   // console.log('북마크 삭제');
 };
+
+export const getBookmarksByUserId = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('bookmarks')
+    .select(
+      ` places (
+      id,
+      place_name
+    )`,
+    )
+    .eq('user_id', userId);
+
+  if (error) throw error;
+
+  return data;
+};

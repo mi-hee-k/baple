@@ -45,3 +45,18 @@ export const deleteLikes = async ({ userId, reviewId }: Props) => {
   }
   // console.log('좋아요 삭제');
 };
+
+export const getLikesByUserId = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('likes')
+    .select(
+      ` reviews (
+      id,
+      content,
+      images_url
+    )`,
+    )
+    .eq('user_id', userId);
+  if (error) throw error;
+  return data;
+};

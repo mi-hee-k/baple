@@ -81,7 +81,7 @@ const Header = () => {
         // setusername(username);
       }
     });
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   const logOutHandler = async () => {
     const { error } = await supabase.auth.signOut();

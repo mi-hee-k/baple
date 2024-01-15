@@ -7,11 +7,6 @@ import { useEffect, useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const notoSansKr = Noto_Sans_KR({
-  weight: ['500'],
-  subsets: ['latin'],
-});
-
 const Home = () => {
   const { username, userId } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);

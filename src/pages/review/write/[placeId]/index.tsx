@@ -149,7 +149,7 @@ const ReviewWritePage = () => {
           variant='solid'
           className='px-8'
           onClick={onSubmitReview}
-          isDisabled={!selectedImages || !reviewText}
+          isDisabled={selectedImages.length === 0 || !reviewText}
         >
           등록하기
         </Button>

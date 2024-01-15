@@ -15,6 +15,8 @@ import { MdPhotoCameraBack } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { toastWarn } from '@/libs/toastifyAlert';
+import MainWrapper from '@/components/layout/MainWrapper';
+import MyTabs from '@/components/mypage/MyTabs';
 
 const UserPage = () => {
   const router = useRouter();
@@ -94,17 +96,15 @@ const UserPage = () => {
     }
   };
 
-  console.log('imagePreview', imagePreview);
-  console.log('newAvatar', newAvatar);
-  console.log('avatarUrl', avatarUrl);
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>에러 발생!</div>;
   return (
-    <>
+    <div className='flex m-8 gap-6'>
       <Seo title={`${user?.user_name}님의 페이지`} />
       <div className='flex justify-center'>
-        <Card className='w-[400px]'>
+        <Card className='w-96'>
           <CardBody className='flex gap-6 items-center'>
+            <h2>프로필</h2>
             {isEditing ? (
               <label className='relative'>
                 <Avatar showFallback src={imagePreview} className='w-36 h-36' />
@@ -123,11 +123,11 @@ const UserPage = () => {
               <Avatar
                 showFallback
                 src={user?.avatar_url}
-                className='w-24 h-24'
+                className='w-36 h-36'
               />
             )}
             <div className='flex flex-col gap-6'>
-              <div className='flex gap-3'>
+              <div className='flex gap-3 items-center'>
                 <label className='w-16'>닉네임</label>
                 {isEditing ? (
                   <Input
@@ -138,26 +138,30 @@ const UserPage = () => {
                   <span className='text-md'>{user?.user_name}</span>
                 )}
               </div>
-              <div className='flex gap-3'>
+              <div className='flex gap-3 items-center'>
                 <label className='w-16'>이메일</label>
                 <span className='text-small text-default-500'>
                   {user?.email}
                 </span>
               </div>
               {isEditing ? (
-                <div className='flex gap-4'>
-                  <Button onClick={onEditDone}>수정완료</Button>
+                <div className='flex gap-4 justify-center'>
+                  <Button onClick={onEditDone} color='primary'>
+                    수정완료
+                  </Button>
                   <Button
                     onClick={() => {
                       setIsEditing(false);
                       // setImagePreview('');
                     }}
+                    color='primary'
+                    variant='bordered'
                   >
                     취소
                   </Button>
                 </div>
               ) : (
-                <Button onClick={() => setIsEditing(true)}>
+                <Button onClick={() => setIsEditing(true)} color='primary'>
                   회원정보 수정
                 </Button>
               )}
@@ -165,7 +169,8 @@ const UserPage = () => {
           </CardBody>
         </Card>
       </div>
-    </>
+      <MyTabs userId={userId} />
+    </div>
   );
 };
 
