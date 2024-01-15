@@ -10,6 +10,6 @@ export const getPlaceInfo = async (id: string) => {
   if (error) {
     throw error;
   }
-  console.log('placeInfo', placeInfo);
+  // console.log('placeInfo', placeInfo);
   return placeInfo;
 };
