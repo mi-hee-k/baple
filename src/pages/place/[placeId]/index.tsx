@@ -33,7 +33,7 @@ const PlacePage = () => {
     return <div>Loading...</div>;
   }
 
-  console.log('reviews', reviews);
+  // console.log('reviews', reviews);
 
   return (
     <MainWrapper>

@@ -1,4 +1,4 @@
-import { deleteLikes, getLikes, insertLikes } from '@/apis/likes';
+import { deleteLikes, getLike, getLikes, insertLikes } from '@/apis/likes';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -24,7 +24,7 @@ const ReviewLikes = ({ review }: Props) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isShown, setIsShown] = useState(false);
 
-  const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
+  const { data: placeInfo } = useQuery({
     queryKey: ['placeInfo', review.place_id],
     queryFn: () => getPlaceInfo(review.place_id),
     staleTime: Infinity,
@@ -32,8 +32,15 @@ const ReviewLikes = ({ review }: Props) => {
 
   const { data: likeState } = useQuery({
     queryKey: ['likes', userInfo.userId, review.id],
-    queryFn: () => getLikes({ userId: userInfo.userId, reviewId: review.id }),
+    queryFn: () => getLike({ userId: userInfo.userId, reviewId: review.id }),
   });
+
+  const { data: likeCount } = useQuery({
+    queryKey: ['likes', review.id],
+    queryFn: () => getLikes(review.id),
+  });
+
+  console.log(likeCount);
 
   useEffect(() => {
     setIsLiked(likeState ? likeState.length > 0 : false);
@@ -51,12 +58,10 @@ const ReviewLikes = ({ review }: Props) => {
         userInfo.userId,
         review.id,
       ]);
-      const updateBookmark = [
-        { user_id: userInfo.userId, review_id: review.id },
-      ];
+      const updateLikes = [{ user_id: userInfo.userId, review_id: review.id }];
       queryClient.setQueryData(
         ['likes', userInfo.userId, review.id],
-        updateBookmark,
+        updateLikes,
       );
       return { prev };
     },
@@ -87,10 +92,10 @@ const ReviewLikes = ({ review }: Props) => {
         userInfo.userId,
         review.id,
       ]);
-      const updateBookmark = undefined;
+      const updateLikes = undefined;
       queryClient.setQueryData(
         ['likes', userInfo.userId, review.id],
-        updateBookmark,
+        updateLikes,
       );
       return { prev };
     },
@@ -109,14 +114,79 @@ const ReviewLikes = ({ review }: Props) => {
     },
   });
 
+  interface Likes {
+    id: string;
+    user_id: string;
+    review_id: string;
+  }
+
+  // 낙관적 업데이트 (좋아요 개수 추가)
+  const plusLikesCount = useMutation({
+    mutationFn: getLikes,
+    onMutate: async () => {
+      await queryClient.cancelQueries({
+        queryKey: ['likes', review.id],
+      });
+      const prev: Likes[] | undefined = queryClient.getQueryData([
+        'likes',
+        review.id,
+      ]);
+      const updateLikesCount = [
+        ...(prev || []),
+        { user_id: userInfo.userId, review_id: review.id },
+      ];
+      queryClient.setQueryData(['likes', review.id], updateLikesCount);
+      return { prev };
+    },
+    onError: (error, updateReviewParams, context) => {
+      if (context?.prev) {
+        queryClient.setQueryData(['likes', review.id], context.prev);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['likes', review.id],
+      });
+    },
+  });
+
+  // 낙관적 업데이트 (좋아요 개수 빼기)
+  const minusLikesCount = useMutation({
+    mutationFn: getLikes,
+    onMutate: async () => {
+      await queryClient.cancelQueries({
+        queryKey: ['likes', review.id],
+      });
+      const prev: Likes[] | undefined = queryClient.getQueryData([
+        'likes',
+        review.id,
+      ]);
+      const updateLikesCount = prev?.slice(0, prev.length - 1);
+      queryClient.setQueryData(['likes', review.id], updateLikesCount);
+      return { prev };
+    },
+    onError: (error, updateReviewParams, context) => {
+      if (context?.prev) {
+        queryClient.setQueryData(['likes', review.id], context.prev);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['likes', review.id],
+      });
+    },
+  });
+
   // 버튼 토글
   const toggleLikes = () => {
     if (isLiked) {
       setIsLiked(false);
       delLikes.mutate({ userId: userInfo.userId, reviewId: review.id });
+      minusLikesCount.mutate(review.id);
     } else {
       setIsLiked(true);
       addLikes.mutate({ userId: userInfo.userId, reviewId: review.id });
+      plusLikesCount.mutate(review.id);
     }
   };
 
@@ -183,20 +253,26 @@ const ReviewLikes = ({ review }: Props) => {
     <div className='relative'>
       <div className='absolute left-[-70px] z-10'>
         {/* 좋아요 */}
-        <div className='flex flex-col justify-center items-center fixed top-[120px] w-[50px] h-[100px] p-3 rounded-full bg-slate-200'>
+        <div className='flex flex-col justify-center items-center fixed top-[120px] w-[50px] h-[120px] p-3 rounded-full bg-slate-200'>
           {userInfo.isLoggedIn ? (
             isLiked ? (
-              <FcLike
-                className='cursor-pointer mb-[10px]'
-                size={30}
-                onClick={toggleLikes}
-              />
+              <>
+                <FcLike
+                  className='cursor-pointer'
+                  size={30}
+                  onClick={toggleLikes}
+                />
+                <span className='mb-[4px]'>{likeCount?.length}</span>
+              </>
             ) : (
-              <FcLikePlaceholder
-                className='cursor-pointer mb-[10px]'
-                size={30}
-                onClick={toggleLikes}
-              />
+              <>
+                <FcLikePlaceholder
+                  className='cursor-pointer'
+                  size={30}
+                  onClick={toggleLikes}
+                />
+                <span className='mb-[4px]'>{likeCount?.length}</span>
+              </>
             )
           ) : (
             <FcLikePlaceholder
