@@ -56,7 +56,7 @@ const ReviewWritePage = () => {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.size > 1024 * 1024) {
-          return toast.warn('최대 1MB까지 업로드 가능합니다.');
+          return toastWarn('최대 1MB까지 업로드 가능합니다.');
         }
         const imageUrl = URL.createObjectURL(file);
         console.log('imageUrl', imageUrl);
@@ -64,7 +64,7 @@ const ReviewWritePage = () => {
           selectedImageArray.push({ file, imageUrl });
           selectedFileArray.push(file);
         } else {
-          toast.warn('이미지는 최대 5장까지만 업로드 가능합니다.');
+          toastWarn('이미지는 최대 5장까지만 업로드 가능합니다.');
         }
       }
       setSelectedImages(selectedImageArray);
