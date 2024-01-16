@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef } from 'react';
+import React, { useState, ChangeEvent, useRef, useMemo } from 'react';
 import { Button, Spacer, Textarea, Input } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
 import { useSelector } from 'react-redux';
@@ -21,6 +21,7 @@ import dynamic from 'next/dynamic';
 
 const ReviewWritePage = () => {
   // const [reviewText, setReviewText] = useState('');
+  const [editorContent, setEditorContent] = useState('');
   const [selectedImages, setSelectedImages] = useState<
     { file: File; imageUrl: string }[]
   >([]);
@@ -67,6 +68,8 @@ const ReviewWritePage = () => {
           toastWarn('이미지는 최대 5장까지만 업로드 가능합니다.');
         }
       }
+      const editorContentValue = editorRef.current?.getInstance().getMarkdown();
+      setEditorContent(editorContentValue);
       setSelectedImages(selectedImageArray);
       setSelectedFiles(selectedFileArray);
     }
@@ -100,7 +103,7 @@ const ReviewWritePage = () => {
   const onSubmitReview = async () => {
     // const editorValue = editorRef.current.getInstance().getValue(); //추가
     const editorIns = editorRef?.current?.getInstance();
-    const editValue = editorIns.getMarkdown();
+    const editValue = editorIns?.getMarkdown();
 
     console.log(editValue);
     // setEditorContent(editValue);
@@ -138,6 +141,11 @@ const ReviewWritePage = () => {
     // setReviewText('');
     router.replace(`/place/${placeId}`);
   };
+
+  const memoizedEditor = useMemo(
+    () => <NoSsrEditor content={editorContent} editorRef={editorRef} />,
+    [editorContent],
+  );
 
   return (
     <div className='p-10 max-w-screen-md mx-auto'>
@@ -189,7 +197,7 @@ const ReviewWritePage = () => {
           className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
         /> */}
 
-        <NoSsrEditor content='' editorRef={editorRef} />
+        {memoizedEditor}
       </div>
       <div className='flex itmes-center justify-center'>
         <Spacer x={2} />
@@ -198,7 +206,7 @@ const ReviewWritePage = () => {
           variant='solid'
           className='px-8'
           onClick={onSubmitReview}
-          // isDisabled={!selectedImages || false}
+          isDisabled={true}
         >
           등록하기
         </Button>
