@@ -5,6 +5,7 @@ import SwiperCore from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
+import Image from 'next/image';
 
 const Carousel = ({
   slidesPerView,
@@ -33,8 +34,9 @@ const Carousel = ({
         {slideData.map((slide: string) => (
           <SwiperSlide key={slide}>
             <div className={`bg-slate-400 h-[${slideHeight}]`}>
-              <img
+              <Image
                 src={slide}
+                layout='fill'
                 className='object-fill w-full h-full'
                 alt='img'
               />

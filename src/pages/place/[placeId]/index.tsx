@@ -2,17 +2,12 @@ import { getPlaceInfo } from '@/apis/places';
 import { getLikesWithCommentsByPlaceId } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/common/Carousel';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import PlaceDetail from '@/components/place_detail/PlaceDetail';
-
 import { useRouter } from 'next/router';
 import Seo from '@/components/layout/Seo';
-import ReviewCard from '@/components/place_detail/ReviewCard';
-import { ReviewWithLikesAndComments } from '@/types/types';
 
-interface Props {
-  reviewInfinity: ReviewWithLikesAndComments;
-}
+import ReviewCard from '@/components/common/ReviewCard';
 
 const PlacePage = () => {
   const router = useRouter();
