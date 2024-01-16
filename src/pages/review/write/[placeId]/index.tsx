@@ -49,6 +49,7 @@ const ReviewWritePage = () => {
 
     const selectedImageArray = [...selectedImages];
     const selectedFileArray = [...selectedFiles];
+
     if (files) {
       console.log('files', files);
       // const imagesArray = Array.from(files);
@@ -103,8 +104,9 @@ const ReviewWritePage = () => {
     const editValue = editorIns.getMarkdown();
 
     console.log(editValue);
+
     // setEditorContent(editValue);
-    // console.log('드러갔으??>>', editorContent);
+    // console.log('드러갔으?>>', editorContent);
 
     const publicUrlList: string[] = [];
     if (selectedFiles) {
