@@ -12,8 +12,15 @@ const CommentList = ({ reviewId }: Props) => {
   const { data: comments, isLoading } = useQuery({
     queryKey: ['comments', reviewId],
     queryFn: () => getAllComments(reviewId),
+    // select: (data) => ({
+    //   reversed: data?.reverse(),
+    // }),
   });
-  console.log('comments', comments);
+  console.log('comments 이걸 순서대로 하자는거지?', comments);
+
+  if (isLoading) {
+    return <p>댓글 정보 불러오는중...</p>;
+  }
 
   return (
     <>
