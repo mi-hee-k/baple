@@ -6,6 +6,7 @@ import { supabase } from '@/libs/supabase';
 import { placesData } from '@/redux/modules/placesDataSlice';
 import { Tables } from '@/types/supabase';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import {
   Map,
@@ -47,6 +48,7 @@ const NearByPage = () => {
     isLoading: true,
   });
   const [regionName, setRegionName] = useState<string>('');
+  const [cityName, setCityName] = useState<string>('');
   const [place, setplace] = useState<Tables<'places'>[] | null>([]);
   const dispatch = useDispatch();
   /**
@@ -72,6 +74,7 @@ const NearByPage = () => {
           )
           .then((res) => {
             setRegionName(res.data.documents[0]?.address.region_2depth_name);
+            setCityName(res.data.documents[0]?.address.region_1depth_name);
             console.log(res.data.documents[0]?.address);
           });
       } catch (error) {
@@ -92,7 +95,8 @@ const NearByPage = () => {
       let { data: places, error } = await supabase
         .from('places')
         .select('*')
-        .eq('district', regionName);
+        .eq('district', regionName)
+        .eq('city', cityName);
       if (places !== null) {
         setplace(places);
         dispatch(placesData(places));
@@ -182,7 +186,7 @@ const NearByPage = () => {
         {place?.map((item) => (
           <EventMarkerContainer key={item.id} item={item} />
         ))}
-        <PlacesModal />
+        <PlacesModal cityName={cityName} regionName={regionName} />
         <MylocationButton mylocation={mylocation} setLocation={setLocation} />
         <MapTypeControl position={'TOPLEFT'} />
         <ZoomControl position={'LEFT'} />

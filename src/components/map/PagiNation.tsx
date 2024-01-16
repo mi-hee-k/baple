@@ -18,7 +18,7 @@ const PagiNation = ({
   const endRange = Math.min(currentPageGroup * itemsPerPage, numPages);
 
   return (
-    <div className='gap-4 flex m-[10px] bottom-0 absolute w-[380px] h-[100px] text-[30px] justify-center'>
+    <div className='gap-4 flex bottom-0 absolute w-[380px] h-[70px] text-[30px] items-center justify-center'>
       {currentPageGroup > 1 && (
         <button
           onClick={() => setPage(startRange - 1)}

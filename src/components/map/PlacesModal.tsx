@@ -3,8 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import MapPlaceCard from './MapPlaceCard';
 import PagiNation from './PagiNation';
+import Link from 'next/link';
 
-const PlacesModal = () => {
+const PlacesModal = ({
+  regionName,
+  cityName,
+}: {
+  regionName: string;
+  cityName: string;
+}) => {
   const places = useSelector((state: RootState) => state.placesDataSlice);
   console.log(places);
 
@@ -27,15 +34,22 @@ const PlacesModal = () => {
   return (
     <>
       <div className='absolute flex flex-col bg-white bg-opacity-50 right-0 bottom-0 z-10 w-[400px] h-[700px] '>
+        <div className='h-[50px] w-[380px] flex justify-center items-center text-[20px]'>
+          <p className='font-bold text-[25px]'>
+            {cityName}&nbsp;
+            {regionName}
+          </p>
+          의 장소목록 입니다
+        </div>
+
         {/* 맵으로 장소카드 컴포넌트 만들어 뿌려주기 */}
         {places?.slice(offset, offset + limit).map((place) => {
           return (
-            <div
-              key={place.id}
-              className='w-[390px] bg-white flex h-[100px] m-2 rounded-[80px] p-4 '
-            >
-              <MapPlaceCard place={place} />
-            </div>
+            <Link key={place.id} href={`/place/${place?.id}`}>
+              <div className='w-[390px] bg-white flex h-[100px] m-2 rounded-[80px] p-4 '>
+                <MapPlaceCard place={place} />
+              </div>
+            </Link>
           );
         })}
 
