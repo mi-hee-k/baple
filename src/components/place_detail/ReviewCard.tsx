@@ -17,7 +17,7 @@ const ReviewCard = ({ review }: Props) => {
   const router = useRouter();
   return (
     <Card
-      className='flex flex-col w-[230px] p-3 rounded-xl shadow-xl cursor-pointer'
+      className='flex flex-col w-[280px] p-3 rounded-xl shadow-xl cursor-pointer'
       isPressable
       onPress={() => router.push(`/review/${review.id}`)}
     >

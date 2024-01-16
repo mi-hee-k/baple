@@ -64,7 +64,7 @@ const PlacePage = () => {
       {/* 리뷰 */}
       <section>
         <h2 className='mb-[50px] text-3xl font-bold text-center'>방문 후기</h2>
-        <div className='flex gap-6 px-6 mb-[20px] flex-wrap justify-center items-center'>
+        <div className='grid grid-cols-4 gap-6 mb-[20px] flex-wrap justify-center items-center'>
           {/* 리뷰카드 */}
           {reviews?.length === 0 ? (
             <p>등록된 리뷰가 없습니다</p>
