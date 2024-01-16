@@ -10,9 +10,9 @@ interface Props {
 
 const PlaceCard = ({ place }: Props) => {
   const router = useRouter();
-  console.log('placeCardProps', place);
+  // console.log('placeCardProps', place);
   const imgURL = place.image_url;
-  console.log(imgURL);
+  // console.log(imgURL);
   return (
     <div className='m-1'>
       <Card
