@@ -6,7 +6,6 @@ import { Tables } from '@/types/supabase';
 import { formatDate } from '@/utils/dateFormatter';
 import { Avatar, Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 

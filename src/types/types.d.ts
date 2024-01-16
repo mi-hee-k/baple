@@ -64,3 +64,13 @@ export interface PlacesWithBookmarksReviews extends Tables<'places'> {
     user_id: string;
   }[];
 }
+
+export interface ReviewWithPlaceAndUser extends Tables<'reviews'> {
+  places: {
+    place_name: string;
+  };
+  users: {
+    avatar_url: string | null;
+    user_name: string;
+  };
+}
