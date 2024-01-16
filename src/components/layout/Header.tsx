@@ -71,12 +71,17 @@ const Header = () => {
         // handle token refreshed event
       } else if (event === 'USER_UPDATED') {
         // handle user updated event
-        dispatch(updateUser({ avatarUrl, username }));
+        dispatch(
+          updateUser({
+            avatarUrl: user?.avatar_url,
+            username: user?.user_name,
+          }),
+        );
         setCurrentUser(session?.user);
         // setusername(username);
       }
     });
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   const logOutHandler = async () => {
     const { error } = await supabase.auth.signOut();
@@ -85,7 +90,7 @@ const Header = () => {
   };
   console.log('currentUser', currentUser);
   return (
-    <header className='bg-yellow-300 py-2 font-bold sticky top-0 z-20 shadow-md'>
+    <header className='bg-[#FFD029] py-2 font-bold sticky top-0 z-20 shadow-md'>
       <div className='container m-auto flex items-center max-w-[1200px] min-h-[48px] w-[90%]'>
         <nav className='flex gap-6 w-full justify-between'>
           <Link href='/'>BAPLE</Link>
@@ -94,8 +99,6 @@ const Header = () => {
           <Link href='/place/bf2dafff-f2a1-41ff-942f-056a242e53f1'>
             장소 상세
           </Link>
-          <Link href='/review/1234'>리뷰 상세</Link>
-          <Link href='/review/write'>리뷰 작성</Link>
 
           {currentUser ? (
             <>

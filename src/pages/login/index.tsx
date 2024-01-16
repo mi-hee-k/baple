@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toastError, toastSuccess } from '@/libs/toastifyAlert';
 
 interface FormValues {
   email: string;
@@ -39,10 +40,10 @@ const LogInPage = () => {
 
     if (error) {
       console.error('error', error);
-      toast.error('로그인에 실패하였습니다.');
+      toastError('로그인에 실패하였습니다.');
     } else {
       console.log('data', data);
-      toast.success('로그인 되었습니다!');
+      toastSuccess('로그인 되었습니다!');
       router.push('/');
     }
   };
@@ -51,8 +52,7 @@ const LogInPage = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'kakao',
     });
-    console.log('KakaoLoginData', data);
-    console.log('kakaoLoginError', error);
+    if (error) throw error.message;
   };
   return (
     <>

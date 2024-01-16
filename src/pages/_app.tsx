@@ -3,6 +3,23 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import Providers from './providers';
 import { useRouter } from 'next/router';
+import localFont from 'next/font/local';
+
+const nanumSquareRound = localFont({
+  src: [
+    {
+      path: './fonts/NanumSquareRoundR.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/NanumSquareRoundB.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+});
+
 import Script from 'next/script';
 
 declare global {
@@ -23,24 +40,28 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (router.pathname === '/login' || router.pathname === '/signup') {
     return (
-      <Providers>
-        <Component {...pageProps} />
-        <Script
-          src='https://developers.kakao.com/sdk/js/kakao.js'
-          onLoad={kakaoInit}
-        />
-      </Providers>
+      <main className={nanumSquareRound.className}>
+        <Providers>
+          <Component {...pageProps} />
+          <Script
+            src='https://developers.kakao.com/sdk/js/kakao.js'
+            onLoad={kakaoInit}
+          />
+        </Providers>
+      </main>
     );
   }
   return (
-    <Providers>
-      <Layout>
-        <Component {...pageProps} />
-        <Script
-          src='https://developers.kakao.com/sdk/js/kakao.js'
-          onLoad={kakaoInit}
-        />
-      </Layout>
-    </Providers>
+    <main className={nanumSquareRound.className}>
+      <Providers>
+        <Layout>
+          <Component {...pageProps} />
+          <Script
+            src='https://developers.kakao.com/sdk/js/kakao.js'
+            onLoad={kakaoInit}
+          />
+        </Layout>
+      </Providers>
+    </main>
   );
 }

@@ -6,6 +6,7 @@ import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
 
 interface PlaceInfoAllData {
@@ -132,12 +133,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
 
   // 모달
   const showAlert = () => {
-    toast.warn('로그인 후 이용해 주세요', {
-      position: 'top-right',
-      autoClose: 2000,
-      progress: undefined,
-      theme: 'light',
-    });
+    toastWarn('로그인 후 이용해 주세요');
   };
 
   return (

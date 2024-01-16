@@ -14,6 +14,7 @@ import { deleteComment } from '@/apis/comments';
 import { toast } from 'react-toastify';
 
 import type { CommentsWithUser } from '@/types/types';
+import { toastSuccess } from '@/libs/toastifyAlert';
 
 interface Props {
   comment: CommentsWithUser;
@@ -24,12 +25,7 @@ const CommentCard = ({ comment }: Props) => {
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
-      toast.success('삭제 완료', {
-        position: 'top-right',
-        autoClose: 2000,
-        progress: undefined,
-        theme: 'light',
-      });
+      toastSuccess('삭제 완료');
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
@@ -43,8 +39,8 @@ const CommentCard = ({ comment }: Props) => {
       <CardBody>
         <div className='flex gap-4'>
           <div className='flex flex-col'>
-            <Avatar src={comment.users.avatar_url} showFallback />
-            <p className='text-md'>{comment.users.user_name}</p>
+            <Avatar src={comment.users?.avatar_url} showFallback />
+            <p className='text-md'>{comment.users?.user_name}</p>
           </div>
           <Divider orientation='vertical' className='border-gray-800' />
           <div className='w-full flex justify-between'>
