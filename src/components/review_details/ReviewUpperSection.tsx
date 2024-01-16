@@ -4,7 +4,7 @@ import React from 'react';
 import type { ReviewWithPlaceAndUser } from '@/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteReview } from '@/apis/reviews';
-import { toastSuccess } from '@/libs/toastifyAlert';
+import { toastError, toastSuccess } from '@/libs/toastifyAlert';
 import { useRouter } from 'next/router';
 
 interface Props {
@@ -21,6 +21,10 @@ const ReviewUpperSection = ({ review }: Props) => {
       toastSuccess('삭제 완료');
       queryClient.invalidateQueries({ queryKey: ['reviews', review.place_id] });
       router.back();
+    },
+    onError: () => {
+      toastError('문제가 발생하여 삭제하지 못했습니다');
+      return;
     },
   });
   const reviewDelete = () => {

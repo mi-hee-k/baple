@@ -54,6 +54,7 @@ export const getLikesWithCommentsByPlaceId = async (placeId: string) => {
   return data;
 };
 
+//리뷰 수정
 export const updateReviewContent = async ({
   id,
   editValue,
@@ -86,7 +87,6 @@ export const insertNewReview = async ({
       images_url: publicUrlList,
     },
   ]);
-  // .select();
   console.log('리뷰 삽입 데이터 > ', data);
   if (error) throw error;
 };
@@ -111,6 +111,10 @@ export const getReviewsByUserId = async (userId: string) => {
   return data;
 };
 
+//리뷰 삭제
 export const deleteReview = async (reviewId: string) => {
   const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
+  if (error) {
+    throw error;
+  }
 };
