@@ -38,6 +38,7 @@ const ReviewPage = () => {
     return (
       <>
         <MainWrapper>
+          <Spacer y={10} />
           <Seo title='Review' />
           <ReviewLikes review={review} />
           {review?.images_url && (
