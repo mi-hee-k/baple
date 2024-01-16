@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
-import { useKakaoLoader, useMap } from 'react-kakao-maps-sdk';
+import { Button } from '@nextui-org/react';
+import React from 'react';
+import { useMap } from 'react-kakao-maps-sdk';
 
 interface Maplocation {
   center: {
@@ -25,8 +26,10 @@ const MylocationButton = ({
   );
 
   return (
-    <div className='absolute flex bg-red-500 z-10 top-[3px] left-[130px] w-[90px] h-[35px] justify-center'>
-      <button
+    <div className='absolute flex  z-10 top-[3px] left-[130px] w-[90px] h-[32px] justify-center'>
+      <Button
+        color='primary'
+        className='bg-[#FFD029]'
         onClick={() => {
           map.setCenter(location);
           setLocation({
@@ -40,7 +43,7 @@ const MylocationButton = ({
         }}
       >
         나의 위치
-      </button>
+      </Button>
     </div>
   );
 };

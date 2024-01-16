@@ -192,7 +192,7 @@ export interface Database {
           created_at: string;
           id: string;
           images_url: Json | null;
-          place_id: string | null;
+          place_id: string;
           user_id: string | null;
         };
         Insert: {
@@ -234,21 +234,21 @@ export interface Database {
           created_at: string;
           email: string | null;
           id: string;
-          nickname: string | null;
+          username: string | null;
         };
         Insert: {
           avatar_url?: string | null;
           created_at?: string;
           email?: string | null;
           id: string;
-          nickname?: string | null;
+          username?: string | null;
         };
         Update: {
           avatar_url?: string | null;
           created_at?: string;
           email?: string | null;
           id?: string;
-          nickname?: string | null;
+          username?: string | null;
         };
         Relationships: [
           {

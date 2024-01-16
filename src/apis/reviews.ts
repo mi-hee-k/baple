@@ -38,3 +38,29 @@ export const updateReviewContent = async ({
     .eq('id', id)
     .select();
 };
+
+interface InsertReviewParams {
+  content: string;
+  placeId: string;
+  userId: string;
+  publicUrlList: string[];
+}
+
+export const insertNewReview = async ({
+  content,
+  placeId,
+  userId,
+  publicUrlList,
+}: InsertReviewParams) => {
+  const { data, error } = await supabase.from('reviews').insert([
+    {
+      content: content,
+      place_id: placeId,
+      user_id: userId,
+      images_url: publicUrlList,
+    },
+  ]);
+  // .select();
+  console.log('리뷰 삽입 데이터 > ', data);
+  if (error) throw error;
+};

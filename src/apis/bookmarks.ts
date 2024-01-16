@@ -14,32 +14,34 @@ export const insertBookmark = async ({ userId, placeId }: Props) => {
   if (error) {
     throw error;
   }
-  console.log('북마크 성공', insertBookmark);
+  // console.log('북마크 성공', data);
   return data;
 };
 
 // 북마크 가져오기
-export const getBookmark = async (userId: string) => {
+export const getBookmark = async ({ userId, placeId }: Props) => {
   const { data, error } = await supabase
     .from('bookmarks')
     .select()
-    .match({ user_id: userId });
+    .eq('place_id', placeId)
+    .eq('user_id', userId);
 
   if (error) {
     throw error;
   }
-  // console.log(data);
-  console.log(data);
   return data;
 };
 
 // 북마크 삭제
-export const deleteBookmark = async (placeId: string) => {
+export const deleteBookmark = async ({ userId, placeId }: Props) => {
   const { error } = await supabase
     .from('bookmarks')
     .delete()
+    .eq('user_id', userId)
     .eq('place_id', placeId);
+
   if (error) {
     console.log(error);
   }
+  // console.log('북마크 삭제');
 };

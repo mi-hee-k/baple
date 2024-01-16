@@ -1,3 +1,4 @@
+import Seo from '@/components/layout/Seo';
 import EventMarkerContainer from '@/components/map/MarkerContainer';
 import MylocationButton from '@/components/map/MylocationButton';
 import PlacesModal from '@/components/map/PlacesModal';
@@ -71,8 +72,8 @@ const NearByPage = () => {
           )
           .then((res) => {
             setRegionName(res.data.documents[0]?.address.region_2depth_name);
+            console.log(res.data.documents[0]?.address);
           });
-        console.log('afafafa');
       } catch (error) {
         console.log(error);
       }
@@ -146,6 +147,7 @@ const NearByPage = () => {
 
   return (
     <div style={{ position: 'relative', display: 'flex' }}>
+      <Seo title='내 근처 장소' />
       <Map // 지도를 표시할 Container
         center={location.center}
         style={{

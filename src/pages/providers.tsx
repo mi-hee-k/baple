@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import { NextUIProvider } from '@nextui-org/react';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import store from '@/redux/config/configStore';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -31,11 +32,18 @@ const Providers = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <NextUIProvider>
-        <Provider store={store}>
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ToastContainer />
-        </Provider>
+        <NextThemesProvider
+          attribute='class'
+          defaultTheme='baple'
+          //TODO: light, dark 대신 low-vision 이나 high-contrast 같은 theme 만들기
+          themes={['light', 'dark', 'baple']}
+        >
+          <Provider store={store}>
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+            <ToastContainer />
+          </Provider>
+        </NextThemesProvider>
       </NextUIProvider>
     </QueryClientProvider>
   );

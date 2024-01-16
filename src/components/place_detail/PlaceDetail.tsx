@@ -1,13 +1,8 @@
-import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmark';
+import { deleteBookmark, getBookmark, insertBookmark } from '@/apis/bookmarks';
 import { RootState } from '@/redux/config/configStore';
 import { Tables } from '@/types/supabase';
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
-import { Bookmark, BookmarkSolid } from 'iconoir-react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -18,12 +13,20 @@ interface PlaceInfoAllData {
 }
 
 const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const queryClient = useQueryClient();
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const userInfo = useSelector((state: RootState) => state.auth);
-  console.log(userInfo);
   const { place_name, tel, address, working_hours, holidays, lat, lng } =
     placeInfo;
-  console.log(lat, lng);
+
+  const { data: bookmarkState } = useQuery({
+    queryKey: ['bookmark', userInfo.userId, placeId],
+    queryFn: () => getBookmark({ userId: userInfo.userId, placeId }),
+  });
+
+  useEffect(() => {
+    setIsBookmarked(bookmarkState ? bookmarkState.length > 0 : false);
+  }, [bookmarkState]);
 
   const isInfoArray = [
     placeInfo.is_audio_guide,
@@ -47,33 +50,94 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     '휠체어 대여',
   ];
 
-  const queryClient = new QueryClient();
+  // 낙관적 업데이트 (추가)
+  const addBookmark = useMutation({
+    mutationFn: insertBookmark,
+    onMutate: async () => {
+      await queryClient.cancelQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+      const prev = queryClient.getQueryData([
+        'bookmark',
+        userInfo.userId,
+        placeId,
+      ]);
+      const updateBookmark = [{ user_id: userInfo.userId, place_id: placeId }];
+      queryClient.setQueryData(
+        ['bookmark', userInfo.userId, placeId],
+        updateBookmark,
+      );
+      return { prev };
+    },
+    onError: (error, updateReviewParams, context) => {
+      if (context?.prev) {
+        queryClient.setQueryData(
+          ['bookmark', userInfo.userId, placeId],
+          context.prev,
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+    },
+  });
 
+  // 낙관적 업데이트 (삭제)
+  const delBookmark = useMutation({
+    mutationFn: deleteBookmark,
+    onMutate: async () => {
+      await queryClient.cancelQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+      const prev = queryClient.getQueryData([
+        'bookmark',
+        userInfo.userId,
+        placeId,
+      ]);
+      const updateBookmark = undefined;
+      queryClient.setQueryData(
+        ['bookmark', userInfo.userId, placeId],
+        updateBookmark,
+      );
+      return { prev };
+    },
+    onError: (error, updateReviewParams, context) => {
+      if (context?.prev) {
+        queryClient.setQueryData(
+          ['bookmark', userInfo.userId, placeId],
+          context.prev,
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['bookmark', userInfo.userId, placeId],
+      });
+    },
+  });
+
+  // 버튼 토글
   const toggleBookmark = () => {
     if (isBookmarked) {
       setIsBookmarked(false);
-      addBookmark({ userId: userInfo.userId, placeId });
-      console.log(isBookmarked);
+      delBookmark.mutate({ userId: userInfo.userId, placeId });
     } else {
       setIsBookmarked(true);
-      delBookmark(placeId);
-      console.log(isBookmarked);
+      addBookmark.mutate({ userId: userInfo.userId, placeId });
     }
   };
 
-  const { mutate: addBookmark } = useMutation({
-    mutationFn: insertBookmark,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
-    },
-  });
-
-  const { mutate: delBookmark } = useMutation({
-    mutationFn: deleteBookmark,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
-    },
-  });
+  // 모달
+  const showAlert = () => {
+    toast.warn('로그인 후 이용해 주세요', {
+      position: 'top-right',
+      autoClose: 2000,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
 
   return (
     <section>
@@ -83,12 +147,25 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
             {place_name}
           </h1>
 
-          {isBookmarked ? (
-            <Bookmark className='cursor-pointer' onClick={toggleBookmark} />
+          {userInfo.isLoggedIn ? (
+            isBookmarked ? (
+              <FaBookmark
+                className='cursor-pointer'
+                size={20}
+                onClick={toggleBookmark}
+              />
+            ) : (
+              <FaRegBookmark
+                className='cursor-pointer'
+                size={20}
+                onClick={toggleBookmark}
+              />
+            )
           ) : (
-            <BookmarkSolid
+            <FaRegBookmark
               className='cursor-pointer'
-              onClick={toggleBookmark}
+              size={20}
+              onClick={showAlert}
             />
           )}
         </div>
@@ -97,7 +174,9 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
       <div className='mb-[10px]'>
         <p>전화 : {tel}</p>
         <p>주소 : {address}</p>
-        <p>운영시간 : {working_hours}</p>
+        <p>
+          운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
+        </p>
         <p>휴무일 : {holidays === 'null' ? '정보없음' : holidays}</p>
       </div>
       <div className='flex gap-2 mb-[30px] flex-wrap'>

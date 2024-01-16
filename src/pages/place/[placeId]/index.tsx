@@ -7,6 +7,7 @@ import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import { useRouter } from 'next/router';
+import Seo from '@/components/layout/Seo';
 
 const PlacePage = () => {
   const router = useRouter();
@@ -23,15 +24,17 @@ const PlacePage = () => {
   });
 
   const imgList = reviews?.map((item) => item.images_url).flat() as string[];
+  // console.log(imgList);
 
   if (placeInfoLoading || reviewLoading) {
     return <div>Loading...</div>;
   }
 
-  // console.log('reviews', reviews);
+  console.log('reviews', reviews);
 
   return (
     <MainWrapper>
+      <Seo title={placeInfo.place_name} />
       {imgList && (
         <Carousel
           slideData={imgList ?? []} // imgList가 없으면 빈배열
@@ -48,20 +51,21 @@ const PlacePage = () => {
         <div className='w-[80%] h-[300px] bg-blue-400 mx-auto'>지도</div>
       </section>
       <section className='mb-[30px] text-center'>
-        <Link href={'/review/write'}>
-          <button className='bg-red-400 p-4 rounded-md text-white'>
-            리뷰 작성하기
-          </button>
-        </Link>
+        <button
+          className='bg-red-400 p-4 rounded-md text-white'
+          onClick={() => router.push(`/review/write/${placeId}`)}
+        >
+          리뷰 작성하기
+        </button>
       </section>
 
       {/* 리뷰 */}
       <section>
         <h2 className='mb-[50px] text-3xl font-bold text-center'>방문 후기</h2>
-        <div className='flex gap-6 px-6 mb-[20px]'>
+        <div className='flex gap-6 px-6 mb-[20px] flex-wrap justify-center items-center'>
           {/* 리뷰카드 */}
           {reviews?.map((review) => (
-            <Link href={'/review/1234'} key={review.id}>
+            <Link href={`/review/${review.id}`} key={review.id}>
               <div className='w-[300px] bg-slate-200 p-4 rounded-xl shadow-md'>
                 <div className='flex items-center justify-between'>
                   {/* 리뷰헤더1 */}
