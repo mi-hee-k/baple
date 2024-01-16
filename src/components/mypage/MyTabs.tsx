@@ -14,13 +14,14 @@ import { getBookmarksByUserId } from '@/apis/bookmarks';
 import { getLikesByUserId } from '@/apis/likes';
 import ReviewCard from '../common/ReviewCard';
 import { getReviewsByUserId } from '@/apis/reviews';
+import PlaceCard2 from '../common/PlaceCard2';
 
 type Props = {
   userId: string;
 };
 
 const MyTabs = ({ userId }: Props) => {
-  const { data: bookmarksPlaces, isLoading: isBookmarksLoading } = useQuery({
+  const { data: bookmarkedPlaces, isLoading: isBookmarksLoading } = useQuery({
     queryKey: ['bookmark', userId],
     queryFn: () => getBookmarksByUserId(userId),
   });
@@ -37,7 +38,7 @@ const MyTabs = ({ userId }: Props) => {
     },
   );
 
-  console.log('내가 북마크한 장소', bookmarksPlaces);
+  console.log('내가 북마크한 장소', bookmarkedPlaces);
   console.log('내가 좋아요한 리뷰', likedReviews);
   console.log('내가 작성한 리뷰', writtenReviews);
 
@@ -48,11 +49,10 @@ const MyTabs = ({ userId }: Props) => {
       <Tabs aria-label='Options' color='primary'>
         <Tab key='photos' title='내가 북마크한 장소'>
           <Card>
-            <CardBody>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
-              porro eligendi aliquam libero ex, perspiciatis sed veniam
-              consequatur ipsam accusamus soluta dolorum, repellendus laboriosam
-              tempore molestias ipsum ab, esse deleniti.
+            <CardBody className='grid grid-cols-4 gap-12'>
+              {bookmarkedPlaces?.map((place, idx) => (
+                <PlaceCard2 key={idx} place={place} />
+              ))}
             </CardBody>
           </Card>
         </Tab>

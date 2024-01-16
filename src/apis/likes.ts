@@ -67,11 +67,9 @@ export const getLikesByUserId = async (userId: string) => {
       `
     reviews (
       *
-      
     )`,
     )
     .eq('user_id', userId);
   if (error) throw error;
-  console.log('data!~!', data);
   return data?.flatMap((item) => item.reviews) || [];
 };
