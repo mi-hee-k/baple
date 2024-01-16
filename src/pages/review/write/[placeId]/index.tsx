@@ -10,7 +10,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { insertNewReview } from '@/apis/reviews';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
@@ -25,7 +24,7 @@ const ReviewWritePage = () => {
     { file: File; imageUrl: string }[]
   >([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  // const [editorContent, setEditorContent] = useState(''); //TuiEditor 추가!
+  const [editorContent, setEditorContent] = useState(''); //TuiEditor 추가!
   const editorRef = useRef<any>(null); // TuiEditor의 ref를 설정
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
@@ -51,8 +50,6 @@ const ReviewWritePage = () => {
     const selectedFileArray = [...selectedFiles];
     if (files) {
       console.log('files', files);
-      // const imagesArray = Array.from(files);
-      // setImages(imagesArray);
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.size > 1024 * 1024) {
@@ -108,7 +105,8 @@ const ReviewWritePage = () => {
     const editorIns = editorRef?.current?.getInstance();
     const editValue = editorIns.getMarkdown();
 
-    console.log(editValue);
+    console.log('editValue', editValue);
+    console.log('editorRef', editorRef.current.value);
     // setEditorContent(editValue);
     // console.log('드러갔으??>>', editorContent);
 

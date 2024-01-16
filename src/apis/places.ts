@@ -47,3 +47,12 @@ export const updatePlaceImage = async ({ id, imageUrl }: Params) => {
 
   if (error) throw error;
 };
+
+export const searchPlaces = async (searchValue: string) => {
+  const { data, error } = await supabase
+    .from('places')
+    .select()
+    .textSearch('place_name', searchValue);
+  if (error) throw error;
+  return data;
+};
