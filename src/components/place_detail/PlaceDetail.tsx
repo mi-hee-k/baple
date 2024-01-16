@@ -6,6 +6,7 @@ import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
@@ -133,12 +134,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
 
   // 모달
   const showAlert = () => {
-    toast.warn('로그인 후 이용해 주세요', {
-      position: 'top-right',
-      autoClose: 2000,
-      progress: undefined,
-      theme: 'light',
-    });
+    toastWarn('로그인 후 이용해 주세요');
   };
 
   // 카카오 공유 - 중복 (통일해야함)

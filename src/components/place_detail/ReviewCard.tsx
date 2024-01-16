@@ -32,7 +32,9 @@ const ReviewCard = ({ review }: Props) => {
           <span className='inline-block font-bold text-xl'>
             {review.users.user_name}
           </span>
-          <span className='text-gray-500'>{formatDate(review.created_at)}</span>
+          <span className='text-gray-500 text-sm'>
+            {formatDate(review.created_at)}
+          </span>
         </div>
         <div>
           <p className='w-[100%] h-[70px] bg-white overflow-hidden whitespace-pre-line overflow-ellipsis break-all line-clamp-3'>

@@ -17,12 +17,11 @@ export const getReviewById = async (id: string) => {
 };
 
 // 리뷰 정보 (by placeId)
-export const getReviewByPlaceId = async (placeId: string) => {
+export const getReviewsByPlaceId = async (placeId: string) => {
   const { data: review, error } = await supabase
     .from('reviews')
     .select('*')
     .eq('place_id', placeId);
-  // console.log('review', review);
   if (error) {
     throw error;
   }
@@ -96,4 +95,14 @@ export const getPlacesByReviewCount = async () => {
     console.log(data);
     return data;
   }
+};
+
+// 유저가 작성한 리뷰 (by userId)
+export const getReviewsByUserId = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select()
+    .eq('user_id', userId);
+  if (error) throw error;
+  return data;
 };
