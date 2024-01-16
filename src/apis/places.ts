@@ -33,3 +33,17 @@ export const getPlaceInfoList = async (ids: string[]) => {
 
   return placeInfoList;
 };
+
+type Params = {
+  id: string;
+  imageUrl: string;
+};
+
+export const updatePlaceImage = async ({ id, imageUrl }: Params) => {
+  const { error } = await supabase
+    .from('places')
+    .update({ image_url: imageUrl })
+    .eq('id', id);
+
+  if (error) throw error;
+};
