@@ -96,8 +96,8 @@ const UserPage = () => {
     }
   };
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (error) return <div>에러 발생!</div>;
+  // if (isLoading) return <div>로딩중...</div>;
+  // if (error) return <div>에러 발생!</div>;
   return (
     <div className='flex m-8 gap-6'>
       <Seo title={`${user?.user_name}님의 페이지`} />

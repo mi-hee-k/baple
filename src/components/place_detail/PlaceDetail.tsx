@@ -5,9 +5,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
+import { RiKakaoTalkFill } from 'react-icons/ri';
+import { shareKakao } from '@/utils/shareKaKao';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -143,30 +144,69 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
           <h1 className='text-2xl text-bold mb-[10px] mr-[4px]'>
             {place_name}
           </h1>
-
+        </div>
+        <div className='flex'>
           {userInfo.isLoggedIn ? (
             isBookmarked ? (
-              <FaBookmark
-                className='cursor-pointer'
-                size={20}
-                onClick={toggleBookmark}
-              />
+              <>
+                <FaBookmark
+                  className='cursor-pointer mr-[10px]'
+                  size={30}
+                  onClick={toggleBookmark}
+                />
+                <RiKakaoTalkFill
+                  className='cursor-pointer '
+                  size={30}
+                  onClick={() =>
+                    shareKakao({
+                      address: placeInfo?.address,
+                      place_name: placeInfo?.place_name,
+                      placeId,
+                    })
+                  }
+                />
+              </>
             ) : (
-              <FaRegBookmark
-                className='cursor-pointer'
-                size={20}
-                onClick={toggleBookmark}
-              />
+              <>
+                <FaRegBookmark
+                  className='cursor-pointer mr-[10px]'
+                  size={30}
+                  onClick={toggleBookmark}
+                />
+                <RiKakaoTalkFill
+                  className='cursor-pointer '
+                  size={30}
+                  onClick={() =>
+                    shareKakao({
+                      address: placeInfo?.address,
+                      place_name: placeInfo?.place_name,
+                      placeId,
+                    })
+                  }
+                />
+              </>
             )
           ) : (
-            <FaRegBookmark
-              className='cursor-pointer'
-              size={20}
-              onClick={showAlert}
-            />
+            <>
+              <FaRegBookmark
+                className='cursor-pointer'
+                size={30}
+                onClick={showAlert}
+              />
+              <RiKakaoTalkFill
+                className='cursor-pointer '
+                size={30}
+                onClick={() =>
+                  shareKakao({
+                    address: placeInfo?.address,
+                    place_name: placeInfo?.place_name,
+                    placeId,
+                  })
+                }
+              />
+            </>
           )}
         </div>
-        <div>icons</div>
       </div>
       <div className='mb-[10px]'>
         <p>전화 : {tel === '' ? '정보없음' : tel}</p>
