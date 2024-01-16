@@ -95,9 +95,11 @@ const PlacePage = () => {
                   {/* 내용파트 */}
                   <div>
                     <div className='text-right'>
-                      <span className='mr-[6px]'>❤ {review.likes.length} </span>
                       <span className='mr-[6px]'>
-                        💬 {review.comments.length}
+                        ❤ {review.likes?.length}{' '}
+                      </span>
+                      <span className='mr-[6px]'>
+                        💬 {review.comments?.length}
                       </span>
                     </div>
                     <p className='w-[100%] h-[100px] p-2 mt-2 bg-white'>

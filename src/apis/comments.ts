@@ -32,3 +32,12 @@ export const deleteComment = async (commentId: string) => {
     .delete()
     .eq('id', commentId);
 };
+
+export const getCommentsByReviewId = async (reviewId: string) => {
+  const { data, error } = await supabase
+    .from('comments')
+    .select()
+    .eq('review_id', reviewId);
+  if (error) throw error;
+  return data;
+};

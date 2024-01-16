@@ -234,21 +234,21 @@ export interface Database {
           created_at: string;
           email: string | null;
           id: string;
-          username: string | null;
+          user_name: string | null;
         };
         Insert: {
           avatar_url?: string | null;
           created_at?: string;
           email?: string | null;
           id: string;
-          username?: string | null;
+          user_name?: string | null;
         };
         Update: {
           avatar_url?: string | null;
           created_at?: string;
           email?: string | null;
           id?: string;
-          username?: string | null;
+          user_name?: string | null;
         };
         Relationships: [
           {

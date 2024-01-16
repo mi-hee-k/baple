@@ -22,13 +22,6 @@ export type Database = MergeDeep<
   }
 >;
 
-export interface User {
-  userId: string;
-  email: string;
-  avatarUrl: string;
-  username: string;
-}
-
 export interface ReviewUpdateParams {
   id: string;
   editValue: string;
@@ -41,6 +34,21 @@ export interface CommentsWithUser extends Tables<'comments'> {
   };
 }
 
+export interface ReviewCard {
+  id: string;
+  content: string;
+  created_at: Date;
+  images_url: string[];
+  user_id: string;
+  place_id: string;
+  users?: {
+    avatar_url: string | undefined;
+    created_at: string;
+    email: string | null;
+    id: string;
+    user_name: string | null;
+  };
+}
 export interface PlacesWithBookmarksReviews extends Tables<'places'> {
   bookmarks: {
     id: string;

@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
+import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -26,17 +27,14 @@ const ReviewWritePage = () => {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-
     const selectedImageArray = [...selectedImages];
     const selectedFileArray = [...selectedFiles];
     if (files) {
       console.log('files', files);
-      // const imagesArray = Array.from(files);
-      // setImages(imagesArray);
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.size > 1024 * 1024) {
-          return toast.warn('최대 1MB까지 업로드 가능합니다.');
+          return toastWarn('최대 1MB까지 업로드 가능합니다.');
         }
         const imageUrl = URL.createObjectURL(file);
         console.log('imageUrl', imageUrl);
@@ -44,7 +42,7 @@ const ReviewWritePage = () => {
           selectedImageArray.push({ file, imageUrl });
           selectedFileArray.push(file);
         } else {
-          toast.warn('이미지는 최대 5장까지만 업로드 가능합니다.');
+          toastWarn('이미지는 최대 5장까지만 업로드 가능합니다.');
         }
       }
       setSelectedImages(selectedImageArray);
@@ -98,8 +96,7 @@ const ReviewWritePage = () => {
       publicUrlList,
     };
     mutate(args);
-
-    toast.success('등록되었습니다.');
+    toastSuccess('리뷰가 등록되었습니다.');
     setReviewText('');
     router.replace(`/place/${placeId}`);
   };
@@ -152,7 +149,7 @@ const ReviewWritePage = () => {
           variant='solid'
           className='px-8'
           onClick={onSubmitReview}
-          isDisabled={!selectedImages || !reviewText}
+          isDisabled={selectedImages.length === 0 || !reviewText}
         >
           등록하기
         </Button>
