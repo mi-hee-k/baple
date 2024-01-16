@@ -97,3 +97,13 @@ export const getPlacesByReviewCount = async () => {
     return data;
   }
 };
+
+// 유저가 작성한 리뷰 (by userId)
+export const getReviewsByUserId = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select()
+    .eq('user_id', userId);
+  if (error) throw error;
+  return data;
+};

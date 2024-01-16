@@ -13,36 +13,39 @@ import { useQuery } from '@tanstack/react-query';
 import { getBookmarksByUserId } from '@/apis/bookmarks';
 import { getLikesByUserId } from '@/apis/likes';
 import ReviewCard from '../common/ReviewCard';
-import { Tables } from '@/types/supabase';
-import { LikedReviews } from '@/types/types';
+import { getReviewsByUserId } from '@/apis/reviews';
 
 type Props = {
   userId: string;
 };
 
 const MyTabs = ({ userId }: Props) => {
-  const {
-    data: bookmarksPlace,
-    error,
-    isLoading: isBookmarksLoading,
-  } = useQuery({
+  const { data: bookmarksPlaces, isLoading: isBookmarksLoading } = useQuery({
     queryKey: ['bookmark', userId],
     queryFn: () => getBookmarksByUserId(userId),
   });
 
-  const { data: likedReview, isLoading: isLikesLoading } = useQuery({
+  const { data: likedReviews, isLoading: isLikesLoading } = useQuery({
     queryKey: ['likes', userId],
     queryFn: () => getLikesByUserId(userId),
   });
 
-  console.log('내가 북마크한 장소', bookmarksPlace);
-  console.log('내가 좋아요한 리뷰', likedReview);
+  const { data: writtenReviews, isLoading: isWrittenReviewsLoading } = useQuery(
+    {
+      queryKey: ['reviews', userId],
+      queryFn: () => getReviewsByUserId(userId),
+    },
+  );
+
+  console.log('내가 북마크한 장소', bookmarksPlaces);
+  console.log('내가 좋아요한 리뷰', likedReviews);
+  console.log('내가 작성한 리뷰', writtenReviews);
 
   if (isBookmarksLoading || isLikesLoading) return <div>로딩중...</div>;
 
   return (
     <div className='flex w-full flex-col'>
-      <Tabs aria-label='Options'>
+      <Tabs aria-label='Options' color='primary'>
         <Tab key='photos' title='내가 북마크한 장소'>
           <Card>
             <CardBody>
@@ -55,18 +58,19 @@ const MyTabs = ({ userId }: Props) => {
         </Tab>
         <Tab key='music' title='내가 좋아요한 리뷰'>
           <Card>
-            <CardBody className='grid grid-cols-3  gap-4'>
-              {likedReview?.map((review, idx) => (
+            <CardBody className='grid grid-cols-4 gap-4'>
+              {likedReviews?.map((review, idx) => (
                 <ReviewCard key={idx} review={review} />
               ))}
             </CardBody>
           </Card>
         </Tab>
-        <Tab key='videos' title='내가 댓글을 남긴 리뷰'>
+        <Tab key='videos' title='내가 작성한 리뷰'>
           <Card>
-            <CardBody>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
+            <CardBody className='grid grid-cols-4 gap-4'>
+              {writtenReviews?.map((review, idx) => (
+                <ReviewCard key={idx} review={review} />
+              ))}
             </CardBody>
           </Card>
         </Tab>

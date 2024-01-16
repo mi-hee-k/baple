@@ -1,5 +1,4 @@
 import { supabase } from '@/libs/supabase';
-import { LikedReviews } from '@/types/types';
 
 interface Props {
   userId: string;
@@ -67,8 +66,8 @@ export const getLikesByUserId = async (userId: string) => {
     .select(
       `
     reviews (
-      *,
-      users(*)
+      *
+      
     )`,
     )
     .eq('user_id', userId);
