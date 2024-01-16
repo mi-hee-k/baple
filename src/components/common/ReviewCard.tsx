@@ -1,12 +1,10 @@
 import { getCommentsByReviewId } from '@/apis/comments';
 import { getLikes } from '@/apis/likes';
 import { getUserDataById } from '@/apis/users';
-import { Tables } from '@/types/supabase';
 import { ReviewCard } from '@/types/types';
 import { formatDate } from '@/utils/dateFormatter';
 import { Avatar, Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -24,7 +22,7 @@ const ReviewCard = ({ review }: Props) => {
   });
 
   const { data: comments } = useQuery({
-    queryKey: ['comments', review.id],
+    queryKey: ['comment', review.id],
     queryFn: () => getCommentsByReviewId(review.id),
   });
 
