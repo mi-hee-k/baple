@@ -6,6 +6,7 @@ import { RootState } from '@/redux/config/configStore';
 import {
   InvalidateQueryFilters,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import { insertNewReview } from '@/apis/reviews';
@@ -14,6 +15,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { getPlaceInfo } from '@/apis/places';
 import TuiEditor from '@/components/common/TuiEditor';
 import dynamic from 'next/dynamic';
 
@@ -29,7 +31,11 @@ const ReviewWritePage = () => {
   const router = useRouter();
   const { placeId } = router.query;
 
-  console.log('editorRef', editorRef);
+  const { data: placeInfo } = useQuery({
+    queryKey: ['placeInfo', placeId],
+    queryFn: () => getPlaceInfo(placeId as string),
+    // staleTime: Infinity,
+  });
 
   const NoSsrEditor = dynamic(
     () => import('../../../../components/common/TuiEditor'),
@@ -116,6 +122,8 @@ const ReviewWritePage = () => {
         console.log('imageData', imageData);
         publicUrlList.push(imageData.publicUrl);
       }
+    }
+    if (placeInfo.image_url === null) {
     }
     const args = {
       content: editValue,
