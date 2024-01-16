@@ -134,7 +134,7 @@ export interface Database {
           is_wheelchair_rental: boolean | null;
           lat: number;
           lng: number;
-          place_name: string | null;
+          place_name: string;
           tel: string | null;
           working_hours: string | null;
         };
@@ -234,21 +234,21 @@ export interface Database {
           created_at: string;
           email: string | null;
           id: string;
-          username: string | null;
+          user_name: string | null;
         };
         Insert: {
           avatar_url?: string | null;
           created_at?: string;
           email?: string | null;
           id: string;
-          username?: string | null;
+          user_name?: string | null;
         };
         Update: {
           avatar_url?: string | null;
           created_at?: string;
           email?: string | null;
           id?: string;
-          username?: string | null;
+          user_name?: string | null;
         };
         Relationships: [
           {

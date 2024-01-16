@@ -1,5 +1,5 @@
 import { getPlaceInfo } from '@/apis/places';
-import { getReviewByPlaceId } from '@/apis/reviews';
+import { getLikesWithCommentsByPlaceId } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/common/Carousel';
 import { useQuery } from '@tanstack/react-query';
@@ -20,17 +20,18 @@ const PlacePage = () => {
 
   const { data: reviews, isLoading: reviewLoading } = useQuery({
     queryKey: ['reviews', placeId],
-    queryFn: () => getReviewByPlaceId(placeId),
+    queryFn: () => getLikesWithCommentsByPlaceId(placeId),
   });
 
-  const imgList = reviews?.map((item) => item.images_url).flat() as string[];
-  // console.log(imgList);
+  const imgList = reviews
+    ?.map((item) => item.images_url)
+    .flat()
+    .filter((url) => url !== null) as string[];
+  // console.log('imgList', imgList);
 
   if (placeInfoLoading || reviewLoading) {
     return <div>Loading...</div>;
   }
-
-  console.log('reviews', reviews);
 
   return (
     <MainWrapper>
@@ -64,34 +65,51 @@ const PlacePage = () => {
         <h2 className='mb-[50px] text-3xl font-bold text-center'>방문 후기</h2>
         <div className='flex gap-6 px-6 mb-[20px] flex-wrap justify-center items-center'>
           {/* 리뷰카드 */}
-          {reviews?.map((review) => (
-            <Link href={`/review/${review.id}`} key={review.id}>
-              <div className='w-[300px] bg-slate-200 p-4 rounded-xl shadow-md'>
-                <div className='flex items-center justify-between'>
-                  {/* 리뷰헤더1 */}
-                  <div className=' flex mb-[10px]'>
-                    <div className='rounded-full w-[40px] h-[40px] mr-[10px] bg-slate-300'></div>
-                    <span className='inline-block'>닉네임</span>
-                  </div>
-                  {/* 리뷰헤더2 */}
-                  <div>
-                    <span>{formatDate(review.created_at)}</span>
-                  </div>
-                </div>
-                {/* 이미지파트 */}
-                <div className='bg-slate-300 h-[150px] mb-[10px]'>Image</div>
 
-                {/* 내용파트 */}
-                <div>
-                  <span>❤</span>
-                  <span>💬</span>
-                  <p className='w-[100%] h-[100px] p-2 mt-2 bg-white'>
-                    {review.content}
-                  </p>
+          {reviews?.length === 0 ? (
+            <p>등록된 리뷰가 없습니다</p>
+          ) : (
+            reviews?.map((review) => (
+              <Link href={`/review/${review.id}`} key={review.id}>
+                <div className='w-[300px] bg-slate-200 p-4 rounded-xl shadow-md'>
+                  <div className='flex flex-col'>
+                    {/* 이미지파트 */}
+                    <div className='bg-slate-300 w-full h-[150px] mb-[10px]'>
+                      Image
+                    </div>
+
+                    {/* 유저정보 파트 */}
+                    <div className=' flex mb-[10px] items-center justify-between'>
+                      <div className='flex items-center'>
+                        {/* <div className='rounded-full w-[40px] h-[40px] mr-[6px] bg-slate-300'>
+                          img
+                        </div> */}
+                        <span className='inline-block'>닉네임</span>
+                      </div>
+                      <div>
+                        <span>{formatDate(review.created_at)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 내용파트 */}
+                  <div>
+                    <div className='text-right'>
+                      <span className='mr-[6px]'>
+                        ❤ {review.likes?.length}{' '}
+                      </span>
+                      <span className='mr-[6px]'>
+                        💬 {review.comments?.length}
+                      </span>
+                    </div>
+                    <p className='w-[100%] h-[100px] p-2 mt-2 bg-white'>
+                      {review.content}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+          )}
         </div>
       </section>
     </MainWrapper>

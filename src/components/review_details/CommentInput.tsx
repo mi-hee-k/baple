@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useForm, FieldErrors, FieldValues } from 'react-hook-form';
+import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 
 interface Props {
   reviewId: string;
@@ -29,12 +30,7 @@ const CommentInput = ({ reviewId }: Props) => {
   const InsertMutate = useMutation({
     mutationFn: insertNewComment,
     onSuccess: () => {
-      toast.success('댓글이 성공적으로 등록되었습니다!', {
-        position: 'top-right',
-        autoClose: 2000,
-        progress: undefined,
-        theme: 'light',
-      });
+      toastSuccess('댓글이 성공적으로 등록되었습니다!');
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
@@ -42,12 +38,7 @@ const CommentInput = ({ reviewId }: Props) => {
   const submitComment = async () => {
     // e.preventDefault();
     if (!isLoggedIn) {
-      toast.warning('로그인 후 이용해 주세요', {
-        position: 'top-right',
-        autoClose: 2000,
-        progress: undefined,
-        theme: 'light',
-      });
+      toastWarn('로그인 후 이용해 주세요');
       return;
     }
 
@@ -61,9 +52,7 @@ const CommentInput = ({ reviewId }: Props) => {
   const onError = (errors: FieldErrors<FieldValues>) => {
     if (errors.comment) {
       const errMsg = errors.comment.message as string;
-      toast.warning(errMsg, {
-        autoClose: 2000,
-      });
+      toastWarn(errMsg);
     }
   };
 
