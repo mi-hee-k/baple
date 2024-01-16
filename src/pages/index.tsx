@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { Inter, Noto_Sans_KR } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import Seo from '@/components/layout/Seo';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
@@ -9,7 +8,6 @@ import MostReviews from '@/components/home/MostReviews';
 import MostBookmarks from '@/components/home/MostBookmarks';
 import { Spacer } from '@nextui-org/react';
 import Carousel from '@/components/common/Carousel';
-import MainWrapper from '@/components/layout/MainWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
