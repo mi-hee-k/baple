@@ -1,7 +1,7 @@
 import { supabase } from '@/libs/supabase';
 
 // queryFn
-export const getUserDataById = async (userId: string) => {
+export const getUserDataById = async (userId: string | null) => {
   const { data: user, error } = await supabase
     .from('users')
     .select('*')

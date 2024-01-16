@@ -6,6 +6,7 @@ import { RootState } from '@/redux/config/configStore';
 import {
   InvalidateQueryFilters,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import { insertNewReview } from '@/apis/reviews';
@@ -14,6 +15,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { getPlaceInfo } from '@/apis/places';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -24,6 +26,14 @@ const ReviewWritePage = () => {
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const { placeId } = router.query;
+
+  const { data: placeInfo } = useQuery({
+    queryKey: ['placeInfo', placeId],
+    queryFn: () => getPlaceInfo(placeId as string),
+    // staleTime: Infinity,
+  });
+
+  console.log('placeInfo', placeInfo);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -88,6 +98,8 @@ const ReviewWritePage = () => {
         console.log('imageData', imageData);
         publicUrlList.push(imageData.publicUrl);
       }
+    }
+    if (placeInfo.image_url === null) {
     }
     const args = {
       content: reviewText,

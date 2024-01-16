@@ -1,7 +1,8 @@
 import { getCommentsByReviewId } from '@/apis/comments';
 import { getLikes } from '@/apis/likes';
 import { getUserDataById } from '@/apis/users';
-import { ReviewCard } from '@/types/types';
+import { Tables } from '@/types/supabase';
+// import { ReviewCard } from '@/types/types';
 import { formatDate } from '@/utils/dateFormatter';
 import { Avatar, Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
@@ -9,15 +10,15 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 type Props = {
-  review: ReviewCard;
+  review: Tables<'reviews'>;
 };
 
 const ReviewCard = ({ review }: Props) => {
   const router = useRouter();
-  console.log('reviewProps >> ', review);
+  console.log('reviewProps! >> ', review);
 
   const { data: likes } = useQuery({
-    queryKey: ['likes', review.id],
+    queryKey: ['like', review.id],
     queryFn: () => getLikes(review.id),
   });
 
@@ -51,7 +52,11 @@ const ReviewCard = ({ review }: Props) => {
           height={230}
           alt='review image'
           className='w-full object-cover h-[140px]'
-          src={review?.images_url ? review?.images_url[0] : undefined}
+          src={
+            Array.isArray(review?.images_url)
+              ? (review?.images_url[0] as string)
+              : undefined
+          }
         />
       </CardBody>
       <CardFooter className='text-small justify-between flex flex-col'>
