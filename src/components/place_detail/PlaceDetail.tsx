@@ -6,6 +6,8 @@ import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { toastWarn } from '@/libs/toastifyAlert';
+import { Chip } from '@nextui-org/react';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -46,7 +48,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     '장애인 화장실',
     '장애인용 출입문',
     '안내견 동반',
-    '입장료 있음',
+    '입장료',
     '휠체어 대여',
   ];
 
@@ -131,12 +133,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
 
   // 모달
   const showAlert = () => {
-    toast.warn('로그인 후 이용해 주세요', {
-      position: 'top-right',
-      autoClose: 2000,
-      progress: undefined,
-      theme: 'light',
-    });
+    toastWarn('로그인 후 이용해 주세요');
   };
 
   return (
@@ -172,7 +169,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
         <div>icons</div>
       </div>
       <div className='mb-[10px]'>
-        <p>전화 : {tel}</p>
+        <p>전화 : {tel === '' ? '정보없음' : tel}</p>
         <p>주소 : {address}</p>
         <p>
           운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
@@ -180,12 +177,15 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
         <p>휴무일 : {holidays === 'null' ? '정보없음' : holidays}</p>
       </div>
       <div className='flex gap-2 mb-[30px] flex-wrap'>
+        <div>편의시설</div>
         {isInfoArray.map((item, index) => (
           <div key={index}>
-            {item && (
-              <span className='bg-green-300 rounded-xl px-4 py-1'>
+            {item ? (
+              <Chip className='bg-primary rounded-xl px-4 py-1'>
                 {infoDetails[index]}
-              </span>
+              </Chip>
+            ) : (
+              <Chip className='rounded-xl px-4 py-1'>{infoDetails[index]}</Chip>
             )}
           </div>
         ))}

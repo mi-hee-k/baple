@@ -2,7 +2,8 @@ import { supabase } from '@/libs/supabase';
 
 import type { Tables } from '@/types/supabase';
 import type { ReviewUpdateParams } from '@/types/types';
-// 리뷰 아이디 가져오기
+
+// 리뷰 가져오기 (by Id)
 export const getReviewById = async (id: string) => {
   const { data: review, error } = await supabase
     .from('reviews')
@@ -16,16 +17,37 @@ export const getReviewById = async (id: string) => {
 };
 
 // 리뷰 정보 (by placeId)
-export const getReviewByPlaceId = async (placeId: string) => {
+export const getReviewsByPlaceId = async (placeId: string) => {
   const { data: review, error } = await supabase
     .from('reviews')
     .select('*')
     .eq('place_id', placeId);
-  // console.log('review', review);
   if (error) {
     throw error;
   }
   return review;
+};
+
+export const getLikesWithCommentsByPlaceId = async (placeId: string) => {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select(
+      `
+    *,
+    likes(*),
+    comments(*),
+    users (
+      user_name
+    )
+  `,
+    )
+    .eq('place_id', placeId);
+
+  if (error) {
+    throw error;
+  }
+  console.log('여기!!!!!!!!!', data);
+  return data;
 };
 
 export const updateReviewContent = async ({
@@ -73,4 +95,14 @@ export const getPlacesByReviewCount = async () => {
     console.log(data);
     return data;
   }
+};
+
+// 유저가 작성한 리뷰 (by userId)
+export const getReviewsByUserId = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select()
+    .eq('user_id', userId);
+  if (error) throw error;
+  return data;
 };

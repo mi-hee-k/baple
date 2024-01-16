@@ -1,11 +1,9 @@
-import React, { useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 interface Props {
   content: string;
   editorRef: React.MutableRefObject<any>;
-  onChange: (value: string) => void;
 }
 
 const TuiEditor = ({ content = '', editorRef }: Props) => {

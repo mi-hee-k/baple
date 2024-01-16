@@ -13,19 +13,30 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
+import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import TuiEditor from '@/components/common/TuiEditor';
+import dynamic from 'next/dynamic';
 
 const ReviewWritePage = () => {
-  const [reviewText, setReviewText] = useState('');
+  // const [reviewText, setReviewText] = useState('');
   const [selectedImages, setSelectedImages] = useState<
     { file: File; imageUrl: string }[]
   >([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [editorContent, setEditorContent] = useState('');
-  const editorRef = useRef(null);
+  // const [editorContent, setEditorContent] = useState(''); //TuiEditor 추가!
+  const editorRef = useRef<any>(null); // TuiEditor의 ref를 설정
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const { placeId } = router.query;
+
+  console.log('editorRef', editorRef);
+
+  const NoSsrEditor = dynamic(
+    () => import('../../../../components/common/TuiEditor'),
+    {
+      ssr: false,
+    },
+  );
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -67,9 +78,9 @@ const ReviewWritePage = () => {
     },
   });
 
-  const handleEditorChange = (value: string) => {
-    setEditorContent(value);
-  };
+  // const handleEditorChange = (value: string) => {
+  //   setEditorContent(value);
+  // }; //Editor 핸들러
 
   const handleRemoveImage = (index: number) => {
     const updatedImages = [...selectedImages];
@@ -81,6 +92,14 @@ const ReviewWritePage = () => {
   };
 
   const onSubmitReview = async () => {
+    // const editorValue = editorRef.current.getInstance().getValue(); //추가
+    const editorIns = editorRef?.current?.getInstance();
+    const editValue = editorIns.getMarkdown();
+
+    console.log(editValue);
+    // setEditorContent(editValue);
+    // console.log('드러갔으??>>', editorContent);
+
     const publicUrlList: string[] = [];
     if (selectedFiles) {
       for (const file of selectedFiles) {
@@ -99,15 +118,16 @@ const ReviewWritePage = () => {
       }
     }
     const args = {
-      content: reviewText,
+      content: editValue,
       placeId: placeId as string,
       userId,
       publicUrlList,
     };
+
     mutate(args);
 
     toast.success('등록되었습니다.');
-    setReviewText('');
+    // setReviewText('');
     router.replace(`/place/${placeId}`);
   };
 
@@ -160,11 +180,8 @@ const ReviewWritePage = () => {
           placeholder='이용자님의 소중한 경험을 남겨 주세요. 자세히 작성할수록 다른 이용자에게 큰 도움이 됩니다.'
           className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
         /> */}
-        <TuiEditor
-          content={editorContent}
-          editorRef={editorRef}
-          onChange={handleEditorChange}
-        />
+
+        <NoSsrEditor content='' editorRef={editorRef} />
       </div>
       <div className='flex itmes-center justify-center'>
         <Spacer x={2} />
@@ -173,7 +190,7 @@ const ReviewWritePage = () => {
           variant='solid'
           className='px-8'
           onClick={onSubmitReview}
-          isDisabled={!selectedImages || !reviewText}
+          // isDisabled={!selectedImages || false}
         >
           등록하기
         </Button>

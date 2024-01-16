@@ -1,18 +1,33 @@
 import React from 'react';
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 import { useRouter } from 'next/router';
+import { Tables } from '@/types/supabase';
+import { useQuery } from '@tanstack/react-query';
+import { getBookmarksByPlaceId } from '@/apis/bookmarks';
+import { getReviewsByPlaceId } from '@/apis/reviews';
 
-import type { PlacesWithBookmarksReviews } from '@/types/types';
+type Props = {
+  place: Tables<'places'>;
+};
 
-interface Props {
-  place: PlacesWithBookmarksReviews;
-}
-
-const PlaceCard = ({ place }: Props) => {
+const PlaceCard2 = ({ place }: Props) => {
   const router = useRouter();
-  console.log('placeCardProps', place);
+  console.log('placeCard2Props', place);
   const imgURL = place.image_url;
   console.log(imgURL);
+
+  const { data: bookmarksData, isLoading: isBookmarksLoading } = useQuery({
+    queryKey: ['bookmarks', place.id],
+    queryFn: () => getBookmarksByPlaceId(place.id),
+  });
+
+  const { data: reviewsData, isLoading: isReviewsLoading } = useQuery({
+    queryKey: ['reviews', place.id],
+    queryFn: () => getReviewsByPlaceId(place.id),
+  });
+
+  console.log('bookmarksPlace', bookmarksData);
+  console.log('reviewsData', reviewsData);
   return (
     <div className='m-1'>
       <Card
@@ -38,8 +53,8 @@ const PlaceCard = ({ place }: Props) => {
             <strong>{place.place_name}</strong>
             <div className='flex justify-between w-[210px]'>
               <div>
-                <span>📑{place.reviews.length}</span>
-                <span>🔖{place.bookmarks.length}</span>
+                <span>📑{reviewsData?.length}</span>
+                <span>🔖{bookmarksData?.length}</span>
               </div>
               <span className='text-s'>{place.city}</span>
             </div>
@@ -50,4 +65,4 @@ const PlaceCard = ({ place }: Props) => {
   );
 };
 
-export default PlaceCard;
+export default PlaceCard2;

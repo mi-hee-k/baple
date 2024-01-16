@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import React, { useEffect, useState } from 'react';
-import type { User } from '@/types/types';
 import { getUserDataById, updateUser } from '@/apis/users';
 import {
   InvalidateQueryFilters,
@@ -12,10 +11,12 @@ import {
 import { Avatar, Button, Card, CardBody, Input } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
 import { supabase } from '@/libs/supabase';
-import { toast } from 'react-toastify';
 import { MdPhotoCameraBack } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
+import { toastWarn } from '@/libs/toastifyAlert';
+import MainWrapper from '@/components/layout/MainWrapper';
+import MyTabs from '@/components/mypage/MyTabs';
 
 const UserPage = () => {
   const router = useRouter();
@@ -24,9 +25,9 @@ const UserPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState(username);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState(avatarUrl);
 
   // const { userId } = router.query as { userId: string };
-  const [imagePreview, setImagePreview] = useState(avatarUrl);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -40,7 +41,6 @@ const UserPage = () => {
     data: user,
     error,
     isLoading,
-    refetch,
   } = useQuery({
     queryKey: ['user', userId],
     queryFn: () => getUserDataById(userId),
@@ -88,7 +88,7 @@ const UserPage = () => {
     if (e.target.files) {
       const selectedFile = e.target.files[0];
       if (selectedFile.size > 1024 * 1024) {
-        return toast.warn('최대 1MB까지 업로드 가능합니다.');
+        return toastWarn('최대 1MB까지 업로드 가능합니다.');
       }
       const imgUrl = URL.createObjectURL(selectedFile);
       setNewAvatar(selectedFile);
@@ -96,16 +96,15 @@ const UserPage = () => {
     }
   };
 
-  console.log('imagePreview', imagePreview);
-  console.log('newAvatar', newAvatar);
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>에러 발생!</div>;
   return (
-    <>
+    <div className='flex m-8 gap-6'>
       <Seo title={`${user?.user_name}님의 페이지`} />
       <div className='flex justify-center'>
-        <Card className='w-[400px]'>
+        <Card className='w-96'>
           <CardBody className='flex gap-6 items-center'>
+            <h2>프로필</h2>
             {isEditing ? (
               <label className='relative'>
                 <Avatar showFallback src={imagePreview} className='w-36 h-36' />
@@ -124,11 +123,11 @@ const UserPage = () => {
               <Avatar
                 showFallback
                 src={user?.avatar_url}
-                className='w-24 h-24'
+                className='w-36 h-36'
               />
             )}
             <div className='flex flex-col gap-6'>
-              <div className='flex gap-3'>
+              <div className='flex gap-3 items-center'>
                 <label className='w-16'>닉네임</label>
                 {isEditing ? (
                   <Input
@@ -139,26 +138,30 @@ const UserPage = () => {
                   <span className='text-md'>{user?.user_name}</span>
                 )}
               </div>
-              <div className='flex gap-3'>
+              <div className='flex gap-3 items-center'>
                 <label className='w-16'>이메일</label>
                 <span className='text-small text-default-500'>
                   {user?.email}
                 </span>
               </div>
               {isEditing ? (
-                <div className='flex gap-4'>
-                  <Button onClick={onEditDone}>수정완료</Button>
+                <div className='flex gap-4 justify-center'>
+                  <Button onClick={onEditDone} color='primary'>
+                    수정완료
+                  </Button>
                   <Button
                     onClick={() => {
                       setIsEditing(false);
                       // setImagePreview('');
                     }}
+                    color='primary'
+                    variant='bordered'
                   >
                     취소
                   </Button>
                 </div>
               ) : (
-                <Button onClick={() => setIsEditing(true)}>
+                <Button onClick={() => setIsEditing(true)} color='primary'>
                   회원정보 수정
                 </Button>
               )}
@@ -166,7 +169,8 @@ const UserPage = () => {
           </CardBody>
         </Card>
       </div>
-    </>
+      <MyTabs userId={userId} />
+    </div>
   );
 };
 
