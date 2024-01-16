@@ -116,7 +116,7 @@ export interface Database {
       };
       places: {
         Row: {
-          address: string | null;
+          address: string;
           category_1: string | null;
           category_2: string | null;
           city: string | null;

@@ -4,10 +4,10 @@ import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/common/Carousel';
 import { useQuery } from '@tanstack/react-query';
 import PlaceDetail from '@/components/place_detail/PlaceDetail';
-import Link from 'next/link';
-import { formatDate } from '@/utils/dateFormatter';
 import { useRouter } from 'next/router';
 import Seo from '@/components/layout/Seo';
+
+import ReviewCard from '@/components/common/ReviewCard';
 
 const PlacePage = () => {
   const router = useRouter();
@@ -36,6 +36,7 @@ const PlacePage = () => {
   return (
     <MainWrapper>
       <Seo title={placeInfo.place_name} />
+      {/* 이미지 캐러셀 */}
       {imgList && (
         <Carousel
           slideData={imgList ?? []} // imgList가 없으면 빈배열
@@ -63,51 +64,13 @@ const PlacePage = () => {
       {/* 리뷰 */}
       <section>
         <h2 className='mb-[50px] text-3xl font-bold text-center'>방문 후기</h2>
-        <div className='flex gap-6 px-6 mb-[20px] flex-wrap justify-center items-center'>
+        <div className='grid grid-cols-4 gap-6 mb-[20px] flex-wrap justify-center items-center'>
           {/* 리뷰카드 */}
-
           {reviews?.length === 0 ? (
             <p>등록된 리뷰가 없습니다</p>
           ) : (
             reviews?.map((review) => (
-              <Link href={`/review/${review.id}`} key={review.id}>
-                <div className='w-[300px] bg-slate-200 p-4 rounded-xl shadow-md'>
-                  <div className='flex flex-col'>
-                    {/* 이미지파트 */}
-                    <div className='bg-slate-300 w-full h-[150px] mb-[10px]'>
-                      Image
-                    </div>
-
-                    {/* 유저정보 파트 */}
-                    <div className=' flex mb-[10px] items-center justify-between'>
-                      <div className='flex items-center'>
-                        {/* <div className='rounded-full w-[40px] h-[40px] mr-[6px] bg-slate-300'>
-                          img
-                        </div> */}
-                        <span className='inline-block'>닉네임</span>
-                      </div>
-                      <div>
-                        <span>{formatDate(review.created_at)}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 내용파트 */}
-                  <div>
-                    <div className='text-right'>
-                      <span className='mr-[6px]'>
-                        ❤ {review.likes?.length}{' '}
-                      </span>
-                      <span className='mr-[6px]'>
-                        💬 {review.comments?.length}
-                      </span>
-                    </div>
-                    <p className='w-[100%] h-[100px] p-2 mt-2 bg-white'>
-                      {review.content}
-                    </p>
-                  </div>
-                </div>
-              </Link>
+              <ReviewCard key={review.id} review={review} />
             ))
           )}
         </div>
