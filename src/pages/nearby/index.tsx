@@ -1,9 +1,12 @@
 import Seo from '@/components/layout/Seo';
-import EventMarkerContainer from '@/components/overlaymap/MarkerContainer';
-import MylocationButton from '@/components/overlaymap/MylocationButton';
+import EventMarkerContainer from '@/components/map/MarkerContainer';
+import MylocationButton from '@/components/map/MylocationButton';
+import PlacesModal from '@/components/map/PlacesModal';
 import { supabase } from '@/libs/supabase';
+import { placesData } from '@/redux/modules/placesDataSlice';
 import { Tables } from '@/types/supabase';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import {
   Map,
@@ -11,6 +14,7 @@ import {
   MapTypeControl,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
+import { useDispatch } from 'react-redux';
 
 interface Maplocation {
   center: {
@@ -44,8 +48,9 @@ const NearByPage = () => {
     isLoading: true,
   });
   const [regionName, setRegionName] = useState<string>('');
+  const [cityName, setCityName] = useState<string>('');
   const [place, setplace] = useState<Tables<'places'>[] | null>([]);
-
+  const dispatch = useDispatch();
   /**
    * 현재 할것
    * 1. 현재 위경도 값을 동적으로 변환 시키기 위해 sdk제공 코드 사용
@@ -69,6 +74,8 @@ const NearByPage = () => {
           )
           .then((res) => {
             setRegionName(res.data.documents[0]?.address.region_2depth_name);
+            setCityName(res.data.documents[0]?.address.region_1depth_name);
+            console.log(res.data.documents[0]?.address);
           });
       } catch (error) {
         console.log(error);
@@ -88,9 +95,11 @@ const NearByPage = () => {
       let { data: places, error } = await supabase
         .from('places')
         .select('*')
-        .eq('district', regionName);
+        .eq('district', regionName)
+        .eq('city', cityName);
       if (places !== null) {
         setplace(places);
+        dispatch(placesData(places));
         console.log('데이터가 fecthing 되었습니다');
       }
       if (error) console.log('error');
@@ -149,10 +158,10 @@ const NearByPage = () => {
           // 지도의 크기
           width: '100%',
           height: '93vh',
-          marginBottom: 0,
         }}
-        level={5} // 지도의 확대 레벨
-        zoomable={false}
+        level={7} // 지도의 확대 레벨
+        maxLevel={7}
+        zoomable={true}
         keyboardShortcuts={true}
         onDragEnd={(map) =>
           setLocation({
@@ -177,9 +186,10 @@ const NearByPage = () => {
         {place?.map((item) => (
           <EventMarkerContainer key={item.id} item={item} />
         ))}
-        <MylocationButton mylocation={mylocation} />
-        <MapTypeControl position={'TOPRIGHT'} />
-        <ZoomControl position={'RIGHT'} />
+        <PlacesModal cityName={cityName} regionName={regionName} />
+        <MylocationButton mylocation={mylocation} setLocation={setLocation} />
+        <MapTypeControl position={'TOPLEFT'} />
+        <ZoomControl position={'LEFT'} />
       </Map>
     </div>
   );
