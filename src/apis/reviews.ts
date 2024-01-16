@@ -1,19 +1,23 @@
 import { supabase } from '@/libs/supabase';
 
-import type { Tables } from '@/types/supabase';
-import type { ReviewUpdateParams } from '@/types/types';
+import type { ReviewUpdateParams, ReviewWithPlaceAndUser } from '@/types/types';
 
 // 리뷰 가져오기 (by Id)
 export const getReviewById = async (id: string) => {
   const { data: review, error } = await supabase
     .from('reviews')
-    .select('*')
+    .select(
+      `*,
+      places(place_name),
+      users(avatar_url,user_name)
+      `,
+    )
     .eq('id', id)
     .single();
   if (error) {
     throw error;
   }
-  return review as Tables<'reviews'>;
+  return review as ReviewWithPlaceAndUser;
 };
 
 // 리뷰 정보 (by placeId)
@@ -105,4 +109,8 @@ export const getReviewsByUserId = async (userId: string) => {
     .eq('user_id', userId);
   if (error) throw error;
   return data;
+};
+
+export const deleteReview = async (reviewId: string) => {
+  const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
 };
