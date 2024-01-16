@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
@@ -13,7 +12,7 @@ import { FaPaperclip } from 'react-icons/fa';
 import { Tables } from '@/types/supabase';
 import { getPlaceInfo } from '@/apis/places';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
-import { shareKaKao } from '@/utils/shareKaKao';
+import { shareKakao } from '@/utils/shareKaKao';
 
 interface Props {
   review: Tables<'reviews'>;
@@ -258,7 +257,7 @@ const ReviewLikes = ({ review }: Props) => {
                   size={24}
                   className='cursor-pointer'
                   onClick={() =>
-                    shareKaKao({
+                    shareKakao({
                       address: placeInfo?.address,
                       place_name: placeInfo?.place_name,
                       placeId: review.place_id,

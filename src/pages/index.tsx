@@ -3,7 +3,6 @@ import Seo from '@/components/layout/Seo';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useEffect, useState } from 'react';
-import { getPlacesByReviewCount } from '@/apis/reviews';
 import MostReviews from '@/components/home/MostReviews';
 import MostBookmarks from '@/components/home/MostBookmarks';
 import { Spacer } from '@nextui-org/react';

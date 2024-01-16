@@ -5,11 +5,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
-import { shareKaKao } from '@/utils/shareKaKao';
+import { shareKakao } from '@/utils/shareKaKao';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -159,7 +158,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                   className='cursor-pointer '
                   size={30}
                   onClick={() =>
-                    shareKaKao({
+                    shareKakao({
                       address: placeInfo?.address,
                       place_name: placeInfo?.place_name,
                       placeId,
@@ -178,7 +177,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                   className='cursor-pointer '
                   size={30}
                   onClick={() =>
-                    shareKaKao({
+                    shareKakao({
                       address: placeInfo?.address,
                       place_name: placeInfo?.place_name,
                       placeId,
@@ -198,7 +197,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                 className='cursor-pointer '
                 size={30}
                 onClick={() =>
-                  shareKaKao({
+                  shareKakao({
                     address: placeInfo?.address,
                     place_name: placeInfo?.place_name,
                     placeId,

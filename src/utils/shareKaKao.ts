@@ -4,7 +4,7 @@ interface Props {
   placeId: string;
 }
 
-export const shareKaKao = async ({ address, place_name, placeId }: Props) => {
+export const shareKakao = async ({ address, place_name, placeId }: Props) => {
   await window.Kakao.Share.sendDefault({
     objectType: 'location',
     address: `${address}`,
