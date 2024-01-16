@@ -12,7 +12,7 @@ const PlacesModal = ({
   regionName: string;
   cityName: string;
 }) => {
-  const places = useSelector((state: RootState) => state.placesDataSlice);
+  const places = useSelector((state: RootState) => state.placesData);
   console.log(places);
 
   // 현재 페이지
