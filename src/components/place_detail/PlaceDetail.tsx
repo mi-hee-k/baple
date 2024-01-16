@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
+import { shareKaKao } from '@/utils/shareKaKao';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -137,32 +138,6 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     toastWarn('로그인 후 이용해 주세요');
   };
 
-  // 카카오 공유 - 중복 (통일해야함)
-  const shareKaKao = async () => {
-    await window.Kakao.Share.sendDefault({
-      objectType: 'location',
-      address: `${placeInfo?.address}`,
-      addressTitle: `${placeInfo?.place_name}`,
-      content: {
-        title: 'Baple',
-        description: `${placeInfo?.place_name}`,
-        imageUrl:
-          'https://velog.velcdn.com/images/jetiiin/post/3e477527-5e73-4a52-a8de-c0d1dec00f8a/image.png',
-        link: {
-          webUrl: `http://localhost:3000/place/${placeId}`,
-        },
-      },
-      buttons: [
-        {
-          title: '웹으로 보기',
-          link: {
-            webUrl: `http://localhost:3000/place/${placeId}`,
-          },
-        },
-      ],
-    });
-  };
-
   return (
     <section>
       <div className=' flex justify-between'>
@@ -183,7 +158,13 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                 <RiKakaoTalkFill
                   className='cursor-pointer '
                   size={30}
-                  onClick={shareKaKao}
+                  onClick={() =>
+                    shareKaKao({
+                      address: placeInfo?.address,
+                      place_name: placeInfo?.place_name,
+                      placeId,
+                    })
+                  }
                 />
               </>
             ) : (
@@ -196,7 +177,13 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                 <RiKakaoTalkFill
                   className='cursor-pointer '
                   size={30}
-                  onClick={shareKaKao}
+                  onClick={() =>
+                    shareKaKao({
+                      address: placeInfo?.address,
+                      place_name: placeInfo?.place_name,
+                      placeId,
+                    })
+                  }
                 />
               </>
             )
@@ -210,7 +197,13 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
               <RiKakaoTalkFill
                 className='cursor-pointer '
                 size={30}
-                onClick={shareKaKao}
+                onClick={() =>
+                  shareKaKao({
+                    address: placeInfo?.address,
+                    place_name: placeInfo?.place_name,
+                    placeId,
+                  })
+                }
               />
             </>
           )}

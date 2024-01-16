@@ -13,6 +13,7 @@ import { FaPaperclip } from 'react-icons/fa';
 import { Tables } from '@/types/supabase';
 import { getPlaceInfo } from '@/apis/places';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { shareKaKao } from '@/utils/shareKaKao';
 
 interface Props {
   review: Tables<'reviews'>;
@@ -205,32 +206,6 @@ const ReviewLikes = ({ review }: Props) => {
     setIsShown((prev) => !prev);
   };
 
-  // 카카오 공유 - 중복 (통일해야함)
-  const shareKaKao = async () => {
-    await window.Kakao.Share.sendDefault({
-      objectType: 'location',
-      address: `${placeInfo?.address}`,
-      addressTitle: `${placeInfo?.place_name}`,
-      content: {
-        title: 'Baple',
-        description: `${placeInfo?.place_name}`,
-        imageUrl:
-          'https://velog.velcdn.com/images/jetiiin/post/3e477527-5e73-4a52-a8de-c0d1dec00f8a/image.png',
-        link: {
-          webUrl: `http://localhost:3000/place/${review.place_id}`,
-        },
-      },
-      buttons: [
-        {
-          title: '웹으로 보기',
-          link: {
-            webUrl: `http://localhost:3000/place/${review.place_id}`,
-          },
-        },
-      ],
-    });
-  };
-
   // 클립보드 url 복사
   const copyClipboard = () => {
     const baseUrl = 'http://localhost:3000';
@@ -282,7 +257,13 @@ const ReviewLikes = ({ review }: Props) => {
                 <RiKakaoTalkFill
                   size={24}
                   className='cursor-pointer'
-                  onClick={shareKaKao}
+                  onClick={() =>
+                    shareKaKao({
+                      address: placeInfo?.address,
+                      place_name: placeInfo?.place_name,
+                      placeId: review.place_id,
+                    })
+                  }
                 />
               </div>
               <div
