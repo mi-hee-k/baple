@@ -95,7 +95,7 @@ const Header = () => {
         <nav className='flex gap-6 w-full justify-between'>
           <Link href='/'>BAPLE</Link>
           <Link href='/nearby'>주변 장소</Link>
-          <Link href='/places'>장소 목록</Link>
+          <Link href='/places'>장소 검색</Link>
           <Link href='/place/bf2dafff-f2a1-41ff-942f-056a242e53f1'>
             장소 상세
           </Link>
