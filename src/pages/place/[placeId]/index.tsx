@@ -18,6 +18,7 @@ import {
 } from 'react-kakao-maps-sdk';
 import { useState } from 'react';
 import { Button } from '@nextui-org/react';
+import CarouselThumb from '@/components/common/Carousel_Thumb';
 
 const PlacePage = () => {
   const router = useRouter();
@@ -54,10 +55,10 @@ const PlacePage = () => {
       <div className='flex justify-between h-[500px] mb-[50px] mt-[80px]'>
         {imgList && (
           <div className='w-[48%]'>
-            <Carousel
+            <CarouselThumb
               slideData={imgList ?? []} // imgList가 없으면 빈배열
               slidesPerView={1} // 보여줄 슬라이스 수
-              slideHeight={'500px'} // 캐러셀 높이
+              slideHeight={'350px'} // 캐러셀 높이
             />
           </div>
         )}

@@ -32,6 +32,13 @@ body {
   color: #fff;
 }
 
+.thumbs .swiper-button-next::after,
+.thumbs .swiper-button-prev::after {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
 .swiper-button-next::after,
 .swiper-button-prev::after {
   color: #5c5c5c;
