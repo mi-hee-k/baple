@@ -42,7 +42,8 @@ const MyTabs = ({ userId }: Props) => {
   console.log('내가 좋아요한 리뷰', likedReviews);
   console.log('내가 작성한 리뷰', writtenReviews);
 
-  if (isBookmarksLoading || isLikesLoading) return <div>로딩중...</div>;
+  if (isBookmarksLoading || isLikesLoading || isWrittenReviewsLoading)
+    return <div>로딩중...</div>;
 
   return (
     <div className='flex w-full flex-col'>
@@ -50,27 +51,39 @@ const MyTabs = ({ userId }: Props) => {
         <Tab key='photos' title='내가 북마크한 장소'>
           <Card>
             <CardBody className='grid grid-cols-4 gap-12'>
-              {bookmarkedPlaces?.map((place, idx) => (
-                <PlaceCard2 key={idx} place={place} />
-              ))}
+              {bookmarkedPlaces?.length !== 0 ? (
+                bookmarkedPlaces?.map((place, idx) => (
+                  <PlaceCard2 key={idx} place={place} />
+                ))
+              ) : (
+                <div>북마크한 장소가 없습니다</div>
+              )}
             </CardBody>
           </Card>
         </Tab>
         <Tab key='music' title='내가 좋아요한 리뷰'>
           <Card>
             <CardBody className='grid grid-cols-4 gap-4'>
-              {likedReviews?.map((review, idx) => (
-                <ReviewCard key={idx} review={review} />
-              ))}
+              {likedReviews?.length !== 0 ? (
+                likedReviews?.map((review, idx) => (
+                  <ReviewCard key={idx} review={review} />
+                ))
+              ) : (
+                <div>좋아요한 리뷰가 없습니다</div>
+              )}
             </CardBody>
           </Card>
         </Tab>
         <Tab key='videos' title='내가 작성한 리뷰'>
           <Card>
             <CardBody className='grid grid-cols-4 gap-4'>
-              {writtenReviews?.map((review, idx) => (
-                <ReviewCard key={idx} review={review} />
-              ))}
+              {writtenReviews?.length !== 0 ? (
+                writtenReviews?.map((review, idx) => (
+                  <ReviewCard key={idx} review={review} />
+                ))
+              ) : (
+                <div>작성한 리뷰가 없습니다.</div>
+              )}
             </CardBody>
           </Card>
         </Tab>

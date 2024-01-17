@@ -13,7 +13,8 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
-import { getPlaceInfo } from '@/apis/places';
+import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
+import TuiEditor from '@/components/common/TuiEditor';
 import dynamic from 'next/dynamic';
 
 const ReviewWritePage = () => {
@@ -67,14 +68,25 @@ const ReviewWritePage = () => {
       setSelectedFiles(selectedFileArray);
     }
   };
+  console.log('editorContent', editorContent);
   console.log('selectedImages', selectedImages);
   console.log('selectedFiles', selectedFiles);
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate: mutateToAdd } = useMutation({
     mutationFn: insertNewReview,
     onSuccess: async () => {
       await queryClient.invalidateQueries([
         'reviews',
+        placeId,
+      ] as InvalidateQueryFilters);
+    },
+  });
+
+  const { mutate: mutateToUpdate } = useMutation({
+    mutationFn: updatePlaceImage,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([
+        'placeInfo',
         placeId,
       ] as InvalidateQueryFilters);
     },
@@ -118,19 +130,21 @@ const ReviewWritePage = () => {
         console.log('imageData', imageData);
         publicUrlList.push(imageData.publicUrl);
       }
+      // place의 image_url이 null 이면, 리뷰 이미지의 첫번째 사진으로 place image_url 저장
+      if (placeInfo.image_url === null) {
+        mutateToUpdate({ id: placeId as string, imageUrl: publicUrlList[0] });
+      }
     }
-    if (placeInfo.image_url === null) {
-    }
+
     const args = {
       content: editValue,
       placeId: placeId as string,
       userId,
       publicUrlList,
     };
-
-    mutate(args);
-
-    toastSuccess('등록되었습니다.');
+    mutateToAdd(args);
+    toastSuccess('리뷰가 등록되었습니다.');
+    // setReviewText('');
     router.replace(`/place/${placeId}`);
   };
 
