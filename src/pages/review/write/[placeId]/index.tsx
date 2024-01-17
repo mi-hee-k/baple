@@ -68,6 +68,7 @@ const ReviewWritePage = () => {
       setSelectedFiles(selectedFileArray);
     }
   };
+  console.log('editorContent', editorContent);
   console.log('selectedImages', selectedImages);
   console.log('selectedFiles', selectedFiles);
   const queryClient = useQueryClient();
