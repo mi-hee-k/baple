@@ -2,7 +2,6 @@ import { Tables } from '@/types/supabase';
 import avatarDefault from '../../../public/images/avatar_default.jpg';
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
   console.log(place);
