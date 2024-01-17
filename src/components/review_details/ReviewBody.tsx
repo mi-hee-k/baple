@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Spacer } from '@nextui-org/react';
-import dynamic from 'next/dynamic';
 import { updateReviewContent } from '@/apis/reviews';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -10,18 +9,15 @@ interface Props {
   review: Tables<'reviews'>;
 }
 
-const NoSsrEditor = dynamic(() => import('../common/TuiEditor'), {
-  ssr: false,
-});
-const NoSsrViewer = dynamic(() => import('../common/TuiViewer'), {
-  ssr: false,
-});
-
 const ReviewBody = ({ review }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const { id, created_at, content, user_id, place_id } = review;
+  const [editValue, setEditValue] = useState(content);
+
+  console.log('content', content);
 
   const queryClient = useQueryClient();
+
   const updateReviewMutate = useMutation({
     mutationFn: updateReviewContent,
     onMutate: async (updateReviewParams) => {
@@ -50,25 +46,31 @@ const ReviewBody = ({ review }: Props) => {
     },
   });
 
-  const ref = useRef<any>(null);
-
   const editDoneButtonHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const editorIns = ref?.current?.getInstance();
-      const editValue = editorIns.getMarkdown();
-      updateReviewMutate.mutate({ id, editValue });
-    } catch {
-      console.error('알수 없는 오류 발생');
-    }
+
+    updateReviewMutate.mutate({ id, editValue });
   };
 
   return (
     <>
-      {!isEditing && <NoSsrViewer content={content} />}
+      {!isEditing && (
+        <textarea
+          className='w-[1000px] h-[500px] text-black bg-white'
+          value={content}
+          disabled
+        />
+      )}
       {isEditing && (
         <form onSubmit={editDoneButtonHandler}>
-          <NoSsrEditor content={content} editorRef={ref} />
+          <textarea
+            className='w-[1000px] h-[500px] text-black'
+            onChange={(e) => {
+              console.log(e.target.value);
+              setEditValue(e.target.value);
+            }}
+            value={editValue}
+          />
           <Button type='submit'>수정완료</Button>
         </form>
       )}
