@@ -10,9 +10,11 @@ import Link from 'next/link';
 
 interface Props {
   review: ReviewWithPlaceAndUser;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ReviewUpperSection = ({ review }: Props) => {
+const ReviewUpperSection = ({ review, setIsEditing, isEditing }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -54,8 +56,14 @@ const ReviewUpperSection = ({ review }: Props) => {
           <Button size='sm' color='primary' onClick={reviewDelete}>
             삭제
           </Button>
-          <Button size='sm' color='primary'>
-            수정
+          <Button
+            size='sm'
+            color='primary'
+            onClick={() => {
+              setIsEditing((prev) => !prev);
+            }}
+          >
+            {isEditing ? '취소' : '수정'}
           </Button>
         </div>
       </div>
