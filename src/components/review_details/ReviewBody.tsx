@@ -74,6 +74,7 @@ const ReviewBody = ({ review }: Props) => {
           <Button type='submit'>수정완료</Button>
         </form>
       )}
+      <Spacer y={5} />
       <Button
         color='primary'
         onClick={() => {

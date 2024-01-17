@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteReview } from '@/apis/reviews';
 import { toastError, toastSuccess } from '@/libs/toastifyAlert';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface Props {
   review: ReviewWithPlaceAndUser;
@@ -35,7 +36,9 @@ const ReviewUpperSection = ({ review }: Props) => {
   return (
     <>
       <Spacer y={10} />
-      <strong className='text-2xl'>{review.places.place_name}</strong>
+      <Link href={`/place/${review.place_id}`}>
+        <strong className='text-2xl'>{review.places.place_name}</strong>
+      </Link>
       <Spacer y={5} />
 
       <div className='flex justify-between items-center gap-4'>
