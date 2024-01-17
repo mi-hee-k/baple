@@ -10,7 +10,6 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-// import { inView } from 'framer-motion';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
@@ -30,35 +29,32 @@ const PlacesPage = () => {
     setCurrentPage(1);
   }, [searchValue]);
 
-  const loadMoreData = async () =>
-    // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    {
-      // e.preventDefault();
-      setLoading(true);
+  const loadMoreData = async () => {
+    setLoading(true);
 
-      try {
-        const { data, error } = await supabase
-          .from('places')
-          .select('*')
-          .ilike('place_name', `%${searchValue}%`)
-          .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+    try {
+      const { data, error } = await supabase
+        .from('places')
+        .select('*')
+        .ilike('place_name', `%${searchValue}%`)
+        .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
 
-        if (error) {
-          console.error('데이터 가져오기 에러:', error.message);
-        } else {
-          if (data.length === 0) {
-            setIsFinished(true);
-            return;
-          }
-
-          console.log('페이징 및 필터링된 데이터:', data);
-          setSearchedPlaces([...searchedPlaces, ...data]); // 기존 데이터와 새로운 데이터 병합
-          setCurrentPage((prev) => prev + 1); // 다음 페이지로 이동
+      if (error) {
+        console.error('데이터 가져오기 에러:', error.message);
+      } else {
+        if (data.length === 0) {
+          setIsFinished(true);
+          return;
         }
-      } finally {
-        setLoading(false);
+
+        console.log('페이징 및 필터링된 데이터:', data);
+        setSearchedPlaces([...searchedPlaces, ...data]); // 기존 데이터와 새로운 데이터 병합
+        setCurrentPage((prev) => prev + 1); // 다음 페이지로 이동
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
   console.log('CurrentPage', currentPage);
   /*
   const {
