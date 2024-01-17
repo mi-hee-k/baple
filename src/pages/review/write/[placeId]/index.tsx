@@ -1,6 +1,5 @@
-import React, { useState, ChangeEvent, useRef } from 'react';
+import React, { useState, ChangeEvent, useRef, useMemo } from 'react';
 import { Button, Spacer, Textarea, Input } from '@nextui-org/react';
-import { useParams } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import {
@@ -21,6 +20,7 @@ import dynamic from 'next/dynamic';
 
 const ReviewWritePage = () => {
   // const [reviewText, setReviewText] = useState('');
+  const [editorContent, setEditorContent] = useState('');
   const [selectedImages, setSelectedImages] = useState<
     { file: File; imageUrl: string }[]
   >([]);
@@ -68,6 +68,7 @@ const ReviewWritePage = () => {
           toastWarn('이미지는 최대 5장까지만 업로드 가능합니다.');
         }
       }
+      const editorContentValue = editorRef.current?.getInstance().getMarkdown();
       setSelectedImages(selectedImageArray);
       setSelectedFiles(selectedFileArray);
     }
