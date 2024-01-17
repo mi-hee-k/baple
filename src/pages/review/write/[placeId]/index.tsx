@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, useRef, useMemo } from 'react';
-import { Button, Spacer, Textarea, Input } from '@nextui-org/react';
-import { useParams } from 'next/navigation';
+import { Button, Spacer } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import {
@@ -10,23 +9,19 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { insertNewReview } from '@/apis/reviews';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { getPlaceInfo } from '@/apis/places';
-import TuiEditor from '@/components/common/TuiEditor';
 import dynamic from 'next/dynamic';
 
 const ReviewWritePage = () => {
-  // const [reviewText, setReviewText] = useState('');
   const [editorContent, setEditorContent] = useState('');
   const [selectedImages, setSelectedImages] = useState<
     { file: File; imageUrl: string }[]
   >([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  // const [editorContent, setEditorContent] = useState(''); //TuiEditor 추가!
   const editorRef = useRef<any>(null); // TuiEditor의 ref를 설정
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
@@ -52,8 +47,6 @@ const ReviewWritePage = () => {
     const selectedFileArray = [...selectedFiles];
     if (files) {
       console.log('files', files);
-      // const imagesArray = Array.from(files);
-      // setImages(imagesArray);
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.size > 1024 * 1024) {
@@ -87,10 +80,6 @@ const ReviewWritePage = () => {
     },
   });
 
-  // const handleEditorChange = (value: string) => {
-  //   setEditorContent(value);
-  // }; //Editor 핸들러
-
   const handleRemoveImage = (index: number) => {
     const updatedImages = [...selectedImages];
     updatedImages.splice(index, 1);
@@ -101,13 +90,17 @@ const ReviewWritePage = () => {
   };
 
   const onSubmitReview = async () => {
-    // const editorValue = editorRef.current.getInstance().getValue(); //추가
     const editorIns = editorRef?.current?.getInstance();
     const editValue = editorIns?.getMarkdown();
-
+    const isWhitespaceOnly = /^\s*$/;
     console.log(editValue);
-    // setEditorContent(editValue);
-    // console.log('드러갔으??>>', editorContent);
+    if (!editValue) {
+      toastWarn('내용을 입력하고 등록해 주세요');
+      return;
+    } else if (isWhitespaceOnly.test(editValue)) {
+      toastWarn('공백 이외의 내용을 입력해 주세요');
+      return;
+    }
 
     const publicUrlList: string[] = [];
     if (selectedFiles) {
@@ -137,14 +130,13 @@ const ReviewWritePage = () => {
 
     mutate(args);
 
-    toast.success('등록되었습니다.');
-    // setReviewText('');
+    toastSuccess('등록되었습니다.');
     router.replace(`/place/${placeId}`);
   };
 
   const memoizedEditor = useMemo(
     () => <NoSsrEditor content={editorContent} editorRef={editorRef} />,
-    [editorContent],
+    [editorContent, NoSsrEditor],
   );
 
   return (
@@ -189,16 +181,7 @@ const ReviewWritePage = () => {
         <h2 className='text-xl font-bold mr-1'>후기</h2>
         <span className='text-red-500 text-2xl font-bold'>*</span>
       </div>
-      <div className='mb-7'>
-        {/* <Textarea
-          value={reviewText}
-          onChange={(event) => setReviewText(event.target.value)}
-          placeholder='이용자님의 소중한 경험을 남겨 주세요. 자세히 작성할수록 다른 이용자에게 큰 도움이 됩니다.'
-          className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
-        /> */}
-
-        {memoizedEditor}
-      </div>
+      <div className='mb-7'>{memoizedEditor}</div>
       <div className='flex itmes-center justify-center'>
         <Spacer x={2} />
         <Button
@@ -206,7 +189,7 @@ const ReviewWritePage = () => {
           variant='solid'
           className='px-8'
           onClick={onSubmitReview}
-          isDisabled={true}
+          // isDisabled={false}
         >
           등록하기
         </Button>
