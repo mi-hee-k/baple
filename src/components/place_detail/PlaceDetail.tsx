@@ -19,8 +19,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   const queryClient = useQueryClient();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const userInfo = useSelector((state: RootState) => state.auth);
-  const { place_name, tel, address, working_hours, holidays, lat, lng } =
-    placeInfo;
+  const { place_name, tel, address, working_hours, holidays } = placeInfo;
 
   const { data: bookmarkState } = useQuery({
     queryKey: ['bookmark', userInfo.userId, placeId],
