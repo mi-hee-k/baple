@@ -51,16 +51,19 @@ const PlacePage = () => {
     <MainWrapper>
       <Seo title={placeInfo.place_name} />
       {/* 이미지 캐러셀 */}
-      {imgList && (
-        <Carousel
-          slideData={imgList ?? []} // imgList가 없으면 빈배열
-          slidesPerView={4} // 보여줄 슬라이스 수
-          slideHeight={'200px'} // 캐러셀 높이
-        />
-      )}
-
-      {/* 장소 상세정보 */}
-      <PlaceDetail placeInfo={placeInfo} placeId={placeId} />
+      <div className='flex justify-between h-[500px] mb-[50px] mt-[80px]'>
+        {imgList && (
+          <div className='w-[48%]'>
+            <Carousel
+              slideData={imgList ?? []} // imgList가 없으면 빈배열
+              slidesPerView={1} // 보여줄 슬라이스 수
+              slideHeight={'500px'} // 캐러셀 높이
+            />
+          </div>
+        )}
+        {/* 장소 상세정보 */}
+        <PlaceDetail placeInfo={placeInfo} placeId={placeId} />
+      </div>
 
       {/* 지도 */}
       <section className='mb-[30px] relative'>

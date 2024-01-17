@@ -137,44 +137,63 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   };
 
   return (
-    <section>
-      <div className=' flex justify-between'>
-        <div className='flex'>
-          <h1 className='text-2xl text-bold mb-[10px] mr-[4px]'>
+    <section className='flex flex-col justify-between w-[48%] h-[500px]'>
+      <div>
+        <div className=' flex justify-between'>
+          <h1 className='text-4xl text-bold mt-[10px] mb-[30px]'>
             {place_name}
           </h1>
-        </div>
-        <div className='flex'>
-          {userInfo.isLoggedIn ? (
-            isBookmarked ? (
-              <>
-                <FaBookmark
-                  className='cursor-pointer mr-[10px]'
-                  size={30}
-                  onClick={toggleBookmark}
-                />
-                <RiKakaoTalkFill
-                  className='cursor-pointer '
-                  size={30}
-                  onClick={() =>
-                    shareKakao({
-                      address: placeInfo?.address,
-                      place_name: placeInfo?.place_name,
-                      placeId,
-                    })
-                  }
-                />
-              </>
+          <div className='flex'>
+            {userInfo.isLoggedIn ? (
+              isBookmarked ? (
+                <>
+                  <FaBookmark
+                    className='cursor-pointer mr-[10px]'
+                    size={40}
+                    onClick={toggleBookmark}
+                  />
+                  <RiKakaoTalkFill
+                    className='cursor-pointer '
+                    size={40}
+                    onClick={() =>
+                      shareKakao({
+                        address: placeInfo?.address,
+                        place_name: placeInfo?.place_name,
+                        placeId,
+                      })
+                    }
+                  />
+                </>
+              ) : (
+                <>
+                  <FaRegBookmark
+                    className='cursor-pointer mr-[10px]'
+                    size={40}
+                    onClick={toggleBookmark}
+                  />
+                  <RiKakaoTalkFill
+                    className='cursor-pointer '
+                    size={40}
+                    onClick={() =>
+                      shareKakao({
+                        address: placeInfo?.address,
+                        place_name: placeInfo?.place_name,
+                        placeId,
+                      })
+                    }
+                  />
+                </>
+              )
             ) : (
               <>
                 <FaRegBookmark
-                  className='cursor-pointer mr-[10px]'
-                  size={30}
-                  onClick={toggleBookmark}
+                  className='cursor-pointer'
+                  size={40}
+                  onClick={showAlert}
                 />
                 <RiKakaoTalkFill
                   className='cursor-pointer '
-                  size={30}
+                  size={40}
                   onClick={() =>
                     shareKakao({
                       address: placeInfo?.address,
@@ -184,47 +203,31 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                   }
                 />
               </>
-            )
-          ) : (
-            <>
-              <FaRegBookmark
-                className='cursor-pointer'
-                size={30}
-                onClick={showAlert}
-              />
-              <RiKakaoTalkFill
-                className='cursor-pointer '
-                size={30}
-                onClick={() =>
-                  shareKakao({
-                    address: placeInfo?.address,
-                    place_name: placeInfo?.place_name,
-                    placeId,
-                  })
-                }
-              />
-            </>
-          )}
+            )}
+          </div>
+        </div>
+        <div>
+          <p className='text-xl'>주소 : {address}</p>
+          <p className='text-xl'>전화 : {tel === '' ? '정보없음' : tel}</p>
+          <p className='text-xl'>
+            운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
+          </p>
+          <p className='text-xl'>
+            휴무일 : {holidays === 'null' ? '정보없음' : holidays}
+          </p>
         </div>
       </div>
-      <div className='mb-[10px]'>
-        <p>전화 : {tel === '' ? '정보없음' : tel}</p>
-        <p>주소 : {address}</p>
-        <p>
-          운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
-        </p>
-        <p>휴무일 : {holidays === 'null' ? '정보없음' : holidays}</p>
-      </div>
-      <div className='flex gap-2 mb-[30px] flex-wrap'>
-        <div>편의시설</div>
+      <div className='flex gap-2 flex-wrap w-full'>
         {isInfoArray.map((item, index) => (
-          <div key={index}>
+          <div key={index} className='w-[32%]'>
             {item ? (
-              <Chip className='bg-primary rounded-xl px-4 py-1'>
+              <Chip className='bg-primary rounded-xl text-lg w-full max-w-full text-center'>
                 {infoDetails[index]}
               </Chip>
             ) : (
-              <Chip className='rounded-xl px-4 py-1'>{infoDetails[index]}</Chip>
+              <Chip className='rounded-xl text-lg w-full max-w-full max-w text-center'>
+                {infoDetails[index]}
+              </Chip>
             )}
           </div>
         ))}
