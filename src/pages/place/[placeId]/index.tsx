@@ -20,7 +20,8 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import { useState } from 'react';
-import { Button } from '@nextui-org/react';
+import { Button, Divider } from '@nextui-org/react';
+import CarouselThumb from '@/components/common/Carousel_Thumb';
 import ReviewCard2 from '@/components/common/ReviewCard2';
 
 const PlacePage = () => {
@@ -59,16 +60,19 @@ const PlacePage = () => {
     <MainWrapper>
       <Seo title={placeInfo.place_name} />
       {/* 이미지 캐러셀 */}
-      {imgList && (
-        <Carousel
-          slideData={imgList ?? []} // imgList가 없으면 빈배열
-          slidesPerView={4} // 보여줄 슬라이스 수
-          slideHeight={'200px'} // 캐러셀 높이
-        />
-      )}
-
-      {/* 장소 상세정보 */}
-      <PlaceDetail placeInfo={placeInfo} placeId={placeId} />
+      <div className='flex justify-between h-[500px] mb-[50px] mt-[80px]'>
+        {imgList && (
+          <div className='w-[48%]'>
+            <CarouselThumb
+              slideData={imgList ?? []} // imgList가 없으면 빈배열
+              slidesPerView={1} // 보여줄 슬라이스 수
+              slideHeight={'700px'} // 캐러셀 높이
+            />
+          </div>
+        )}
+        {/* 장소 상세정보 */}
+        <PlaceDetail placeInfo={placeInfo} placeId={placeId} />
+      </div>
 
       {/* 지도 */}
       <section className='mb-[30px] relative'>
@@ -127,18 +131,25 @@ const PlacePage = () => {
           </RoadviewMarker>
         </Roadview>
       </section>
-      <section className='mb-[30px] text-center'>
-        <button
-          className='bg-red-400 p-4 rounded-md text-white'
-          onClick={() => router.push(`/review/write/${placeId}`)}
-        >
-          리뷰 작성하기
-        </button>
-      </section>
 
       {/* 리뷰 */}
       <section>
-        <h2 className='mb-[50px] text-3xl font-bold text-center'>방문 후기</h2>
+        <div className='flex mt-[100px] mb-[30px] justify-between'>
+          <h2 className='text-3xl font-bold'>방문자 리뷰</h2>
+          <Button
+            className='bg-primary px-8 py-2 rounded-full text-black'
+            onClick={() => router.push(`/review/write/${placeId}`)}
+          >
+            리뷰 작성하기
+          </Button>
+        </div>
+        <Divider className='bg-primary h-0.5 mb-[30px]' />
+        <div className='text-right mb-[20px] px-[10px]'>
+          <span className='mr-[20px] text-gray-500 text-sm cursor-pointer'>
+            최신순
+          </span>
+          <span className='text-gray-500 text-sm cursor-pointer'>추천순</span>
+        </div>
         <div className='flex flex-col justify-center gap-y-5 items-center'>
           {/* 리뷰카드 */}
           {reviews?.length === 0 ? (
