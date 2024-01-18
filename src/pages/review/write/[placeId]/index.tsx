@@ -9,7 +9,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { insertNewReview } from '@/apis/reviews';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
