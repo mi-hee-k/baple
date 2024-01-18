@@ -1,7 +1,7 @@
 import { getPlaceInfo } from '@/apis/places';
 import {
   getLikesWithCommentsByPlaceId,
-  getReviewsByPlaceId,
+  getReviewsByPlaceIdrpc,
 } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/common/Carousel';
@@ -10,7 +10,7 @@ import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import { useRouter } from 'next/router';
 import Seo from '@/components/layout/Seo';
 
-import ReviewCard from '@/components/common/ReviewCard';
+// import ReviewCard from '@/components/common/ReviewCard';
 import {
   Map,
   MapMarker,
@@ -22,6 +22,7 @@ import {
 import { useState } from 'react';
 import { Button, Divider } from '@nextui-org/react';
 import CarouselThumb from '@/components/common/Carousel_Thumb';
+import ReviewCard2 from '@/components/common/ReviewCard2';
 
 const PlacePage = () => {
   const router = useRouter();
@@ -35,8 +36,11 @@ const PlacePage = () => {
 
   const { data: reviews, isLoading: reviewLoading } = useQuery({
     queryKey: ['reviews', placeId],
-    queryFn: () => getReviewsByPlaceId(placeId),
+    queryFn: () => getReviewsByPlaceIdrpc(placeId),
+    enabled: !!placeId,
   });
+
+  console.log('reviews가 뭐라 찍히지?', reviews);
 
   const imgList = reviews
     ?.map((item) => item.images_url)
@@ -47,6 +51,7 @@ const PlacePage = () => {
     lat: placeInfo?.lat,
     lng: placeInfo?.lng,
   };
+
   if (placeInfoLoading || reviewLoading) {
     return <div>Loading...</div>;
   }
@@ -151,7 +156,7 @@ const PlacePage = () => {
             <p>등록된 리뷰가 없습니다</p>
           ) : (
             reviews?.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+              <ReviewCard2 key={review.id} review={review} />
             ))
           )}
         </div>
