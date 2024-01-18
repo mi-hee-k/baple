@@ -2,7 +2,6 @@ import { Tables } from '@/types/supabase';
 import avatarDefault from '../../../public/images/avatar_default.jpg';
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
   console.log(place);
@@ -12,6 +11,9 @@ const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
         src={place?.image_url ? place?.image_url : avatarDefault}
         alt='이미지'
         className='w-[70px] rounded-[50%]'
+        // radius='lg'
+        width={100}
+        height={230}
       />
       <div className='flex flex-col ml-[20px] '>
         <div className='text-black'>{place?.place_name}</div>

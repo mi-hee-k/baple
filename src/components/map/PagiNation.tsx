@@ -1,5 +1,3 @@
-import { Pagination } from '@nextui-org/react';
-
 const PagiNation = ({
   page,
   setPage,
