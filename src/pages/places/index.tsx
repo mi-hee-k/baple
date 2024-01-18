@@ -17,7 +17,7 @@ const PlacesPage = () => {
   const [searchedPlaces, setSearchedPlaces] = useState<Tables<'places'>[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
+  // const [isFinished, setIsFinished] = useState(false);
   const queryClient = useQueryClient();
   const pageSize = 20; // 페이지당 장소 수
   // let currentPage = 1;
@@ -39,14 +39,11 @@ const PlacesPage = () => {
         .ilike('place_name', `%${searchValue}%`)
         .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
 
-      if (error) {
-        console.error('데이터 가져오기 에러:', error.message);
-      } else {
+      if (!error) {
         if (data.length === 0) {
-          setIsFinished(true);
+          // setIsFinished(true);
           return;
         }
-
         console.log('페이징 및 필터링된 데이터:', data);
         setSearchedPlaces([...searchedPlaces, ...data]); // 기존 데이터와 새로운 데이터 병합
         setCurrentPage((prev) => prev + 1); // 다음 페이지로 이동
@@ -56,6 +53,7 @@ const PlacesPage = () => {
     }
   };
   console.log('CurrentPage', currentPage);
+
   /*
   const {
     data: places,
@@ -140,13 +138,13 @@ const PlacesPage = () => {
           <PlaceCard2 key={idx} place={place} />
         ))}
       </div>
-      {searchedPlaces.length === 0 || isFinished ? null : (
+      {/* {searchedPlaces.length === 0 || isFinished ? null : (
         <div className='w-full flex justify-center m-2'>
           <Button onClick={loadMoreData} isDisabled={loading} color='primary'>
             더보기
           </Button>
         </div>
-      )}
+      )} */}
       <div
         style={{
           textAlign: 'center',
