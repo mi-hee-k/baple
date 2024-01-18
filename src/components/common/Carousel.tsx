@@ -36,7 +36,8 @@ const Carousel = ({
             <div className={`bg-slate-400 h-[${slideHeight}]`}>
               <Image
                 src={slide}
-                layout='fill'
+                width={200}
+                height={500}
                 className='object-fill w-full h-full'
                 alt='img'
               />

@@ -223,7 +223,7 @@ const ReviewLikes = ({ review }: Props) => {
               <>
                 <FcLike
                   className='cursor-pointer'
-                  size={30}
+                  size='30px'
                   onClick={toggleLikes}
                 />
                 <span className='mb-[4px]'>{likeCount?.length}</span>
@@ -232,7 +232,7 @@ const ReviewLikes = ({ review }: Props) => {
               <>
                 <FcLikePlaceholder
                   className='cursor-pointer'
-                  size={30}
+                  size='30px'
                   onClick={toggleLikes}
                 />
                 <span className='mb-[4px]'>{likeCount?.length}</span>
@@ -241,7 +241,7 @@ const ReviewLikes = ({ review }: Props) => {
           ) : (
             <FcLikePlaceholder
               className='cursor-pointer mb-[10px]'
-              size={30}
+              size='30px'
               onClick={showLoginAlert}
             />
           )}
@@ -279,7 +279,7 @@ const ReviewLikes = ({ review }: Props) => {
             </div>
           </div>
           <FaShareAlt
-            size={30}
+            size='30px'
             className='cursor-pointer'
             onClick={toggleShareBtn}
           />
