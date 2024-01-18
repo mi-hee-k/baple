@@ -4,7 +4,7 @@ import CommentInput from '@/components/review_details/CommentInput';
 import CommentList from '@/components/review_details/CommentList';
 import ReviewBody from '@/components/review_details/ReviewBody';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { getReviewById } from '@/apis/reviews';
 import { Avatar, Button, Spacer } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
@@ -15,6 +15,7 @@ import ReviewUpperSection from '@/components/review_details/ReviewUpperSection';
 const ReviewPage = () => {
   const router = useRouter();
   const reviewId = router.query.reviewId as string;
+  const [isEditing, setIsEditing] = useState(false);
 
   const {
     data: review,
@@ -39,7 +40,11 @@ const ReviewPage = () => {
     return (
       <>
         <MainWrapper>
-          <ReviewUpperSection review={review} />
+          <ReviewUpperSection
+            review={review}
+            setIsEditing={setIsEditing}
+            isEditing={isEditing}
+          />
 
           <Seo title='Review' />
           <ReviewLikes review={review} />
@@ -51,7 +56,11 @@ const ReviewPage = () => {
             />
           )}
           <Spacer y={10} />
-          <ReviewBody review={review} />
+          <ReviewBody
+            review={review}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
           <Spacer y={10} />
           <CommentInput reviewId={review.id} />
           <Spacer y={10} />

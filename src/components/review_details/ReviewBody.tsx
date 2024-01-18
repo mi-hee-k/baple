@@ -1,27 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Spacer } from '@nextui-org/react';
-import dynamic from 'next/dynamic';
 import { updateReviewContent } from '@/apis/reviews';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { Tables } from '@/types/supabase';
+import { toastSuccess } from '@/libs/toastifyAlert';
 
 interface Props {
   review: Tables<'reviews'>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NoSsrEditor = dynamic(() => import('../common/TuiEditor'), {
-  ssr: false,
-});
-const NoSsrViewer = dynamic(() => import('../common/TuiViewer'), {
-  ssr: false,
-});
-
-const ReviewBody = ({ review }: Props) => {
-  const [isEditing, setIsEditing] = useState(false);
+const ReviewBody = ({ review, isEditing, setIsEditing }: Props) => {
   const { id, created_at, content, user_id, place_id } = review;
+  const [editValue, setEditValue] = useState(content);
+
+  console.log('content', content);
 
   const queryClient = useQueryClient();
+
   const updateReviewMutate = useMutation({
     mutationFn: updateReviewContent,
     onMutate: async (updateReviewParams) => {
@@ -50,39 +48,45 @@ const ReviewBody = ({ review }: Props) => {
     },
   });
 
-  const ref = useRef<any>(null);
-
   const editDoneButtonHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const editorIns = ref?.current?.getInstance();
-      const editValue = editorIns.getMarkdown();
-      updateReviewMutate.mutate({ id, editValue });
-    } catch {
-      console.error('알수 없는 오류 발생');
-    }
+
+    updateReviewMutate.mutate({ id, editValue });
+
+    toastSuccess('수정 완료되었습니다');
   };
 
   return (
     <>
-      {!isEditing && <NoSsrViewer content={content} />}
+      {!isEditing && (
+        <textarea
+          className='w-full h-[300px] text-black bg-white resize-none'
+          value={content}
+          disabled
+          draggable={false}
+        />
+      )}
       {isEditing && (
         <form onSubmit={editDoneButtonHandler}>
-          <NoSsrEditor content={content} editorRef={ref} />
-          <Button type='submit'>수정완료</Button>
+          <div className='flex flex-col items-center'>
+            <textarea
+              className='w-full h-[300px] text-black resize-none'
+              onChange={(e) => {
+                console.log(e.target.value);
+                setEditValue(e.target.value);
+              }}
+              value={editValue}
+              draggable={false}
+            />
+            <Spacer y={3} />
+            <Button color='primary' type='submit'>
+              수정완료
+            </Button>
+          </div>
         </form>
       )}
-      <Button
-        color='primary'
-        onClick={() => {
-          setIsEditing((prev) => !prev);
-        }}
-      >
-        수정state토글
-      </Button>
+
       <Spacer y={10} />
-      <p>placeid:{place_id}</p>
-      <p>userid:{user_id}</p>
     </>
   );
 };

@@ -15,7 +15,9 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
-import { getPlaceInfo } from '@/apis/places';
+import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
+import TuiEditor from '@/components/common/TuiEditor';
+import dynamic from 'next/dynamic';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -59,14 +61,25 @@ const ReviewWritePage = () => {
       setSelectedFiles(selectedFileArray);
     }
   };
+
   console.log('selectedImages', selectedImages);
   console.log('selectedFiles', selectedFiles);
   const queryClient = useQueryClient();
-  const { mutate } = useMutation({
+  const { mutate: mutateToAdd } = useMutation({
     mutationFn: insertNewReview,
     onSuccess: async () => {
       await queryClient.invalidateQueries([
         'reviews',
+        placeId,
+      ] as InvalidateQueryFilters);
+    },
+  });
+
+  const { mutate: mutateToUpdate } = useMutation({
+    mutationFn: updatePlaceImage,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries([
+        'placeInfo',
         placeId,
       ] as InvalidateQueryFilters);
     },
@@ -98,8 +111,19 @@ const ReviewWritePage = () => {
         console.log('imageData', imageData);
         publicUrlList.push(imageData.publicUrl);
       }
+      // place의 image_url이 null 이면, 리뷰 이미지의 첫번째 사진으로 place image_url 저장
+      if (placeInfo.image_url === null) {
+        mutateToUpdate({ id: placeId as string, imageUrl: publicUrlList[0] });
+      }
     }
-    if (placeInfo.image_url === null) {
+
+    const isReviewEmpty = /^\s*$/;
+    if (!reviewText) {
+      toastWarn('후기는 필수 요소입니다. 입력 후 등록해 주세요.');
+      return;
+    } else if (isReviewEmpty.test(reviewText)) {
+      toastWarn('공백 이외 내용을 입력해 주세요.');
+      return;
     }
     const args = {
       content: reviewText,
@@ -107,15 +131,15 @@ const ReviewWritePage = () => {
       userId,
       publicUrlList,
     };
-    mutate(args);
+    mutateToAdd(args);
     toastSuccess('리뷰가 등록되었습니다.');
-    setReviewText('');
+    // setReviewText('');
     router.replace(`/place/${placeId}`);
   };
 
   return (
-    <div className='p-10 max-w-screen-md mx-auto'>
-      <div>{placeInfo.place_name}</div>
+    <div className='p-10 max-w-screen-md mx-auto shadow-lg '>
+      <div className='mb-10 text-3xl font-bold '>{placeInfo.place_name}</div>
       <div>
         <div className='flex items-center mb-8'>
           <h2 className='text-2xl mr-1 mb-2'>후기</h2>
@@ -128,14 +152,11 @@ const ReviewWritePage = () => {
           onChange={(event) => setReviewText(event.target.value)}
           placeholder='다녀오신 장소에서 즐거운 시간을 보내셨나요? 
           방문 경험을 사용자들과 공유해 주세요!
-          
           리뷰를 보는 사용자를 위해 욕설, 비방, 명예훼손성 표현은 주의해 주세요.'
           className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
         />
       </div>
-      <h2 className='text-xl  mb-4'>
-        사진 올리기(최대 5장까지 첨부 가능합니다)
-      </h2>
+      <h2 className='text-xl'>사진 올리기(최대 5장까지 첨부 가능합니다)</h2>
       <div className='mb-20 flex gap-6 mt-7'>
         <label className='relative cursor-pointer'>
           <input
@@ -145,7 +166,7 @@ const ReviewWritePage = () => {
             onChange={handleImageChange}
             className='hidden'
           />
-          <div className='w-24 h-24 bg-gray-200 flex items-center justify-center rounded'>
+          <div className='w-24 h-24 bg-gray-100 flex items-center justify-center rounded'>
             <span className='text-3xl'>+</span>
           </div>
         </label>
@@ -162,9 +183,9 @@ const ReviewWritePage = () => {
             />
             <button
               onClick={() => handleRemoveImage(index)}
-              className='delete-button absolute font-bold -top-5 right-0 text-red-400 hover:text-red-800 cursor-pointer'
+              className='delete-button absolute font-extrabold right-1 text-gray-200 hover:text-red-500 cursor-pointer'
             >
-              x
+              X
             </button>
           </div>
         ))}
