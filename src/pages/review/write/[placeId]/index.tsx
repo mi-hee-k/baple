@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
-import { Button, Spacer, Textarea, Input } from '@nextui-org/react';
-import { useParams } from 'next/navigation';
+import { Button, Spacer, Textarea } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import {
@@ -16,8 +15,6 @@ import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
-import TuiEditor from '@/components/common/TuiEditor';
-import dynamic from 'next/dynamic';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
