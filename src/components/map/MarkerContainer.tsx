@@ -1,9 +1,7 @@
 import { Tables } from '@/types/supabase';
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { CustomOverlayMap, MapMarker, useMap } from 'react-kakao-maps-sdk';
 import PlaceCard2 from '../common/PlaceCard2';
-import { Chip } from '@nextui-org/react';
 
 const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
   const map = useMap();

@@ -12,9 +12,7 @@ type Props = {
 
 const PlaceCard2 = ({ place }: Props) => {
   const router = useRouter();
-  console.log('placeCard2Props', place);
   const imgURL = place.image_url;
-  console.log(imgURL);
 
   const { data: bookmarksData, isLoading: isBookmarksLoading } = useQuery({
     queryKey: ['bookmarks', place.id],
@@ -25,9 +23,6 @@ const PlaceCard2 = ({ place }: Props) => {
     queryKey: ['reviews', place.id],
     queryFn: () => getReviewsByPlaceId(place.id),
   });
-
-  console.log('bookmarksPlace', bookmarksData);
-  console.log('reviewsData', reviewsData);
   return (
     <div className='m-1'>
       <Card

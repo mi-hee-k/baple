@@ -33,13 +33,13 @@ const PlacesModal = ({
   }, [places]);
   return (
     <>
-      <div className='absolute flex flex-col bg-white bg-opacity-50 right-0 bottom-0 z-10 w-[400px] h-[700px] '>
-        <div className='h-[50px] w-[380px] flex justify-center items-center text-[20px]'>
-          <p className='font-bold text-[25px]'>
+      <div className='absolute flex flex-col bg-white bg-opacity-50 right-0 bottom-0 z-10 w-[400px] h-[700px] rounded-tl-[20px]'>
+        <div className='h-[50px] w-[380px] flex justify-center items-center text-[18px]'>
+          <p className='font-bold text-[20px]'>
             {cityName}&nbsp;
             {regionName}
           </p>
-          의 장소목록 입니다
+          의 추천장소 입니다
         </div>
 
         {/* 맵으로 장소카드 컴포넌트 만들어 뿌려주기 */}

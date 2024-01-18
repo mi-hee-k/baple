@@ -110,7 +110,7 @@ const NearByPage = () => {
      */
 
     if (regionName !== '') fetchPlaceData();
-  }, [regionName]);
+  }, [regionName, cityName]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -186,7 +186,10 @@ const NearByPage = () => {
         {place?.map((place) => (
           <EventMarkerContainer key={place.id} place={place} />
         ))}
-        <PlacesModal cityName={cityName} regionName={regionName} />
+        {place?.length !== 0 ? (
+          <PlacesModal cityName={cityName} regionName={regionName} />
+        ) : null}
+
         <MylocationButton mylocation={mylocation} setLocation={setLocation} />
         <MapTypeControl position={'TOPLEFT'} />
         <ZoomControl position={'LEFT'} />
