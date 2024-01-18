@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useState, ChangeEvent, useRef, useMemo } from 'react';
-import { Button, Spacer } from '@nextui-org/react';
-=======
 import React, { useState, ChangeEvent } from 'react';
 import { Button, Spacer, Textarea } from '@nextui-org/react';
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import {
@@ -19,25 +14,13 @@ import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
-<<<<<<< HEAD
-import TuiEditor from '@/components/common/TuiEditor';
-import dynamic from 'next/dynamic';
-
-const ReviewWritePage = () => {
-  const [editorContent, setEditorContent] = useState('');
-=======
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
   const [selectedImages, setSelectedImages] = useState<
     { file: File; imageUrl: string }[]
   >([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-<<<<<<< HEAD
-  const editorRef = useRef<any>(null); // TuiEditor의 ref를 설정
-=======
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const { placeId } = router.query;
@@ -70,17 +53,11 @@ const ReviewWritePage = () => {
           toastWarn('이미지는 최대 5장까지만 업로드 가능합니다.');
         }
       }
-      const editorContentValue = editorRef.current?.getInstance().getMarkdown();
-      setEditorContent(editorContentValue);
       setSelectedImages(selectedImageArray);
       setSelectedFiles(selectedFileArray);
     }
   };
-<<<<<<< HEAD
-  console.log('editorContent', editorContent);
-=======
 
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
   console.log('selectedImages', selectedImages);
   console.log('selectedFiles', selectedFiles);
   const queryClient = useQueryClient();
@@ -114,21 +91,6 @@ const ReviewWritePage = () => {
   };
 
   const onSubmitReview = async () => {
-<<<<<<< HEAD
-    const editorIns = editorRef?.current?.getInstance();
-    const editValue = editorIns?.getMarkdown();
-    const isWhitespaceOnly = /^\s*$/;
-    console.log(editValue);
-    if (!editValue) {
-      toastWarn('내용을 입력하고 등록해 주세요');
-      return;
-    } else if (isWhitespaceOnly.test(editValue)) {
-      toastWarn('공백 이외의 내용을 입력해 주세요');
-      return;
-    }
-
-=======
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
     const publicUrlList: string[] = [];
     if (selectedFiles) {
       for (const file of selectedFiles) {
@@ -151,8 +113,6 @@ const ReviewWritePage = () => {
       }
     }
 
-<<<<<<< HEAD
-=======
     const isReviewEmpty = /^\s*$/;
     if (!reviewText) {
       toastWarn('후기는 필수 요소입니다. 입력 후 등록해 주세요.');
@@ -161,7 +121,6 @@ const ReviewWritePage = () => {
       toastWarn('공백 이외 내용을 입력해 주세요.');
       return;
     }
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
     const args = {
       content: reviewText,
       placeId: placeId as string,
@@ -173,11 +132,6 @@ const ReviewWritePage = () => {
     // setReviewText('');
     router.replace(`/place/${placeId}`);
   };
-
-  const memoizedEditor = useMemo(
-    () => <NoSsrEditor content={editorContent} editorRef={editorRef} />,
-    [editorContent, NoSsrEditor],
-  );
 
   return (
     <div className='p-10 max-w-screen-md mx-auto shadow-lg '>
@@ -232,14 +186,6 @@ const ReviewWritePage = () => {
           </div>
         ))}
       </div>
-<<<<<<< HEAD
-      <div className='flex items-center mb-8'>
-        <h2 className='text-xl font-bold mr-1'>후기</h2>
-        <span className='text-red-500 text-2xl font-bold'>*</span>
-      </div>
-      <div className='mb-7'>{memoizedEditor}</div>
-=======
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
       <div className='flex itmes-center justify-center'>
         <Spacer x={2} />
         <Button
@@ -247,11 +193,7 @@ const ReviewWritePage = () => {
           variant='solid'
           className='px-8'
           onClick={onSubmitReview}
-<<<<<<< HEAD
-          // isDisabled={false}
-=======
           isDisabled={!reviewText}
->>>>>>> ac395689c94de859eadad0f121bac8e355d5a1cb
         >
           등록하기
         </Button>
