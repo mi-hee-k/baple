@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
-import {
-  Tabs,
-  Tab,
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Button,
-  Image,
-} from '@nextui-org/react';
+import { Tabs, Tab, Card, CardBody } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { getBookmarksByUserId } from '@/apis/bookmarks';
-import { getLikesByUserId } from '@/apis/likes';
-import ReviewCard from '../common/ReviewCard';
-import {
-  getLikedReviews,
-  getReviewsByUserId,
-  getReviewsByUserIdrpc,
-} from '@/apis/reviews';
+// import { getLikesByUserId } from '@/apis/likes';
+// import ReviewCard from '../common/ReviewCard';
+import { getLikedReviews, getReviewsByUserIdrpc } from '@/apis/reviews';
 import PlaceCard2 from '../common/PlaceCard2';
 import ReviewCard2 from '../common/ReviewCard2';
 
@@ -70,17 +57,6 @@ const MyTabs = ({ userId }: Props) => {
         </Tab>
 
         <Tab key='music' title='내가 좋아요한 리뷰'>
-          {/* <Card>
-            <CardBody className='grid grid-cols-4 gap-4'>
-              {likedReviews?.length !== 0 ? (
-                likedReviews?.map((review, idx) => (
-                  <ReviewCard key={idx} review={review} />
-                ))
-              ) : (
-                <div>좋아요한 리뷰가 없습니다</div>
-              )}
-            </CardBody>
-          </Card> */}
           <Card>
             <CardBody className='flex flex-col gap-1'>
               {likedReviews?.map((review, idx) => (
@@ -91,17 +67,6 @@ const MyTabs = ({ userId }: Props) => {
         </Tab>
 
         <Tab key='videos' title='내가 작성한 리뷰'>
-          {/* <Card>
-            <CardBody className='grid grid-cols-4 gap-4'>
-              {writtenReviews?.length !== 0 ? (
-                writtenReviews?.map((review, idx) => (
-                  <ReviewCard key={idx} review={review} />
-                ))
-              ) : (
-                <div>작성한 리뷰가 없습니다.</div>
-              )}
-            </CardBody>
-          </Card> */}
           <Card>
             <CardBody className='flex flex-col gap-1'>
               {writtenReviews?.map((review, idx) => (

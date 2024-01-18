@@ -10,7 +10,7 @@ import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import { useRouter } from 'next/router';
 import Seo from '@/components/layout/Seo';
 
-import ReviewCard from '@/components/common/ReviewCard';
+// import ReviewCard from '@/components/common/ReviewCard';
 import {
   Map,
   MapMarker,
@@ -38,13 +38,6 @@ const PlacePage = () => {
     queryFn: () => getReviewsByPlaceIdrpc(placeId),
     enabled: !!placeId,
   });
-
-  // const { data: rpcplacereviews } = useQuery({
-  //   queryKey: ['rpcreviews', placeId],
-  //   queryFn: () => getReviewsByPlaceIdrpc(placeId),
-  //   enabled: !!placeId,
-  // });
-  // console.log('rpcreviews', rpcplacereviews);
 
   console.log('reviews가 뭐라 찍히지?', reviews);
 
@@ -157,11 +150,6 @@ const PlacePage = () => {
           )}
         </div>
       </section>
-      {/* <section>
-        {reviews?.map((review) => (
-          <ReviewCard2 key={review.id} review={review} />
-        ))}
-      </section> */}
     </MainWrapper>
   );
 };
