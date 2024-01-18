@@ -41,8 +41,9 @@ export const getLikesWithCommentsByPlaceId = async (placeId: string) => {
     likes(*),
     comments(*),
     users (
-      user_name
-    )
+      user_name,avatar_url
+    ),
+    places(place_name)
   `,
     )
     .eq('place_id', placeId);
@@ -73,6 +74,7 @@ interface InsertReviewParams {
   publicUrlList: string[];
 }
 
+//리뷰 추가
 export const insertNewReview = async ({
   content,
   placeId,

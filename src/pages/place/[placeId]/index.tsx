@@ -18,6 +18,7 @@ import {
 } from 'react-kakao-maps-sdk';
 import { useState } from 'react';
 import { Button } from '@nextui-org/react';
+import ReviewCard2 from '@/components/common/ReviewCard2';
 
 const PlacePage = () => {
   const router = useRouter();
@@ -34,6 +35,8 @@ const PlacePage = () => {
     queryFn: () => getLikesWithCommentsByPlaceId(placeId),
   });
 
+  console.log('reviews가 뭐라 찍히지?', reviews);
+
   const imgList = reviews
     ?.map((item) => item.images_url)
     .flat()
@@ -43,6 +46,7 @@ const PlacePage = () => {
     lat: placeInfo?.lat,
     lng: placeInfo?.lng,
   };
+
   if (placeInfoLoading || reviewLoading) {
     return <div>Loading...</div>;
   }
@@ -131,17 +135,22 @@ const PlacePage = () => {
       {/* 리뷰 */}
       <section>
         <h2 className='mb-[50px] text-3xl font-bold text-center'>방문 후기</h2>
-        <div className='grid grid-cols-4 gap-6 mb-[20px] flex-wrap justify-center items-center'>
+        <div className='flex flex-col justify-center gap-y-5 items-center'>
           {/* 리뷰카드 */}
           {reviews?.length === 0 ? (
             <p>등록된 리뷰가 없습니다</p>
           ) : (
             reviews?.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+              <ReviewCard2 key={review.id} review={review} />
             ))
           )}
         </div>
       </section>
+      {/* <section>
+        {reviews?.map((review) => (
+          <ReviewCard2 key={review.id} review={review} />
+        ))}
+      </section> */}
     </MainWrapper>
   );
 };

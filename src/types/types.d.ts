@@ -74,3 +74,16 @@ export interface ReviewWithPlaceAndUser extends Tables<'reviews'> {
     user_name: string;
   };
 }
+
+export interface ReviewWithLikesUserComments extends Tables<'reviews'> {
+  users: {
+    avatar_url: string | null;
+    user_name: string;
+  };
+  likes: Tables<'likes'>[];
+  comments: Tables<'comments'>[];
+  places: {
+    place_name: string;
+  };
+  images_url: string[];
+}
