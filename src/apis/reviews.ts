@@ -1,6 +1,10 @@
 import { supabase } from '@/libs/supabase';
 
-import type { ReviewUpdateParams, ReviewWithPlaceAndUser } from '@/types/types';
+import type {
+  ReviewUpdateParams,
+  ReviewWithPlaceAndUser,
+  ReviewsFromRPC,
+} from '@/types/types';
 
 // 리뷰 가져오기 (by Id)
 export const getReviewById = async (id: string) => {
@@ -41,8 +45,9 @@ export const getLikesWithCommentsByPlaceId = async (placeId: string) => {
     likes(*),
     comments(*),
     users (
-      user_name
-    )
+      user_name,avatar_url
+    ),
+    places(place_name)
   `,
     )
     .eq('place_id', placeId);
@@ -73,6 +78,7 @@ interface InsertReviewParams {
   publicUrlList: string[];
 }
 
+//리뷰 추가
 export const insertNewReview = async ({
   content,
   placeId,
@@ -101,20 +107,49 @@ export const getPlacesByReviewCount = async () => {
   }
 };
 
-// 유저가 작성한 리뷰 (by userId)
-export const getReviewsByUserId = async (userId: string) => {
-  const { data, error } = await supabase
-    .from('reviews')
-    .select()
-    .eq('user_id', userId);
-  if (error) throw error;
-  return data;
-};
-
 //리뷰 삭제
 export const deleteReview = async (reviewId: string) => {
   const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
   if (error) {
     throw error;
   }
+};
+
+//'좋아요' 한 장소 조회
+export const getLikedReviews = async (userId: string) => {
+  const { data, error } = await supabase.rpc('get_liked_reviews', {
+    p_user_id: userId,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data as ReviewsFromRPC[];
+};
+
+//placeId 기반 리뷰 조회
+export const getReviewsByPlaceIdrpc = async (placeId: string) => {
+  const { data, error } = await supabase.rpc('get_reviews_by_place_id', {
+    p_place_id: placeId,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data as ReviewsFromRPC[];
+};
+
+//userId 기반 리뷰 조회
+export const getReviewsByUserIdrpc = async (userId: string) => {
+  const { data, error } = await supabase.rpc('get_reviews_by_user_id', {
+    p_user_id: userId,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data as ReviewsFromRPC[];
 };

@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Tabs,
-  Tab,
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Button,
-  Image,
-} from '@nextui-org/react';
+import { Tabs, Tab, Card, CardBody } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { getBookmarksByUserId } from '@/apis/bookmarks';
-import { getLikesByUserId } from '@/apis/likes';
-import ReviewCard from '../common/ReviewCard';
-import { getReviewsByUserId } from '@/apis/reviews';
+// import { getLikesByUserId } from '@/apis/likes';
+// import ReviewCard from '../common/ReviewCard';
+import { getLikedReviews, getReviewsByUserIdrpc } from '@/apis/reviews';
 import PlaceCard2 from '../common/PlaceCard2';
+import ReviewCard2 from '../common/ReviewCard2';
 
 type Props = {
   userId: string;
@@ -28,13 +20,15 @@ const MyTabs = ({ userId }: Props) => {
 
   const { data: likedReviews, isLoading: isLikesLoading } = useQuery({
     queryKey: ['likes', userId],
-    queryFn: () => getLikesByUserId(userId),
+    queryFn: () => getLikedReviews(userId),
   });
+
+  console.log('좋아요 한 리뷰들>>', likedReviews);
 
   const { data: writtenReviews, isLoading: isWrittenReviewsLoading } = useQuery(
     {
       queryKey: ['reviews', userId],
-      queryFn: () => getReviewsByUserId(userId),
+      queryFn: () => getReviewsByUserIdrpc(userId),
     },
   );
 
@@ -61,29 +55,23 @@ const MyTabs = ({ userId }: Props) => {
             </CardBody>
           </Card>
         </Tab>
+
         <Tab key='music' title='내가 좋아요한 리뷰'>
           <Card>
-            <CardBody className='grid grid-cols-4 gap-4'>
-              {likedReviews?.length !== 0 ? (
-                likedReviews?.map((review, idx) => (
-                  <ReviewCard key={idx} review={review} />
-                ))
-              ) : (
-                <div>좋아요한 리뷰가 없습니다</div>
-              )}
+            <CardBody className='flex flex-col gap-1'>
+              {likedReviews?.map((review, idx) => (
+                <ReviewCard2 review={review} key={idx} />
+              ))}
             </CardBody>
           </Card>
         </Tab>
+
         <Tab key='videos' title='내가 작성한 리뷰'>
           <Card>
-            <CardBody className='grid grid-cols-4 gap-4'>
-              {writtenReviews?.length !== 0 ? (
-                writtenReviews?.map((review, idx) => (
-                  <ReviewCard key={idx} review={review} />
-                ))
-              ) : (
-                <div>작성한 리뷰가 없습니다.</div>
-              )}
+            <CardBody className='flex flex-col gap-1'>
+              {writtenReviews?.map((review, idx) => (
+                <ReviewCard2 key={idx} review={review} />
+              ))}
             </CardBody>
           </Card>
         </Tab>
