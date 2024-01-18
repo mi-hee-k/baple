@@ -150,7 +150,7 @@ const PlacePage = () => {
           </span>
           <span className='text-gray-500 text-sm cursor-pointer'>추천순</span>
         </div>
-        <div className='grid grid-cols-4 gap-6 mb-[20px] place-items-center flex-wrap justify-center items-center'>
+        <div className='flex flex-col justify-center gap-y-5 items-center'>
           {/* 리뷰카드 */}
           {reviews?.length === 0 ? (
             <p>등록된 리뷰가 없습니다</p>
