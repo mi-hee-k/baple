@@ -1,5 +1,8 @@
 import { getPlaceInfo } from '@/apis/places';
-import { getLikesWithCommentsByPlaceId } from '@/apis/reviews';
+import {
+  getLikesWithCommentsByPlaceId,
+  getReviewsByPlaceIdrpc,
+} from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/common/Carousel';
 import { useQuery } from '@tanstack/react-query';
@@ -32,8 +35,16 @@ const PlacePage = () => {
 
   const { data: reviews, isLoading: reviewLoading } = useQuery({
     queryKey: ['reviews', placeId],
-    queryFn: () => getLikesWithCommentsByPlaceId(placeId),
+    queryFn: () => getReviewsByPlaceIdrpc(placeId),
+    enabled: !!placeId,
   });
+
+  // const { data: rpcplacereviews } = useQuery({
+  //   queryKey: ['rpcreviews', placeId],
+  //   queryFn: () => getReviewsByPlaceIdrpc(placeId),
+  //   enabled: !!placeId,
+  // });
+  // console.log('rpcreviews', rpcplacereviews);
 
   console.log('reviews가 뭐라 찍히지?', reviews);
 

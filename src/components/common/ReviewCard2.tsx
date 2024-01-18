@@ -10,17 +10,27 @@ import {
 import Link from 'next/link';
 
 import { formatDate } from '@/utils/dateFormatter';
-import type { ReviewWithLikesUserComments } from '@/types/types';
+// import type { ReviewWithLikesUserComments } from '@/types/types';
+import type { ReviewsFromRPC } from '@/types/types';
 
 interface Props {
-  review: ReviewWithLikesUserComments;
+  review: ReviewsFromRPC;
 }
 
 const ReviewCard2 = ({ review }: Props) => {
-  const { images_url, content, likes, comments, id } = review;
+  const {
+    images_url,
+    content,
+    likes_count,
+    comments_count,
+    unique_review_id,
+    place_name,
+    user_name,
+    user_avatar_url,
+  } = review;
 
   return (
-    <Link className='w-full' href={`/review/${id}`}>
+    <Link className='w-full' href={`/review/${unique_review_id}`}>
       <Card className='w-full'>
         <CardHeader className='flex gap-3'>
           {images_url?.map((url) => (
@@ -36,20 +46,17 @@ const ReviewCard2 = ({ review }: Props) => {
         </CardHeader>
         <CardBody>
           <div className='flex gap-5'>
-            <Avatar
-              showFallback
-              src={review.users.avatar_url as string | undefined}
-            />
+            <Avatar showFallback src={user_avatar_url} />
             <div className='flex flex-col w-full'>
               <div className='flex gap-5 justify-between 이거!'>
                 <div className='flex gap-5'>
-                  <strong>{review.places.place_name}</strong>
-                  <span>{review.users.user_name}</span>
+                  <strong>{place_name}</strong>
+                  <span>{user_name}</span>
                 </div>
                 <div className='flex gap-3'>
                   <span>{formatDate(review.created_at)}</span>
-                  <span>댓글 수: {comments.length}</span>
-                  <span>좋아요 수: {likes.length}</span>
+                  <span>댓글 수: {comments_count}</span>
+                  <span>좋아요 수: {likes_count}</span>
                 </div>
               </div>
               <p>{content}</p>

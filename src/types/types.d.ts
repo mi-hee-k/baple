@@ -75,15 +75,25 @@ export interface ReviewWithPlaceAndUser extends Tables<'reviews'> {
   };
 }
 
-export interface ReviewWithLikesUserComments extends Tables<'reviews'> {
-  users: {
-    avatar_url: string | null;
-    user_name: string;
-  };
-  likes: Tables<'likes'>[];
-  comments: Tables<'comments'>[];
-  places: {
-    place_name: string;
-  };
+// export interface ReviewWithLikesUserComments extends Tables<'reviews'> {
+//   users: {
+//     avatar_url: string | null;
+//     user_name: string;
+//   };
+//   likes: Tables<'likes'>[];
+//   comments: Tables<'comments'>[];
+//   places: {
+//     place_name: string;
+//   };
+//   images_url: string[];
+// }
+
+export interface ReviewsFromRPC extends Tables<'reviews'> {
   images_url: string[];
+  unique_review_id: string;
+  user_avatar_url: string;
+  user_name: string;
+  place_name: string;
+  comments_count: number;
+  likes_count: number;
 }
