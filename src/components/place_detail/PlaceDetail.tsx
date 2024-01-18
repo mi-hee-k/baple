@@ -136,6 +136,8 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     toastWarn('로그인 후 이용해 주세요');
   };
 
+  const sizeValue = 34 * 34;
+
   return (
     <section className='flex flex-col justify-between w-[48%] h-[500px]'>
       <div>
@@ -149,12 +151,12 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                 <>
                   <FaBookmark
                     className='cursor-pointer mr-[10px]'
-                    size={40}
+                    size='34px'
                     onClick={toggleBookmark}
                   />
                   <RiKakaoTalkFill
                     className='cursor-pointer '
-                    size={40}
+                    size='34px'
                     onClick={() =>
                       shareKakao({
                         address: placeInfo?.address,
@@ -168,12 +170,12 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                 <>
                   <FaRegBookmark
                     className='cursor-pointer mr-[10px]'
-                    size={40}
+                    size='34px'
                     onClick={toggleBookmark}
                   />
                   <RiKakaoTalkFill
                     className='cursor-pointer '
-                    size={40}
+                    size='34px'
                     onClick={() =>
                       shareKakao({
                         address: placeInfo?.address,
@@ -188,12 +190,12 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
               <>
                 <FaRegBookmark
                   className='cursor-pointer'
-                  size={40}
+                  size='34px'
                   onClick={showAlert}
                 />
                 <RiKakaoTalkFill
                   className='cursor-pointer '
-                  size={40}
+                  size='34px'
                   onClick={() =>
                     shareKakao({
                       address: placeInfo?.address,

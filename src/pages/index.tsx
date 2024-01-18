@@ -37,7 +37,7 @@ const Home = () => {
         <Carousel
           slideData={imgList} // imgList가 없으면 빈배열
           slidesPerView={1} // 보여줄 슬라이스 수
-          slideHeight={'300px'} // 캐러셀 높이
+          slideHeight={'700px'} // 캐러셀 높이
         />
       </section>
       <div className='flex flex-col w-[100vw] justify-center items-center'>
