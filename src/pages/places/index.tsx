@@ -12,7 +12,10 @@ import {
 } from '@tanstack/react-query';
 
 const PlacesPage = () => {
+  // 체크박스를 클릭할때 해당 체크박스 value가 배열형태로 순서대로 들어감
   const [selected, setSelected] = useState<string[]>([]);
+  // 체크박스 상태 변화를 감지할 수 있는 추가적인 상태
+  const [checkboxChanged, setCheckboxChanged] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [searchedPlaces, setSearchedPlaces] = useState<Tables<'places'>[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -20,24 +23,45 @@ const PlacesPage = () => {
   // const [isFinished, setIsFinished] = useState(false);
   const queryClient = useQueryClient();
   const pageSize = 20; // 페이지당 장소 수
-  // let currentPage = 1;
 
   console.log('searchValue', searchValue);
+  console.log('aaaa', selected);
   useEffect(() => {
     // 새로운 검색어가 입력될 때 기존에 검색된 장소를 비움
     setSearchedPlaces([]);
     setCurrentPage(1);
-  }, [searchValue]);
+    setCheckboxChanged(true); // 체크박스 상태가 변경되었음을 표시
+  }, [searchValue, selected]);
+
+  // 체크박스 상태에 변화가 있을 때마다 데이터를 다시 불러오도록 useEffect 추가
+  useEffect(() => {
+    if (checkboxChanged) {
+      // 체크박스가 변경되었으면 데이터를 다시 불러오기
+      loadMoreData();
+      setCheckboxChanged(false); // 체크박스 상태 변경 표시 초기화
+    }
+  }, [checkboxChanged, selected]);
 
   const loadMoreData = async () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('places')
         .select('*')
-        .ilike('place_name', `%${searchValue}%`)
-        .range((currentPage - 1) * pageSize, currentPage * pageSize - 1);
+        .ilike('place_name', `%${searchValue}%`);
+
+      // 선택된 체크박스에 따라 필터 추가
+      if (selected.length > 0) {
+        selected.forEach((checkbox) => {
+          query = query.in(checkbox, [true]);
+        });
+      }
+
+      const { data, error } = await query.range(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize - 1,
+      );
 
       if (!error) {
         if (data.length === 0) {
@@ -45,8 +69,8 @@ const PlacesPage = () => {
           return;
         }
         console.log('페이징 및 필터링된 데이터:', data);
-        setSearchedPlaces([...searchedPlaces, ...data]); // 기존 데이터와 새로운 데이터 병합
-        setCurrentPage((prev) => prev + 1); // 다음 페이지로 이동
+        setSearchedPlaces([...searchedPlaces, ...data]);
+        setCurrentPage((prev) => prev + 1);
       }
     } finally {
       setLoading(false);
@@ -100,13 +124,13 @@ const PlacesPage = () => {
           onValueChange={setSelected}
         >
           <Checkbox value='is_paid'>입장료</Checkbox>
-          <Checkbox value='장애인용 출입문'>장애인용 출입문</Checkbox>
-          <Checkbox value='휠체어 대여'>휠체어 대여</Checkbox>
-          <Checkbox value='안내견 동반'>안내견 동반</Checkbox>
-          <Checkbox value='점자 가이드'>점자 가이드</Checkbox>
-          <Checkbox value='오디오 가이드'>오디오 가이드</Checkbox>
-          <Checkbox value='장애인용 화장실'>장애인용 화장실</Checkbox>
-          <Checkbox value='장애인용 주차장'>장애인용 주차장</Checkbox>
+          <Checkbox value='is_easy_door'>장애인용 출입문</Checkbox>
+          <Checkbox value='is_wheelchair_rental'>휠체어 대여</Checkbox>
+          <Checkbox value='is_guide_dog'>안내견 동반</Checkbox>
+          <Checkbox value='is_braille_guide'>점자 가이드</Checkbox>
+          <Checkbox value='is_audio_guide'>오디오 가이드</Checkbox>
+          <Checkbox value='is_disabled_toilet'>장애인용 화장실</Checkbox>
+          <Checkbox value='is_disabled_parking'>장애인용 주차장</Checkbox>
         </CheckboxGroup>
         <p className='text-default-500 text-small'>
           Selected: {selected.join(', ')}
