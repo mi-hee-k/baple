@@ -7,6 +7,7 @@ import {
   Select,
   SelectItem,
 } from '@nextui-org/react';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const categoryList = [
@@ -15,6 +16,7 @@ const categoryList = [
 ];
 
 const BoardWritePage = () => {
+  const router = useRouter();
   return (
     <MainWrapper>
       <header className='flex mt-[50px] mb-[30px] justify-between'>
@@ -32,7 +34,7 @@ const BoardWritePage = () => {
           >
             {categoryList.map((category) => (
               <SelectItem key={category.value} value={category.value}>
-                {category.value}
+                {category.label}
               </SelectItem>
             ))}
           </Select>
@@ -58,7 +60,9 @@ const BoardWritePage = () => {
           />
 
           <div className='text-right'>
-            <Button className='mr-[10px] '>취소</Button>
+            <Button className='mr-[10px]' onClick={() => router.back()}>
+              취소
+            </Button>
             <Button className='bg-primary'>등록</Button>
           </div>
         </form>

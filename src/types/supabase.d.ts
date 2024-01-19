@@ -9,6 +9,44 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      boards: {
+        Row: {
+          category: string | null;
+          content: string | null;
+          created_at: string;
+          id: string;
+          place_name: string | null;
+          title: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          category?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: string;
+          place_name?: string | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          category?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: string;
+          place_name?: string | null;
+          title?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'boards_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       bookmarks: {
         Row: {
           id: string;
@@ -116,7 +154,7 @@ export interface Database {
       };
       places: {
         Row: {
-          address: string;
+          address: string | null;
           category_1: string | null;
           category_2: string | null;
           city: string | null;
@@ -134,7 +172,7 @@ export interface Database {
           is_wheelchair_rental: boolean | null;
           lat: number;
           lng: number;
-          place_name: string;
+          place_name: string | null;
           tel: string | null;
           working_hours: string | null;
         };
@@ -155,8 +193,8 @@ export interface Database {
           is_guide_dog?: boolean | null;
           is_paid?: boolean | null;
           is_wheelchair_rental?: boolean | null;
-          lat?: number;
-          lng?: number;
+          lat: number;
+          lng: number;
           place_name?: string | null;
           tel?: string | null;
           working_hours?: string | null;
@@ -186,13 +224,85 @@ export interface Database {
         };
         Relationships: [];
       };
+      places_duplicate: {
+        Row: {
+          address: string | null;
+          category_1: string | null;
+          category_2: string | null;
+          city: string | null;
+          district: string | null;
+          holidays: string | null;
+          id: string;
+          image_url: string | null;
+          is_audio_guide: boolean | null;
+          is_braille_guide: boolean | null;
+          is_disabled_parking: boolean | null;
+          is_disabled_toilet: boolean | null;
+          is_easy_door: boolean | null;
+          is_guide_dog: boolean | null;
+          is_paid: boolean | null;
+          is_wheelchair_rental: boolean | null;
+          lat: number | null;
+          lng: number | null;
+          place_name: string | null;
+          tel: string | null;
+          working_hours: string | null;
+        };
+        Insert: {
+          address?: string | null;
+          category_1?: string | null;
+          category_2?: string | null;
+          city?: string | null;
+          district?: string | null;
+          holidays?: string | null;
+          id?: string;
+          image_url?: string | null;
+          is_audio_guide?: boolean | null;
+          is_braille_guide?: boolean | null;
+          is_disabled_parking?: boolean | null;
+          is_disabled_toilet?: boolean | null;
+          is_easy_door?: boolean | null;
+          is_guide_dog?: boolean | null;
+          is_paid?: boolean | null;
+          is_wheelchair_rental?: boolean | null;
+          lat?: number | null;
+          lng?: number | null;
+          place_name?: string | null;
+          tel?: string | null;
+          working_hours?: string | null;
+        };
+        Update: {
+          address?: string | null;
+          category_1?: string | null;
+          category_2?: string | null;
+          city?: string | null;
+          district?: string | null;
+          holidays?: string | null;
+          id?: string;
+          image_url?: string | null;
+          is_audio_guide?: boolean | null;
+          is_braille_guide?: boolean | null;
+          is_disabled_parking?: boolean | null;
+          is_disabled_toilet?: boolean | null;
+          is_easy_door?: boolean | null;
+          is_guide_dog?: boolean | null;
+          is_paid?: boolean | null;
+          is_wheelchair_rental?: boolean | null;
+          lat?: number | null;
+          lng?: number | null;
+          place_name?: string | null;
+          tel?: string | null;
+          working_hours?: string | null;
+        };
+        Relationships: [];
+      };
       reviews: {
         Row: {
-          content: string;
+          content: string | null;
           created_at: string;
           id: string;
           images_url: Json | null;
-          place_id: string;
+          place_id: string | null;
           user_id: string | null;
         };
         Insert: {
@@ -265,7 +375,109 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_bookmarked_places: {
+        Args: {
+          user_id: string;
+        };
+        Returns: {
+          place_id: string;
+          place_name: string;
+          image_url: string;
+          city: string;
+          review_count: number;
+          bookmark_count: number;
+        }[];
+      };
+      get_liked_reviews: {
+        Args: {
+          p_user_id: string;
+        };
+        Returns: {
+          unique_review_id: string;
+          content: string;
+          created_at: string;
+          user_id: string;
+          images_url: Json;
+          place_id: string;
+          user_avatar_url: string;
+          user_name: string;
+          place_name: string;
+          comments_count: number;
+          likes_count: number;
+        }[];
+      };
+      get_place_card_info: {
+        Args: {
+          placeid: string;
+        };
+        Returns: {
+          place_id: string;
+          place_name: string;
+          image_url: string;
+          city: string;
+          review_count: number;
+          bookmark_count: number;
+        }[];
+      };
+      get_review_data_with_info: {
+        Args: {
+          place_id: string;
+        };
+        Returns: {
+          id: string;
+          content: string;
+          user_id: string;
+          user_name: string;
+          avatar_url: string;
+          place_name: string;
+          like_count: number;
+          comment_count: number;
+        }[];
+      };
+      get_reviews_by_place_id: {
+        Args: {
+          p_place_id: string;
+        };
+        Returns: {
+          unique_review_id: string;
+          content: string;
+          created_at: string;
+          user_id: string;
+          images_url: Json;
+          place_id: string;
+          user_avatar_url: string;
+          user_name: string;
+          place_name: string;
+          comments_count: number;
+          likes_count: number;
+        }[];
+      };
+      get_reviews_by_user_id: {
+        Args: {
+          p_user_id: string;
+        };
+        Returns: {
+          unique_review_id: string;
+          content: string;
+          created_at: string;
+          user_id: string;
+          images_url: Json;
+          place_id: string;
+          user_avatar_url: string;
+          user_name: string;
+          place_name: string;
+          comments_count: number;
+          likes_count: number;
+        }[];
+      };
+      get_top_bookmarked_places: {
+        Args: Record<PropertyKey, never>;
+        Returns: string[];
+      };
+      get_top_place_ids: {
+        Args: Record<PropertyKey, never>;
+        Returns: string[];
+      };
     };
     Enums: {
       [_ in never]: never;
