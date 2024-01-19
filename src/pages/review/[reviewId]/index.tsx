@@ -35,7 +35,6 @@ const ReviewPage = () => {
   }
 
   if (review) {
-    // console.log('여기리뷰는 뭐징?', review);
     const imgUrl = review.images_url as string[];
     return (
       <>
