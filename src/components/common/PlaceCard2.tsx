@@ -20,7 +20,7 @@ const PlaceCard2 = ({ place }: Props) => {
   });
 
   const { data: reviewsData, isLoading: isReviewsLoading } = useQuery({
-    queryKey: ['reviews', place.id],
+    queryKey: ['reviewsPC', place.id],
     queryFn: () => getReviewsByPlaceId(place.id),
   });
   return (

@@ -36,7 +36,7 @@ const Home = () => {
           slideHeight={'700px'} // 캐러셀 높이
         />
       </section>
-      <div className='flex flex-col w-[100vw] justify-center items-center'>
+      <div className='flex flex-col w-full justify-center items-center'>
         <MostReviews />
         <Spacer y={10} />
         <MostBookmarks />
