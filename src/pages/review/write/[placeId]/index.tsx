@@ -143,9 +143,9 @@ const ReviewWritePage = () => {
         </div>
         <div>
           <div className='flex items-center mb-5'>
-            <div></div>
-            <h2 className='text-2xl mr-1 mb-2 font-medium'>후기</h2>
-            <span className='text-red-500 text-3xl font-bold'>*</span>
+            {/* <div></div> 아이콘 들어갈 부분 */}
+            <h2 className='text-xl mr-1 mb-2 font-medium'>후기</h2>
+            <span className='text-red-500 text-2xl font-bold'>*</span>
           </div>
         </div>
         <div className='mb-10'>
