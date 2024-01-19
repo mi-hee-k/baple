@@ -8,8 +8,6 @@ const placesDataSlice = createSlice({
   initialState,
   reducers: {
     placesData: (state, action) => {
-      console.log(action.payload);
-      console.log(state);
       return (state = action.payload);
     },
   },
