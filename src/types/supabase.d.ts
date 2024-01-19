@@ -154,7 +154,7 @@ export interface Database {
       };
       places: {
         Row: {
-          address: string | null;
+          address: string;
           category_1: string | null;
           category_2: string | null;
           city: string | null;
@@ -172,7 +172,7 @@ export interface Database {
           is_wheelchair_rental: boolean | null;
           lat: number;
           lng: number;
-          place_name: string | null;
+          place_name: string;
           tel: string | null;
           working_hours: string | null;
         };
@@ -265,8 +265,8 @@ export interface Database {
           is_guide_dog?: boolean | null;
           is_paid?: boolean | null;
           is_wheelchair_rental?: boolean | null;
-          lat?: number | null;
-          lng?: number | null;
+          lat?: number;
+          lng?: number;
           place_name?: string | null;
           tel?: string | null;
           working_hours?: string | null;
@@ -288,8 +288,8 @@ export interface Database {
           is_guide_dog?: boolean | null;
           is_paid?: boolean | null;
           is_wheelchair_rental?: boolean | null;
-          lat?: number | null;
-          lng?: number | null;
+          lat?: number;
+          lng?: number;
           place_name?: string | null;
           tel?: string | null;
           working_hours?: string | null;
@@ -298,11 +298,11 @@ export interface Database {
       };
       reviews: {
         Row: {
-          content: string | null;
+          content: string;
           created_at: string;
           id: string;
           images_url: Json | null;
-          place_id: string | null;
+          place_id: string;
           user_id: string | null;
         };
         Insert: {
