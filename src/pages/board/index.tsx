@@ -116,7 +116,7 @@ const BoardPage = () => {
               isCompact
               showControls
               showShadow
-              color='default'
+              color='primary'
               page={page}
               total={pages}
               onChange={(page) => setPage(page)}

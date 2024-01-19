@@ -30,10 +30,8 @@ const Header = () => {
     queryFn: () => getUserDataById(userId),
     enabled: userId !== undefined,
   });
-  // console.log('리액트쿼리로 가져온 user', user);
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      // console.log(event, session);
       const userId = session?.user.id as string;
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
@@ -88,7 +86,6 @@ const Header = () => {
     if (error) throw error;
     router.push('/');
   };
-  console.log('currentUser', currentUser);
   return (
     <header className='bg-[#FFD029] py-2 font-bold sticky top-0 z-20 shadow-md'>
       <div className='container m-auto flex items-center max-w-[1200px] min-h-[48px] w-[90%]'>

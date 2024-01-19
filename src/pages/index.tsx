@@ -13,10 +13,6 @@ const inter = Inter({ subsets: ['latin'] });
 const imgList = [
   'https://viqpcjrcqjtetxqetmpo.supabase.co/storage/v1/object/public/review_images/1705164393565',
   'https://viqpcjrcqjtetxqetmpo.supabase.co/storage/v1/object/public/review_images/1705164394232',
-  'https://viqpcjrcqjtetxqetmpo.supabase.co/storage/v1/object/public/review_images/1705164393565',
-  'https://viqpcjrcqjtetxqetmpo.supabase.co/storage/v1/object/public/review_images/1705164394232',
-  'https://viqpcjrcqjtetxqetmpo.supabase.co/storage/v1/object/public/review_images/1705164393565',
-  'https://viqpcjrcqjtetxqetmpo.supabase.co/storage/v1/object/public/review_images/1705164394232',
 ];
 
 const Home = () => {

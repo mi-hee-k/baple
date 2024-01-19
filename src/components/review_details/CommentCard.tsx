@@ -27,24 +27,29 @@ const CommentCard = ({ comment }: Props) => {
   };
 
   return (
-    <Card className=' max-w-[1200px] h-[110px] rounded-full'>
-      <CardBody>
+    <div className='py-3 border-b-2 min-h-[90px] '>
+      <div>
         <div className='flex gap-4 items-center'>
           <Avatar
             src={comment.users?.avatar_url}
             showFallback
-            className='h-100px h-[85px] w-[93px]'
+            className='h-100px h-[60px] w-[60px]'
             radius='full'
             // size='lg'
           />
           <div className='w-full flex justify-between'>
-            <div className='flex flex-col'>
-              <p className='text-md'>{comment.users?.user_name}</p>
+            <div className='flex flex-col gap-3'>
+              <div className='flex gap-x-6'>
+                <strong className='text-md text-lg'>
+                  {comment.users?.user_name}
+                </strong>
+                <span>{formatDate(comment.created_at)}</span>
+              </div>
+
               <span>{comment.content}</span>
             </div>
 
             <div className='flex flex-col gap-3 items-end mr-6'>
-              <span>{formatDate(comment.created_at)}</span>
               <button
                 className='border w-7 border-primary text-primary'
                 onClick={deleteBtnHandler.bind(null, comment.id)}
@@ -54,8 +59,8 @@ const CommentCard = ({ comment }: Props) => {
             </div>
           </div>
         </div>
-      </CardBody>
-    </Card>
+      </div>
+    </div>
   );
 };
 

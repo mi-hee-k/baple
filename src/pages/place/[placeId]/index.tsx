@@ -40,7 +40,8 @@ const PlacePage = () => {
     enabled: !!placeId,
   });
 
-  // console.log('reviews가 뭐라 찍히지?', reviews);
+  console.log('reviews가 뭐라 찍히지?', reviews);
+  console.log('reviews의 수?', reviews?.length);
 
   const imgList = reviews
     ?.map((item) => item.images_url)

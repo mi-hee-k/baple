@@ -4,7 +4,6 @@ import React from 'react';
 import Image from 'next/image';
 
 const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
-  console.log(place);
   return (
     <>
       <Image

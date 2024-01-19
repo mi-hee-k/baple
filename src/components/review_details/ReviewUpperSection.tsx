@@ -1,4 +1,4 @@
-import { Avatar, Button, Spacer } from '@nextui-org/react';
+import { Avatar, Button, Divider, Spacer } from '@nextui-org/react';
 import React from 'react';
 
 import type { ReviewWithPlaceAndUser } from '@/types/types';
@@ -43,10 +43,10 @@ const ReviewUpperSection = ({ review, setIsEditing, isEditing }: Props) => {
       </Link>
       <Spacer y={5} />
 
-      <div className='flex justify-between items-center gap-4'>
+      <div className='flex justify-between items-center gap-4 border-t-3 border-primary py-5'>
         <div className='flex  items-center gap-4'>
           <Avatar
-            size='lg'
+            className='w-[88px] h-[88px]'
             showFallback
             src={review.users.avatar_url || undefined}
           />
