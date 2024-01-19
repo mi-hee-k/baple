@@ -8,7 +8,7 @@ import { supabase } from '@/libs/supabase';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import { toastError, toastSuccess } from '@/libs/toastifyAlert';
+import { toastError, toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 
 interface FormValues {
   email: string;
@@ -33,6 +33,7 @@ const SignupPage = () => {
 
   const [isVisible1, setIsVisible1] = useState(false);
   const [isVisible2, setIsVisible2] = useState(false);
+  const [checkedUsername, setCheckedUsername] = useState(false);
   const toggleVisibility1 = () => setIsVisible1(!isVisible1);
   const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
@@ -61,12 +62,28 @@ const SignupPage = () => {
     }
   };
 
+  const validateUsername = async (username: string) => {
+    console.log('username', username);
+    const { data, error } = await supabase
+      .from('users')
+      .select()
+      .eq('user_name', username);
+    if (error) throw error;
+    if (data?.length !== 0) {
+      toastWarn('이미 사용중인 닉네임 입니다. 😅');
+      setCheckedUsername(false);
+    } else {
+      toastSuccess('사용 가능한 닉네임 입니다. 😄');
+      setCheckedUsername(true);
+    }
+  };
+
   return (
     <>
       <Seo title='SignUp' />
       <div className='h-screen flex flex-col justify-center items-center'>
         <Link href='/'>BAPLE</Link>
-        <form onSubmit={handleSubmit(signUpHandler)}>
+        <form onSubmit={handleSubmit(signUpHandler)} className='flex flex-col'>
           <Input
             type='email'
             label='이메일'
@@ -153,20 +170,33 @@ const SignupPage = () => {
                 비밀번호가 일치하지 않습니다
               </p>
             )}
-          <Input
-            type='text'
-            label='닉네임'
-            variant='bordered'
-            placeholder='닉네임을 입력해주세요'
-            className='w-96'
-            {...register('username', {
-              required: '닉네임을 입력해주세요',
-              maxLength: {
-                value: 20,
-                message: '20글자를 초과할 수 없습니다',
-              },
-            })}
-          />
+          <div className='flex items-center gap-2'>
+            <Input
+              type='text'
+              label='닉네임'
+              variant='bordered'
+              placeholder='닉네임을 입력해주세요 '
+              className=''
+              {...register('username', {
+                required: '닉네임을 입력해주세요',
+                maxLength: {
+                  value: 8,
+                  message: '8글자 이하의 닉네임을 입력해주세요',
+                },
+                minLength: {
+                  value: 2,
+                  message: '2글자 이상의 닉네임을 입력해주세요.',
+                },
+              })}
+            />
+
+            <Button
+              onClick={() => validateUsername(watchUsername)}
+              color='warning'
+            >
+              중복 확인
+            </Button>
+          </div>
           {errors.username && (
             <p className='text-red-500 text-xs text-center'>
               {errors.username.message}
@@ -179,7 +209,8 @@ const SignupPage = () => {
               !watchEmail ||
               !watchPassword ||
               !watchConfirmPassword ||
-              !watchUsername
+              !watchUsername ||
+              !checkedUsername
             }
           >
             회원 가입
