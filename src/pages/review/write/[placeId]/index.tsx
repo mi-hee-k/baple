@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
+import Seo from '@/components/layout/Seo';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -135,7 +136,9 @@ const ReviewWritePage = () => {
 
   return (
     <div className='py-5 '>
+      <Seo title='리뷰 작성' />
       <div className=' p-20 max-w-screen-md mx-auto shadow '>
+        <Seo title='리뷰 작성' />
         <div className=' mb-10 text-2xl font-semibold  ;'>
           <div className='border-b-3 py-3 border-yellow-400'>
             {placeInfo?.place_name}
