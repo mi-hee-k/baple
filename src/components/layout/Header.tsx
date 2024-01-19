@@ -30,10 +30,10 @@ const Header = () => {
     queryFn: () => getUserDataById(userId),
     enabled: userId !== undefined,
   });
-  console.log('리액트쿼리로 가져온 user', user);
+  // console.log('리액트쿼리로 가져온 user', user);
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event, session);
+      // console.log(event, session);
       const userId = session?.user.id as string;
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;

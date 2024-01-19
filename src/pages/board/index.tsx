@@ -41,46 +41,6 @@ const rows = [
     place_name: '아이스링크장',
     created_at: '24-01-19',
   },
-  {
-    key: '4',
-    category: '신규',
-    title: '휠체어 대여 당분간 안된대요',
-    content: '피터팬',
-    place_name: '구청',
-    created_at: '24-01-19',
-  },
-  {
-    key: '5',
-    category: '불편사항',
-    title: '화장실 공사중이에요',
-    content: '홍길동',
-    place_name: '관악구민',
-    created_at: '24-01-19',
-  },
-  {
-    key: '6',
-    category: '신규',
-    title: '경사가 있어요22',
-    content: '임꺽정',
-    place_name: '시청',
-    created_at: '24-01-19',
-  },
-  {
-    key: '7',
-    category: '불편사항',
-    title: '여름엔 문 닫아요',
-    content: '빨강머리 앤',
-    place_name: '아이스링크장',
-    created_at: '24-01-19',
-  },
-  {
-    key: '8',
-    category: '신규',
-    title: '휠체어 대여 당분간 안된대요',
-    content: '피터팬',
-    place: '구청',
-    created_at: '24-01-19',
-  },
 ];
 
 const columns = [
@@ -179,7 +139,7 @@ const BoardPage = () => {
             <TableRow
               key={item.key}
               className='cursor-pointer hover:scale-[1.003] text-center'
-              onClick={() => router.push('board/1234')}
+              onClick={() => router.push(`board/${item.id}`)}
             >
               {(columnKey) => (
                 <TableCell>{getKeyValue(item, columnKey)}</TableCell>

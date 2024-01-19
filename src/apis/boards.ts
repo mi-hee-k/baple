@@ -35,3 +35,21 @@ export const getPosts = async () => {
   }
   return data;
 };
+
+export const getPost = async (id: string) => {
+  const { data, error } = await supabase
+    .from('boards')
+    .select(
+      `*,
+       users (
+      user_name,
+      avatar_url
+    )`,
+    )
+    .eq('id', id)
+    .single();
+  if (error) {
+    throw error;
+  }
+  return data;
+};
