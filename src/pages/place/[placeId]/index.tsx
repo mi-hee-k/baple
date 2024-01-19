@@ -1,16 +1,12 @@
 import { getPlaceInfo } from '@/apis/places';
-import {
-  getLikesWithCommentsByPlaceId,
-  getReviewsByPlaceIdrpc,
-} from '@/apis/reviews';
+import { getReviewsByPlaceIdrpc } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Carousel from '@/components/common/Carousel';
 import { useQuery } from '@tanstack/react-query';
 import PlaceDetail from '@/components/place_detail/PlaceDetail';
 import { useRouter } from 'next/router';
 import Seo from '@/components/layout/Seo';
-
-// import ReviewCard from '@/components/common/ReviewCard';
+import _ from 'lodash';
 import {
   Map,
   MapMarker,
@@ -22,12 +18,13 @@ import {
 import { useState } from 'react';
 import { Button, Divider } from '@nextui-org/react';
 import CarouselThumb from '@/components/common/Carousel_Thumb';
-import ReviewCard2 from '@/components/common/ReviewCard2';
+import PaiginatedReviews from '@/components/place_detail/PaiginatedReviews';
 
 const PlacePage = () => {
   const router = useRouter();
   const placeId: string = router.query.placeId as string;
   const [toggle, setToggle] = useState('map');
+  const [recentOrder, setRecentOrder] = useState(true);
 
   const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
     queryKey: ['placeInfo', placeId],
@@ -38,16 +35,18 @@ const PlacePage = () => {
     queryKey: ['reviews', placeId],
     queryFn: () => getReviewsByPlaceIdrpc(placeId),
     enabled: !!placeId,
+    select: (data) => {
+      const recentOrder = _.orderBy(data, 'created_at', 'desc');
+      const likesOrder = _.orderBy(data, 'likes_count', 'desc');
+      return { recentOrder, likesOrder };
+    },
   });
 
-  console.log('reviews가 뭐라 찍히지?', reviews);
-  console.log('reviews의 수?', reviews?.length);
-
-  const imgList = reviews
+  const imgList = reviews?.recentOrder
     ?.map((item) => item.images_url)
     .flat()
     .filter((url) => url !== null) as string[];
-  // console.log('imgList', imgList);
+
   let placePosition = {
     lat: placeInfo?.lat,
     lng: placeInfo?.lng,
@@ -146,19 +145,35 @@ const PlacePage = () => {
         </div>
         <Divider className='bg-primary h-0.5 mb-[30px]' />
         <div className='text-right mb-[20px] px-[10px]'>
-          <span className='mr-[20px] text-gray-500 text-sm cursor-pointer'>
+          <span
+            className={`mr-[20px] text-gray-500 text-sm cursor-pointer ${
+              recentOrder ? 'border-b-2' : ''
+            }`}
+            onClick={() => {
+              setRecentOrder(true);
+            }}
+          >
             최신순
           </span>
-          <span className='text-gray-500 text-sm cursor-pointer'>추천순</span>
+          <span
+            className={`text-gray-500 text-sm cursor-pointer ${
+              !recentOrder ? 'border-b-2' : ''
+            }`}
+            onClick={() => {
+              setRecentOrder(false);
+            }}
+          >
+            추천순
+          </span>
         </div>
         <div className='flex flex-col justify-center gap-y-5 items-center'>
           {/* 리뷰카드 */}
-          {reviews?.length === 0 ? (
+          {reviews?.likesOrder.length === 0 ? (
             <p>등록된 리뷰가 없습니다</p>
           ) : (
-            reviews?.map((review) => (
-              <ReviewCard2 key={review.id} review={review} />
-            ))
+            <PaiginatedReviews
+              reviews={recentOrder ? reviews?.recentOrder : reviews?.likesOrder}
+            />
           )}
         </div>
       </section>

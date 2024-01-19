@@ -55,7 +55,6 @@ export const getLikesWithCommentsByPlaceId = async (placeId: string) => {
   if (error) {
     throw error;
   }
-  console.log('여기!!!!!!!!!', data);
   return data;
 };
 
@@ -102,7 +101,6 @@ export const getPlacesByReviewCount = async () => {
   let { data, error } = await supabase.rpc('get_top_place_ids');
   if (error) console.error(error);
   else {
-    console.log(data);
     return data;
   }
 };
