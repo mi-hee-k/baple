@@ -58,7 +58,9 @@ const ReviewCard2 = ({ review }: Props) => {
             </div>
           </div>
           <section className='flex text-end flex-col w-[190px]'>
-            <span>{formatDate(review.created_at)}</span>
+            <span className='text-sm text-gray-500'>
+              {formatDate(review.created_at)}
+            </span>
             <div className='flex justify-end gap-3'>
               <span>📑 {comments_count}</span>
               <span>❤️ {likes_count}</span>
