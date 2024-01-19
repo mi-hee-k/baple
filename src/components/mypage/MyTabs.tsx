@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardBody, Tabs, Tab } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
-import CardProfile from './CardProfile';
+import CardProfile from './MyProfile';
 
 const MyTabs = () => {
   const { userId } = useSelector((state: RootState) => state.auth);
@@ -45,9 +45,6 @@ const MyTabs = () => {
         size='lg'
         variant='underlined'
       >
-        <Tab key='profile' title='프로필 수정'>
-          <CardProfile />
-        </Tab>
         <Tab key='bookmarked' title='내가 북마크한 장소'>
           <Card>
             <CardBody>

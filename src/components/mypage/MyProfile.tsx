@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { toastWarn } from '@/libs/toastifyAlert';
 
-const CardProfile = () => {
+const MyProfile = () => {
   const { username, avatarUrl, userId } = useSelector(
     (state: RootState) => state.auth,
   );
@@ -78,66 +78,75 @@ const CardProfile = () => {
     }
   };
   return (
-    <Card>
-      <CardBody className='flex gap-6 items-center justify-center w-full bg-gray-50'>
-        {isEditing ? (
-          <label className='relative'>
-            <Avatar showFallback src={imagePreview} className='w-36 h-36' />
-            <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center text-white transition-opacity cursor-pointer  rounded-full backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100'>
-              <MdPhotoCameraBack className='text-[4rem] mx-auto ' />
-              <p className='font-bold'>이미지 변경</p>
-            </div>
-            <input
-              type='file'
-              accept='image/*'
-              className='hidden'
-              onChange={previewImg}
-            />
+    // <Card>
+    <div className='flex gap-6 items-center justify-center w-full m-6'>
+      {isEditing ? (
+        <label className='relative'>
+          <Avatar showFallback src={imagePreview} className='w-36 h-36' />
+          <div className='absolute top-0 w-full h-full flex flex-col justify-center items-center text-white transition-opacity cursor-pointer  rounded-full backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100'>
+            <MdPhotoCameraBack className='text-[4rem] mx-auto ' />
+            <p className='font-bold'>이미지 변경</p>
+          </div>
+          <input
+            type='file'
+            accept='image/*'
+            className='hidden'
+            onChange={previewImg}
+          />
+        </label>
+      ) : (
+        <Avatar showFallback src={user?.avatar_url} className='w-36 h-36' />
+      )}
+      <div className='flex flex-col gap-6'>
+        <div className='flex gap-3 items-center'>
+          <label className='w-16' htmlFor='username'>
+            닉네임
           </label>
-        ) : (
-          <Avatar showFallback src={user?.avatar_url} className='w-36 h-36' />
-        )}
-        <div className='flex flex-col gap-6'>
-          <div className='flex gap-3 items-center'>
-            <label className='w-16'>닉네임</label>
-            {isEditing ? (
-              <Input
-                defaultValue={user?.user_name}
-                onChange={(e) => setNewUsername(e.target.value)}
-              />
-            ) : (
-              <span className='text-md'>{user?.user_name}</span>
-            )}
-          </div>
-          <div className='flex gap-3 items-center'>
-            <label className='w-16'>이메일</label>
-            <span className='text-small text-default-500'>{user?.email}</span>
-          </div>
           {isEditing ? (
-            <div className='flex gap-4 justify-center'>
-              <Button onClick={onEditDone} color='primary'>
-                수정완료
-              </Button>
-              <Button
-                onClick={() => {
-                  setIsEditing(false);
-                  // setImagePreview('');
-                }}
-                color='primary'
-                variant='bordered'
-              >
-                취소
-              </Button>
-            </div>
+            <Input
+              id='username'
+              defaultValue={user?.user_name}
+              onChange={(e) => setNewUsername(e.target.value)}
+            />
           ) : (
-            <Button onClick={() => setIsEditing(true)} color='primary'>
-              회원정보 수정
-            </Button>
+            <span className='text-md'>{user?.user_name}</span>
           )}
         </div>
-      </CardBody>
-    </Card>
+        <div className='flex gap-3 items-center'>
+          <label className='w-16'>이메일</label>
+          <span className='text-small text-default-500'>{user?.email}</span>
+        </div>
+        {isEditing ? (
+          <div className='flex gap-4 justify-center'>
+            <Button onClick={onEditDone} color='primary'>
+              수정완료
+            </Button>
+            <Button
+              onClick={() => {
+                setIsEditing(false);
+                // setImagePreview('');
+              }}
+              color='primary'
+              variant='bordered'
+            >
+              취소
+            </Button>
+          </div>
+        ) : (
+          <div className='flex justify-center'>
+            <Button
+              onClick={() => setIsEditing(true)}
+              color='primary'
+              className='w-12'
+            >
+              수정
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+    // </Card>
   );
 };
 
-export default CardProfile;
+export default MyProfile;

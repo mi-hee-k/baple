@@ -6,6 +6,7 @@ import Seo from '@/components/layout/Seo';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import MyTabs from '@/components/mypage/MyTabs';
+import MyProfile from '@/components/mypage/MyProfile';
 
 const UserPage = () => {
   const { userId } = useSelector((state: RootState) => state.auth);
@@ -25,13 +26,7 @@ const UserPage = () => {
   return (
     <div className='flex m-8 flex-col justify-center items-center'>
       <Seo title={`${user?.user_name}님의 페이지`} />
-      <div className='flex gap-4 justify-center w-96 m-6'>
-        <Avatar showFallback src={user?.avatar_url} className='w-36 h-36' />
-        <div className='flex flex-col justify-center'>
-          <span className='text-2xl'>{user?.user_name}</span>
-          <span className='text-gray-400'>{user?.email}</span>
-        </div>
-      </div>
+      <MyProfile />
       <MyTabs />
     </div>
   );
