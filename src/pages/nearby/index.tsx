@@ -161,8 +161,10 @@ const NearByPage = () => {
         }}
         level={7} // 지도의 확대 레벨
         maxLevel={7}
+        draggable={true}
         zoomable={true}
         keyboardShortcuts={true}
+        scrollwheel={true}
         onDragEnd={(map) =>
           setLocation({
             center: {

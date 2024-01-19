@@ -24,14 +24,11 @@ const PlacesPage = () => {
   const queryClient = useQueryClient();
   const pageSize = 20; // 페이지당 장소 수
 
-  console.log('searchValue', searchValue);
-  console.log('aaaa', selected);
+  // console.log('searchValue', searchValue);
+  // console.log('aaaa', selected);
   useEffect(() => {
-    // 새로운 검색어가 입력될 때 기존에 검색된 장소를 비움
-    setSearchedPlaces([]);
-    setCurrentPage(1);
-    setCheckboxChanged(true); // 체크박스 상태가 변경되었음을 표시
-  }, [searchValue, selected]);
+    handleSearch();
+  }, [selected]);
 
   // 체크박스 상태에 변화가 있을 때마다 데이터를 다시 불러오도록 useEffect 추가
   useEffect(() => {
@@ -41,6 +38,19 @@ const PlacesPage = () => {
       setCheckboxChanged(false); // 체크박스 상태 변경 표시 초기화
     }
   }, [checkboxChanged, selected]);
+
+  // 검색 버튼을 눌렀을 때만 데이터를 초기화하고 첫 페이지부터 데이터를 불러오기
+  const handleSearch = () => {
+    setSearchedPlaces([]); // 새로운 검색어가 입력될 때 기존에 검색된 장소를 비움
+    setCurrentPage(1);
+    setCheckboxChanged(true); // 체크박스 상태가 변경되었음을 표시
+  };
+
+  // 검색 버튼 클릭 시 데이터 불러오기
+  const handleClickSearch = () => {
+    handleSearch();
+    loadMoreData();
+  };
 
   const loadMoreData = async () => {
     setLoading(true);
@@ -71,7 +81,7 @@ const PlacesPage = () => {
           return;
         }
 
-        console.log('페이징 및 필터링된 데이터:', data);
+        // console.log('페이징 및 필터링된 데이터:', data);
         setSearchedPlaces([...searchedPlaces, ...data]);
         setCurrentPage((prev) => prev + 1);
       }
@@ -79,9 +89,9 @@ const PlacesPage = () => {
       setLoading(false);
     }
   };
-  console.log('CurrentPage', currentPage);
+  // console.log('CurrentPage', currentPage);
 
-  console.log('searchedPlaces', searchedPlaces);
+  // console.log('searchedPlaces', searchedPlaces);
   const { ref } = useInView({
     threshold: 1,
     onChange: (inView) => {
@@ -89,6 +99,7 @@ const PlacesPage = () => {
       loadMoreData();
     },
   });
+
   return (
     <div>
       <div className='flex flex-col gap-3'>
@@ -98,6 +109,16 @@ const PlacesPage = () => {
           value={selected}
           onValueChange={setSelected}
         >
+          <Button value='is_paid' color='primary' onClick={(e) => {}}>
+            #입장료
+          </Button>
+          <Button></Button>
+          <Button></Button>
+          <Button></Button>
+          <Button></Button>
+          <Button></Button>
+          <Button></Button>
+
           <Checkbox value='is_paid'>입장료</Checkbox>
           <Checkbox value='is_easy_door'>장애인용 출입문</Checkbox>
           <Checkbox value='is_wheelchair_rental'>휠체어 대여</Checkbox>
@@ -122,7 +143,7 @@ const PlacesPage = () => {
           color='primary'
           type='submit'
           className='h-12'
-          onClick={loadMoreData}
+          onClick={handleClickSearch}
         >
           검색
         </Button>
