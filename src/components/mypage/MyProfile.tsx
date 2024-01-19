@@ -6,12 +6,12 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { Avatar, Button, Card, CardBody, Input } from '@nextui-org/react';
+import { Avatar, Button, Input } from '@nextui-org/react';
 import { supabase } from '@/libs/supabase';
 import { MdPhotoCameraBack } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
-import { toastWarn } from '@/libs/toastifyAlert';
+import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 
 const MyProfile = () => {
   const { username, avatarUrl, userId } = useSelector(
@@ -19,6 +19,8 @@ const MyProfile = () => {
   );
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState(username);
+  const [isCheckedUsername, setIsCheckedUsername] = useState(false);
+  const [isCheckedAvatar, setIsCheckedAvatar] = useState(false);
   const [newAvatar, setNewAvatar] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState(avatarUrl);
   const {
@@ -75,10 +77,25 @@ const MyProfile = () => {
       const imgUrl = URL.createObjectURL(selectedFile);
       setNewAvatar(selectedFile);
       setImagePreview(imgUrl);
+      setIsCheckedAvatar(true);
+    }
+  };
+
+  const validateUsername = async (username: string) => {
+    const { data, error } = await supabase
+      .from('users')
+      .select()
+      .eq('user_name', username);
+    if (error) throw error;
+    if (data?.length !== 0) {
+      toastWarn('이미 사용중인 닉네임 입니다. 😅');
+      setIsCheckedUsername(false);
+    } else {
+      toastSuccess('사용 가능한 닉네임 입니다. 😄');
+      setIsCheckedUsername(true);
     }
   };
   return (
-    // <Card>
     <div className='flex gap-6 items-center justify-center w-full m-6'>
       {isEditing ? (
         <label className='relative'>
@@ -103,11 +120,17 @@ const MyProfile = () => {
             닉네임
           </label>
           {isEditing ? (
-            <Input
-              id='username'
-              defaultValue={user?.user_name}
-              onChange={(e) => setNewUsername(e.target.value)}
-            />
+            <div className='flex gap-2 items-center'>
+              <Input
+                id='username'
+                defaultValue={user?.user_name}
+                onChange={(e) => setNewUsername(e.target.value)}
+                className='w-32'
+              />
+              <Button onClick={() => validateUsername(newUsername)}>
+                중복 확인
+              </Button>
+            </div>
           ) : (
             <span className='text-md'>{user?.user_name}</span>
           )}
@@ -118,13 +141,19 @@ const MyProfile = () => {
         </div>
         {isEditing ? (
           <div className='flex gap-4 justify-center'>
-            <Button onClick={onEditDone} color='primary'>
+            <Button
+              onClick={onEditDone}
+              color='primary'
+              isDisabled={!isCheckedAvatar && !isCheckedUsername}
+            >
               수정완료
             </Button>
             <Button
               onClick={() => {
                 setIsEditing(false);
                 // setImagePreview('');
+                setIsCheckedAvatar(false);
+                setIsCheckedUsername(false);
               }}
               color='primary'
               variant='bordered'
@@ -145,7 +174,6 @@ const MyProfile = () => {
         )}
       </div>
     </div>
-    // </Card>
   );
 };
 

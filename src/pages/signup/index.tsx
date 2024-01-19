@@ -63,7 +63,6 @@ const SignupPage = () => {
   };
 
   const validateUsername = async (username: string) => {
-    console.log('username', username);
     const { data, error } = await supabase
       .from('users')
       .select()
