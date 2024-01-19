@@ -1,12 +1,12 @@
 import { Avatar, Button, Divider, Spacer } from '@nextui-org/react';
 import React from 'react';
-
 import type { ReviewWithPlaceAndUser } from '@/types/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteReview } from '@/apis/reviews';
 import { toastError, toastSuccess } from '@/libs/toastifyAlert';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 
 interface Props {
   review: ReviewWithPlaceAndUser;
@@ -21,9 +21,22 @@ const ReviewUpperSection = ({ review, setIsEditing, isEditing }: Props) => {
   const reviewDelteMutate = useMutation({
     mutationFn: deleteReview,
     onSuccess: () => {
-      toastSuccess('삭제 완료');
-      queryClient.invalidateQueries({ queryKey: ['reviews', review.place_id] });
-      router.back();
+      Swal.fire({
+        icon: 'warning',
+        title: '정말 삭제하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+        confirmButtonColor: '#FFD029',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          queryClient.invalidateQueries({
+            queryKey: ['reviews', review.place_id],
+          });
+          router.back();
+          toastSuccess('삭제 완료');
+        }
+      });
     },
     onError: () => {
       toastError('문제가 발생하여 삭제하지 못했습니다');
@@ -31,7 +44,6 @@ const ReviewUpperSection = ({ review, setIsEditing, isEditing }: Props) => {
     },
   });
   const reviewDelete = () => {
-    console.log('하이');
     reviewDelteMutate.mutate(review.id);
   };
 
