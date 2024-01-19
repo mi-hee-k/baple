@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, CardBody, Divider, Avatar } from '@nextui-org/react';
+import { Avatar } from '@nextui-org/react';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
@@ -54,7 +54,7 @@ const ReviewCard2 = ({ review }: Props) => {
               <strong className={` ${displayPlaceName ? 'block' : 'hidden'}`}>
                 {place_name}
               </strong>
-              <p>{content}</p>
+              <div className='max-h-[24px] overflow-hidden'>{content}</div>
             </div>
           </div>
           <section className='flex text-end flex-col w-[190px]'>
