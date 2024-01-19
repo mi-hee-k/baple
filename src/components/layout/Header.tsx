@@ -19,7 +19,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [userId, setUserId] = useState('');
+  // const [userId, setUserId] = useState('');
+  const { userId } = useSelector((state: RootState) => state.auth);
 
   const {
     data: user,
@@ -28,7 +29,7 @@ const Header = () => {
   } = useQuery({
     queryKey: ['user', userId],
     queryFn: () => getUserDataById(userId),
-    enabled: userId !== undefined,
+    enabled: !!userId,
   });
   console.log('리액트쿼리로 가져온 user', user);
   useEffect(() => {
@@ -39,7 +40,7 @@ const Header = () => {
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const username = session?.user.user_metadata.user_name;
 
-      setUserId(userId);
+      // setUserId(userId);
       if (event === 'INITIAL_SESSION') {
         setCurrentUser(session?.user);
         dispatch(

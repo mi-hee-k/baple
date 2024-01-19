@@ -41,13 +41,13 @@ const ReviewPage = () => {
   }
 
   if (review) {
-    // console.log('여기리뷰는 뭐징?', review);
     const imgUrl = review.images_url as string[];
     const commentsCount = comments?.length;
     console.log('commentsCount', commentsCount);
     return (
       <>
         <MainWrapper>
+          <Seo title='리뷰' />
           <Card>
             <CardBody className='px-[40px]'>
               <ReviewUpperSection

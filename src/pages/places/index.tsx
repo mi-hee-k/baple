@@ -10,6 +10,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import Seo from '@/components/layout/Seo';
 
 const PlacesPage = () => {
   // 체크박스를 클릭할때 해당 체크박스 value가 배열형태로 순서대로 들어감
@@ -20,7 +21,7 @@ const PlacesPage = () => {
   const [searchedPlaces, setSearchedPlaces] = useState<Tables<'places'>[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
+  // const [isFinished, setIsFinished] = useState(false);
   const queryClient = useQueryClient();
   const pageSize = 20; // 페이지당 장소 수
 
@@ -63,14 +64,11 @@ const PlacesPage = () => {
         currentPage * pageSize - 1,
       );
 
-      if (error) {
-        console.error('데이터 가져오기 에러:', error.message);
-      } else {
+      if (!error) {
         if (data.length === 0) {
-          setIsFinished(true);
+          // setIsFinished(true);
           return;
         }
-
         console.log('페이징 및 필터링된 데이터:', data);
         setSearchedPlaces([...searchedPlaces, ...data]);
         setCurrentPage((prev) => prev + 1);
@@ -80,6 +78,34 @@ const PlacesPage = () => {
     }
   };
   console.log('CurrentPage', currentPage);
+
+  /*
+  const {
+    data: places,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['places', searchValue],
+    queryFn: fetchPlacesData,
+    initialPageParam: currentPage, // 초기 페이지 값 설정
+    getNextPageParam: (lastPage, allPages) => {
+      const totalPage = allPages.flat().length;
+      console.log('lastPage', lastPage);
+      console.log('allPages', allPages);
+      console.log('totalPage', totalPage);
+      // return totalPage < pageSize * currentPage ? currentPage + 1 : undefined;
+      return (currentPage += 1);
+    },
+  });
+
+  const fetchMore = () => {
+    if (!hasNextPage) return;
+    console.log('fetchMore함수 실행');
+    fetchNextPage();
+  };
+
+  console.log('places!!!!', places);
+*/
 
   console.log('searchedPlaces', searchedPlaces);
   const { ref } = useInView({
@@ -91,6 +117,7 @@ const PlacesPage = () => {
   });
   return (
     <div>
+      <Seo title='장소 검색' />
       <div className='flex flex-col gap-3'>
         <CheckboxGroup
           label='편의시설'
@@ -137,13 +164,13 @@ const PlacesPage = () => {
           <PlaceCard2 key={idx} place={place} />
         ))}
       </div>
-      {searchedPlaces.length === 0 || isFinished ? null : (
+      {/* {searchedPlaces.length === 0 || isFinished ? null : (
         <div className='w-full flex justify-center m-2'>
           <Button onClick={loadMoreData} isDisabled={loading} color='primary'>
             더보기
           </Button>
         </div>
-      )}
+      )} */}
       <div
         style={{
           textAlign: 'center',
