@@ -99,6 +99,7 @@ const Header = () => {
           <Link href='/place/bf2dafff-f2a1-41ff-942f-056a242e53f1'>
             장소 상세
           </Link>
+          <Link href='/board'>게시판</Link>
 
           {currentUser ? (
             <>
