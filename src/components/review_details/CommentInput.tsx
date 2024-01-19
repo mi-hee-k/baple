@@ -12,9 +12,10 @@ import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 
 interface Props {
   reviewId: string;
+  commentsCount: number | undefined;
 }
 
-const CommentInput = ({ reviewId }: Props) => {
+const CommentInput = ({ reviewId, commentsCount }: Props) => {
   const {
     register,
     handleSubmit,
@@ -58,9 +59,10 @@ const CommentInput = ({ reviewId }: Props) => {
 
   return (
     <div>
-      <p>댓글</p>
+      <strong className='ml-2'>댓글</strong>
+      <span className='px-[10px]'>댓글아이콘 : {commentsCount}</span>
       <form
-        className='flex gap-5 items-center'
+        className='flex gap-5 items-center border border-t-2 border-b-2 border-l-0 border-r-0 border-primary py-[20px]'
         onSubmit={handleSubmit(submitComment, onError)}
       >
         <Input
@@ -79,13 +81,8 @@ const CommentInput = ({ reviewId }: Props) => {
             setComment(e.target.value);
           }}
         />
-        <Button
-          color='primary'
-          variant='ghost'
-          type='submit'
-          className='w-[100px] h-[60px] '
-        >
-          등록
+        <Button color='primary' type='submit' className='w-[100px] h-[60px] '>
+          입력
         </Button>
       </form>
     </div>
