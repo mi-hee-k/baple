@@ -1,4 +1,6 @@
+import { getPosts } from '@/apis/boards';
 import MainWrapper from '@/components/layout/MainWrapper';
+import { formatDate } from '@/utils/dateFormatter';
 import { Button, Divider } from '@nextui-org/react';
 import {
   Table,
@@ -10,6 +12,7 @@ import {
   getKeyValue,
   Pagination,
 } from '@nextui-org/react';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 
@@ -19,7 +22,7 @@ const rows = [
     category: '신규',
     title: '화장실 공사중이에요',
     content: '홍길동',
-    place: '관악구민',
+    place_name: '관악구민',
     created_at: '24-01-19',
   },
   {
@@ -27,7 +30,7 @@ const rows = [
     category: '불편사항',
     title: '경사가 있어요',
     content: '임꺽정',
-    place: '시청',
+    place_name: '시청',
     created_at: '24-01-19',
   },
   {
@@ -35,7 +38,7 @@ const rows = [
     category: '신규',
     title: '여름엔 문 닫아요',
     content: '빨강머리 앤',
-    place: '아이스링크장',
+    place_name: '아이스링크장',
     created_at: '24-01-19',
   },
   {
@@ -43,7 +46,7 @@ const rows = [
     category: '신규',
     title: '휠체어 대여 당분간 안된대요',
     content: '피터팬',
-    place: '구청',
+    place_name: '구청',
     created_at: '24-01-19',
   },
   {
@@ -51,7 +54,7 @@ const rows = [
     category: '불편사항',
     title: '화장실 공사중이에요',
     content: '홍길동',
-    place: '관악구민',
+    place_name: '관악구민',
     created_at: '24-01-19',
   },
   {
@@ -59,7 +62,7 @@ const rows = [
     category: '신규',
     title: '경사가 있어요22',
     content: '임꺽정',
-    place: '시청',
+    place_name: '시청',
     created_at: '24-01-19',
   },
   {
@@ -67,7 +70,7 @@ const rows = [
     category: '불편사항',
     title: '여름엔 문 닫아요',
     content: '빨강머리 앤',
-    place: '아이스링크장',
+    place_name: '아이스링크장',
     created_at: '24-01-19',
   },
   {
@@ -94,7 +97,7 @@ const columns = [
     label: '작성자',
   },
   {
-    key: 'place',
+    key: 'place_name',
     label: '장소',
   },
   {
@@ -106,16 +109,31 @@ const columns = [
 const BoardPage = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const rowsPerPage = 4;
 
-  const pages = Math.ceil(rows.length / rowsPerPage);
+  const { data: posts = [], isLoading } = useQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+    select: (posts) => {
+      return posts.map((post) => ({
+        ...post,
+        created_at: formatDate(post.created_at),
+      }));
+    },
+  });
+
+  const postsPerPage = 4;
+  const pages = Math.ceil((posts?.length || 0) / postsPerPage);
 
   const items = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
+    const start = (page - 1) * postsPerPage;
+    const end = start + postsPerPage;
 
-    return rows.slice(start, end);
-  }, [page, rows]);
+    return posts?.slice(start, end);
+  }, [page, posts]);
+
+  if (isLoading) {
+    return <p>로딩중...</p>;
+  }
 
   return (
     <MainWrapper>

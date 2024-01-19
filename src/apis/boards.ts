@@ -10,6 +10,7 @@ export interface FormValues
   userId: string;
 }
 
+// 게시글 쓰기
 export const insertNewPost = async (formData: FormValues) => {
   const { userId, category, title, content, placeName } = formData;
   console.log(userId);
@@ -22,6 +23,15 @@ export const insertNewPost = async (formData: FormValues) => {
       place_name: placeName,
     },
   ]);
-  console.log('post 추가 데이터 > ', data);
+  console.log('post 추가 성공');
   if (error) throw error;
+};
+
+// 게시글 가져오기
+export const getPosts = async () => {
+  const { data, error } = await supabase.from('boards').select();
+  if (error) {
+    throw error;
+  }
+  return data;
 };

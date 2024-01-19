@@ -16,8 +16,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 const categoryList = [
-  { label: '신규장소', value: 'NewPlace' },
-  { label: '불편사항', value: 'complaint' },
+  { label: '신규장소', value: '신규장소' },
+  { label: '불편사항', value: '불편사항' },
 ];
 
 const BoardWritePage = () => {
