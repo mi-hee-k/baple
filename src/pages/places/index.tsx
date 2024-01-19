@@ -10,6 +10,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import Seo from '@/components/layout/Seo';
 
 const PlacesPage = () => {
   // 체크박스를 클릭할때 해당 체크박스 value가 배열형태로 순서대로 들어감
@@ -116,6 +117,7 @@ const PlacesPage = () => {
   });
   return (
     <div>
+      <Seo title='장소 검색' />
       <div className='flex flex-col gap-3'>
         <CheckboxGroup
           label='편의시설'
