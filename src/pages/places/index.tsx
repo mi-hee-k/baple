@@ -109,7 +109,7 @@ const PlacesPage = () => {
           value={selected}
           onValueChange={setSelected}
         >
-          <Button value='is_paid' color='primary' onClick={(e) => {}}>
+          {/* <Button value='is_paid' color='primary' onClick={(e) => {}}>
             #입장료
           </Button>
           <Button></Button>
@@ -117,7 +117,7 @@ const PlacesPage = () => {
           <Button></Button>
           <Button></Button>
           <Button></Button>
-          <Button></Button>
+          <Button></Button> */}
 
           <Checkbox value='is_paid'>입장료</Checkbox>
           <Checkbox value='is_easy_door'>장애인용 출입문</Checkbox>
