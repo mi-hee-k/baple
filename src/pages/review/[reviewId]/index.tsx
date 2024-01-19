@@ -6,16 +6,22 @@ import ReviewBody from '@/components/review_details/ReviewBody';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { getReviewById } from '@/apis/reviews';
-import { Avatar, Button, Spacer } from '@nextui-org/react';
+import { Card, CardBody, Spacer } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
 import { useRouter } from 'next/router';
 import ReviewLikes from '@/components/review_details/ReviewLikes';
 import ReviewUpperSection from '@/components/review_details/ReviewUpperSection';
+import { getAllComments } from '@/apis/comments';
 
 const ReviewPage = () => {
   const router = useRouter();
   const reviewId = router.query.reviewId as string;
   const [isEditing, setIsEditing] = useState(false);
+
+  const { data: comments } = useQuery({
+    queryKey: ['comments', reviewId],
+    queryFn: () => getAllComments(reviewId),
+  });
 
   const {
     data: review,
@@ -36,35 +42,45 @@ const ReviewPage = () => {
 
   if (review) {
     const imgUrl = review.images_url as string[];
+    const commentsCount = comments?.length;
+    console.log('commentsCount', commentsCount);
     return (
       <>
         <MainWrapper>
           <Seo title='리뷰' />
-          <ReviewUpperSection
-            review={review}
-            setIsEditing={setIsEditing}
-            isEditing={isEditing}
-          />
-          <ReviewLikes review={review} />
-          {review?.images_url && (
-            <Carousel
-              slideData={imgUrl}
-              slideHeight={'300px'}
-              slidesPerView={4}
-            />
-          )}
-          <Spacer y={10} />
-          <ReviewBody
-            review={review}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-          />
-          <Spacer y={10} />
-          <CommentInput reviewId={review.id} />
-          <Spacer y={10} />
-          <div className='flex flex-col gap-4'>
-            <CommentList reviewId={review.id} />
-          </div>
+          <Card>
+            <CardBody className='px-[40px]'>
+              <ReviewUpperSection
+                review={review}
+                setIsEditing={setIsEditing}
+                isEditing={isEditing}
+              />
+
+              <Seo title='Review' />
+              <ReviewLikes review={review} />
+              {review?.images_url && (
+                <Carousel
+                  slideData={imgUrl}
+                  slideHeight={'300px'}
+                  slidesPerView={4}
+                />
+              )}
+              <Spacer y={10} />
+              <ReviewBody
+                review={review}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+              />
+              <Spacer y={10} />
+              <CommentInput
+                reviewId={review.id}
+                commentsCount={commentsCount}
+              />
+              <div className='flex flex-col'>
+                <CommentList comments={comments} />
+              </div>
+            </CardBody>
+          </Card>
         </MainWrapper>
       </>
     );

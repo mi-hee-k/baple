@@ -215,7 +215,7 @@ const ReviewLikes = ({ review }: Props) => {
 
   return (
     <div className='relative'>
-      <div className='absolute left-[-70px] z-10'>
+      <div className='absolute left-[-120px] z-10'>
         {/* 좋아요 */}
         <div className='flex flex-col justify-center items-center fixed top-[120px] w-[50px] h-[120px] p-3 rounded-full bg-slate-200'>
           {userInfo.isLoggedIn ? (
