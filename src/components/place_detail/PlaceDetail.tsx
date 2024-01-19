@@ -136,8 +136,6 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     toastWarn('로그인 후 이용해 주세요');
   };
 
-  const sizeValue = 34 * 34;
-
   return (
     <section className='flex flex-col justify-between w-[48%] h-[500px]'>
       <div>
@@ -223,11 +221,17 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
         {isInfoArray.map((item, index) => (
           <div key={index} className='w-[32%]'>
             {item ? (
-              <Chip className='bg-primary rounded-xl text-lg w-full max-w-full text-center'>
+              <Chip
+                className='bg-primary rounded-xl text-lg w-full max-w-full text-center'
+                color='primary'
+              >
                 {infoDetails[index]}
               </Chip>
             ) : (
-              <Chip className='rounded-xl text-lg w-full max-w-full max-w text-center'>
+              <Chip
+                className='rounded-xl text-lg w-full max-w-full max-w text-center'
+                color='primary'
+              >
                 {infoDetails[index]}
               </Chip>
             )}
