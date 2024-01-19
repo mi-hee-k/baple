@@ -1,23 +1,19 @@
 import React from 'react';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Divider,
-  Image,
-  Avatar,
-} from '@nextui-org/react';
+import { Card, CardHeader, CardBody, Divider, Avatar } from '@nextui-org/react';
 import Link from 'next/link';
-
 import { formatDate } from '@/utils/dateFormatter';
-// import type { ReviewWithLikesUserComments } from '@/types/types';
+import Image from 'next/image';
+
 import type { ReviewsFromRPC } from '@/types/types';
+import { useRouter } from 'next/router';
 
 interface Props {
   review: ReviewsFromRPC;
 }
 
 const ReviewCard2 = ({ review }: Props) => {
+  const { pathname } = useRouter();
+  const displayPlaceName = pathname === '/place/[placeId]' ? false : true;
   const {
     images_url,
     content,
@@ -31,40 +27,47 @@ const ReviewCard2 = ({ review }: Props) => {
 
   return (
     <Link className='w-full' href={`/review/${unique_review_id}`}>
-      <Card className='w-full'>
-        <CardHeader className='flex gap-3'>
-          {images_url?.map((url) => (
-            <Image
-              key={url}
-              alt='nextui logo'
-              height={40}
-              radius='sm'
-              src={url}
-              width={40}
+      <div className='card w-full p-2 border rounded-xl'>
+        <div className='flex justify-between gap-x-4'>
+          <section className='flex flex-col gap-y-2 min-w-[118px] items-center justify-center'>
+            <Avatar
+              showFallback
+              src={user_avatar_url}
+              className='w-[50px] h-[50px]'
             />
-          ))}
-        </CardHeader>
-        <CardBody>
-          <div className='flex gap-5'>
-            <Avatar showFallback src={user_avatar_url} />
-            <div className='flex flex-col w-full'>
-              <div className='flex gap-5 justify-between 이거!'>
-                <div className='flex gap-5'>
-                  <strong>{place_name}</strong>
-                  <span>{user_name}</span>
-                </div>
-                <div className='flex gap-3'>
-                  <span>{formatDate(review.created_at)}</span>
-                  <span>댓글 수: {comments_count}</span>
-                  <span>좋아요 수: {likes_count}</span>
-                </div>
+            <strong>{user_name}</strong>
+          </section>
+          <div className='flex flex-col w-full'>
+            <div className='flex flex-col gap-4'>
+              <div className='flex gap-x-1'>
+                {images_url?.map((url) => (
+                  <Image
+                    key={url}
+                    alt='review images'
+                    src={url}
+                    height={40}
+                    width={40}
+                    className='w-[40px] h-[40px] object-cover object-center rounded-md'
+                  />
+                ))}
               </div>
+              <strong className={` ${displayPlaceName ? 'block' : 'hidden'}`}>
+                {place_name}
+              </strong>
               <p>{content}</p>
             </div>
           </div>
-        </CardBody>
-        <Divider />
-      </Card>
+          <section className='flex text-end flex-col w-[190px]'>
+            <span className='text-sm text-gray-500'>
+              {formatDate(review.created_at)}
+            </span>
+            <div className='flex justify-end gap-3'>
+              <span>📑 {comments_count}</span>
+              <span>❤️ {likes_count}</span>
+            </div>
+          </section>
+        </div>
+      </div>
     </Link>
   );
 };

@@ -10,6 +10,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import Seo from '@/components/layout/Seo';
 
 const PlacesPage = () => {
   // 체크박스를 클릭할때 해당 체크박스 value가 배열형태로 순서대로 들어감
@@ -20,7 +21,7 @@ const PlacesPage = () => {
   const [searchedPlaces, setSearchedPlaces] = useState<Tables<'places'>[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
+  // const [isFinished, setIsFinished] = useState(false);
   const queryClient = useQueryClient();
   const pageSize = 20; // 페이지당 장소 수
 
@@ -73,11 +74,9 @@ const PlacesPage = () => {
         currentPage * pageSize - 1,
       );
 
-      if (error) {
-        console.error('데이터 가져오기 에러:', error.message);
-      } else {
+      if (!error) {
         if (data.length === 0) {
-          setIsFinished(true);
+          // setIsFinished(true);
           return;
         }
 
@@ -102,6 +101,7 @@ const PlacesPage = () => {
 
   return (
     <div>
+      <Seo title='장소 검색' />
       <div className='flex flex-col gap-3'>
         <CheckboxGroup
           label='편의시설'
@@ -158,13 +158,13 @@ const PlacesPage = () => {
           <PlaceCard2 key={idx} place={place} />
         ))}
       </div>
-      {searchedPlaces.length === 0 || isFinished ? null : (
+      {/* {searchedPlaces.length === 0 || isFinished ? null : (
         <div className='w-full flex justify-center m-2'>
           <Button onClick={loadMoreData} isDisabled={loading} color='primary'>
             더보기
           </Button>
         </div>
-      )}
+      )} */}
       <div
         style={{
           textAlign: 'center',

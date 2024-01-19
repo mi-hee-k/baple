@@ -18,6 +18,7 @@ const nanumSquareRound = localFont({
       style: 'normal',
     },
   ],
+  variable: '--font-nanum-square-round',
 });
 
 import Script from 'next/script';

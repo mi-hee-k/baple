@@ -53,7 +53,7 @@ module.exports = {
           extend: 'light',
           colors: {
             background: 'white',
-            foreground: 'black',
+            foreground: '#1E1E1E',
             primary: {
               100: '#FFE074',
               500: '#FFD029',
