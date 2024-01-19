@@ -60,7 +60,7 @@ const ReviewBody = ({ review, isEditing, setIsEditing }: Props) => {
     <>
       {!isEditing && (
         <textarea
-          className='w-full h-[300px] text-black bg-white resize-none'
+          className='w-full min-h-[200px] text-black bg-white resize-none'
           value={content}
           disabled
           draggable={false}
