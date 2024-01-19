@@ -135,17 +135,17 @@ const ReviewWritePage = () => {
 
   return (
     <div className='py-5 '>
-      <div className=' p-10 max-w-screen-md mx-auto shadow '>
+      <div className=' p-20 max-w-screen-md mx-auto shadow '>
         <div className=' mb-10 text-2xl font-semibold  ;'>
           <div className='border-b-3 py-3 border-yellow-400'>
-            {placeInfo.place_name}
+            {placeInfo?.place_name}
           </div>
         </div>
         <div>
           <div className='flex items-center mb-5'>
             {/* <div></div> 아이콘 들어갈 부분 */}
             <h2 className='text-xl mr-1 mb-2 font-medium'>후기</h2>
-            <span className='text-red-500 text-2xl font-bold'>*</span>
+            <span className='text-red-500 text-2ㄴxl font-bold'>*</span>
           </div>
         </div>
         <div className='mb-10'>
