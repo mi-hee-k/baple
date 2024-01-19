@@ -1,26 +1,16 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getAllComments } from '@/apis/comments';
 import CommentCard from './CommentCard';
 import { Spacer } from '@nextui-org/react';
+import { CommentsWithUser } from '@/types/types';
 
 interface Props {
-  reviewId: string;
+  comments: CommentsWithUser[] | undefined;
 }
 
-const CommentList = ({ reviewId }: Props) => {
-  const { data: comments, isLoading } = useQuery({
-    queryKey: ['comments', reviewId],
-    queryFn: () => getAllComments(reviewId),
-    // select: (data) => ({
-    //   reversed: data?.reverse(),
-    // }),
-  });
-
-  if (isLoading) {
-    return <p>댓글 정보 불러오는중...</p>;
+const CommentList = ({ comments }: Props) => {
+  if (comments?.length === 0) {
+    return <p>등록된 댓글이 없습니다</p>;
   }
-
   return (
     <>
       {comments?.map((comment) => (

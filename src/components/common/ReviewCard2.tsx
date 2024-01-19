@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Divider,
-  Image,
-  Avatar,
-} from '@nextui-org/react';
+import { Card, CardHeader, CardBody, Divider, Avatar } from '@nextui-org/react';
 import Link from 'next/link';
-
 import { formatDate } from '@/utils/dateFormatter';
-// import type { ReviewWithLikesUserComments } from '@/types/types';
+import Image from 'next/image';
+
 import type { ReviewsFromRPC } from '@/types/types';
 
 interface Props {
@@ -30,17 +23,20 @@ const ReviewCard2 = ({ review }: Props) => {
   } = review;
 
   return (
-    <Link className='w-full' href={`/review/${unique_review_id}`}>
+    <Link
+      className='w-full hover:scale-[1.01] transition-all'
+      href={`/review/${unique_review_id}`}
+    >
       <Card className='w-full'>
         <CardHeader className='flex gap-3'>
           {images_url?.map((url) => (
             <Image
               key={url}
-              alt='nextui logo'
-              height={40}
-              radius='sm'
+              alt='review images'
               src={url}
+              height={40}
               width={40}
+              className='max-h-[40px] max-w-[40px] rounded-md'
             />
           ))}
         </CardHeader>
