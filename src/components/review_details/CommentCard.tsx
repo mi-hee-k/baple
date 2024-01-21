@@ -10,9 +10,10 @@ import { toastSuccess } from '@/libs/toastifyAlert';
 
 interface Props {
   comment: CommentsWithUser;
+  currentUserId: string;
 }
 
-const CommentCard = ({ comment }: Props) => {
+const CommentCard = ({ comment, currentUserId }: Props) => {
   const queryClient = useQueryClient();
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
@@ -21,6 +22,7 @@ const CommentCard = ({ comment }: Props) => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
+  const showDelBtn = comment.user_id === currentUserId ? true : false;
 
   const deleteBtnHandler = (commentId: string) => {
     deleteMutate.mutate(commentId);
@@ -51,7 +53,9 @@ const CommentCard = ({ comment }: Props) => {
 
             <div className='flex flex-col gap-3 items-end mr-6'>
               <button
-                className='border w-7 border-primary text-primary'
+                className={`border w-7 border-primary text-primary ${
+                  showDelBtn ? '' : 'hidden'
+                }`}
                 onClick={deleteBtnHandler.bind(null, comment.id)}
               >
                 X
