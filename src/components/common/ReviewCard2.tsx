@@ -65,13 +65,21 @@ const ReviewCard2 = ({ review }: Props) => {
               <span className='flex gap-1'>
                 <Image
                   src='/images/icons/comment.svg'
-                  width={15}
-                  height={15}
+                  width={20}
+                  height={20}
                   alt='comment icon'
                 />
                 {comments_count}
               </span>
-              <span>❤️ {likes_count}</span>
+              <span className='flex gap-1'>
+                <Image
+                  src='/images/icons/filled-heart.svg'
+                  width={20}
+                  height={20}
+                  alt='likes icon'
+                />
+                {likes_count}
+              </span>
             </div>
           </section>
         </div>
