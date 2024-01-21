@@ -68,7 +68,11 @@ const PlacePage = () => {
         {imgList && (
           <div className='w-[48%]'>
             <CarouselThumb
-              slideData={imgList ?? []} // imgList가 없으면 빈배열
+              slideData={
+                imgList.length !== 0
+                  ? imgList
+                  : ['https://dummyimage.com/600x400/000/fff.png&text=baple']
+              } // imgList가 없으면 빈배열
               slidesPerView={1} // 보여줄 슬라이스 수
               slideHeight={'700px'} // 캐러셀 높이
             />

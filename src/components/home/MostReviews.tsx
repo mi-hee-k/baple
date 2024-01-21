@@ -22,6 +22,7 @@ const MostReviews = () => {
       queryFn: () => getPlaceInfoList(topReviewedPlaces),
       enabled: !!topReviewedPlaces,
     });
+  console.log(topReviewedPlacesList);
 
   if (isLoading || placesListLoading) {
     return <p>데이터 불러오는중...</p>;
