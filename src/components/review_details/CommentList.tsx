@@ -5,21 +5,16 @@ import { CommentsWithUser } from '@/types/types';
 
 interface Props {
   comments: CommentsWithUser[] | undefined;
-  currentUserId: string;
 }
 
-const CommentList = ({ comments, currentUserId }: Props) => {
+const CommentList = ({ comments }: Props) => {
   if (comments?.length === 0) {
     return <p>등록된 댓글이 없습니다</p>;
   }
   return (
     <>
       {comments?.map((comment) => (
-        <CommentCard
-          key={comment.id}
-          comment={comment}
-          currentUserId={currentUserId}
-        />
+        <CommentCard key={comment.id} comment={comment} />
       ))}
       <Spacer y={10} />
     </>

@@ -7,13 +7,14 @@ import { toast } from 'react-toastify';
 
 import type { CommentsWithUser } from '@/types/types';
 import { toastSuccess } from '@/libs/toastifyAlert';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
 
 interface Props {
   comment: CommentsWithUser;
-  currentUserId: string;
 }
 
-const CommentCard = ({ comment, currentUserId }: Props) => {
+const CommentCard = ({ comment }: Props) => {
   const queryClient = useQueryClient();
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
@@ -22,7 +23,10 @@ const CommentCard = ({ comment, currentUserId }: Props) => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
-  const showDelBtn = comment.user_id === currentUserId ? true : false;
+  const { userId: currentUserId } = useSelector(
+    (state: RootState) => state.auth,
+  );
+  const showDelBtn = comment.user_id == currentUserId ? true : false;
 
   const deleteBtnHandler = (commentId: string) => {
     deleteMutate.mutate(commentId);
@@ -51,11 +55,13 @@ const CommentCard = ({ comment, currentUserId }: Props) => {
               <span>{comment.content}</span>
             </div>
 
-            <div className='flex flex-col gap-3 items-end mr-6'>
+            <div
+              className={`flex flex-col gap-3 items-end mr-6  ${
+                showDelBtn ? '' : 'hidden'
+              }`}
+            >
               <button
-                className={`border w-7 border-primary text-primary ${
-                  showDelBtn ? '' : 'hidden'
-                }`}
+                className={`border w-7 border-primary text-primary`}
                 onClick={deleteBtnHandler.bind(null, comment.id)}
               >
                 X

@@ -23,7 +23,6 @@ const ReviewPage = () => {
   const { userId: currentUserId } = useSelector(
     (state: RootState) => state.auth,
   );
-  console.log('auth뭐라찍힘?', currentUserId);
 
   const { data: comments } = useQuery({
     queryKey: ['comments', reviewId],
