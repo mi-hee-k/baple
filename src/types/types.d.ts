@@ -84,3 +84,12 @@ export interface ReviewsFromRPC extends Tables<'reviews'> {
   comments_count: number;
   likes_count: number;
 }
+
+export interface Maplocation {
+  center: {
+    lat: number;
+    lng: number;
+  };
+  errMsg: string | null;
+  isLoading: boolean;
+}

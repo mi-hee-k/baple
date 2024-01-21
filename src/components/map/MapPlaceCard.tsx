@@ -10,13 +10,12 @@ const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
           place?.image_url ? place?.image_url : '/images/icons/character.svg'
         }
         alt='이미지'
-        className='w-[70px] rounded-[50%]'
-        // radius='lg'
+        className='w-[70px] rounded-[50%]  shadow-lg'
         width={100}
         height={230}
       />
       <div className='flex flex-col ml-[20px] '>
-        <div className='text-black'>{place?.place_name}</div>
+        <div className='text-black font-bold'>{place?.place_name}</div>
         <div className='text-black flex flex-row '>
           <p className={place?.is_audio_guide ? 'mr-[1px]' : 'none'}>
             {place?.is_audio_guide ? '오디오' : null}
