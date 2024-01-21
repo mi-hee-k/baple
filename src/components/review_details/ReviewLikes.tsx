@@ -47,8 +47,6 @@ const ReviewLikes = ({ review }: Props) => {
     queryFn: () => getLikes(review.id),
   });
 
-  console.log(likeCount);
-
   useEffect(() => {
     setIsLiked(likeState ? likeState.length > 0 : false);
   }, [likeState]);

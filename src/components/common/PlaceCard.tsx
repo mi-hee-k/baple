@@ -15,7 +15,7 @@ const PlaceCard = ({ place }: Props) => {
     place.image_url !== null
       ? place.image_url
       : 'https://dummyimage.com/600x400/000/fff.png&text=baple';
-  console.log(imgURL);
+
   return (
     <div className='m-1'>
       <Card
