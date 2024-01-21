@@ -39,6 +39,7 @@ const ReviewLikes = ({ review }: Props) => {
   const { data: likeState } = useQuery({
     queryKey: ['likes', userInfo.userId, review.id],
     queryFn: () => getLike({ userId: userInfo.userId, reviewId: review.id }),
+    enabled: !!userInfo.userId,
   });
 
   const { data: likeCount } = useQuery({
