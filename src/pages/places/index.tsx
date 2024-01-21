@@ -103,7 +103,7 @@ const PlacesPage = () => {
     <div>
       <div className='flex flex-col'>
         <div>
-          <div className='flex flex-col gap-4 w-[300px] z-10 fixed top-[8rem] left-[20rem] '>
+          <div className='flex flex-col gap-4 w-[300px] z-10 fixed top-[8rem] left-[9rem] '>
             {checkboxButton('is_paid', '# 입장료')}
             {checkboxButton('is_easy_door', '# 장애인용 출입문')}
             {checkboxButton('is_wheelchair_rental', '# 휠체어 대여')}
