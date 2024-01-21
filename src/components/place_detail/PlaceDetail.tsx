@@ -9,6 +9,7 @@ import { toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { shareKakao } from '@/utils/shareKaKao';
+import Image from 'next/image';
 
 interface PlaceInfoAllData {
   placeId: string;
@@ -148,6 +149,14 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
             {userInfo.isLoggedIn ? (
               isBookmarked ? (
                 <>
+                  {/* <Image
+                    src='/images/icons/bookmark.svg'
+                    alt='bookmark'
+                    width={34}
+                    height={34}
+                    className='cursor-pointer mr-[10px]'
+                    onClick={toggleBookmark}
+                  /> */}
                   <FaBookmark
                     className='cursor-pointer mr-[10px]'
                     size='34px'
@@ -167,6 +176,14 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                 </>
               ) : (
                 <>
+                  {/* <Image
+                    src='/images/icons/bookmark.svg'
+                    alt='bookmark'
+                    width={34}
+                    height={34}
+                    className='cursor-pointer mr-[10px]'
+                    onClick={toggleBookmark}
+                  /> */}
                   <FaRegBookmark
                     className='cursor-pointer mr-[10px]'
                     size='34px'
@@ -187,6 +204,14 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
               )
             ) : (
               <>
+                {/* <Image
+                  src='/images/icons/bookmark.svg'
+                  alt='bookmark'
+                  width={34}
+                  height={34}
+                  className='cursor-pointer'
+                  onClick={showAlert}
+                /> */}
                 <FaRegBookmark
                   className='cursor-pointer'
                   size='34px'

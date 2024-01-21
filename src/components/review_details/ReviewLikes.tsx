@@ -13,6 +13,7 @@ import { Tables } from '@/types/supabase';
 import { getPlaceInfo } from '@/apis/places';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { shareKakao } from '@/utils/shareKaKao';
+import Image from 'next/image';
 
 interface Props {
   review: Tables<'reviews'>;
@@ -220,29 +221,56 @@ const ReviewLikes = ({ review }: Props) => {
           {userInfo.isLoggedIn ? (
             isLiked ? (
               <>
-                <FcLike
+                <Image
+                  src='/images/icons/filled-heart.svg'
+                  alt=''
+                  width={34}
+                  height={34}
+                  onClick={toggleLikes}
+                  className='cursor-pointer'
+                />
+                {/* <FcLike
                   className='cursor-pointer'
                   size='30px'
                   onClick={toggleLikes}
-                />
+                /> */}
                 <span className='mb-[4px]'>{likeCount?.length}</span>
               </>
             ) : (
               <>
-                <FcLikePlaceholder
+                <Image
+                  src='/images/icons/empty-heart.svg'
+                  alt=''
+                  width={34}
+                  height={34}
+                  onClick={toggleLikes}
+                  className='cursor-pointer'
+                />
+                {/* <FcLikePlaceholder
                   className='cursor-pointer'
                   size='30px'
                   onClick={toggleLikes}
-                />
+                /> */}
                 <span className='mb-[4px]'>{likeCount?.length}</span>
               </>
             )
           ) : (
-            <FcLikePlaceholder
-              className='cursor-pointer mb-[10px]'
-              size='30px'
-              onClick={showLoginAlert}
-            />
+            <>
+              <Image
+                src='/images/icons/empty-heart.svg'
+                alt=''
+                width={34}
+                height={34}
+                onClick={showLoginAlert}
+                className='cursor-pointer'
+              />
+              <span className='mb-[4px]'>{likeCount?.length}</span>
+              {/* <FcLikePlaceholder
+               className='cursor-pointer mb-[10px]'
+               size='30px'
+               onClick={showLoginAlert}
+             /> */}
+            </>
           )}
           {/* 공유하기 */}
           <div className='z-[5] relative w-full'>
@@ -277,11 +305,19 @@ const ReviewLikes = ({ review }: Props) => {
               </div>
             </div>
           </div>
-          <FaShareAlt
+          <Image
+            src='/images/icons/share.svg'
+            alt='share button'
+            width={34}
+            height={34}
+            onClick={toggleShareBtn}
+            className='cursor-pointer'
+          />
+          {/* <FaShareAlt
             size='30px'
             className='cursor-pointer'
             onClick={toggleShareBtn}
-          />
+          /> */}
         </div>
       </div>
     </div>
