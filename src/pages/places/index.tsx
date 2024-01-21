@@ -62,7 +62,6 @@ const PlacesPage = () => {
         if (data.length === 0) {
           return;
         }
-
         setSearchedPlaces([...searchedPlaces, ...data]);
         setCurrentPage((prev) => prev + 1);
       }
@@ -70,7 +69,6 @@ const PlacesPage = () => {
       setLoading(false);
     }
   };
-
   const { ref } = useInView({
     threshold: 1,
     onChange: (inView) => {
@@ -105,7 +103,6 @@ const PlacesPage = () => {
     <div>
       <div className='flex flex-col'>
         <div>
-          <label>편의시설</label>
           <div className='flex flex-col gap-4 w-[300px] z-10 fixed top-[8rem] left-[20rem] '>
             {checkboxButton('is_paid', '# 입장료')}
             {checkboxButton('is_easy_door', '# 장애인용 출입문')}
@@ -145,13 +142,14 @@ const PlacesPage = () => {
         </div>
       </div>
       <div
-        style={{
-          textAlign: 'center',
-          backgroundColor: 'green',
-          color: 'white',
-          width: '100%',
-          height: 50,
-        }}
+        // style={{
+        //   textAlign: 'center',
+        //   backgroundColor: 'green',
+        //   color: 'white',
+        //   width: '100%',
+        //   height: 50,
+        // }}
+        // className='hidden'
         ref={ref}
       >
         Trigger to Fetch Here
