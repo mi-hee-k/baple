@@ -141,19 +141,7 @@ const PlacesPage = () => {
           ))}
         </div>
       </div>
-      <div
-        // style={{
-        //   textAlign: 'center',
-        //   backgroundColor: 'green',
-        //   color: 'white',
-        //   width: '100%',
-        //   height: 50,
-        // }}
-        // className='hidden'
-        ref={ref}
-      >
-        Trigger to Fetch Here
-      </div>
+      <div ref={ref}></div>
     </div>
   );
 };
