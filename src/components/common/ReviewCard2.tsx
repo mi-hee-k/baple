@@ -3,9 +3,9 @@ import { Avatar } from '@nextui-org/react';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
-
 import type { ReviewsFromRPC } from '@/types/types';
 import { useRouter } from 'next/router';
+import CommentIcon from 'images/icons/comment.svg';
 
 interface Props {
   review: ReviewsFromRPC;
@@ -62,7 +62,15 @@ const ReviewCard2 = ({ review }: Props) => {
               {formatDate(review.created_at)}
             </span>
             <div className='flex justify-end gap-3'>
-              <span>📑 {comments_count}</span>
+              <span className='flex gap-1'>
+                <Image
+                  src='/images/icons/comment.svg'
+                  width={15}
+                  height={15}
+                  alt='comment icon'
+                />
+                {comments_count}
+              </span>
               <span>❤️ {likes_count}</span>
             </div>
           </section>
