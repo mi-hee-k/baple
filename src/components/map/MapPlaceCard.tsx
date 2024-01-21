@@ -1,5 +1,4 @@
 import { Tables } from '@/types/supabase';
-import avatarDefault from '../../../public/images/avatar_default.jpg';
 import React from 'react';
 import Image from 'next/image';
 
@@ -7,7 +6,9 @@ const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
   return (
     <>
       <Image
-        src={place?.image_url ? place?.image_url : avatarDefault}
+        src={
+          place?.image_url ? place?.image_url : '/images/icons/character.svg'
+        }
         alt='이미지'
         className='w-[70px] rounded-[50%]'
         // radius='lg'
