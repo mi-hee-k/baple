@@ -84,7 +84,9 @@ const SignupPage = () => {
     <>
       <Seo title='SignUp' />
       <div className='h-screen flex flex-col justify-center items-center'>
-        <Link href='/'>BAPLE</Link>
+        <Link href='/' className='text-3xl font-black'>
+          BAPLE
+        </Link>
         <form onSubmit={handleSubmit(signUpHandler)} className='flex flex-col'>
           <Input
             type='email'
