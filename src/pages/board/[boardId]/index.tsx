@@ -66,9 +66,9 @@ const BoardPostPage = () => {
             <Avatar
               size='sm'
               showFallback
-              src={post.users.avatar_url || undefined}
+              src={post.users?.avatar_url || undefined}
             />
-            <p className='text-md'>{post.users.user_name}</p>
+            <p className='text-md'>{post.users?.user_name}</p>
           </div>
         </div>
         {userInfo.userId === post.user_id ? (

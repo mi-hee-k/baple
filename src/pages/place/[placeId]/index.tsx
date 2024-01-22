@@ -95,7 +95,16 @@ const PlacePage = () => {
           level={5}
           maxLevel={5}
         >
-          <MapMarker position={placePosition} />
+          <MapMarker
+            position={placePosition}
+            image={{
+              src: '/images/icons/marker.svg', // 마커이미지의 주소입니다
+              size: {
+                width: 44,
+                height: 40,
+              },
+            }}
+          />
           {toggle === 'map' && (
             <Button
               className='absolute flex  z-10 top-[3px] left-[130px] w-[90px] h-[32px] justify-center'
