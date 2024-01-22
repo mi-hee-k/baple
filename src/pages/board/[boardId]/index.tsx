@@ -20,6 +20,8 @@ const BoardPostPage = () => {
     queryFn: () => getPost(boardId),
   });
 
+  console.log(post);
+
   const queryClient = useQueryClient();
   const deleteMutate = useMutation({
     mutationFn: deletePost,
@@ -69,14 +71,16 @@ const BoardPostPage = () => {
             <p className='text-md'>{post.users.user_name}</p>
           </div>
         </div>
-        <div className='flex gap-5'>
-          <Button size='sm' color='primary' onClick={delPost}>
-            삭제
-          </Button>
-          <Button size='sm' color='primary'>
-            수정
-          </Button>
-        </div>
+        {userInfo.userId === post.user_id ? (
+          <div className='flex gap-5'>
+            <Button size='sm' color='primary' onClick={delPost}>
+              삭제
+            </Button>
+            <Button size='sm' color='primary'>
+              수정
+            </Button>
+          </div>
+        ) : null}
       </div>
       <Spacer y={8} />
 

@@ -57,7 +57,7 @@ const columns = [
     label: '제목',
   },
   {
-    key: 'content',
+    key: 'user_name',
     label: '작성자',
   },
   {
@@ -81,12 +81,15 @@ const BoardPage = () => {
     select: (posts) => {
       return posts.map((post) => ({
         ...post,
+        user_name: post.users.user_name,
         created_at: formatDate(post.created_at),
       }));
     },
   });
 
   const recentOrder = _.orderBy(posts, 'created_at', 'desc');
+
+  console.log(recentOrder);
 
   const postsPerPage = 10;
   const pages = Math.ceil((recentOrder?.length || 0) / postsPerPage);

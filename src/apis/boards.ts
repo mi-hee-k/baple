@@ -28,7 +28,12 @@ export const insertNewPost = async (formData: FormValues) => {
 
 // 게시글 전부 가져오기
 export const getPosts = async () => {
-  const { data, error } = await supabase.from('boards').select();
+  const { data, error } = await supabase.from('boards').select(`
+  *,
+  users(
+    user_name
+  )
+  `);
   if (error) {
     throw error;
   }
