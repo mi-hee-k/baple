@@ -18,6 +18,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
 const rows = [
   {
@@ -56,7 +57,7 @@ const columns = [
     label: '제목',
   },
   {
-    key: 'content',
+    key: 'user_name',
     label: '작성자',
   },
   {
@@ -80,20 +81,23 @@ const BoardPage = () => {
     select: (posts) => {
       return posts.map((post) => ({
         ...post,
+        user_name: post.users.user_name,
         created_at: formatDate(post.created_at),
       }));
     },
   });
 
-  const postsPerPage = 4;
-  const pages = Math.ceil((posts?.length || 0) / postsPerPage);
+  const recentOrder = _.orderBy(posts, 'created_at', 'desc');
+
+  const postsPerPage = 10;
+  const pages = Math.ceil((recentOrder?.length || 0) / postsPerPage);
 
   const items = useMemo(() => {
     const start = (page - 1) * postsPerPage;
     const end = start + postsPerPage;
 
-    return posts?.slice(start, end);
-  }, [page, posts]);
+    return recentOrder?.slice(start, end);
+  }, [page, recentOrder]);
 
   if (isLoading) {
     return <p>로딩중...</p>;

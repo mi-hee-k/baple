@@ -10,6 +10,7 @@ import {
   Select,
   SelectItem,
 } from '@nextui-org/react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -37,15 +38,22 @@ const BoardWritePage = () => {
   const watchPlaceName = watch('placeName');
   const watchContent = watch('content');
 
+  const queryClient = useQueryClient();
+  const addPostMutate = useMutation({
+    mutationFn: insertNewPost,
+    onSuccess: () => {
+      router.push('/board');
+      toastSuccess('등록되었습니다!');
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
+    },
+  });
+
   const createPost: SubmitHandler<FormValues> = (data) => {
     const formData = {
       ...data,
       userId: userInfo.userId,
     };
-
-    insertNewPost(formData);
-    router.push('/board');
-    toastSuccess('등록되었습니다!');
+    addPostMutate.mutate(formData);
   };
 
   return (
