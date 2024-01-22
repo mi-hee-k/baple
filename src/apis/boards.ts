@@ -26,7 +26,7 @@ export const insertNewPost = async (formData: FormValues) => {
   if (error) throw error;
 };
 
-// 게시글 가져오기
+// 게시글 전부 가져오기
 export const getPosts = async () => {
   const { data, error } = await supabase.from('boards').select();
   if (error) {
@@ -35,7 +35,8 @@ export const getPosts = async () => {
   return data;
 };
 
-export const getPost = async (id: string) => {
+// 게시글 가져오기
+export const getPost = async (boardId: string) => {
   const { data, error } = await supabase
     .from('boards')
     .select(
@@ -45,10 +46,30 @@ export const getPost = async (id: string) => {
       avatar_url
     )`,
     )
-    .eq('id', id)
+    .eq('id', boardId)
     .single();
   if (error) {
     throw error;
   }
   return data;
+};
+
+// 게시글 삭제
+export const deletePost = async ({
+  userId,
+  boardId,
+}: {
+  userId: string;
+  boardId: string;
+}) => {
+  const { error } = await supabase
+    .from('boards')
+    .delete()
+    .eq('user_id', userId)
+    .eq('id', boardId);
+
+  if (error) {
+    console.log(error);
+  }
+  console.log('게시글 삭제');
 };

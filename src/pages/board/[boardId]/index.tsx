@@ -1,23 +1,53 @@
-import { getPost } from '@/apis/boards';
+import { deletePost, getPost } from '@/apis/boards';
 import MainWrapper from '@/components/layout/MainWrapper';
+import { toastSuccess } from '@/libs/toastifyAlert';
+import { RootState } from '@/redux/config/configStore';
 import { formatDate } from '@/utils/dateFormatter';
 import { Avatar, Button, Spacer } from '@nextui-org/react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const BoardPostPage = () => {
   const router = useRouter();
   const boardId: string = router.query.boardId as string;
+  const userInfo = useSelector((state: RootState) => state.auth);
+
   const { data: post, isLoading } = useQuery({
     queryKey: ['posts', boardId],
     queryFn: () => getPost(boardId),
   });
 
+  const queryClient = useQueryClient();
+  const deleteMutate = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      router.push('/board');
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
+    },
+  });
+
+  const delPost = () => {
+    Swal.fire({
+      icon: 'warning',
+      title: '정말 삭제하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소',
+      confirmButtonColor: '#FFD029',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMutate.mutate({ userId: userInfo.userId, boardId });
+        toastSuccess('삭제 되었습니다');
+      }
+    });
+  };
+
   if (isLoading) {
     return <p>로딩중...</p>;
   }
-  console.log(post);
 
   return (
     <MainWrapper>
@@ -40,7 +70,7 @@ const BoardPostPage = () => {
           </div>
         </div>
         <div className='flex gap-5'>
-          <Button size='sm' color='primary'>
+          <Button size='sm' color='primary' onClick={delPost}>
             삭제
           </Button>
           <Button size='sm' color='primary'>
