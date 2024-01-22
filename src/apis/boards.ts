@@ -1,6 +1,5 @@
 import { supabase } from '@/libs/supabase';
 import { Tables } from '@/types/supabase';
-
 export interface FormValues
   extends Omit<
     Tables<'boards'>,
@@ -41,7 +40,7 @@ export const getPost = async (id: string) => {
     .from('boards')
     .select(
       `*,
-       users (
+      users (
       user_name,
       avatar_url
     )`,

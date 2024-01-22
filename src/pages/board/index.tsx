@@ -18,6 +18,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
 const rows = [
   {
@@ -85,14 +86,16 @@ const BoardPage = () => {
     },
   });
 
-  const postsPerPage = 4;
-  const pages = Math.ceil((posts?.length || 0) / postsPerPage);
+  const recentOrder = _.orderBy(posts, 'created_at', 'desc');
+
+  const postsPerPage = 10;
+  const pages = Math.ceil((recentOrder?.length || 0) / postsPerPage);
 
   const items = useMemo(() => {
     const start = (page - 1) * postsPerPage;
     const end = start + postsPerPage;
 
-    return posts?.slice(start, end);
+    return recentOrder?.slice(start, end);
   }, [page, posts]);
 
   if (isLoading) {
