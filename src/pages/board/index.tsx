@@ -97,7 +97,7 @@ const BoardPage = () => {
     const end = start + postsPerPage;
 
     return recentOrder?.slice(start, end);
-  }, [page, posts]);
+  }, [page, recentOrder]);
 
   if (isLoading) {
     return <p>로딩중...</p>;
