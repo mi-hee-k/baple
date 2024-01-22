@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toastWarn } from '@/libs/toastifyAlert';
+import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { shareKakao } from '@/utils/shareKaKao';
@@ -127,9 +127,11 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     if (isBookmarked) {
       setIsBookmarked(false);
       delBookmark.mutate({ userId: userInfo.userId, placeId });
+      toastSuccess('북마크에 추가되었습니다');
     } else {
       setIsBookmarked(true);
       addBookmark.mutate({ userId: userInfo.userId, placeId });
+      toastSuccess('북마크에 해제되었습니다');
     }
   };
 
@@ -254,10 +256,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
                 {infoDetails[index]}
               </Chip>
             ) : (
-              <Chip
-                className='rounded-xl text-lg w-full max-w-full max-w text-center'
-                color='primary'
-              >
+              <Chip className='rounded-xl text-lg w-full max-w-full max-w text-center'>
                 {infoDetails[index]}
               </Chip>
             )}
