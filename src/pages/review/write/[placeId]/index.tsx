@@ -15,6 +15,7 @@ import { supabase } from '@/libs/supabase';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
 import Seo from '@/components/layout/Seo';
+import PhotoIcon from 'images/icons/photo.svg';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -148,7 +149,7 @@ const ReviewWritePage = () => {
         </div>
         <div>
           <div className='flex items-center mb-5'>
-            {/* <div></div> 아이콘 들어갈 부분 */}
+            {/* <span>아이콘</span> */}
             <h2 className='text-xl mr-1 mb-2 font-medium'>후기</h2>
             <span className='text-red-500 text-2xl font-bold'>*</span>
           </div>
@@ -163,12 +164,13 @@ const ReviewWritePage = () => {
             className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
           />
         </div>
-        <div className='border-t-3 border-yellow-400 py-9'>
+        <div className='border-t-3 border-yellow-400 py-9 flex'>
+          {/* <span>아이콘</span> */}
           <h2 className='text-xl font-medium'>
             사진 올리기(최대 3장까지 첨부 가능합니다)
           </h2>
         </div>
-        <div className='mb-10  flex gap-6 mt-7'>
+        <div className='mb-10  flex gap-6'>
           <label className='relative cursor-pointer'>
             <input
               type='file'
