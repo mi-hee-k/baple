@@ -127,11 +127,11 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     if (isBookmarked) {
       setIsBookmarked(false);
       delBookmark.mutate({ userId: userInfo.userId, placeId });
-      toastSuccess('북마크에 추가되었습니다');
+      toastSuccess('북마크에 해제되었습니다');
     } else {
       setIsBookmarked(true);
       addBookmark.mutate({ userId: userInfo.userId, placeId });
-      toastSuccess('북마크에 해제되었습니다');
+      toastSuccess('북마크에 추가되었습니다');
     }
   };
 
