@@ -33,8 +33,8 @@ const PlacesModal = ({
   }, [places]);
   return (
     <>
-      <div className='absolute flex flex-col bg-white bg-opacity-50 right-0 bottom-0 z-10 w-[400px] h-[700px] rounded-tl-[20px]'>
-        <div className='h-[50px] w-[380px] flex justify-center items-center text-[18px]'>
+      <div className='absolute flex flex-col bg-white bg-opacity-50 right-0 bottom-[10px] z-10 w-[25rem] h-[90vh] rounded-tl-[20px]'>
+        <div className='h-[50px] w-[400px] flex justify-center items-center text-[18px]  bg-white  rounded-tl-[20px] shadow-xl'>
           <p className='font-bold text-[20px]'>
             {cityName}&nbsp;
             {regionName}
