@@ -89,8 +89,6 @@ const BoardPage = () => {
 
   const recentOrder = _.orderBy(posts, 'created_at', 'desc');
 
-  console.log(recentOrder);
-
   const postsPerPage = 10;
   const pages = Math.ceil((recentOrder?.length || 0) / postsPerPage);
 
