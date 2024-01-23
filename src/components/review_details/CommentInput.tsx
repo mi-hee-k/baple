@@ -66,7 +66,7 @@ const CommentInput = ({ reviewId, commentsCount, placeId }: Props) => {
       <strong className='ml-2'>댓글</strong>
       <span className='px-[10px]'>댓글아이콘 : {commentsCount}</span>
       <form
-        className='flex gap-5 items-center border border-t-2 border-b-2 border-l-0 border-r-0 border-primary py-[20px]'
+        className='flex gap-5 items-center border border-t-3 border-b-3 border-l-0 border-r-0 py-[20px]'
         onSubmit={handleSubmit(submitComment, onError)}
       >
         <Input

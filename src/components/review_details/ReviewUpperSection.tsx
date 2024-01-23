@@ -68,7 +68,7 @@ const ReviewUpperSection = ({
       </Link>
       <Spacer y={5} />
 
-      <div className='flex justify-between items-center gap-4 border-t-3 border-primary py-5'>
+      <div className='flex justify-between items-center gap-4 border-t-3 py-5'>
         <div className='flex  items-center gap-4'>
           <Avatar
             className='w-[88px] h-[88px]'

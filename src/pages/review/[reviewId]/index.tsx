@@ -86,6 +86,8 @@ const ReviewPage = () => {
                 commentsCount={commentsCount}
                 placeId={placeId}
               />
+              <Spacer y={1} />
+
               <div className='flex flex-col'>
                 <CommentList comments={comments} />
               </div>

@@ -18,12 +18,12 @@ const CommentList = ({ comments }: Props) => {
     );
   }
   return (
-    <>
+    <section className='flex flex-col gap-y-2'>
       {comments?.map((comment) => (
         <CommentCard key={comment.id} comment={comment} />
       ))}
       <Spacer y={10} />
-    </>
+    </section>
   );
 };
 
