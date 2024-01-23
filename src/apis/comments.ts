@@ -11,7 +11,8 @@ export const getAllComments = async (id: string) => {
     *,
     users (
       user_name, avatar_url
-    )
+    ),
+    reviews(place_id)
   `,
     )
     .eq('review_id', id);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from '@nextui-org/react';
+import { Avatar, Spacer } from '@nextui-org/react';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
@@ -27,15 +27,15 @@ const ReviewCard2 = ({ review }: Props) => {
 
   return (
     <Link className='w-full' href={`/review/${unique_review_id}`}>
-      <div className='card w-full p-2 border rounded-xl'>
+      <div className='card w-full pr-[47px] py-[18px] p-2 border rounded-xl'>
         <div className='flex justify-between gap-x-4'>
           <section className='flex flex-col gap-y-2 min-w-[118px] items-center justify-center'>
             <Avatar
               showFallback
               src={user_avatar_url}
-              className='w-[50px] h-[50px]'
+              className='w-[65px] h-[65px]'
             />
-            <strong>{user_name}</strong>
+            <strong className='text-[15px]'>{user_name}</strong>
           </section>
           <div className='flex flex-col w-full'>
             <div className='flex flex-col gap-4'>
@@ -45,19 +45,21 @@ const ReviewCard2 = ({ review }: Props) => {
                     key={url}
                     alt='review images'
                     src={url}
-                    height={40}
-                    width={40}
-                    className='w-[40px] h-[40px] object-cover object-center rounded-md'
+                    height={100}
+                    width={100}
+                    className='w-[100px] h-[100px] object-cover object-center rounded-md'
                   />
                 ))}
               </div>
               <strong className={` ${displayPlaceName ? 'block' : 'hidden'}`}>
                 {place_name}
               </strong>
-              <div className='max-h-[24px] overflow-hidden'>{content}</div>
+              <div className='max-h-[24px] text-[15px] overflow-hidden'>
+                {content}
+              </div>
             </div>
           </div>
-          <section className='flex text-end flex-col w-[190px]'>
+          <section className='flex text-end flex-col justify-between h-auto w-[190px]'>
             <span className='text-sm text-gray-500'>
               {formatDate(review.created_at)}
             </span>

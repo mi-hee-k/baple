@@ -154,7 +154,8 @@ const PlacePage = () => {
           <h2 className='text-3xl font-bold'>방문자 리뷰</h2>
           {isLoggedIn ? (
             <Button
-              className='bg-primary px-8 py-2 rounded-full text-black'
+              color='primary'
+              className=' px-8 py-2 rounded-full '
               onClick={() => router.push(`/review/write/${placeId}`)}
             >
               리뷰 작성하기
@@ -168,7 +169,7 @@ const PlacePage = () => {
             </Button>
           )}
         </div>
-        <Divider className='bg-primary h-0.5 mb-[30px]' />
+        <Divider className='h-0.5 mb-[30px]' />
         <div className='text-right mb-[20px] px-[10px]'>
           <span
             className={`mr-[20px] text-gray-500 text-sm cursor-pointer ${
