@@ -6,7 +6,7 @@ import ReviewBody from '@/components/review_details/ReviewBody';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { getReviewById } from '@/apis/reviews';
-import { Card, CardBody, Spacer } from '@nextui-org/react';
+import { Spacer } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
 import { useRouter } from 'next/router';
 import ReviewLikes from '@/components/review_details/ReviewLikes';
@@ -56,43 +56,39 @@ const ReviewPage = () => {
       <>
         <MainWrapper>
           <Seo title='리뷰' />
-          <Card>
-            <CardBody className='px-[40px]'>
-              <ReviewUpperSection
-                review={review}
-                setIsEditing={setIsEditing}
-                isEditing={isEditing}
-                currentUserId={currentUserId}
-              />
+          <ReviewUpperSection
+            review={review}
+            setIsEditing={setIsEditing}
+            isEditing={isEditing}
+            currentUserId={currentUserId}
+          />
 
-              <Seo title='Review' />
-              <ReviewLikes review={review} />
-              {review?.images_url && (
-                <Carousel
-                  slideData={imgUrl}
-                  slideHeight={'300px'}
-                  slidesPerView={4}
-                />
-              )}
-              <Spacer y={10} />
-              <ReviewBody
-                review={review}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-              />
-              <Spacer y={10} />
-              <CommentInput
-                reviewId={review.id}
-                commentsCount={commentsCount}
-                placeId={placeId}
-              />
-              <Spacer y={1} />
+          <Seo title='Review' />
+          <ReviewLikes review={review} />
+          {review?.images_url && (
+            <Carousel
+              slideData={imgUrl}
+              slideHeight={'300px'}
+              slidesPerView={4}
+            />
+          )}
+          <Spacer y={10} />
+          <ReviewBody
+            review={review}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
+          <Spacer y={10} />
+          <CommentInput
+            reviewId={review.id}
+            commentsCount={commentsCount}
+            placeId={placeId}
+          />
+          <Spacer y={1} />
 
-              <div className='flex flex-col'>
-                <CommentList comments={comments} />
-              </div>
-            </CardBody>
-          </Card>
+          <div className='flex flex-col'>
+            <CommentList comments={comments} />
+          </div>
         </MainWrapper>
       </>
     );
