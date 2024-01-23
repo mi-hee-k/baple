@@ -83,6 +83,9 @@ const ReviewLikes = ({ review }: Props) => {
       queryClient.invalidateQueries({
         queryKey: ['likes', userInfo.userId, review.id],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['likes', userInfo.userId],
+      });
     },
   });
 
@@ -116,6 +119,9 @@ const ReviewLikes = ({ review }: Props) => {
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ['likes', userInfo.userId, review.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['likes', userInfo.userId],
       });
     },
   });
