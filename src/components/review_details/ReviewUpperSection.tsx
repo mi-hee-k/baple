@@ -12,7 +12,7 @@ interface Props {
   review: ReviewWithPlaceAndUser;
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  currentUserId: string;
+  currentUserId: string | null;
 }
 
 const ReviewUpperSection = ({
@@ -29,7 +29,6 @@ const ReviewUpperSection = ({
   const reviewDelteMutate = useMutation({
     mutationFn: deleteReview,
     onSuccess: () => {
-      // toastSuccess('삭제 완료');
       queryClient.invalidateQueries({
         queryKey: ['reviews', review.place_id],
       });
@@ -37,7 +36,6 @@ const ReviewUpperSection = ({
         queryKey: ['reviews', currentUserId],
       });
     },
-    // router.back();
     onError: () => {
       toastError('문제가 발생하여 삭제하지 못했습니다');
       return;

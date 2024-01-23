@@ -1,49 +1,30 @@
 import React, { useState } from 'react';
 import { Button, Input } from '@nextui-org/react';
 import newComment from '@/utils/newComment';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { insertNewComment } from '@/apis/comments';
-import { toast } from 'react-toastify';
-// import { USER_ID } from '@/constants/temp_develop';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useForm, FieldErrors, FieldValues } from 'react-hook-form';
-import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { toastWarn } from '@/libs/toastifyAlert';
+import { useComments } from '@/hooks/useComments';
 import Image from 'next/image';
 
 interface Props {
   reviewId: string;
+  placeId: string;
   commentsCount: number | undefined;
   placeId: string | undefined;
 }
 
-const CommentInput = ({ reviewId, commentsCount, placeId }: Props) => {
+const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
   const { isLoggedIn, userId } = useSelector((state: RootState) => state.auth);
+  const { insertComment } = useComments(userId as string, placeId);
 
   const [comment, setComment] = useState('');
-
-  const queryClient = useQueryClient();
-  const InsertMutate = useMutation({
-    mutationFn: insertNewComment,
-    onSuccess: () => {
-      toastSuccess('댓글이 성공적으로 등록되었습니다!');
-      queryClient.invalidateQueries({ queryKey: ['comments'] });
-      queryClient.invalidateQueries({
-        queryKey: ['reviews', placeId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['likes', userId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['reviews', userId],
-      });
-    },
-  });
 
   const submitComment = async () => {
     // e.preventDefault();
@@ -51,11 +32,8 @@ const CommentInput = ({ reviewId, commentsCount, placeId }: Props) => {
       toastWarn('로그인 후 이용해 주세요');
       return;
     }
-
     const newCommentData = new newComment(reviewId, userId, comment);
-
-    InsertMutate.mutate(newCommentData);
-
+    insertComment(newCommentData);
     setComment('');
   };
 
