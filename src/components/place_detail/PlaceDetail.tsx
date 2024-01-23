@@ -55,14 +55,14 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   ];
 
   // 낙관적 업데이트 (추가)
-  const addBookmark = useMutation({
+  const { mutate: addBookmark } = useMutation({
     mutationFn: insertBookmark,
     onMutate: async () => {
       await queryClient.cancelQueries({
         queryKey: ['bookmark', userId, placeId],
       });
       const prev = queryClient.getQueryData(['bookmark', userId, placeId]);
-      const updateBookmark = [{ user_id: userId, place_id: placeId }];
+      const updateBookmark = [{ userId, place_id: placeId }];
       queryClient.setQueryData(['bookmark', userId, placeId], updateBookmark);
       return { prev };
     },
@@ -79,7 +79,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   });
 
   // 낙관적 업데이트 (삭제)
-  const delBookmark = useMutation({
+  const { mutate: delBookmark } = useMutation({
     mutationFn: deleteBookmark,
     onMutate: async () => {
       await queryClient.cancelQueries({
@@ -106,11 +106,11 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   const toggleBookmark = () => {
     if (isBookmarked) {
       setIsBookmarked(false);
-      delBookmark.mutate({ userId: userId, placeId });
+      delBookmark({ userId, placeId });
       toastSuccess('북마크에 해제되었습니다');
     } else {
       setIsBookmarked(true);
-      addBookmark.mutate({ userId: userId, placeId });
+      addBookmark({ userId, placeId });
       toastSuccess('북마크에 추가되었습니다');
     }
   };
