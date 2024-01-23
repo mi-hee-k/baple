@@ -30,6 +30,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        purple: '#7b4cff',
+        pink: '#ff518f',
+        green: '#4ff2a4',
+        blue: '#66b6ff',
+        yellow: '#ffd029',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -40,6 +47,7 @@ module.exports = {
   darkMode: 'class',
   plugins: [
     nextui({
+      addCommonColors: true,
       themes: {
         light: {
           layout: {},
