@@ -15,24 +15,24 @@ interface Props {
 }
 
 const Editor = ({ isEdit }: Props) => {
-  const userInfo = useSelector((state: RootState) => state.auth);
+  const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const boardId: string = router.query.boardId as string;
   const [inputs, setInputs] = useState({
     title: '',
-    category: '',
+    category: '신규장소',
     content: '',
     place_name: '',
   });
 
-  const { data: post, isLoading } = useQuery({
+  const { data: post } = useQuery({
     queryKey: ['posts', boardId],
     queryFn: () => getPost(boardId),
     enabled: !!boardId,
   });
 
   const queryClient = useQueryClient();
-  const addPostMutate = useMutation({
+  const { mutate: addPostMutate } = useMutation({
     mutationFn: insertNewPost,
     onSuccess: () => {
       router.push('/board');
@@ -41,7 +41,7 @@ const Editor = ({ isEdit }: Props) => {
     },
   });
 
-  const updatePostMutate = useMutation({
+  const { mutate: updatePostMutate } = useMutation({
     mutationFn: updatePost,
     onSuccess: () => {
       router.push('/board');
@@ -61,45 +61,62 @@ const Editor = ({ isEdit }: Props) => {
     });
   };
 
-  const createPost = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = {
-      title: inputs.title,
-      category: inputs.category,
-      content: inputs.content,
-      placeName: inputs.place_name,
-      userId: userInfo.userId,
-    };
-    addPostMutate.mutate(formData);
-  };
-
-  const editPost = () => {
+  // 유효성 검사
+  const validateCheck = () => {
     if (
       inputs.title.trim() === '' ||
       inputs.content.trim() === '' ||
       inputs.place_name.trim() === '' ||
-      inputs.category === undefined
+      inputs.category === 'undefined'
     ) {
       toastWarn('모든 정보를 입력해주세요');
-      return;
+      return false;
     }
-    const editValue = {
-      title: inputs.title,
-      category: inputs.category,
-      content: inputs.content,
-      placeName: inputs.place_name,
-      userId: userInfo.userId,
-    };
+    return true; // 조건을 만족할 때만 true 반환
+  };
+
+  const formData = {
+    title: inputs.title,
+    category: inputs.category,
+    content: inputs.content,
+    placeName: inputs.place_name,
+    userId,
+  };
+
+  const createPost = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!validateCheck()) {
+      return; // validateCheck가 false를 반환하면 함수 종료
+    }
+
     Swal.fire({
       icon: 'success',
-      title: '정말 수정하시겠습니까?',
+      title: '이대로 등록하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '등록',
+      cancelButtonText: '취소',
+      confirmButtonColor: '#FFD029',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        addPostMutate(formData);
+      }
+    });
+  };
+
+  const editPost = () => {
+    if (!validateCheck()) {
+      return; // validateCheck가 false를 반환하면 함수 종료
+    }
+    Swal.fire({
+      icon: 'success',
+      title: '이대로 수정하시겠습니까?',
       showCancelButton: true,
       confirmButtonText: '수정',
       cancelButtonText: '취소',
       confirmButtonColor: '#FFD029',
     }).then((result) => {
       if (result.isConfirmed) {
-        updatePostMutate.mutate({ boardId, editValue });
+        updatePostMutate({ boardId, editValue: formData });
       }
     });
   };
@@ -108,16 +125,12 @@ const Editor = ({ isEdit }: Props) => {
     if (isEdit && post) {
       setInputs({
         title: post.title || '',
-        category: post.category || '',
+        category: post.category || '신규장소',
         content: post.content || '',
         place_name: post.place_name || '',
       });
     }
   }, [isEdit, post]);
-
-  if (isLoading) {
-    return <p>로딩중...</p>;
-  }
 
   return (
     <section className='flex justify-center'>
@@ -145,7 +158,7 @@ const Editor = ({ isEdit }: Props) => {
               <option
                 key={category}
                 value={category}
-                defaultValue={isEdit ? post.category : undefined}
+                defaultValue={isEdit ? post?.category : undefined}
                 className='p-2 h-2'
               >
                 {category}

@@ -21,16 +21,8 @@ const BoardPostPage = () => {
   });
 
   const queryClient = useQueryClient();
-  const deleteMutate = useMutation({
+  const { mutate: deleteMutate } = useMutation({
     mutationFn: deletePost,
-    onSuccess: () => {
-      router.push('/board');
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
-    },
-  });
-
-  const updateMutate = useMutation({
-    mutationFn: updatePost,
     onSuccess: () => {
       router.push('/board');
       queryClient.invalidateQueries({ queryKey: ['posts'] });
@@ -47,7 +39,7 @@ const BoardPostPage = () => {
       confirmButtonColor: '#FFD029',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMutate.mutate({ userId: userInfo.userId, boardId });
+        deleteMutate({ userId: userInfo.userId, boardId });
         toastSuccess('삭제 되었습니다');
       }
     });
