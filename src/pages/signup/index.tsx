@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { toastError, toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { validateUsername } from '@/utils/validationUtils';
 
 interface FormValues {
   email: string;
@@ -59,31 +60,6 @@ const SignupPage = () => {
     } else {
       toastSuccess('회원 가입 성공!');
       router.push('/');
-    }
-  };
-
-  const validateUsername = async (username: string) => {
-    const { data, error } = await supabase
-      .from('users')
-      .select()
-      .eq('user_name', username);
-    console.log('data', data);
-    if (error) throw error;
-    if (watchUsername === undefined) {
-      toastWarn('닉네임을 입력해주세요. 😅');
-      setIsCheckedUsername(false);
-    } else if (watchUsername.length < 2) {
-      toastWarn('2글자 이상의 닉네임을 입력해주세요. 😅');
-      setIsCheckedUsername(false);
-    } else if (watchUsername.length > 8) {
-      toastWarn('8글자 이하의 닉네임을 입력해주세요. 😅');
-      setIsCheckedUsername(false);
-    } else if (data?.length !== 0) {
-      toastWarn('이미 사용중인 닉네임 입니다. 😅');
-      setIsCheckedUsername(false);
-    } else {
-      toastSuccess('사용 가능한 닉네임 입니다. 😄');
-      setIsCheckedUsername(true);
     }
   };
 
@@ -202,7 +178,9 @@ const SignupPage = () => {
             />
 
             <Button
-              onClick={() => validateUsername(watchUsername)}
+              onClick={() =>
+                validateUsername(watchUsername, setIsCheckedUsername)
+              }
               color='warning'
             >
               중복 확인

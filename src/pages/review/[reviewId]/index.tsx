@@ -81,6 +81,7 @@ const ReviewPage = () => {
               <Spacer y={10} />
               <CommentInput
                 reviewId={review.id}
+                placeId={review.place_id}
                 commentsCount={commentsCount}
               />
               <div className='flex flex-col'>
