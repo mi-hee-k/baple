@@ -22,7 +22,7 @@ const categoryList = [
 ];
 
 const BoardWritePage = () => {
-  const userInfo = useSelector((state: RootState) => state.auth);
+  const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const {
     register,
@@ -39,7 +39,7 @@ const BoardWritePage = () => {
   const watchContent = watch('content');
 
   const queryClient = useQueryClient();
-  const addPostMutate = useMutation({
+  const { mutate } = useMutation({
     mutationFn: insertNewPost,
     onSuccess: () => {
       router.push('/board');
@@ -51,9 +51,9 @@ const BoardWritePage = () => {
   const createPost: SubmitHandler<FormValues> = (data) => {
     const formData = {
       ...data,
-      userId: userInfo.userId,
+      userId,
     };
-    addPostMutate.mutate(formData);
+    mutate(formData);
   };
 
   return (
