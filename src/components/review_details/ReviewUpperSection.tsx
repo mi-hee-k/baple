@@ -23,7 +23,6 @@ const ReviewUpperSection = ({
 }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  console.log('uppersection 에서 review', review);
 
   const showDelEditBtn = currentUserId === review.user_id ? true : false;
 
@@ -66,8 +65,9 @@ const ReviewUpperSection = ({
         <strong className='text-2xl'>{review.places.place_name}</strong>
       </Link>
       <Spacer y={5} />
+      <Divider className='h-0.5' />
 
-      <div className='flex justify-between items-center gap-4 border-t-3 border-primary py-5'>
+      <div className='flex justify-between items-center gap-4 py-5'>
         <div className='flex  items-center gap-4'>
           <Avatar
             className='w-[88px] h-[88px]'
