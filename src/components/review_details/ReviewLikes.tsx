@@ -74,7 +74,7 @@ const ReviewLikes = ({ review }: Props) => {
         queryKey: ['likes', userId, review.id],
       });
       queryClient.invalidateQueries({
-        queryKey: ['likes', userInfo.userId],
+        queryKey: ['likes', userId],
       });
       queryClient.invalidateQueries({
         queryKey: ['reviews', placeInfo.id],
@@ -104,7 +104,7 @@ const ReviewLikes = ({ review }: Props) => {
         queryKey: ['likes', userId, review.id],
       });
       queryClient.invalidateQueries({
-        queryKey: ['likes', userInfo.userId],
+        queryKey: ['likes', userId],
       });
       queryClient.invalidateQueries({
         queryKey: ['reviews', placeInfo.id],
