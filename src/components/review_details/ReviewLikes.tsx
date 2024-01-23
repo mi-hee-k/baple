@@ -27,7 +27,7 @@ interface Likes {
 const ReviewLikes = ({ review }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const userInfo = useSelector((state: RootState) => state.auth);
+  const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isShown, setIsShown] = useState(false);
 
@@ -38,9 +38,9 @@ const ReviewLikes = ({ review }: Props) => {
   });
 
   const { data: likeState } = useQuery({
-    queryKey: ['likes', userInfo.userId, review.id],
-    queryFn: () => getLike({ userId: userInfo.userId, reviewId: review.id }),
-    enabled: !!userInfo.userId,
+    queryKey: ['likes', userId, review.id],
+    queryFn: () => getLike({ userId: userId, reviewId: review.id }),
+    enabled: !!userId,
   });
 
   const { data: likeCount } = useQuery({
@@ -53,75 +53,55 @@ const ReviewLikes = ({ review }: Props) => {
   }, [likeState]);
 
   // 낙관적 업데이트 (추가)
-  const addLikes = useMutation({
+  const { mutate: addLikes } = useMutation({
     mutationFn: insertLikes,
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: ['likes', userInfo.userId, review.id],
+        queryKey: ['likes', userId, review.id],
       });
-      const prev = queryClient.getQueryData([
-        'likes',
-        userInfo.userId,
-        review.id,
-      ]);
-      const updateLikes = [{ user_id: userInfo.userId, review_id: review.id }];
-      queryClient.setQueryData(
-        ['likes', userInfo.userId, review.id],
-        updateLikes,
-      );
+      const prev = queryClient.getQueryData(['likes', userId, review.id]);
+      const updateLikes = [{ user_id: userId, review_id: review.id }];
+      queryClient.setQueryData(['likes', userId, review.id], updateLikes);
       return { prev };
     },
     onError: (error, updateReviewParams, context) => {
       if (context?.prev) {
-        queryClient.setQueryData(
-          ['likes', userInfo.userId, review.id],
-          context.prev,
-        );
+        queryClient.setQueryData(['likes', userId, review.id], context.prev);
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['likes', userInfo.userId, review.id],
+        queryKey: ['likes', userId, review.id],
       });
     },
   });
 
   // 낙관적 업데이트 (삭제)
-  const delLikes = useMutation({
+  const { mutate: delLikes } = useMutation({
     mutationFn: deleteLikes,
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: ['likes', userInfo.userId, review.id],
+        queryKey: ['likes', userId, review.id],
       });
-      const prev = queryClient.getQueryData([
-        'likes',
-        userInfo.userId,
-        review.id,
-      ]);
+      const prev = queryClient.getQueryData(['likes', userId, review.id]);
       const updateLikes = undefined;
-      queryClient.setQueryData(
-        ['likes', userInfo.userId, review.id],
-        updateLikes,
-      );
+      queryClient.setQueryData(['likes', userId, review.id], updateLikes);
       return { prev };
     },
     onError: (error, updateReviewParams, context) => {
       if (context?.prev) {
-        queryClient.setQueryData(
-          ['likes', userInfo.userId, review.id],
-          context.prev,
-        );
+        queryClient.setQueryData(['likes', userId, review.id], context.prev);
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['likes', userInfo.userId, review.id],
+        queryKey: ['likes', userId, review.id],
       });
     },
   });
 
   // 낙관적 업데이트 (좋아요 개수 추가)
-  const plusLikesCount = useMutation({
+  const { mutate: plusLikesCount } = useMutation({
     mutationFn: getLikes,
     onMutate: async () => {
       await queryClient.cancelQueries({
@@ -133,7 +113,7 @@ const ReviewLikes = ({ review }: Props) => {
       ]);
       const updateLikesCount = [
         ...(prev || []),
-        { user_id: userInfo.userId, review_id: review.id },
+        { user_id: userId, review_id: review.id },
       ];
       queryClient.setQueryData(['likes', review.id], updateLikesCount);
       return { prev };
@@ -151,7 +131,7 @@ const ReviewLikes = ({ review }: Props) => {
   });
 
   // 낙관적 업데이트 (좋아요 개수 빼기)
-  const minusLikesCount = useMutation({
+  const { mutate: minusLikesCount } = useMutation({
     mutationFn: getLikes,
     onMutate: async () => {
       await queryClient.cancelQueries({
@@ -181,12 +161,12 @@ const ReviewLikes = ({ review }: Props) => {
   const toggleLikes = () => {
     if (isLiked) {
       setIsLiked(false);
-      delLikes.mutate({ userId: userInfo.userId, reviewId: review.id });
-      minusLikesCount.mutate(review.id);
+      delLikes({ userId: userId, reviewId: review.id });
+      minusLikesCount(review.id);
     } else {
       setIsLiked(true);
-      addLikes.mutate({ userId: userInfo.userId, reviewId: review.id });
-      plusLikesCount.mutate(review.id);
+      addLikes({ userId: userId, reviewId: review.id });
+      plusLikesCount(review.id);
     }
   };
 
@@ -218,7 +198,7 @@ const ReviewLikes = ({ review }: Props) => {
       <div className='absolute left-[-120px] z-10'>
         {/* 좋아요 */}
         <div className='flex flex-col justify-center items-center fixed top-[120px] w-auto h-auto p-3 rounded-full bg-slate-200'>
-          {userInfo.isLoggedIn ? (
+          {isLoggedIn ? (
             isLiked ? (
               <>
                 <Image
