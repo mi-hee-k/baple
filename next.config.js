@@ -48,8 +48,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/api/map',
-        destination: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false;`,
+        source: '/kakaomap',
+        destination: `http://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false;`,
       },
     ];
   },

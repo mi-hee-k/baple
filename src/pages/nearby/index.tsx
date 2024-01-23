@@ -1,3 +1,4 @@
+import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
 import EventMarkerContainer from '@/components/map/MarkerContainer';
 import MylocationButton from '@/components/map/MylocationButton';
@@ -47,6 +48,7 @@ const NearByPage = () => {
   const [place, setplace] = useState<Tables<'places'>[] | null>([]);
   const dispatch = useDispatch();
 
+  // console.log('windowkakao', window.kakao);
   /**
    * 현재 할것
    * 1. 현재 위경도 값을 동적으로 변환 시키기 위해 sdk제공 코드 사용
@@ -148,7 +150,10 @@ const NearByPage = () => {
   }, []);
 
   return (
-    <div style={{ position: 'relative', display: 'flex' }}>
+    <div
+      style={{ position: 'relative', display: 'flex' }}
+      className='overflow-x-hidden'
+    >
       <Seo title='내 근처 장소' />
       {!mylocation.isLoading ? (
         <Map // 지도를 표시할 Container
