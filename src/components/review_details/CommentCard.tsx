@@ -37,7 +37,7 @@ const CommentCard = ({ comment }: Props) => {
   };
 
   return (
-    <div className='py-3 border-b-2 min-h-[90px] '>
+    <div className='py-3 border-b-1  border-t-1 min-h-[90px] '>
       <div>
         <div className='flex gap-4 items-center'>
           <Avatar
