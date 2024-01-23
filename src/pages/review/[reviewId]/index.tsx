@@ -38,6 +38,8 @@ const ReviewPage = () => {
     queryFn: () => getReviewById(reviewId),
   });
 
+  const placeId = review?.place_id;
+
   if (isLoading) {
     return <p>리뷰 데이터 로딩중...</p>;
   }
@@ -82,6 +84,7 @@ const ReviewPage = () => {
               <CommentInput
                 reviewId={review.id}
                 commentsCount={commentsCount}
+                placeId={placeId}
               />
               <div className='flex flex-col'>
                 <CommentList comments={comments} />

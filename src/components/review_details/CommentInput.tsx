@@ -13,9 +13,10 @@ import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 interface Props {
   reviewId: string;
   commentsCount: number | undefined;
+  placeId: string | undefined;
 }
 
-const CommentInput = ({ reviewId, commentsCount }: Props) => {
+const CommentInput = ({ reviewId, commentsCount, placeId }: Props) => {
   const {
     register,
     handleSubmit,
@@ -33,6 +34,9 @@ const CommentInput = ({ reviewId, commentsCount }: Props) => {
     onSuccess: () => {
       toastSuccess('댓글이 성공적으로 등록되었습니다!');
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', placeId],
+      });
     },
   });
 

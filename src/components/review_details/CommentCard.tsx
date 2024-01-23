@@ -3,7 +3,6 @@ import { Avatar, Button, Card, CardBody } from '@nextui-org/react';
 import { formatDate } from '@/utils/dateFormatter';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteComment } from '@/apis/comments';
-import { toast } from 'react-toastify';
 
 import type { CommentsWithUser } from '@/types/types';
 import { toastSuccess } from '@/libs/toastifyAlert';
@@ -15,6 +14,7 @@ interface Props {
 }
 
 const CommentCard = ({ comment }: Props) => {
+  const placeId = comment.reviews.place_id;
   const queryClient = useQueryClient();
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
@@ -30,6 +30,9 @@ const CommentCard = ({ comment }: Props) => {
 
   const deleteBtnHandler = (commentId: string) => {
     deleteMutate.mutate(commentId);
+    queryClient.invalidateQueries({
+      queryKey: ['reviews', placeId],
+    });
   };
 
   return (

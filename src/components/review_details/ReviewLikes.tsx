@@ -34,7 +34,7 @@ const ReviewLikes = ({ review }: Props) => {
   const { data: placeInfo } = useQuery({
     queryKey: ['placeInfo', review.place_id],
     queryFn: () => getPlaceInfo(review.place_id),
-    staleTime: Infinity,
+    // staleTime: Infinity,
   });
 
   const { data: likeState } = useQuery({
@@ -86,6 +86,9 @@ const ReviewLikes = ({ review }: Props) => {
       queryClient.invalidateQueries({
         queryKey: ['likes', userInfo.userId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', placeInfo.id],
+      });
     },
   });
 
@@ -122,6 +125,9 @@ const ReviewLikes = ({ review }: Props) => {
       });
       queryClient.invalidateQueries({
         queryKey: ['likes', userInfo.userId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', placeInfo.id],
       });
     },
   });
