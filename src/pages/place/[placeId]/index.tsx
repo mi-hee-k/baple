@@ -27,7 +27,7 @@ const PlacePage = () => {
   const placeId: string = router.query.placeId as string;
   const [toggle, setToggle] = useState('map');
   const [recentOrder, setRecentOrder] = useState(true);
-  const userInfo = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
     queryKey: ['placeInfo', placeId],
@@ -152,7 +152,7 @@ const PlacePage = () => {
       <section>
         <div className='flex mt-[100px] mb-[30px] justify-between'>
           <h2 className='text-3xl font-bold'>방문자 리뷰</h2>
-          {userInfo.isLoggedIn ? (
+          {isLoggedIn ? (
             <Button
               color='primary'
               className=' px-8 py-2 rounded-full '
