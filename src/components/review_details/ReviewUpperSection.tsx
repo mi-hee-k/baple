@@ -23,7 +23,6 @@ const ReviewUpperSection = ({
 }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  console.log('uppersection 에서 review', review);
 
   const showDelEditBtn = currentUserId === review.user_id ? true : false;
 
@@ -33,6 +32,9 @@ const ReviewUpperSection = ({
       // toastSuccess('삭제 완료');
       queryClient.invalidateQueries({
         queryKey: ['reviews', review.place_id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', currentUserId],
       });
     },
     // router.back();
