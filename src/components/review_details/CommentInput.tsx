@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Input } from '@nextui-org/react';
 import newComment from '@/utils/newComment';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { insertNewComment } from '@/apis/comments';
-import { toast } from 'react-toastify';
-// import { USER_ID } from '@/constants/temp_develop';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useForm, FieldErrors, FieldValues } from 'react-hook-form';
-import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { toastWarn } from '@/libs/toastifyAlert';
 import { useComments } from '@/hooks/useComments';
 
 interface Props {
@@ -28,27 +24,14 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
 
   const [comment, setComment] = useState('');
 
-  // const queryClient = useQueryClient();
-  // const InsertMutate = useMutation({
-  //   mutationFn: insertNewComment,
-  //   onSuccess: () => {
-  //     toastSuccess('댓글이 성공적으로 등록되었습니다!');
-  //     queryClient.invalidateQueries({ queryKey: ['comments'] });
-  //   },
-  // });
-
   const submitComment = async () => {
     // e.preventDefault();
     if (!isLoggedIn) {
       toastWarn('로그인 후 이용해 주세요');
       return;
     }
-
     const newCommentData = new newComment(reviewId, userId, comment);
-
-    // InsertMutate.mutate(newCommentData);
     insertComment(newCommentData);
-
     setComment('');
   };
 

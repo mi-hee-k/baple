@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Input } from '@nextui-org/react';
+import { Avatar, Input } from '@nextui-org/react';
 import { formatDate } from '@/utils/dateFormatter';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteComment } from '@/apis/comments';
 import type { CommentsWithUser } from '@/types/types';
-import { toastSuccess } from '@/libs/toastifyAlert';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useComments } from '@/hooks/useComments';
@@ -18,21 +15,13 @@ const CommentCard = ({ comment }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newContent, setNewContent] = useState('');
   const { deleteComment, updateComment } = useComments();
-  // const queryClient = useQueryClient();
-  // const deleteMutate = useMutation({
-  //   mutationFn: deleteComment,
-  //   onSuccess: () => {
-  //     toastSuccess('삭제 완료');
-  //     queryClient.invalidateQueries({ queryKey: ['comments'] });
-  //   },
-  // });
+
   const { userId: currentUserId } = useSelector(
     (state: RootState) => state.auth,
   );
   const showBtn = comment.user_id == currentUserId ? true : false;
 
   const deleteBtnHandler = (commentId: string) => {
-    // deleteMutate.mutate(commentId);
     Swal.fire({
       icon: 'warning',
       title: '정말 삭제하시겠습니까?',
