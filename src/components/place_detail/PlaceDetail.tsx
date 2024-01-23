@@ -121,9 +121,9 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   };
 
   return (
-    <section className='flex flex-col justify-between w-[48%] h-[500px]'>
+    <section className='flex flex-col justify-between w-[90%] h-[500px] md:w-[48%]'>
       <div>
-        <div className=' flex justify-between'>
+        <div className='flex justify-between w-full'>
           <h1 className='text-4xl text-bold mt-[10px] mb-[30px]'>
             {place_name}
           </h1>
@@ -214,7 +214,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
             )}
           </div>
         </div>
-        <div>
+        <div className='mb-[30px] md:mb-0'>
           <p className='text-xl'>주소 : {address}</p>
           <p className='text-xl'>전화 : {tel === '' ? '정보없음' : tel}</p>
           <p className='text-xl'>

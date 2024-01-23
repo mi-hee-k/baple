@@ -63,9 +63,9 @@ const PlacePage = () => {
     <MainWrapper>
       <Seo title={placeInfo.place_name} />
       {/* 이미지 캐러셀 */}
-      <div className='flex justify-between h-[500px] mb-[50px] mt-[80px]'>
+      <div className='flex flex-col items-center justify-start h-[500px] mb-[50px] mt-[20px] md:mt-[80px] md:flex-row md:justify-between'>
         {imgList && (
-          <div className='w-[48%]'>
+          <div className='w-[90%] mb-[20px] md:w-[48%]'>
             <CarouselThumb
               slideData={
                 imgList.length !== 0
@@ -82,7 +82,7 @@ const PlacePage = () => {
       </div>
 
       {/* 지도 */}
-      <section className='mb-[30px] relative'>
+      {/* <section className='mb-[30px] relative'>
         <Map
           center={placePosition}
           draggable={false}
@@ -107,7 +107,7 @@ const PlacePage = () => {
           />
           {toggle === 'map' && (
             <Button
-              className='absolute flex  z-10 top-[3px] left-[130px] w-[90px] h-[32px] justify-center'
+              className='absolute flex z-10 top-[3px] left-[130px] w-[90px] h-[32px] justify-center'
               variant='solid'
               color='primary'
               onClick={() => setToggle('roadview')}
@@ -146,7 +146,7 @@ const PlacePage = () => {
             </div>
           </RoadviewMarker>
         </Roadview>
-      </section>
+      </section> */}
 
       {/* 리뷰 */}
       <section>
