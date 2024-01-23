@@ -10,7 +10,6 @@ import Image from 'next/image';
 
 interface Props {
   reviewId: string;
-  placeId: string;
   commentsCount: number | undefined;
   placeId: string | undefined;
 }
