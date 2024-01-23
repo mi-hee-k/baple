@@ -37,6 +37,12 @@ const CommentInput = ({ reviewId, commentsCount, placeId }: Props) => {
       queryClient.invalidateQueries({
         queryKey: ['reviews', placeId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['likes', userId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', userId],
+      });
     },
   });
 

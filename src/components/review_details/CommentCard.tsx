@@ -15,17 +15,25 @@ interface Props {
 
 const CommentCard = ({ comment }: Props) => {
   const placeId = comment.reviews.place_id;
+  const { userId: currentUserId } = useSelector(
+    (state: RootState) => state.auth,
+  );
+
   const queryClient = useQueryClient();
+
   const deleteMutate = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
       toastSuccess('삭제 완료');
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({
+        queryKey: ['likes', currentUserId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', currentUserId],
+      });
     },
   });
-  const { userId: currentUserId } = useSelector(
-    (state: RootState) => state.auth,
-  );
   const showDelBtn = comment.user_id == currentUserId ? true : false;
 
   const deleteBtnHandler = (commentId: string) => {
