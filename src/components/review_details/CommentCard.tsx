@@ -6,7 +6,9 @@ import type { CommentsWithUser } from '@/types/types';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import Image from 'next/image';
-import { useDeleteCommentMutation } from '@/hooks/commentQueries';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteComment } from '@/apis/comments';
+import { toastSuccess } from '@/libs/toastifyAlert';
 
 interface Props {
   comment: CommentsWithUser;
@@ -18,29 +20,28 @@ const CommentCard = ({ comment }: Props) => {
     (state: RootState) => state.auth,
   );
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-  // const deleteMutate = useMutation({
-  //   mutationFn: deleteComment,
-  //   onSuccess: () => {
-  //     toastSuccess('삭제 완료');
-  //     queryClient.invalidateQueries({ queryKey: ['comments'] });
-  //     queryClient.invalidateQueries({
-  //       queryKey: ['likes', currentUserId],
-  //     });
-  //     queryClient.invalidateQueries({
-  //       queryKey: ['reviews', currentUserId],
-  //     });
-  //     queryClient.invalidateQueries({
-  //       queryKey: ['reviews', placeId],
-  //     });
-  //   },
-  // });
-  const deleteComment = useDeleteCommentMutation({ currentUserId, placeId });
+  const deleteMutate = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      toastSuccess('삭제 완료');
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({
+        queryKey: ['likes', currentUserId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', currentUserId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['reviews', placeId],
+      });
+    },
+  });
   const showDelBtn = comment.user_id == currentUserId ? true : false;
 
   const deleteBtnHandler = (commentId: string) => {
-    deleteComment.mutate(commentId);
+    deleteMutate.mutate(commentId);
   };
 
   return (
