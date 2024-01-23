@@ -1,18 +1,8 @@
 import { supabase } from '@/libs/supabase';
-import { Tables } from '@/types/supabase';
-export interface FormValues
-  extends Omit<
-    Tables<'boards'>,
-    'id' | 'user_id' | 'created_at' | 'place_name'
-  > {
-  placeName: string;
-  userId: string;
-}
 
 // 게시글 쓰기
-export const insertNewPost = async (formData: FormValues) => {
+export const insertNewPost = async (formData: EditValueProps) => {
   const { userId, category, title, content, placeName } = formData;
-  console.log(userId);
   const { data, error } = await supabase.from('boards').insert([
     {
       user_id: userId,
@@ -22,7 +12,7 @@ export const insertNewPost = async (formData: FormValues) => {
       place_name: placeName,
     },
   ]);
-  console.log('post 추가 성공');
+  console.log('post 추가 성공', data);
   if (error) throw error;
 };
 
@@ -77,4 +67,34 @@ export const deletePost = async ({
     console.log(error);
   }
   console.log('게시글 삭제');
+};
+
+interface EditValueProps {
+  title: string;
+  category: string;
+  content: string;
+  placeName: string;
+  userId: string;
+}
+
+// 게시글 수정
+export const updatePost = async ({
+  boardId,
+  editValue,
+}: {
+  boardId: string;
+  editValue: EditValueProps;
+}) => {
+  const { title, category, content, placeName, userId } = editValue;
+  const { data, error } = await supabase
+    .from('boards')
+    .update({
+      title,
+      category,
+      content,
+      place_name: placeName,
+      user_id: userId,
+    })
+    .eq('id', boardId)
+    .select();
 };

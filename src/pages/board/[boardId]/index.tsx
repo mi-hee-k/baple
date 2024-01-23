@@ -1,12 +1,12 @@
-import { deletePost, getPost } from '@/apis/boards';
+import { deletePost, getPost, updatePost } from '@/apis/boards';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { toastSuccess } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
 import { formatDate } from '@/utils/dateFormatter';
 import { Avatar, Button, Spacer } from '@nextui-org/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
@@ -20,10 +20,8 @@ const BoardPostPage = () => {
     queryFn: () => getPost(boardId),
   });
 
-  console.log(post);
-
   const queryClient = useQueryClient();
-  const deleteMutate = useMutation({
+  const { mutate: deleteMutate } = useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
       router.push('/board');
@@ -41,7 +39,7 @@ const BoardPostPage = () => {
       confirmButtonColor: '#FFD029',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMutate.mutate({ userId: userInfo.userId, boardId });
+        deleteMutate({ userId: userInfo.userId, boardId });
         toastSuccess('삭제 되었습니다');
       }
     });
@@ -76,9 +74,11 @@ const BoardPostPage = () => {
             <Button size='sm' color='primary' onClick={delPost}>
               삭제
             </Button>
-            <Button size='sm' color='primary'>
-              수정
-            </Button>
+            <Link href={`/board/write?boardId=${boardId}`}>
+              <Button size='sm' color='primary'>
+                수정
+              </Button>
+            </Link>
           </div>
         ) : null}
       </div>
