@@ -1,6 +1,6 @@
 import { supabase } from '@/libs/supabase';
 
-import type newComment from '@/utils/newComment';
+import newComment from '@/utils/newComment';
 import type { CommentsWithUser } from '@/types/types';
 
 export const getAllComments = async (id: string) => {
@@ -31,6 +31,21 @@ export const deleteComment = async (commentId: string) => {
     .from('comments')
     .delete()
     .eq('id', commentId);
+};
+
+export const updateComment = async ({
+  commentId,
+  newContent,
+}: {
+  commentId: string;
+  newContent: string;
+}) => {
+  const { error } = await supabase
+    .from('comments')
+    .update({ content: newContent })
+    .eq('id', commentId);
+
+  if (error) throw error;
 };
 
 export const getCommentsByReviewId = async (reviewId: string) => {

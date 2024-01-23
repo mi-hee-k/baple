@@ -12,7 +12,7 @@ interface Props {
   review: ReviewWithPlaceAndUser;
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  currentUserId: string;
+  currentUserId: string | null;
 }
 
 const ReviewUpperSection = ({

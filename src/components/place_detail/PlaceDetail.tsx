@@ -19,13 +19,13 @@ interface PlaceInfoAllData {
 const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   const queryClient = useQueryClient();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
-  const userInfo = useSelector((state: RootState) => state.auth);
+  const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { place_name, tel, address, working_hours, holidays } = placeInfo;
 
   const { data: bookmarkState } = useQuery({
-    queryKey: ['bookmark', userInfo.userId, placeId],
-    queryFn: () => getBookmark({ userId: userInfo.userId, placeId }),
-    enabled: !!userInfo.userId,
+    queryKey: ['bookmark', userId, placeId],
+    queryFn: () => getBookmark({ userId, placeId }),
+    enabled: !!userId,
   });
 
   useEffect(() => {
@@ -59,31 +59,21 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     mutationFn: insertBookmark,
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: ['bookmark', userInfo.userId, placeId],
+        queryKey: ['bookmark', userId, placeId],
       });
-      const prev = queryClient.getQueryData([
-        'bookmark',
-        userInfo.userId,
-        placeId,
-      ]);
-      const updateBookmark = [{ user_id: userInfo.userId, place_id: placeId }];
-      queryClient.setQueryData(
-        ['bookmark', userInfo.userId, placeId],
-        updateBookmark,
-      );
+      const prev = queryClient.getQueryData(['bookmark', userId, placeId]);
+      const updateBookmark = [{ user_id: userId, place_id: placeId }];
+      queryClient.setQueryData(['bookmark', userId, placeId], updateBookmark);
       return { prev };
     },
     onError: (error, updateReviewParams, context) => {
       if (context?.prev) {
-        queryClient.setQueryData(
-          ['bookmark', userInfo.userId, placeId],
-          context.prev,
-        );
+        queryClient.setQueryData(['bookmark', userId, placeId], context.prev);
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['bookmark', userInfo.userId, placeId],
+        queryKey: ['bookmark', userId, placeId],
       });
     },
   });
@@ -93,31 +83,21 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     mutationFn: deleteBookmark,
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: ['bookmark', userInfo.userId, placeId],
+        queryKey: ['bookmark', userId, placeId],
       });
-      const prev = queryClient.getQueryData([
-        'bookmark',
-        userInfo.userId,
-        placeId,
-      ]);
+      const prev = queryClient.getQueryData(['bookmark', userId, placeId]);
       const updateBookmark = undefined;
-      queryClient.setQueryData(
-        ['bookmark', userInfo.userId, placeId],
-        updateBookmark,
-      );
+      queryClient.setQueryData(['bookmark', userId, placeId], updateBookmark);
       return { prev };
     },
     onError: (error, updateReviewParams, context) => {
       if (context?.prev) {
-        queryClient.setQueryData(
-          ['bookmark', userInfo.userId, placeId],
-          context.prev,
-        );
+        queryClient.setQueryData(['bookmark', userId, placeId], context.prev);
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['bookmark', userInfo.userId, placeId],
+        queryKey: ['bookmark', userId, placeId],
       });
     },
   });
@@ -126,11 +106,11 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   const toggleBookmark = () => {
     if (isBookmarked) {
       setIsBookmarked(false);
-      delBookmark.mutate({ userId: userInfo.userId, placeId });
+      delBookmark.mutate({ userId: userId, placeId });
       toastSuccess('북마크에 해제되었습니다');
     } else {
       setIsBookmarked(true);
-      addBookmark.mutate({ userId: userInfo.userId, placeId });
+      addBookmark.mutate({ userId: userId, placeId });
       toastSuccess('북마크에 추가되었습니다');
     }
   };
@@ -148,7 +128,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
             {place_name}
           </h1>
           <div className='flex'>
-            {userInfo.isLoggedIn ? (
+            {isLoggedIn ? (
               isBookmarked ? (
                 <>
                   {/* <Image

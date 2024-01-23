@@ -9,32 +9,33 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useForm, FieldErrors, FieldValues } from 'react-hook-form';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { useComments } from '@/hooks/useComments';
 
 interface Props {
   reviewId: string;
+  placeId: string;
   commentsCount: number | undefined;
 }
 
-const CommentInput = ({ reviewId, commentsCount }: Props) => {
+const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
   const { isLoggedIn, userId } = useSelector((state: RootState) => state.auth);
-  // console.log('로그인됨?>>', isLoggedIn, 'uid >>', userId);
-  // console.log('리액트훅폼 에러>>', errors);
+  const { insertComment } = useComments(userId as string, placeId);
 
   const [comment, setComment] = useState('');
 
-  const queryClient = useQueryClient();
-  const InsertMutate = useMutation({
-    mutationFn: insertNewComment,
-    onSuccess: () => {
-      toastSuccess('댓글이 성공적으로 등록되었습니다!');
-      queryClient.invalidateQueries({ queryKey: ['comments'] });
-    },
-  });
+  // const queryClient = useQueryClient();
+  // const InsertMutate = useMutation({
+  //   mutationFn: insertNewComment,
+  //   onSuccess: () => {
+  //     toastSuccess('댓글이 성공적으로 등록되었습니다!');
+  //     queryClient.invalidateQueries({ queryKey: ['comments'] });
+  //   },
+  // });
 
   const submitComment = async () => {
     // e.preventDefault();
@@ -45,7 +46,8 @@ const CommentInput = ({ reviewId, commentsCount }: Props) => {
 
     const newCommentData = new newComment(reviewId, userId, comment);
 
-    InsertMutate.mutate(newCommentData);
+    // InsertMutate.mutate(newCommentData);
+    insertComment(newCommentData);
 
     setComment('');
   };
