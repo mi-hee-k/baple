@@ -1,13 +1,12 @@
 import React from 'react';
-import { Avatar, Button, Card, CardBody } from '@nextui-org/react';
+import { Avatar } from '@nextui-org/react';
 import { formatDate } from '@/utils/dateFormatter';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteComment } from '@/apis/comments';
 
 import type { CommentsWithUser } from '@/types/types';
-import { toastSuccess } from '@/libs/toastifyAlert';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
+import Image from 'next/image';
+import { useDeleteCommentMutation } from '@/hooks/commentQueries';
 
 interface Props {
   comment: CommentsWithUser;
@@ -19,28 +18,29 @@ const CommentCard = ({ comment }: Props) => {
     (state: RootState) => state.auth,
   );
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const deleteMutate = useMutation({
-    mutationFn: deleteComment,
-    onSuccess: () => {
-      toastSuccess('삭제 완료');
-      queryClient.invalidateQueries({ queryKey: ['comments'] });
-      queryClient.invalidateQueries({
-        queryKey: ['likes', currentUserId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['reviews', currentUserId],
-      });
-    },
-  });
+  // const deleteMutate = useMutation({
+  //   mutationFn: deleteComment,
+  //   onSuccess: () => {
+  //     toastSuccess('삭제 완료');
+  //     queryClient.invalidateQueries({ queryKey: ['comments'] });
+  //     queryClient.invalidateQueries({
+  //       queryKey: ['likes', currentUserId],
+  //     });
+  //     queryClient.invalidateQueries({
+  //       queryKey: ['reviews', currentUserId],
+  //     });
+  //     queryClient.invalidateQueries({
+  //       queryKey: ['reviews', placeId],
+  //     });
+  //   },
+  // });
+  const deleteComment = useDeleteCommentMutation({ currentUserId, placeId });
   const showDelBtn = comment.user_id == currentUserId ? true : false;
 
   const deleteBtnHandler = (commentId: string) => {
-    deleteMutate.mutate(commentId);
-    queryClient.invalidateQueries({
-      queryKey: ['reviews', placeId],
-    });
+    deleteComment.mutate(commentId);
   };
 
   return (
@@ -72,10 +72,15 @@ const CommentCard = ({ comment }: Props) => {
               }`}
             >
               <button
-                className={`border w-7 border-primary text-primary`}
+                className={` w-7 `}
                 onClick={deleteBtnHandler.bind(null, comment.id)}
               >
-                X
+                <Image
+                  src='/images/icons/delete.svg'
+                  width={30}
+                  height={30}
+                  alt='delete button icon'
+                />
               </button>
             </div>
           </div>

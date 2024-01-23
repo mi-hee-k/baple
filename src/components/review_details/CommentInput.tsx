@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useForm, FieldErrors, FieldValues } from 'react-hook-form';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import Image from 'next/image';
 
 interface Props {
   reviewId: string;
@@ -23,8 +24,6 @@ const CommentInput = ({ reviewId, commentsCount, placeId }: Props) => {
     formState: { errors },
   } = useForm({ mode: 'onSubmit' });
   const { isLoggedIn, userId } = useSelector((state: RootState) => state.auth);
-  // console.log('로그인됨?>>', isLoggedIn, 'uid >>', userId);
-  // console.log('리액트훅폼 에러>>', errors);
 
   const [comment, setComment] = useState('');
 
@@ -69,8 +68,20 @@ const CommentInput = ({ reviewId, commentsCount, placeId }: Props) => {
 
   return (
     <div>
-      <strong className='ml-2'>댓글</strong>
-      <span className='px-[10px]'>댓글아이콘 : {commentsCount}</span>
+      <div className='flex gap-x-2'>
+        <strong className='ml-2 text-lg'>댓글</strong>
+        <span className='px-[10px] flex items-center'>
+          <Image
+            src='/images/icons/comment.svg'
+            width={20}
+            height={20}
+            alt='comment icon'
+            className='mr-2'
+          />
+          {commentsCount}
+        </span>
+      </div>
+
       <form
         className='flex gap-5 items-center border border-t-3 border-b-3 border-l-0 border-r-0 py-[20px]'
         onSubmit={handleSubmit(submitComment, onError)}
