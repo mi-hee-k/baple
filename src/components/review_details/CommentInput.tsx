@@ -6,11 +6,12 @@ import { RootState } from '@/redux/config/configStore';
 import { useForm, FieldErrors, FieldValues } from 'react-hook-form';
 import { toastWarn } from '@/libs/toastifyAlert';
 import { useComments } from '@/hooks/useComments';
+import Image from 'next/image';
 
 interface Props {
   reviewId: string;
-  placeId: string;
   commentsCount: number | undefined;
+  placeId: string | undefined;
 }
 
 const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
@@ -44,10 +45,22 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
 
   return (
     <div>
-      <strong className='ml-2'>댓글</strong>
-      <span className='px-[10px]'>댓글아이콘 : {commentsCount}</span>
+      <div className='flex gap-x-2'>
+        <strong className='ml-2 text-lg'>댓글</strong>
+        <span className='px-[10px] flex items-center'>
+          <Image
+            src='/images/icons/comment.svg'
+            width={20}
+            height={20}
+            alt='comment icon'
+            className='mr-2'
+          />
+          {commentsCount}
+        </span>
+      </div>
+
       <form
-        className='flex gap-5 items-center border border-t-2 border-b-2 border-l-0 border-r-0 border-primary py-[20px]'
+        className='flex gap-5 items-center border border-t-2 border-b-2 border-l-0 border-r-0 py-[20px]'
         onSubmit={handleSubmit(submitComment, onError)}
       >
         <Input

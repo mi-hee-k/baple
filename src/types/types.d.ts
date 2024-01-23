@@ -32,6 +32,9 @@ export interface CommentsWithUser extends Tables<'comments'> {
     avatar_url: string;
     user_name: string;
   };
+  reviews: {
+    place_id: string;
+  };
 }
 
 export interface ReviewCard {
