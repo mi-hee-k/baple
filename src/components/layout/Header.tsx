@@ -20,10 +20,14 @@ import Image from 'next/image';
 const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  console.log('router', router);
   const [currentUser, setCurrentUser] = useState<any>(null);
   // const [userId, setUserId] = useState('');
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   const {
     data: user,
@@ -40,7 +44,6 @@ const Header = () => {
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const username = session?.user.user_metadata.user_name;
-      // setUserId(userId);
       console.log(event, session);
       if (event === 'INITIAL_SESSION' && session !== null) {
         setCurrentUser(session?.user);
@@ -52,7 +55,6 @@ const Header = () => {
             username: user?.user_name,
           }),
         );
-        // setusername(username);
       } else if (event === 'SIGNED_IN') {
         // handle sign in event
         setCurrentUser(session?.user);
@@ -92,92 +94,101 @@ const Header = () => {
   };
 
   return (
-    <header className='py-2 font-bold sticky top-0 z-20 shadow-xl bg-white'>
-      <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
-        <nav className='flex md:flex w-full justify-between items-center'>
-          {isLoggedIn ? <div className='block md:hidden w-full'></div> : null}
-          <div className='flex w-full justify-center gap-2'>
-            <Link href='/' className='flex justify-center'>
-              <Image
-                src='/images/icons/basic-logo.svg'
-                alt='main logo'
-                width={100}
-                height={50}
-              />
-            </Link>
-            <div className='hidden md:flex gap-10 items-center w-full justify-center'>
-              <Link
-                href='/nearby'
-                className={` ${
-                  router.pathname === '/nearby'
-                    ? 'text-primary'
-                    : 'text-gray-500'
-                }`}
-              >
-                내 주변 장소
-              </Link>
-              <Link
-                href='/places'
-                className={` ${
-                  router.pathname === '/places'
-                    ? 'text-primary'
-                    : 'text-gray-500'
-                }`}
-              >
-                장소 검색
-              </Link>
-              <Link
-                href='/board'
-                className={` ${
-                  router.pathname === '/board'
-                    ? 'text-primary'
-                    : 'text-gray-500'
-                }`}
-              >
-                게시판
-              </Link>
-            </div>
-          </div>
-          {currentUser ? (
-            <div className='flex gap-4 items-center w-full justify-end'>
-              <span className='hidden md:block'>
-                반가워요 {user?.user_name}님!
-              </span>
-              <Dropdown>
-                <DropdownTrigger>
-                  <Avatar
-                    showFallback
-                    src={user?.avatar_url}
-                    className='hover:brightness-50 transition cursor-pointer'
+    <>
+      {isLoaded ? (
+        <header className='py-2 font-bold sticky top-0 z-20 shadow-xl bg-white'>
+          <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
+            <nav className='flex md:flex w-full justify-between items-center'>
+              {isLoggedIn ? (
+                <div className='block md:hidden w-full'></div>
+              ) : null}
+              <div className='flex w-full justify-center gap-2'>
+                <Link href='/' className='flex justify-center'>
+                  <Image
+                    src='/images/icons/basic-logo.svg'
+                    alt='main logo'
+                    width={100}
+                    height={50}
                   />
-                </DropdownTrigger>
-                <DropdownMenu aria-label='Static Actions'>
-                  <DropdownItem key='mypage' href={`/user/${currentUser.id}`}>
-                    마이페이지
-                  </DropdownItem>
-                  <DropdownItem key='logout' onClick={logOutHandler}>
-                    로그아웃
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </div>
-          ) : (
-            <div className='hidden md:flex gap-4 w-full justify-end'>
-              <Link href='/login'>
-                <Button variant='solid' color='primary'>
-                  로그인
-                </Button>
-              </Link>
-              <Link href='/signup'>
-                <Button variant='bordered' color='primary'>
-                  회원가입
-                </Button>
-              </Link>
-            </div>
-          )}
-        </nav>
-      </div>
-    </header>
+                </Link>
+                <div className='hidden md:flex gap-10 items-center w-full justify-center'>
+                  <Link
+                    href='/nearby'
+                    className={` ${
+                      router.pathname === '/nearby'
+                        ? 'text-primary'
+                        : 'text-gray-500'
+                    }`}
+                  >
+                    내 주변 장소
+                  </Link>
+                  <Link
+                    href='/places'
+                    className={` ${
+                      router.pathname === '/places'
+                        ? 'text-primary'
+                        : 'text-gray-500'
+                    }`}
+                  >
+                    장소 검색
+                  </Link>
+                  <Link
+                    href='/board'
+                    className={` ${
+                      router.pathname === '/board'
+                        ? 'text-primary'
+                        : 'text-gray-500'
+                    }`}
+                  >
+                    게시판
+                  </Link>
+                </div>
+              </div>
+              {currentUser ? (
+                <div className='flex gap-4 items-center w-full justify-end'>
+                  <span className='hidden md:block'>
+                    반가워요 {user?.user_name}님!
+                  </span>
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <Avatar
+                        showFallback
+                        src={user?.avatar_url}
+                        className='hover:brightness-50 transition cursor-pointer'
+                      />
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label='Static Actions'>
+                      <DropdownItem
+                        key='mypage'
+                        href={`/user/${currentUser.id}`}
+                      >
+                        마이페이지
+                      </DropdownItem>
+                      <DropdownItem key='logout' onClick={logOutHandler}>
+                        로그아웃
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+              ) : (
+                <div className='hidden md:flex gap-4 w-full justify-end'>
+                  <Link href='/login'>
+                    <Button variant='solid' color='primary'>
+                      로그인
+                    </Button>
+                  </Link>
+                  <Link href='/signup'>
+                    <Button variant='bordered' color='primary'>
+                      회원가입
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </nav>
+          </div>
+        </header>
+      ) : null}
+    </>
   );
 };
 

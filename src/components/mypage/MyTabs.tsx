@@ -42,7 +42,7 @@ const MyTabs = () => {
     <div className='flex w-full flex-col'>
       <Tabs
         aria-label='Options'
-        color='warning'
+        color='primary'
         className='w-full flex justify-center'
         size='lg'
         variant='underlined'
