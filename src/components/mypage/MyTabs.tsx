@@ -7,15 +7,24 @@ import { Card, CardBody, Tabs, Tab } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import CardProfile from './MyProfile';
+import { getMyBookmarkedPlaces } from '@/apis/places';
+import PlaceCard from '../common/PlaceCard';
 
 const MyTabs = () => {
   const { userId } = useSelector((state: RootState) => state.auth);
 
-  const { data: bookmarkedPlaces, isLoading: isBookmarksLoading } = useQuery({
-    queryKey: ['bookmark', userId],
-    queryFn: () => getBookmarksByUserId(userId),
-    enabled: !!userId,
-  });
+  // const { data: bookmarkedPlaces, isLoading: isBookmarksLoading } = useQuery({
+  //   queryKey: ['bookmark', userId],
+  //   queryFn: () => getBookmarksByUserId(userId),
+  //   enabled: !!userId,
+  // });
+  const { data: bookmarkedPlacesRPC, isLoading: isBookmarksLoadingRPC } =
+    useQuery({
+      queryKey: ['bookmarkRPC', userId],
+      queryFn: () => getMyBookmarkedPlaces(userId),
+      enabled: !!userId,
+    });
+  console.log('rpc bookmarkedplaces', bookmarkedPlacesRPC);
 
   const { data: likedReviews, isLoading: isLikesLoading } = useQuery({
     queryKey: ['likes', userId],
@@ -29,11 +38,11 @@ const MyTabs = () => {
     },
   );
 
-  console.log('내가 북마크한 장소', bookmarkedPlaces);
+  // console.log('내가 북마크한 장소', bookmarkedPlaces);
   console.log('내가 좋아요한 리뷰', likedReviews);
   console.log('내가 작성한 리뷰', writtenReviews);
 
-  if (isBookmarksLoading || isLikesLoading || isWrittenReviewsLoading)
+  if (isBookmarksLoadingRPC || isLikesLoading || isWrittenReviewsLoading)
     return <div>로딩중...</div>;
 
   return (
@@ -48,10 +57,21 @@ const MyTabs = () => {
         <Tab key='bookmarked' title='내가 북마크한 장소'>
           <Card>
             <CardBody>
-              {bookmarkedPlaces?.length !== 0 ? (
+              {/* {bookmarkedPlaces?.length !== 0 ? (
                 <div className='grid grid-cols-4 gap-12'>
                   {bookmarkedPlaces?.map((place, idx) => (
                     <PlaceCard2 key={idx} place={place} />
+                  ))}
+                </div>
+              ) : (
+                <div className='flex justify-center w-full '>
+                  북마크한 장소가 없습니다 😢
+                </div>
+              )} */}
+              {bookmarkedPlacesRPC?.length !== 0 ? (
+                <div className='grid grid-cols-4 gap-12'>
+                  {bookmarkedPlacesRPC?.map((place, idx) => (
+                    <PlaceCard key={idx} place={place} />
                   ))}
                 </div>
               ) : (
