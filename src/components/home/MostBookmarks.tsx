@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPlaceInfoList } from '@/apis/places';
+import { getPlaceInfoList, getTopBookmarkedPlaces } from '@/apis/places';
 import PlaceCard from '../common/PlaceCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -11,19 +11,24 @@ import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 
 const MostBookmarks = () => {
-  const { data: topBookmarkedPlaces, isLoading } = useQuery({
-    queryKey: ['topBookmarkedPlaces'],
-    queryFn: getPlacesByBookmarkCount,
-  });
+  // const { data: topBookmarkedPlaces, isLoading } = useQuery({
+  //   queryKey: ['topBookmarkedPlaces'],
+  //   queryFn: getPlacesByBookmarkCount,
+  // });
 
+  // const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
+  //   useQuery({
+  //     queryKey: ['topBookmarkedPlacesList'],
+  //     queryFn: () => getPlaceInfoList(topBookmarkedPlaces),
+  //     enabled: !!topBookmarkedPlaces,
+  //   });
   const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topBookmarkedPlacesList'],
-      queryFn: () => getPlaceInfoList(topBookmarkedPlaces),
-      enabled: !!topBookmarkedPlaces,
+      queryFn: getTopBookmarkedPlaces,
     });
 
-  if (isLoading || placesListLoading) {
+  if (placesListLoading) {
     return <p>데이터 불러오는중...</p>;
   }
 
@@ -42,8 +47,8 @@ const MostBookmarks = () => {
       >
         {topBookmarkedPlacesList?.map((place) => {
           return (
-            <SwiperSlide key={place.id}>
-              <PlaceCard key={place.id} place={place} />
+            <SwiperSlide key={place.unique_place_id}>
+              <PlaceCard key={place.unique_place_id} place={place} />
             </SwiperSlide>
           );
         })}

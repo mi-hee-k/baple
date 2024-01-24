@@ -19,6 +19,7 @@ const PlaceCard = ({ place }: Props) => {
     place_name,
     unique_place_id,
   } = place;
+
   const imgURL =
     image_url !== null
       ? image_url

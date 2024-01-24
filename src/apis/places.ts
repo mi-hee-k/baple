@@ -83,3 +83,22 @@ export const getMyBookmarkedPlaces = async (userId: string) => {
 
   return data as PlacesForPlaceCard[];
 };
+
+export const getTopReviewedPlaces = async () => {
+  const { data, error } = await supabase.rpc('get_top_reviewed_places');
+
+  if (error) {
+    throw error;
+  }
+
+  return data as PlacesForPlaceCard[];
+};
+export const getTopBookmarkedPlaces = async () => {
+  const { data, error } = await supabase.rpc('get_top_bookmarked_places');
+
+  if (error) {
+    throw error;
+  }
+
+  return data as PlacesForPlaceCard[];
+};
