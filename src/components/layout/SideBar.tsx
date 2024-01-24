@@ -4,11 +4,13 @@ import { MdClose } from 'react-icons/md';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
+import { useRouter } from 'next/router';
 
 const SideBar = () => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -22,14 +24,16 @@ const SideBar = () => {
             <RxHamburgerMenu
               className={`cursor-pointer ${
                 isSidebarOpened ? 'hidden' : 'block'
-              } absolute top-4 left-4 z-50`}
+              } absolute top-5 left-5 z-50`}
               onClick={() => setIsSidebarOpened(true)}
+              size={25}
             />
             <MdClose
               className={`cursor-pointer ${
                 isSidebarOpened ? 'block' : 'hidden'
-              } absolute top-4 left-4 z-50`}
+              } absolute top-5 left-5 z-50`}
               onClick={() => setIsSidebarOpened(false)}
+              size={25}
             />
           </div>
           {isSidebarOpened && (
@@ -44,16 +48,58 @@ const SideBar = () => {
             } ease-in-out duration-300 z-40`}
           >
             {/* Content of the sidebar */}
-            <div className={`flex flex-col m-12 gap-5`}>
-              <Link href='/nearby'>주변 장소</Link>
-              <Link href='/places'>장소 검색</Link>
-              <Link href='/board'>게시판</Link>
+            <div className={`flex flex-col m-16 gap-5`}>
+              <Link
+                href='/nearby'
+                className={` ${
+                  router.pathname === '/nearby' ? 'text-primary' : ''
+                }`}
+              >
+                주변 장소
+              </Link>
+              <Link
+                href='/places'
+                className={` ${
+                  router.pathname === '/places' ? 'text-primary' : ''
+                }`}
+              >
+                장소 검색
+              </Link>
+              <Link
+                href='/board'
+                className={` ${
+                  router.pathname.startsWith('/board') ? 'text-primary' : ''
+                }`}
+              >
+                게시판
+              </Link>
               {isLoggedIn ? (
-                <Link href={`/user/${userId}`}>마이페이지</Link>
+                <Link
+                  href={`/user/${userId}`}
+                  className={` ${
+                    router.pathname.startsWith('/user') ? 'text-primary' : ''
+                  }`}
+                >
+                  마이페이지
+                </Link>
               ) : (
                 <>
-                  <Link href='/login'>로그인</Link>
-                  <Link href='/signup'>회원가입</Link>
+                  <Link
+                    href='/login'
+                    className={` ${
+                      router.pathname === '/login' ? 'text-primary' : ''
+                    }`}
+                  >
+                    로그인
+                  </Link>
+                  <Link
+                    href='/signup'
+                    className={` ${
+                      router.pathname === '/signup' ? 'text-primary' : ''
+                    }`}
+                  >
+                    회원가입
+                  </Link>
                 </>
               )}
             </div>

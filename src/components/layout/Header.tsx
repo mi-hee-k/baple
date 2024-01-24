@@ -23,7 +23,7 @@ const Header = () => {
   console.log('router', router);
   const [currentUser, setCurrentUser] = useState<any>(null);
   // const [userId, setUserId] = useState('');
-  const { userId } = useSelector((state: RootState) => state.auth);
+  const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   const {
     data: user,
@@ -92,10 +92,10 @@ const Header = () => {
   };
 
   return (
-    <header className='py-2 font-bold sticky top-0 z-10 shadow-xl bg-white'>
+    <header className='py-2 font-bold sticky top-0 z-20 shadow-xl bg-white'>
       <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
         <nav className='flex md:flex w-full justify-between items-center'>
-          <div className='block md:hidden w-full'></div>
+          {isLoggedIn ? <div className='block md:hidden w-full'></div> : null}
           <div className='flex w-full justify-center gap-2'>
             <Link href='/' className='flex justify-center'>
               <Image
@@ -105,7 +105,7 @@ const Header = () => {
                 height={50}
               />
             </Link>
-            <div className='hidden md:flex gap-6 items-center w-full justify-center'>
+            <div className='hidden md:flex gap-10 items-center w-full justify-center'>
               <Link
                 href='/nearby'
                 className={` ${
@@ -114,7 +114,7 @@ const Header = () => {
                     : 'text-gray-500'
                 }`}
               >
-                주변 장소
+                내 주변 장소
               </Link>
               <Link
                 href='/places'
@@ -162,7 +162,7 @@ const Header = () => {
               </Dropdown>
             </div>
           ) : (
-            <div className='hidden md:flex gap-4'>
+            <div className='hidden md:flex gap-4 w-full justify-end'>
               <Link href='/login'>
                 <Button variant='solid' color='primary'>
                   로그인
