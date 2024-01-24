@@ -109,6 +109,7 @@ const BoardPage = () => {
         <h2 className='text-3xl font-bold'>게시판</h2>
       </header>
 
+      <Divider className='bg-primary h-0.5 mb-[18px]' />
       <Table
         aria-label='Example table with dynamic content'
         bottomContent={
@@ -118,9 +119,11 @@ const BoardPage = () => {
               showControls
               showShadow
               color='primary'
+              variant='light'
               page={page}
               total={pages}
               onChange={(page) => setPage(page)}
+              classNames={{ wrapper: 'shadow-none' }}
             />
           </div>
         }
@@ -132,7 +135,7 @@ const BoardPage = () => {
           {(column) => (
             <TableColumn
               key={column.key}
-              className='text-center bg-primary text-white'
+              className='text-center bg-white text-black text-xl'
             >
               {column.label}
             </TableColumn>
