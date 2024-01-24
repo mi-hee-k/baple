@@ -105,3 +105,13 @@ export interface PlacesForPlaceCard {
   place_name: string;
   unique_place_id: string;
 }
+export interface PlacesForSearch extends PlacesForPlaceCard {
+  is_paid: boolean;
+  is_easy_door: boolean;
+  is_wheelchair_rental: boolean;
+  is_guide_dog: boolean;
+  is_braille_guide: boolean;
+  is_audio_guide: boolean;
+  is_disabled_toilet: boolean;
+  is_disabled_parking: boolean;
+}
