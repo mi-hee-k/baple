@@ -73,7 +73,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
   };
 
   return (
-    <section className='flex flex-col justify-between w-[90%] h-[500px] md:w-[48%]'>
+    <section className='flex flex-col justify-between w-[90%] h-auto md:h-[500px] md:w-[48%]'>
       <div>
         <div className='flex justify-between w-full'>
           <h1 className='text-4xl text-bold mt-[10px] mb-[30px]'>

@@ -10,7 +10,10 @@ const Seo = ({ title }: Props) => {
     <Head>
       <title>{title} | BAPLE</title>
       <meta property='og:title' content='Baple' />
-      <meta property='og:description' content='Baple' />
+      <meta
+        property='og:description'
+        content='교통약자를 위한 배리어프리 정보 플랫폼입니다'
+      />
       <meta property='og:url' content='https://baple.vercel.app/' />
       <meta
         property='og:image'

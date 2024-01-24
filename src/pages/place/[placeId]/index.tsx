@@ -63,7 +63,7 @@ const PlacePage = () => {
     <MainWrapper>
       <Seo title={placeInfo.place_name} />
       {/* 이미지 캐러셀 */}
-      <div className='flex flex-col items-center justify-start h-[500px] mb-[50px] mt-[20px] md:mt-[80px] md:flex-row md:justify-between'>
+      <div className='flex flex-col items-center justify-start h-auto md:h-[500px] mb-[50px] mt-[20px] md:mt-[80px] md:flex-row md:justify-between'>
         {imgList && (
           <div className='w-[90%] mb-[20px] md:w-[48%]'>
             <CarouselThumb

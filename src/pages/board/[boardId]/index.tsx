@@ -4,7 +4,7 @@ import { useBoards } from '@/hooks/useBoards';
 import { toastSuccess } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
 import { formatDate } from '@/utils/dateFormatter';
-import { Avatar, Button, Spacer } from '@nextui-org/react';
+import { Avatar, Button, Divider, Spacer } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -44,16 +44,19 @@ const BoardPostPage = () => {
 
   return (
     <MainWrapper>
-      <span>{post.category}</span>
+      <header className='flex mt-[50px] items-center'>
+        <h2 className='text-2xl mr-5 md:text-3xl font-bold'>{post.title}</h2>
+        <span className='text-gray-600 font-bold text-md md:text-lg'>
+          {post.category}
+        </span>
+      </header>
       <Spacer y={3} />
-      <div className='flex items-center'>
-        <h1 className='text-2xl text-bold mr-[10px]'>{post.title}</h1>
-        <span className='text-gray-600'> {formatDate(post.created_at)}</span>
-      </div>
-      <Spacer y={3} />
+      <Divider className='bg-primary h-0.5' />
+
+      <Spacer y={8} />
       <div className='flex justify-between'>
-        <div className='flex justify-between items-center gap-4'>
-          <div className='flex  items-center gap-4'>
+        <div className='flex justify-between w-full items-center gap-4'>
+          <div className='flex items-center gap-4'>
             <Avatar
               size='sm'
               showFallback
@@ -61,25 +64,34 @@ const BoardPostPage = () => {
             />
             <p className='text-md'>{post.users?.user_name}</p>
           </div>
-        </div>
-        {userInfo.userId === post.user_id ? (
-          <div className='flex gap-5'>
-            <Button size='sm' color='primary' onClick={delPost}>
-              삭제
-            </Button>
-            <Link href={`/board/write?boardId=${boardId}`}>
-              <Button size='sm' color='primary'>
-                수정
-              </Button>
-            </Link>
+          <div className='flex items-center'>
+            <span className='text-gray-400'>{formatDate(post.created_at)}</span>
           </div>
-        ) : null}
+        </div>
       </div>
       <Spacer y={8} />
 
-      <div className='shadow-md w-full min-h-[200px] p-4 rounded-md'>
+      <div className='w-full min-h-[200px] p-4 rounded-md'>
         <p>{post.content}</p>
       </div>
+      <Spacer y={5} />
+      <Divider className='bg-primary h-0.5' />
+      <Spacer y={5} />
+      {userInfo.userId === post.user_id ? (
+        <div className='flex justify-end gap-5'>
+          <Button
+            className='rounded-full px-8 hover:bg-pink hover:text-white'
+            onClick={delPost}
+          >
+            삭제
+          </Button>
+          <Link href={`/board/write?boardId=${boardId}`}>
+            <Button className='rounded-full px-8 hover:bg-primary hover:text-white'>
+              수정
+            </Button>
+          </Link>
+        </div>
+      ) : null}
     </MainWrapper>
   );
 };
