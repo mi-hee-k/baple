@@ -1,10 +1,11 @@
-import { deletePost, getPost, updatePost } from '@/apis/boards';
+import { getPost } from '@/apis/boards';
 import MainWrapper from '@/components/layout/MainWrapper';
+import { useBoards } from '@/hooks/useBoards';
 import { toastSuccess } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
 import { formatDate } from '@/utils/dateFormatter';
 import { Avatar, Button, Spacer } from '@nextui-org/react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -14,19 +15,11 @@ const BoardPostPage = () => {
   const router = useRouter();
   const boardId: string = router.query.boardId as string;
   const userInfo = useSelector((state: RootState) => state.auth);
+  const { deletePost } = useBoards();
 
   const { data: post, isLoading } = useQuery({
     queryKey: ['posts', boardId],
     queryFn: () => getPost(boardId),
-  });
-
-  const queryClient = useQueryClient();
-  const { mutate: deleteMutate } = useMutation({
-    mutationFn: deletePost,
-    onSuccess: () => {
-      router.push('/board');
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
-    },
   });
 
   const delPost = () => {
@@ -39,7 +32,7 @@ const BoardPostPage = () => {
       confirmButtonColor: '#FFD029',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMutate({ userId: userInfo.userId, boardId });
+        deletePost({ userId: userInfo.userId, boardId });
         toastSuccess('삭제 되었습니다');
       }
     });
