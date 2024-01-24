@@ -11,8 +11,8 @@ const Layout = ({ children }: Props) => {
   return (
     <div className='flex flex-col justify-between h-[100vh]'>
       <div>
-        <SideBar />
         <Header />
+        <SideBar />
         {children}
       </div>
       <Footer />
