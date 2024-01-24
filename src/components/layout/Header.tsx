@@ -93,10 +93,10 @@ const Header = () => {
 
   return (
     <header className='py-2 font-bold sticky top-0 z-10 shadow-xl bg-white'>
-      <div className='container m-auto flex items-center max-w-[1200px] min-h-[48px] w-[90%]'>
-        <nav className='flex w-full justify-between items-center'>
-          <div className='flex gap-10'>
-            <Link href='/'>
+      <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
+        <nav className='md:flex w-full justify-between items-center'>
+          <div className='flex'>
+            <Link href='/' className='w-[100%] flex justify-center '>
               <Image
                 src='/images/icons/basic-logo.svg'
                 alt='main logo'
@@ -104,7 +104,7 @@ const Header = () => {
                 height={50}
               />
             </Link>
-            <div className='flex gap-4 items-center'>
+            <div className='hidden md:flex gap-4 items-center w-full'>
               <Link
                 href='/nearby'
                 className={` ${
@@ -159,7 +159,7 @@ const Header = () => {
               </Dropdown>
             </div>
           ) : (
-            <div className='flex gap-4'>
+            <div className='hidden md:flex gap-4'>
               <Link href='/login'>
                 <Button variant='solid' color='primary'>
                   로그인

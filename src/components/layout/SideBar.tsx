@@ -12,19 +12,19 @@ const SideBar = () => {
   return (
     <div className='w-full h-full absolute md:hidden'>
       <RxHamburgerMenu
-        className={`cursor-pointer ${
+        className={`sticky cursor-pointer ${
           isSidebarOpened ? 'hidden' : 'block'
         } absolute top-4 left-4 z-40`}
         onClick={() => setIsSidebarOpened(true)}
       />
       <MdClose
-        className={`cursor-pointer ${
+        className={`sticky cursor-pointer ${
           isSidebarOpened ? 'block' : 'hidden'
         } absolute top-4 left-4 z-40`}
         onClick={() => setIsSidebarOpened(false)}
       />
       <div
-        className={`bg-gray-200 bg-opacity-90 h-full absolute w-full transition-transform transform ${
+        className={`bg-gray-200 bg-opacity-90 h-[100vh] absolute w-[100vw] transition-transform transform ${
           isSidebarOpened ? 'translate-x-0' : '-translate-x-full'
         } ease-in-out duration-300 z-30`}
       >
