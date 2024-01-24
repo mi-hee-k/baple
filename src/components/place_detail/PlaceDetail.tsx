@@ -76,7 +76,7 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     <section className='flex flex-col justify-between w-[90%] h-auto md:h-[500px] md:w-[48%]'>
       <div>
         <div className='flex justify-between w-full'>
-          <h1 className='text-4xl text-bold mt-[10px] mb-[30px]'>
+          <h1 className='text-2xl font-bold md:text-3xl mt-[10px] mb-[10px] md:mb-[30px]'>
             {place_name}
           </h1>
           <div className='flex'>
@@ -167,12 +167,14 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
           </div>
         </div>
         <div className='mb-[30px] md:mb-0'>
-          <p className='text-xl'>주소 : {address}</p>
-          <p className='text-xl'>전화 : {tel === '' ? '정보없음' : tel}</p>
-          <p className='text-xl'>
+          <p className='text-md md:text-xl'>주소 : {address}</p>
+          <p className='text-md md:text-xl'>
+            전화 : {tel === '' ? '정보없음' : tel}
+          </p>
+          <p className='text-md md:text-xl'>
             운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
           </p>
-          <p className='text-xl'>
+          <p className='text-md md:text-xl'>
             휴무일 : {holidays === 'null' ? '정보없음' : holidays}
           </p>
         </div>
@@ -182,13 +184,13 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
           <div key={index} className='w-[32%]'>
             {item ? (
               <Chip
-                className='bg-primary rounded-xl text-lg w-full max-w-full text-center'
+                className='bg-primary rounded-xl text-md md:text-lg w-full max-w-full text-center'
                 color='primary'
               >
                 {infoDetails[index]}
               </Chip>
             ) : (
-              <Chip className='rounded-xl text-lg w-full max-w-full max-w text-center'>
+              <Chip className='rounded-xl text-md md:text-lg w-full max-w-full max-w text-center'>
                 {infoDetails[index]}
               </Chip>
             )}
