@@ -7,6 +7,8 @@ import MostReviews from '@/components/home/MostReviews';
 import MostBookmarks from '@/components/home/MostBookmarks';
 import { Spacer } from '@nextui-org/react';
 import Carousel from '@/components/common/Carousel';
+import { getTopBookmarkedPlaces, getTopReviewedPlaces } from '@/apis/places';
+import { PlacesForPlaceCard } from '@/types/types';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +18,12 @@ const imgList = [
   'https://dummyimage.com/1200x400/f0c518/000000&text=BAPLE',
 ];
 
-const Home = () => {
+interface Props {
+  topBookmarked: PlacesForPlaceCard[];
+  topReviewed: PlacesForPlaceCard[];
+}
+
+const Home = ({ topBookmarked, topReviewed }: Props) => {
   const { username, userId } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -38,9 +45,9 @@ const Home = () => {
         />
       </section>
       <div className='flex flex-col w-full justify-center items-center'>
-        <MostReviews />
+        <MostReviews initialData={topReviewed} />
         <Spacer y={10} />
-        <MostBookmarks />
+        <MostBookmarks initialData={topBookmarked} />
         <Spacer y={20} />
       </div>
     </>
@@ -48,3 +55,9 @@ const Home = () => {
 };
 
 export default Home;
+
+export async function getServerSideProps() {
+  const topBookmarked = await getTopBookmarkedPlaces();
+  const topReviewed = await getTopReviewedPlaces();
+  return { props: { topBookmarked, topReviewed } };
+}

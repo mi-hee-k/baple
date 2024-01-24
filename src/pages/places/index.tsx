@@ -1,7 +1,9 @@
+import PlaceCard from '@/components/common/PlaceCard';
 import PlaceCard2 from '@/components/common/PlaceCard2';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { supabase } from '@/libs/supabase';
 import { Tables } from '@/types/supabase';
+import { PlacesForSearch } from '@/types/types';
 import { Button, Input, Spacer } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +13,7 @@ const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [checkboxChanged, setCheckboxChanged] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  const [searchedPlaces, setSearchedPlaces] = useState<Tables<'places'>[]>([]);
+  const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
@@ -43,10 +45,9 @@ const PlacesPage = () => {
     setLoading(true);
 
     try {
-      let query = supabase
-        .from('places')
-        .select('*')
-        .ilike('place_name', `%${searchValue}%`);
+      let query = supabase.rpc('search_places', {
+        p_search_value: searchValue,
+      });
 
       if (selected.length > 0) {
         selected.forEach((checkbox) => {
@@ -138,7 +139,7 @@ const PlacesPage = () => {
           <div className='flex justify-center'>
             <div className='grid lg:grid-cols-3 sm:grid-cols-2 gap-[3rem] w-full'>
               {searchedPlaces.map((place, idx) => (
-                <PlaceCard2 key={idx} place={place} />
+                <PlaceCard key={idx} place={place} />
               ))}
             </div>
           </div>

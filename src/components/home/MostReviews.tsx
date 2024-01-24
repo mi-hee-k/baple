@@ -9,12 +9,18 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
+import { PlacesForPlaceCard } from '@/types/types';
 
-const MostReviews = () => {
+interface Props {
+  initialData: PlacesForPlaceCard[];
+}
+
+const MostReviews = ({ initialData }: Props) => {
   const { data: topReviewedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topReviewedPlacesList'],
       queryFn: getTopReviewedPlaces,
+      initialData: initialData,
     });
 
   if (placesListLoading) {
