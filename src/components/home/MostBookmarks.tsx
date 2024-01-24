@@ -9,12 +9,18 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
+import { PlacesForPlaceCard } from '@/types/types';
 
-const MostBookmarks = () => {
+interface Props {
+  initialData: PlacesForPlaceCard[];
+}
+
+const MostBookmarks = ({ initialData }: Props) => {
   const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topBookmarkedPlacesList'],
       queryFn: getTopBookmarkedPlaces,
+      initialData: initialData,
     });
 
   if (placesListLoading) {
