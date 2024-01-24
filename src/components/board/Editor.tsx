@@ -1,8 +1,9 @@
 import { getPost, insertNewPost, updatePost } from '@/apis/boards';
-import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
+import { useBoards } from '@/hooks/useBoards';
+import { toastWarn } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
-import { Button, Input, Textarea, Select, SelectItem } from '@nextui-org/react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Button, Input, Textarea, Spacer, Divider } from '@nextui-org/react';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -17,6 +18,7 @@ interface Props {
 const Editor = ({ isEdit }: Props) => {
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
+  const { insertPost, updatePost } = useBoards();
   const boardId: string = router.query.boardId as string;
   const [inputs, setInputs] = useState({
     title: '',
@@ -29,25 +31,6 @@ const Editor = ({ isEdit }: Props) => {
     queryKey: ['posts', boardId],
     queryFn: () => getPost(boardId),
     enabled: !!boardId,
-  });
-
-  const queryClient = useQueryClient();
-  const { mutate: addPostMutate } = useMutation({
-    mutationFn: insertNewPost,
-    onSuccess: () => {
-      router.push('/board');
-      toastSuccess('등록되었습니다!');
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
-    },
-  });
-
-  const { mutate: updatePostMutate } = useMutation({
-    mutationFn: updatePost,
-    onSuccess: () => {
-      router.push('/board');
-      toastSuccess('수정되었습니다!');
-      queryClient.invalidateQueries({ queryKey: ['posts'] });
-    },
   });
 
   const inputChange = (
@@ -98,7 +81,7 @@ const Editor = ({ isEdit }: Props) => {
       confirmButtonColor: '#FFD029',
     }).then((result) => {
       if (result.isConfirmed) {
-        addPostMutate(formData);
+        insertPost(formData);
       }
     });
   };
@@ -116,7 +99,7 @@ const Editor = ({ isEdit }: Props) => {
       confirmButtonColor: '#FFD029',
     }).then((result) => {
       if (result.isConfirmed) {
-        updatePostMutate({ boardId, editValue: formData });
+        updatePost({ boardId, editValue: formData });
       }
     });
   };
@@ -134,7 +117,7 @@ const Editor = ({ isEdit }: Props) => {
 
   return (
     <section className='flex justify-center'>
-      <form onSubmit={createPost} className='w-[70%] p-4 shadow-md '>
+      <form onSubmit={createPost} className='w-[100%]'>
         <Input
           type='text'
           label='제목'
@@ -184,20 +167,31 @@ const Editor = ({ isEdit }: Props) => {
           aria-label='내용'
           name='content'
           value={inputs.content}
-          className='mb-[30px]'
           onChange={inputChange}
         />
+        <Spacer y={6} />
+        <Divider className='bg-primary h-0.5 mb-[30px]' />
 
         <div className='text-right'>
-          <Button className='mr-[10px]' onClick={() => router.back()}>
+          <Button
+            className='mr-[10px] rounded-full px-8'
+            onClick={() => router.back()}
+          >
             취소
           </Button>
           {isEdit ? (
-            <Button type='button' className='bg-primary' onClick={editPost}>
+            <Button
+              type='button'
+              className='bg-primary text-white rounded-full px-8'
+              onClick={editPost}
+            >
               수정
             </Button>
           ) : (
-            <Button type='submit' className='bg-primary'>
+            <Button
+              type='submit'
+              className='bg-primary text-white rounded-full px-8'
+            >
               등록
             </Button>
           )}

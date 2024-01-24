@@ -109,6 +109,7 @@ const BoardPage = () => {
         <h2 className='text-3xl font-bold'>게시판</h2>
       </header>
 
+      <Divider className='bg-primary h-0.5 mb-[18px]' />
       <Table
         aria-label='Example table with dynamic content'
         bottomContent={
@@ -118,19 +119,24 @@ const BoardPage = () => {
               showControls
               showShadow
               color='primary'
+              variant='light'
               page={page}
               total={pages}
               onChange={(page) => setPage(page)}
+              classNames={{ wrapper: 'shadow-none' }}
             />
           </div>
         }
         classNames={{
-          wrapper: 'min-h-[222px]',
+          wrapper: 'min-h-[222px] shadow-none',
         }}
       >
         <TableHeader columns={columns}>
           {(column) => (
-            <TableColumn key={column.key} className='text-center'>
+            <TableColumn
+              key={column.key}
+              className='text-center bg-white text-black text-xl'
+            >
               {column.label}
             </TableColumn>
           )}
@@ -154,14 +160,14 @@ const BoardPage = () => {
       <div className='text-right'>
         {userInfo.userId ? (
           <Button
-            className='bg-primary px-8 py-2 rounded-full text-black'
+            className='bg-primary px-8 py-2 rounded-full text-white'
             onClick={() => router.push('/board/write')}
           >
             글쓰기
           </Button>
         ) : (
           <Button
-            className='bg-primary px-8 py-2 rounded-full text-black'
+            className='bg-primary px-8 py-2 rounded-full text-white'
             onClick={() => toastWarn('로그인 후 이용해주세요')}
           >
             글쓰기
