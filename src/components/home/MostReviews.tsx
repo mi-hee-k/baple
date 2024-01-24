@@ -11,17 +11,6 @@ import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 
 const MostReviews = () => {
-  // const { data: topReviewedPlaces, isLoading } = useQuery({
-  //   queryKey: ['topReviewedPlaces'],
-  //   queryFn: getPlacesByReviewCount,
-  // });
-
-  // const { data: topReviewedPlacesList, isLoading: placesListLoading } =
-  //   useQuery({
-  //     queryKey: ['topReviewedPlacesList'],
-  //     queryFn: () => getPlaceInfoList(topReviewedPlaces),
-  //     enabled: !!topReviewedPlaces,
-  //   });
   const { data: topReviewedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topReviewedPlacesList'],

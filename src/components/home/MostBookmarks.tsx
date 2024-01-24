@@ -11,17 +11,6 @@ import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 
 const MostBookmarks = () => {
-  // const { data: topBookmarkedPlaces, isLoading } = useQuery({
-  //   queryKey: ['topBookmarkedPlaces'],
-  //   queryFn: getPlacesByBookmarkCount,
-  // });
-
-  // const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
-  //   useQuery({
-  //     queryKey: ['topBookmarkedPlacesList'],
-  //     queryFn: () => getPlaceInfoList(topBookmarkedPlaces),
-  //     enabled: !!topBookmarkedPlaces,
-  //   });
   const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topBookmarkedPlacesList'],
