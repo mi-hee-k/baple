@@ -1,4 +1,3 @@
-import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
 import EventMarkerContainer from '@/components/map/MarkerContainer';
 import MylocationButton from '@/components/map/MylocationButton';
@@ -10,10 +9,8 @@ import { Tables } from '@/types/supabase';
 import { Maplocation } from '@/types/types';
 import { Spinner } from '@nextui-org/react';
 import axios from 'axios';
-import Script from 'next/script';
 import React, { useEffect, useState } from 'react';
 import {
-  CustomOverlayMap,
   Map,
   MapMarker,
   MapTypeControl,
@@ -46,6 +43,7 @@ const NearByPage = () => {
   const [regionName, setRegionName] = useState<string>('');
   const [cityName, setCityName] = useState<string>('');
   const [place, setplace] = useState<Tables<'places'>[] | null>([]);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   // console.log('windowkakao', window.kakao);
@@ -152,9 +150,10 @@ const NearByPage = () => {
   return (
     <div
       style={{ position: 'relative', display: 'flex' }}
-      // className='overflow-y-hidden'
+      // className='overflow-hidden'
     >
       <Seo title='내 근처 장소' />
+
       {!mylocation.isLoading ? (
         <Map // 지도를 표시할 Container
           center={location.center}
@@ -196,8 +195,15 @@ const NearByPage = () => {
           {place?.map((place) => (
             <EventMarkerContainer key={place.id} place={place} />
           ))}
-          {place?.length !== 0 ? (
-            <PlacesModal cityName={cityName} regionName={regionName} />
+          {!isModalVisible ? (
+            place?.length !== 0 ? (
+              <PlacesModal
+                cityName={cityName}
+                regionName={regionName}
+                isModalVisible={isModalVisible}
+                setIsModalVisible={setIsModalVisible}
+              />
+            ) : null
           ) : null}
 
           <MylocationButton mylocation={mylocation} setLocation={setLocation} />

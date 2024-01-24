@@ -41,6 +41,7 @@ const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
           position={{ lat: place.lat, lng: place.lng }}
           key={place.id}
           yAnchor={1.15}
+          zIndex={2}
         >
           <div ref={overlayRef}>
             <PlaceCard2 place={place} />
