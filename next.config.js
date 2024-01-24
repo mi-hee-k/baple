@@ -22,7 +22,7 @@ module.exports = {
       },
     ];
   },
-  reactStrictMode: false,
+  // reactStrictMode: false,
 
   webpack: (config) => {
     config.module.rules.push({
@@ -54,5 +54,13 @@ module.exports = {
         pathname: '/**',
       },
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/kakaomap',
+        destination: `http://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false;`,
+      },
+    ];
   },
 };

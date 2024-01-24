@@ -15,6 +15,7 @@ export default function Document() {
             `,
           }}
         />
+        {/* <script src={`/kakaomap`} /> */}
         <Main />
         <NextScript />
       </body>

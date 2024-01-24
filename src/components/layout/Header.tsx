@@ -20,6 +20,7 @@ import Image from 'next/image';
 const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  console.log('router', router);
   const [currentUser, setCurrentUser] = useState<any>(null);
   // const [userId, setUserId] = useState('');
   const { userId } = useSelector((state: RootState) => state.auth);
@@ -39,6 +40,7 @@ const Header = () => {
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const username = session?.user.user_metadata.user_name;
+      // setUserId(userId);
       console.log(event, session);
       if (event === 'INITIAL_SESSION' && session !== null) {
         setCurrentUser(session?.user);
@@ -88,25 +90,55 @@ const Header = () => {
     if (error) throw error;
     router.push('/');
   };
+
   return (
-    <header className='bg-[#FFD029] py-2 font-bold sticky top-0 z-20 shadow-md'>
+    <header className='py-2 font-bold sticky top-0 z-10 shadow-xl bg-white'>
       <div className='container m-auto flex items-center max-w-[1200px] min-h-[48px] w-[90%]'>
-        <nav className='flex gap-6 w-full justify-between items-center'>
-          <Link href='/' className='text-3xl font-black'>
-            <Image
-              src='/images/icons/basic-logo.svg'
-              alt='main logo'
-              width={100}
-              height={50}
-            />
-          </Link>
-          <Link href='/nearby'>주변 장소</Link>
-          <Link href='/places'>장소 검색</Link>
-
-          <Link href='/board'>게시판</Link>
-
+        <nav className='flex w-full justify-between items-center'>
+          <div className='flex gap-10'>
+            <Link href='/'>
+              <Image
+                src='/images/icons/basic-logo.svg'
+                alt='main logo'
+                width={100}
+                height={50}
+              />
+            </Link>
+            <div className='flex gap-4 items-center'>
+              <Link
+                href='/nearby'
+                className={` ${
+                  router.pathname === '/nearby'
+                    ? 'text-primary'
+                    : 'text-gray-500'
+                }`}
+              >
+                주변 장소
+              </Link>
+              <Link
+                href='/places'
+                className={` ${
+                  router.pathname === '/places'
+                    ? 'text-primary'
+                    : 'text-gray-500'
+                }`}
+              >
+                장소 검색
+              </Link>
+              <Link
+                href='/board'
+                className={` ${
+                  router.pathname === '/board'
+                    ? 'text-primary'
+                    : 'text-gray-500'
+                }`}
+              >
+                게시판
+              </Link>
+            </div>
+          </div>
           {currentUser ? (
-            <>
+            <div className='flex gap-4 items-center'>
               <span>반가워요 {user?.user_name}님!</span>
               <Dropdown>
                 <DropdownTrigger>
@@ -125,22 +157,20 @@ const Header = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
-            </>
+            </div>
           ) : (
-            <>
-              <div className='flex gap-4'>
-                <Link href='/login'>
-                  <Button variant='solid' color='warning'>
-                    로그인
-                  </Button>
-                </Link>
-                <Link href='/signup'>
-                  <Button variant='bordered' color='warning'>
-                    회원가입
-                  </Button>
-                </Link>
-              </div>
-            </>
+            <div className='flex gap-4'>
+              <Link href='/login'>
+                <Button variant='solid' color='primary'>
+                  로그인
+                </Button>
+              </Link>
+              <Link href='/signup'>
+                <Button variant='bordered' color='primary'>
+                  회원가입
+                </Button>
+              </Link>
+            </div>
           )}
         </nav>
       </div>
