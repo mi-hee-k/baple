@@ -152,7 +152,7 @@ const NearByPage = () => {
   return (
     <div
       style={{ position: 'relative', display: 'flex' }}
-      className='overflow-x-hidden'
+      // className='overflow-y-hidden'
     >
       <Seo title='내 근처 장소' />
       {!mylocation.isLoading ? (

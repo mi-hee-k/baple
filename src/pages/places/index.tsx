@@ -70,6 +70,7 @@ const PlacesPage = () => {
       setLoading(false);
     }
   };
+
   const { ref } = useInView({
     threshold: 1,
     onChange: (inView) => {

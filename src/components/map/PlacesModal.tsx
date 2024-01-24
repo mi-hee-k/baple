@@ -35,7 +35,7 @@ const PlacesModal = ({
   return (
     <>
       <motion.div
-        className='z-11'
+        className='z-12'
         drag='x'
         dragConstraints={{ left: 0, right: 300 }}
       >
