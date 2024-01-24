@@ -96,3 +96,12 @@ export interface Maplocation {
   errMsg: string | null;
   isLoading: boolean;
 }
+
+export interface PlacesForPlaceCard {
+  bookmarks_count: number;
+  reviews_count: number;
+  city: string;
+  image_url: string;
+  place_name: string;
+  unique_place_id: string;
+}
