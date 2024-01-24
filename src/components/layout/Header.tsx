@@ -94,9 +94,10 @@ const Header = () => {
   return (
     <header className='py-2 font-bold sticky top-0 z-10 shadow-xl bg-white'>
       <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
-        <nav className='md:flex w-full justify-between items-center'>
-          <div className='flex'>
-            <Link href='/' className='w-[100%] flex justify-center '>
+        <nav className='flex md:flex w-full justify-between items-center'>
+          <div className='block md:hidden w-full'></div>
+          <div className='flex w-full justify-center gap-2'>
+            <Link href='/' className='flex justify-center'>
               <Image
                 src='/images/icons/basic-logo.svg'
                 alt='main logo'
@@ -104,7 +105,7 @@ const Header = () => {
                 height={50}
               />
             </Link>
-            <div className='hidden md:flex gap-4 items-center w-full'>
+            <div className='hidden md:flex gap-6 items-center w-full justify-center'>
               <Link
                 href='/nearby'
                 className={` ${
@@ -138,8 +139,10 @@ const Header = () => {
             </div>
           </div>
           {currentUser ? (
-            <div className='flex gap-4 items-center'>
-              <span>반가워요 {user?.user_name}님!</span>
+            <div className='flex gap-4 items-center w-full justify-end'>
+              <span className='hidden md:block'>
+                반가워요 {user?.user_name}님!
+              </span>
               <Dropdown>
                 <DropdownTrigger>
                   <Avatar
