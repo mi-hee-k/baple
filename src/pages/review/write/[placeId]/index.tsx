@@ -167,7 +167,9 @@ const ReviewWritePage = () => {
         <div className='border-t-3 border-yellow-400 py-9 flex'>
           {/* <span>아이콘</span> */}
           <h2 className='text-xl font-medium'>
-            사진 올리기(최대 3장까지 첨부 가능합니다)
+            사진 첨부
+            <br />
+            <div className='text-sm'>최대 3장까지 첨부 가능합니다</div>
           </h2>
         </div>
         <div className='mb-10  flex gap-6'>
@@ -179,7 +181,7 @@ const ReviewWritePage = () => {
               onChange={handleImageChange}
               className='hidden'
             />
-            <div className='w-24 h-24 bg-gray-100 flex items-center justify-center rounded'>
+            <div className='w-24 h-24 bg-gray-200 flex items-center justify-center rounded'>
               <span className='text-3xl'>+</span>
             </div>
           </label>

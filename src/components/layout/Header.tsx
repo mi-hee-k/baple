@@ -65,6 +65,7 @@ const Header = () => {
       } else if (event === 'SIGNED_OUT') {
         dispatch(logOutUser());
         setCurrentUser(null);
+        window.history.replaceState(null, '', '/');
       } else if (event === 'PASSWORD_RECOVERY') {
         // handle password recovery event
       } else if (event === 'TOKEN_REFRESHED') {
