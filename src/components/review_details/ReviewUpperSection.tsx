@@ -1,12 +1,11 @@
 import { Avatar, Button, Divider, Spacer } from '@nextui-org/react';
 import React from 'react';
 import type { ReviewWithPlaceAndUser } from '@/types/types';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteReview } from '@/apis/reviews';
-import { toastError, toastSuccess } from '@/libs/toastifyAlert';
+import { toastSuccess } from '@/libs/toastifyAlert';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
+import { useReviews } from '@/hooks/useReviews';
 
 interface Props {
   review: ReviewWithPlaceAndUser;
@@ -21,26 +20,16 @@ const ReviewUpperSection = ({
   isEditing,
   currentUserId,
 }: Props) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   const showDelEditBtn = currentUserId === review.user_id ? true : false;
 
-  const reviewDelteMutate = useMutation({
-    mutationFn: deleteReview,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['reviews', review.place_id],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['reviews', currentUserId],
-      });
-    },
-    onError: () => {
-      toastError('문제가 발생하여 삭제하지 못했습니다');
-      return;
-    },
-  });
+  const { deleteReview } = useReviews(
+    undefined,
+    review.place_id,
+    currentUserId as string,
+  );
+
   const reviewDelete = () => {
     Swal.fire({
       icon: 'warning',
@@ -51,7 +40,7 @@ const ReviewUpperSection = ({
       confirmButtonColor: '#FFD029',
     }).then((result) => {
       if (result.isConfirmed) {
-        reviewDelteMutate.mutate(review.id);
+        deleteReview(review.id);
         router.back();
         toastSuccess('삭제 완료');
       }
