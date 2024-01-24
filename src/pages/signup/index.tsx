@@ -70,7 +70,10 @@ const SignupPage = () => {
         <Link href='/' className='text-3xl font-black'>
           BAPLE
         </Link>
-        <form onSubmit={handleSubmit(signUpHandler)} className='flex flex-col'>
+        <form
+          onSubmit={handleSubmit(signUpHandler)}
+          className='flex flex-col gap-2'
+        >
           <Input
             type='email'
             label='이메일'
@@ -181,7 +184,7 @@ const SignupPage = () => {
               onClick={() =>
                 validateUsername(watchUsername, setIsCheckedUsername)
               }
-              color='warning'
+              color='primary'
             >
               중복 확인
             </Button>
