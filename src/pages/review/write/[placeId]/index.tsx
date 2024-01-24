@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { Button, Spacer, Textarea } from '@nextui-org/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
@@ -32,7 +32,6 @@ const ReviewWritePage = () => {
     queryKey: ['placeInfo', placeId],
     queryFn: () => getPlaceInfo(placeId as string),
     enabled: placeId !== undefined,
-    // staleTime: Infinity,
   });
 
   console.log('placeInfo', placeInfo);
@@ -111,7 +110,6 @@ const ReviewWritePage = () => {
         console.log('imageData', imageData);
         publicUrlList.push(imageData.publicUrl);
       }
-      // place의 image_url이 null 이면, 리뷰 이미지의 첫번째 사진으로 place image_url 저장
       if (placeInfo?.image_url === null) {
         mutateToUpdate({ id: placeId as string, imageUrl: publicUrlList[0] });
       }
@@ -133,24 +131,22 @@ const ReviewWritePage = () => {
     };
     mutateToAdd(args);
     toastSuccess('리뷰가 등록되었습니다.');
-    // setReviewText('');
     router.replace(`/place/${placeId}`);
   };
 
   return (
-    <div className='min-h-screen  py-20'>
+    <div className='min-h-screen py-20'>
       <Seo title='리뷰 작성' />
-      <div className=' p-20 max-w-screen-md mx-auto shadow '>
+      <div className='p-4 sm:p-10 max-w-screen-md mx-auto shadow'>
         <Seo title='리뷰 작성' />
-        <div className=' mb-10 text-2xl font-semibold  ;'>
-          <div className='border-b-3  border-yellow-400'>
+        <div className='mb-10 text-2xl font-semibold'>
+          <div className='border-b-3 border-yellow-400'>
             {placeInfo?.place_name}
           </div>
         </div>
         <div>
           <div className='flex items-center mb-5'>
-            {/* <span>아이콘</span> */}
-            <h2 className='text-xl mr-1 mb-2 font-medium'>후기</h2>
+            <h2 className='text-xl mr-1 mb-2 '>리뷰를 작성해 주세요</h2>
             <span className='text-red-500 text-2xl font-bold'>*</span>
           </div>
         </div>
@@ -165,14 +161,13 @@ const ReviewWritePage = () => {
           />
         </div>
         <div className='border-t-3 border-yellow-400 py-9 flex'>
-          {/* <span>아이콘</span> */}
-          <h2 className='text-xl font-medium'>
+          <h2 className='text-xl'>
             사진 첨부
             <br />
             <div className='text-sm'>최대 3장까지 첨부 가능합니다</div>
           </h2>
         </div>
-        <div className='mb-10  flex gap-6'>
+        <div className='mb-10 flex flex-col sm:flex-row gap-6'>
           <label className='relative cursor-pointer'>
             <input
               type='file'
@@ -188,7 +183,7 @@ const ReviewWritePage = () => {
           {selectedImages.map((image, index) => (
             <div
               key={index}
-              className='image-preview relative inline-block w-24 h-24'
+              className='image-preview relative inline-block w-24 h-24 mb-4 sm:mb-0'
             >
               <Image
                 src={image.imageUrl}
@@ -205,7 +200,7 @@ const ReviewWritePage = () => {
             </div>
           ))}
         </div>
-        <div className='flex itmes-center justify-center'>
+        <div className='flex items-center justify-center'>
           <Spacer x={2} />
           <Button
             color='primary'
