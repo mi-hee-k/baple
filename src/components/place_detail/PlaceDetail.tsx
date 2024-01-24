@@ -9,7 +9,6 @@ import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { shareKakao } from '@/utils/shareKaKao';
-import Image from 'next/image';
 
 interface PlaceInfoAllData {
   placeId: string;

@@ -82,7 +82,7 @@ const PlacePage = () => {
       </div>
 
       {/* 지도 */}
-      {/* <section className='mb-[30px] relative'>
+      <section className='mb-[30px] relative'>
         <Map
           center={placePosition}
           draggable={false}
@@ -146,7 +146,7 @@ const PlacePage = () => {
             </div>
           </RoadviewMarker>
         </Roadview>
-      </section> */}
+      </section>
 
       {/* 리뷰 */}
       <section>

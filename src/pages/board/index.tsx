@@ -125,12 +125,15 @@ const BoardPage = () => {
           </div>
         }
         classNames={{
-          wrapper: 'min-h-[222px]',
+          wrapper: 'min-h-[222px] shadow-none',
         }}
       >
         <TableHeader columns={columns}>
           {(column) => (
-            <TableColumn key={column.key} className='text-center'>
+            <TableColumn
+              key={column.key}
+              className='text-center bg-primary text-white'
+            >
               {column.label}
             </TableColumn>
           )}
@@ -154,14 +157,14 @@ const BoardPage = () => {
       <div className='text-right'>
         {userInfo.userId ? (
           <Button
-            className='bg-primary px-8 py-2 rounded-full text-black'
+            className='bg-primary px-8 py-2 rounded-full text-white'
             onClick={() => router.push('/board/write')}
           >
             글쓰기
           </Button>
         ) : (
           <Button
-            className='bg-primary px-8 py-2 rounded-full text-black'
+            className='bg-primary px-8 py-2 rounded-full text-white'
             onClick={() => toastWarn('로그인 후 이용해주세요')}
           >
             글쓰기
