@@ -172,25 +172,27 @@ const ReviewWritePage = () => {
               <span className='text-3xl'>+</span>
             </div>
           </label>
-          {selectedImages.map((image, index) => (
-            <div
-              key={index}
-              className='image-preview relative inline-block w-24 h-24 mb-4 sm:mb-0'
-            >
-              <Image
-                src={image.imageUrl}
-                alt={`Selected Image ${index}`}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-              <button
-                onClick={() => handleRemoveImage(index)}
-                className='delete-button absolute font-extrabold right-1 text-gray-200 hover:text-red-500 cursor-pointer'
+          <div className='flex flex-wrap gap-4'>
+            {selectedImages.map((image, index) => (
+              <div
+                key={index}
+                className='image-preview relative inline-block w-24 h-24 mb-4 sm:mb-0 flex-shrink-0 flex-grow-0'
               >
-                X
-              </button>
-            </div>
-          ))}
+                <Image
+                  src={image.imageUrl}
+                  alt={`Selected Image ${index}`}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+                <button
+                  onClick={() => handleRemoveImage(index)}
+                  className='delete-button absolute font-extrabold right-1 text-gray-200 hover:text-red-500 cursor-pointer'
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
         <div className='flex items-center justify-center'>
           <Spacer x={2} />
