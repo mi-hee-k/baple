@@ -28,17 +28,22 @@ const MostReviews = ({ initialData }: Props) => {
   }
 
   return (
-    <div className='w-[1050px] p-1'>
-      <p>가장 많은 리뷰가 달린 장소</p>
+    <div className='w-[90%] p-1'>
+      <div className='flex flex-col gap-2'>
+        <span className='text-2xl text-primary font-bold'>
+          리뷰가 많은 장소
+        </span>
+        <span className='font-light'>리뷰가 많이 달렸어요!</span>
+      </div>
       <Spacer y={4} />
       <Swiper
         loop={true} // 슬라이드 루프
-        spaceBetween={1}
+        spaceBetween={20}
         slidesPerView={4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
         autoplay={true}
-        className='w-full h-full'
+        className=''
         allowTouchMove={false}
       >
         {topReviewedPlacesList?.map((place) => {

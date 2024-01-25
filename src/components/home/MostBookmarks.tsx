@@ -28,12 +28,17 @@ const MostBookmarks = ({ initialData }: Props) => {
   }
 
   return (
-    <div className='w-[1050px] p-1'>
-      <p>가장 많이 북마크 된 장소</p>
+    <div className='w-[90%] p-1'>
+      <div className='flex flex-col gap-2'>
+        <span className='text-2xl text-primary font-bold'>
+          많은 사람들이 즐겨 찾는 장소
+        </span>
+        <span className='font-light'>많은 사람들이 즐겨 찾았어요!</span>
+      </div>
       <Spacer y={4} />
       <Swiper
         loop={true} // 슬라이드 루프
-        spaceBetween={1}
+        spaceBetween={20}
         slidesPerView={4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
