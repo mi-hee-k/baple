@@ -44,7 +44,6 @@ const Header = () => {
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const username = session?.user.user_metadata.user_name;
-      console.log(event, session);
       if (event === 'INITIAL_SESSION' && session !== null) {
         setCurrentUser(session?.user);
         dispatch(
@@ -98,11 +97,11 @@ const Header = () => {
       {isLoaded ? (
         <header className='py-2 font-bold sticky top-0 z-20 shadow-xl bg-white'>
           <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
-            <nav className='flex md:flex w-full justify-between items-center'>
+            <nav className='flex sm:flex w-full justify-between items-center'>
               {isLoggedIn ? (
-                <div className='block md:hidden w-full'></div>
+                <div className='block sm:hidden w-full'></div>
               ) : null}
-              <div className='flex w-full justify-center gap-2'>
+              <div className='flex w-full justify-center '>
                 <Link href='/' className='flex justify-center'>
                   <Image
                     src='/images/icons/basic-logo.svg'
@@ -111,7 +110,7 @@ const Header = () => {
                     height={50}
                   />
                 </Link>
-                <div className='hidden md:flex gap-10 items-center w-full justify-center'>
+                <div className='hidden sm:flex gap-16 items-center w-full justify-center'>
                   <Link
                     href='/nearby'
                     className={` ${
@@ -146,7 +145,7 @@ const Header = () => {
               </div>
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
-                  <span className='hidden md:block'>
+                  <span className='hidden sm:block'>
                     반가워요 {user?.user_name}님!
                   </span>
                   <Dropdown>
@@ -171,7 +170,7 @@ const Header = () => {
                   </Dropdown>
                 </div>
               ) : (
-                <div className='hidden md:flex gap-4 w-full justify-end'>
+                <div className='hidden sm:flex gap-4 w-full justify-end'>
                   <Link href='/login'>
                     <Button variant='solid' color='primary'>
                       로그인

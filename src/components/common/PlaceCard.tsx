@@ -1,8 +1,9 @@
 import React from 'react';
-import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
+import { Card, CardBody, CardFooter } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
 import type { PlacesForPlaceCard } from '@/types/types';
+import Image from 'next/image';
 
 interface Props {
   place: PlacesForPlaceCard;
@@ -32,29 +33,44 @@ const PlaceCard = ({ place }: Props) => {
         // key={index}
         isPressable
         onPress={() => router.push(`/place/${unique_place_id}`)}
-        className='p-2 w-[250px] h-[250px]'
+        className='w-full h-full flex flex-col items-center rounded-3xl'
       >
-        <CardBody className='overflow-visible p-0'>
+        <CardBody className='overflow-visible rounded-3xl flex items-center'>
           <Image
-            shadow='sm'
-            radius='lg'
-            width='100%'
-            height={230}
+            // radius='lg'
+            width={25}
+            height={25}
             alt={place_name}
-            className='w-full object-cover h-[140px]'
+            className='w-full object-cover h-80 rounded-3xl shadow-xl'
             src={imgURL}
           />
         </CardBody>
-        <CardFooter className='text-small justify-between'>
-          <div className='flex flex-col items-start'>
-            <strong>{place_name}</strong>
-            <div className='flex justify-between w-[210px]'>
-              <div>
-                <span>📑{reviews_count}</span>
-                <span>🔖{bookmarks_count}</span>
-              </div>
-              <span className='text-s'>{city}</span>
-            </div>
+        <CardFooter className='flex flex-col'>
+          <div className='flex flex-col items-start w-full'>
+            <span className='text-sm'>{city}</span>
+            <span className='text-base font-bold'>{place_name}</span>
+          </div>
+          <div className='flex gap-2 w-full justify-end'>
+            <span className='flex gap-1 items-center justify-center'>
+              <Image
+                src='/images/icons/write_select.svg'
+                width={20}
+                height={20}
+                alt='write_icon'
+                // className='object-cover'
+              />
+              {reviews_count}
+            </span>
+            <span className='flex gap-2 items-center justify-center'>
+              <Image
+                src='/images/icons/bookmark_select.svg'
+                width={20}
+                height={20}
+                alt='bookmark_icon'
+                className='object-cover'
+              />
+              {bookmarks_count}
+            </span>
           </div>
         </CardFooter>
       </Card>

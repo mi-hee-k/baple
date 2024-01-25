@@ -10,11 +10,13 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
+import { useViewport } from '@/hooks/useViewport';
 
 const BoardPage = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const userInfo = useSelector((state: RootState) => state.auth);
+  const { isMobile } = useViewport();
 
   const { data: posts = [], isLoading } = useQuery({
     queryKey: ['posts'],
@@ -46,7 +48,7 @@ const BoardPage = () => {
 
   return (
     <MainWrapper>
-      <header className='flex mt-[50px] mb-[30px] justify-between'>
+      <header className='flex mt-[50px] mb-3 sm:mb-6 justify-between'>
         <h2 className='text-2xl sm:text-3xl font-bold'>게시판</h2>
       </header>
 
@@ -56,12 +58,9 @@ const BoardPage = () => {
           <tr className='text-lg sm:text-xl'>
             <th>카테고리</th>
             <th>제목</th>
-            <th>작성자</th>
-            <th className='hidden md:table-cell'>장소</th>
-            <th className='hidden md:table-cell'>작성일</th>
-            {/* {columns.map((column) => (
-              <th key={column.key}> {column.label}</th>
-            ))} */}
+            <th className='hidden md:table-cell lg:table-cell'>작성자</th>
+            <th className='hidden lg:table-cell'>장소</th>
+            <th className='hidden lg:table-cell'>작성일</th>
           </tr>
         </thead>
         <tbody>
@@ -72,14 +71,22 @@ const BoardPage = () => {
               onClick={() => router.push(`board/${item.id}`)}
             >
               <td className='text-center'>{item.category}</td>
-              <td className='text-center w-[50%] pre-line'>{item.title}</td>
-              <td className='text-center'>{item.users.user_name}</td>
-              <td className='text-center hidden md:table-cell whitespace-nowrap'>
+              <td className='text-center w-[70%] lg:w-[50%] pre-line'>
+                {isMobile
+                  ? item.title.length > 14
+                    ? item.title.slice(0, 14) + '...'
+                    : item.title
+                  : item.title}
+              </td>
+              <td className='text-center hidden md:table-cell lg:table-cell'>
+                {item.users.user_name}
+              </td>
+              <td className='text-center hidden lg:table-cell whitespace-nowrap'>
                 {item.place_name.length > 10
                   ? item.place_name.substr(0, 10) + '...'
                   : item.place_name}
               </td>
-              <td className='text-center hidden md:table-cell'>
+              <td className='text-center hidden lg:table-cell'>
                 {item.created_at.slice(0, 11)}
               </td>
             </tr>
@@ -100,7 +107,7 @@ const BoardPage = () => {
       </div>
       <Spacer y={8} />
       <Divider className='bg-primary h-0.5 mb-[18px]' />
-      <div className='text-right'>
+      <div className='text-right mb-6 sm:mb-0'>
         {userInfo.userId ? (
           <Button
             className='bg-primary px-8 py-2 rounded-full text-white'

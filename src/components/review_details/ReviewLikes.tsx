@@ -157,7 +157,7 @@ const ReviewLikes = ({ review }: Props) => {
           <div>
             <div className='w-[24px] h-[24px] mr-[4px] xl:mr-0 xl:w-[34px] xl:h-[34px]'>
               <Image
-                src='/images/icons/share.svg'
+                src='/images/icons/share_select.svg'
                 alt='share button'
                 width={34}
                 height={34}

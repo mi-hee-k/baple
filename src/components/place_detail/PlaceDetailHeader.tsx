@@ -2,6 +2,8 @@ import { shareKakao } from '@/utils/shareKaKao';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { PlaceInfoAllData } from './PlaceDetail';
+import Image from 'next/image';
+import { useViewport } from '@/hooks/useViewport';
 
 const PlaceDetailHeader = ({
   placeId,
@@ -11,31 +13,29 @@ const PlaceDetailHeader = ({
   toggleBookmark,
   showAlert,
 }: PlaceInfoAllData) => {
+  const { isMobile } = useViewport();
   return (
     <>
-      <h1 className='text-2xl font-bold sm:text-3xl mt-[10px] mb-[10px] sm:mb-[30px] '>
-        {placeInfo.place_name}
-      </h1>
+      <h1 className='text-2xl font-bold sm:text-3xl'>{placeInfo.place_name}</h1>
       <div className='flex'>
         {isLoggedIn ? (
           isBookmarked ? (
             <>
-              {/* <Image
-                    src='/images/icons/bookmark.svg'
-                    alt='bookmark'
-                    width={34}
-                    height={34}
-                    className='cursor-pointer mr-[10px]'
-                    onClick={toggleBookmark}
-                  /> */}
-              <FaBookmark
+              <Image
+                src='/images/icons/bookmark_select.svg'
+                alt='bookmark'
+                width={isMobile ? 24 : 34}
+                height={isMobile ? 24 : 34}
                 className='cursor-pointer mr-[10px]'
-                size='34px'
                 onClick={toggleBookmark}
               />
-              <RiKakaoTalkFill
-                className='cursor-pointer '
-                size='34px'
+
+              <Image
+                src='/images/icons/share_select.svg'
+                alt='kakao share'
+                width={isMobile ? 24 : 34}
+                height={isMobile ? 24 : 34}
+                className='cursor-pointer'
                 onClick={() =>
                   shareKakao({
                     address: placeInfo?.address,
@@ -47,22 +47,21 @@ const PlaceDetailHeader = ({
             </>
           ) : (
             <>
-              {/* <Image
-                    src='/images/icons/bookmark.svg'
-                    alt='bookmark'
-                    width={34}
-                    height={34}
-                    className='cursor-pointer mr-[10px]'
-                    onClick={toggleBookmark}
-                  /> */}
-              <FaRegBookmark
+              <Image
+                src='/images/icons/bookmark.svg'
+                alt='bookmark'
+                width={isMobile ? 24 : 34}
+                height={isMobile ? 24 : 34}
                 className='cursor-pointer mr-[10px]'
-                size='34px'
                 onClick={toggleBookmark}
               />
-              <RiKakaoTalkFill
-                className='cursor-pointer '
-                size='34px'
+
+              <Image
+                src='/images/icons/share_select.svg'
+                alt='kakao share'
+                width={isMobile ? 24 : 34}
+                height={isMobile ? 24 : 34}
+                className='cursor-pointer'
                 onClick={() =>
                   shareKakao({
                     address: placeInfo?.address,
@@ -75,22 +74,21 @@ const PlaceDetailHeader = ({
           )
         ) : (
           <>
-            {/* <Image
-                  src='/images/icons/bookmark.svg'
-                  alt='bookmark'
-                  width={34}
-                  height={34}
-                  className='cursor-pointer'
-                  onClick={showAlert}
-                /> */}
-            <FaRegBookmark
+            <Image
+              src='/images/icons/bookmark.svg'
+              alt='bookmark'
+              width={isMobile ? 24 : 34}
+              height={isMobile ? 24 : 34}
               className='cursor-pointer'
-              size='34px'
               onClick={showAlert}
             />
-            <RiKakaoTalkFill
-              className='cursor-pointer '
-              size='34px'
+
+            <Image
+              src='/images/icons/share_select.svg'
+              alt='kakao share'
+              width={isMobile ? 24 : 34}
+              height={isMobile ? 24 : 34}
+              className='cursor-pointer'
               onClick={() =>
                 shareKakao({
                   address: placeInfo?.address,

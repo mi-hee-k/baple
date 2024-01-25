@@ -1,5 +1,6 @@
 import PlaceCard from '@/components/common/PlaceCard';
 import PlaceCard2 from '@/components/common/PlaceCard2';
+import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { supabase } from '@/libs/supabase';
 import { Tables } from '@/types/supabase';
@@ -16,7 +17,6 @@ const PlacesPage = () => {
   const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const queryClient = useQueryClient();
   const pageSize = 20;
 
   useEffect(() => {
@@ -143,10 +143,10 @@ const PlacesPage = () => {
               ))}
             </div>
           </div>
-
           <div ref={ref}></div>
         </div>
       </div>
+      <TopButton />
     </MainWrapper>
   );
 };

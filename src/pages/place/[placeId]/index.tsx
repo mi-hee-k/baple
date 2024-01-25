@@ -21,7 +21,7 @@ import PaiginatedReviews from '@/components/place_detail/PaiginatedReviews';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
-import PlaceDetailHeader from '@/components/place_detail/placeDetailHeader';
+import PlaceDetailHeader from '@/components/place_detail/PlaceDetailHeader';
 import { getBookmark } from '@/apis/bookmarks';
 import { useBookmarks } from '@/hooks/useBookmarks';
 
@@ -98,7 +98,7 @@ const PlacePage = () => {
   return (
     <MainWrapper>
       <Seo title={placeInfo.place_name} />
-      <div className='flex justify-between w-full sm:hidden'>
+      <div className='flex items-center justify-between w-full mb-[20px] sm:hidden'>
         <PlaceDetailHeader
           placeId={placeId}
           placeInfo={placeInfo}
@@ -118,8 +118,6 @@ const PlacePage = () => {
                   ? imgList
                   : ['https://dummyimage.com/600x400/000/fff.png&text=baple']
               } // imgList가 없으면 빈배열
-              slidesPerView={1} // 보여줄 슬라이스 수
-              slideHeight={'700px'} // 캐러셀 높이
             />
           </div>
         )}
@@ -204,11 +202,11 @@ const PlacePage = () => {
       {/* 리뷰 */}
       <section>
         <div className='flex mt-[100px] mb-[30px] justify-between'>
-          <h2 className='text-3xl font-bold'>방문자 리뷰</h2>
+          <h2 className='text-2xl sm:text-3xl font-bold'>방문자 리뷰</h2>
           {isLoggedIn ? (
             <Button
               color='primary'
-              className=' px-8 py-2 rounded-full '
+              className='px-4 sm:px-8 py-2 rounded-full text-sm sm:text-md'
               onClick={() => router.push(`/review/write/${placeId}`)}
             >
               리뷰 작성하기

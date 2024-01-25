@@ -1,7 +1,7 @@
 import { Tables } from '@/types/supabase';
 import { Chip } from '@nextui-org/react';
-import PlaceDetailHeader from './placeDetailHeader';
 import { ShowAlertType, ToggleBookmarkType } from '@/pages/place/[placeId]';
+import PlaceDetailHeader from './PlaceDetailHeader';
 
 export interface PlaceInfoAllData {
   placeId: string;
@@ -47,7 +47,7 @@ const PlaceDetail = ({
   return (
     <section className='flex flex-col justify-between w-full h-auto sm:h-[500px] sm:w-[48%] '>
       <div>
-        <div className='justify-between w-full hidden sm:inline-flex'>
+        <div className='justify-between w-full hidden sm:inline-flex sm:mb-[20px]'>
           <PlaceDetailHeader
             placeId={placeId}
             placeInfo={placeInfo}
@@ -72,16 +72,16 @@ const PlaceDetail = ({
       </div>
       <div className='flex gap-2 flex-wrap w-full'>
         {isInfoArray.map((item, index) => (
-          <div key={index} className='w-[32%]'>
+          <div key={index} className='w-[48%] lg:w-[32%]'>
             {item ? (
               <Chip
-                className='bg-primary rounded-xl text-md sm:text-lg w-full max-w-full text-center'
+                className='bg-primary rounded-full text-md sm:text-base w-full max-w-full text-center'
                 color='primary'
               >
                 {infoDetails[index]}
               </Chip>
             ) : (
-              <Chip className='rounded-xl text-md sm:text-lg w-full max-w-full max-w text-center'>
+              <Chip className='rounded-xl text-md sm:text-base w-full max-w-full max-w text-center'>
                 {infoDetails[index]}
               </Chip>
             )}
