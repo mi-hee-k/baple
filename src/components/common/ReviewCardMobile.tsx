@@ -26,7 +26,7 @@ const ReviewCardMobile = ({ review }: Props) => {
 
   return (
     <Link className='w-full' href={`/review/${unique_review_id}`}>
-      <div className='border rounded-md w-full flex flex-col'>
+      <div className='border rounded-md p-2 w-full flex flex-col gap-2'>
         <section className='flex gap-1'>
           {images_url?.map((url) => (
             <Image
@@ -38,6 +38,14 @@ const ReviewCardMobile = ({ review }: Props) => {
               className='w-[100px] h-[100px] transition-all object-cover object-center rounded-md'
             />
           ))}
+        </section>
+        <section className='flex flex-col'>
+          <strong className={` ${displayPlaceName ? 'block' : 'hidden'}`}>
+            {place_name}
+          </strong>
+          <div className='w-full overflow-hidden whitespace-nowrap overflow-ellipsis h-[25px]  text-[15px] '>
+            {content}
+          </div>
         </section>
         <section>
           <div className='flex justify-end gap-3'>
