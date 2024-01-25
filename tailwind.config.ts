@@ -98,6 +98,7 @@ module.exports = {
     'invisible',
     'opacity-100',
     'opacity-0',
+    'h-[${textareaHeight}px]',
   ],
 };
 
