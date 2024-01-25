@@ -78,7 +78,7 @@ const Editor = ({ isEdit }: Props) => {
       showCancelButton: true,
       confirmButtonText: '등록',
       cancelButtonText: '취소',
-      confirmButtonColor: '#FFD029',
+      confirmButtonColor: '#7b4cff',
     }).then((result) => {
       if (result.isConfirmed) {
         insertPost(formData);
@@ -96,7 +96,7 @@ const Editor = ({ isEdit }: Props) => {
       showCancelButton: true,
       confirmButtonText: '수정',
       cancelButtonText: '취소',
-      confirmButtonColor: '#FFD029',
+      confirmButtonColor: '#7b4cff',
     }).then((result) => {
       if (result.isConfirmed) {
         updatePost({ boardId, editValue: formData });
