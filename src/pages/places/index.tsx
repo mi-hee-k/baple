@@ -148,8 +148,8 @@ const PlacesPage = () => {
             ))}
           </div>
         </div>
-        <div ref={ref}></div>
       </div>
+      <div ref={ref}></div>
       <TopButton />
     </MainWrapper>
   );
