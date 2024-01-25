@@ -45,9 +45,9 @@ const PlaceDetail = ({
   ];
 
   return (
-    <section className='flex flex-col justify-between w-full h-auto md:h-[500px] md:w-[48%] '>
+    <section className='flex flex-col justify-between w-full h-auto sm:h-[500px] sm:w-[48%] '>
       <div>
-        <div className='justify-between w-full hidden md:inline-flex'>
+        <div className='justify-between w-full hidden sm:inline-flex'>
           <PlaceDetailHeader
             placeId={placeId}
             placeInfo={placeInfo}
@@ -57,15 +57,15 @@ const PlaceDetail = ({
             showAlert={showAlert}
           />
         </div>
-        <div className='mb-[30px] md:mb-0'>
-          <p className='text-md md:text-xl'>주소 : {address}</p>
-          <p className='text-md md:text-xl'>
+        <div className='mb-[30px] sm:mb-0'>
+          <p className='text-md sm:text-xl'>주소 : {address}</p>
+          <p className='text-md sm:text-xl'>
             전화 : {tel === '' ? '정보없음' : tel}
           </p>
-          <p className='text-md md:text-xl'>
+          <p className='text-md sm:text-xl'>
             운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
           </p>
-          <p className='text-md md:text-xl'>
+          <p className='text-md sm:text-xl'>
             휴무일 : {holidays === 'null' ? '정보없음' : holidays}
           </p>
         </div>
@@ -75,13 +75,13 @@ const PlaceDetail = ({
           <div key={index} className='w-[32%]'>
             {item ? (
               <Chip
-                className='bg-primary rounded-xl text-md md:text-lg w-full max-w-full text-center'
+                className='bg-primary rounded-xl text-md sm:text-lg w-full max-w-full text-center'
                 color='primary'
               >
                 {infoDetails[index]}
               </Chip>
             ) : (
-              <Chip className='rounded-xl text-md md:text-lg w-full max-w-full max-w text-center'>
+              <Chip className='rounded-xl text-md sm:text-lg w-full max-w-full max-w text-center'>
                 {infoDetails[index]}
               </Chip>
             )}

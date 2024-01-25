@@ -13,7 +13,7 @@ const PlaceDetailHeader = ({
 }: PlaceInfoAllData) => {
   return (
     <>
-      <h1 className='text-2xl font-bold md:text-3xl mt-[10px] mb-[10px] md:mb-[30px] '>
+      <h1 className='text-2xl font-bold sm:text-3xl mt-[10px] mb-[10px] sm:mb-[30px] '>
         {placeInfo.place_name}
       </h1>
       <div className='flex'>

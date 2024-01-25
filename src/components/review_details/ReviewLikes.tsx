@@ -96,13 +96,13 @@ const ReviewLikes = ({ review }: Props) => {
 
   return (
     <div className='relative'>
-      <div className='absolute right-[100px] top-[20px] md:left-[-90px] z-10'>
+      <div className='absolute right-[100px] top-[20px] xl:left-[-90px] z-10'>
         {/* 좋아요 */}
-        <div className='flex md:flex-col justify-center items-center absolute md:fixed top-[-250px] md:top-[120px] w-[100px] md:w-auto h-[40px] md:h-auto p-3 rounded-full border border-gray-200 shadow-sm'>
+        <div className='flex xl:flex-col justify-center items-center absolute xl:fixed top-[-250px] xl:top-[120px] w-[100px] xl:w-auto h-[40px] xl:h-auto p-3 rounded-full border border-gray-200 shadow-sm'>
           {isLoggedIn ? (
             isLiked ? (
-              <div className='flex md:flex-col md:items-center'>
-                <div className='w-[24px] h-[24px] mr-[6px] md:mr-0 md:w-[34px] md:h-[34px] md:mb-[4px]'>
+              <div className='flex xl:flex-col xl:items-center'>
+                <div className='w-[24px] h-[24px] mr-[6px] xl:mr-0 xl:w-[34px] xl:h-[34px] xl:mb-[4px]'>
                   <Image
                     src='/images/icons/filled-heart.svg'
                     alt=''
@@ -113,13 +113,13 @@ const ReviewLikes = ({ review }: Props) => {
                   />
                 </div>
 
-                <span className='mr-[6px] md:mr-0 md:mb-[4px]'>
+                <span className='mr-[6px] xl:mr-0 xl:mb-[4px]'>
                   {likeCount?.length}
                 </span>
               </div>
             ) : (
-              <div className='flex md:flex-col md:items-center'>
-                <div className='w-[24px] h-[24px] mr-[6px] md:mr-0 md:w-[34px] md:h-[34px] md:mb-[4px]'>
+              <div className='flex xl:flex-col xl:items-center'>
+                <div className='w-[24px] h-[24px] mr-[6px] xl:mr-0 xl:w-[34px] xl:h-[34px] xl:mb-[4px]'>
                   <Image
                     src='/images/icons/empty-heart.svg'
                     alt=''
@@ -130,14 +130,14 @@ const ReviewLikes = ({ review }: Props) => {
                   />
                 </div>
 
-                <span className='mr-[6px] md:mr-0 md:mb-[4px]'>
+                <span className='mr-[6px] xl:mr-0 xl:mb-[4px]'>
                   {likeCount?.length}
                 </span>
               </div>
             )
           ) : (
-            <div className='flex md:flex-col md:items-center'>
-              <div className='w-[24px] h-[24px] mr-[6px] md:mr-0 md:w-[34px] md:h-[34px] md:mb-[4px]'>
+            <div className='flex xl:flex-col xl:items-center'>
+              <div className='w-[24px] h-[24px] mr-[6px] xl:mr-0 xl:w-[34px] xl:h-[34px] xl:mb-[4px]'>
                 <Image
                   src='/images/icons/empty-heart.svg'
                   alt=''
@@ -147,7 +147,7 @@ const ReviewLikes = ({ review }: Props) => {
                   className='cursor-pointer'
                 />
               </div>
-              <span className='mr-[6px] md:mr-0 md:mb-[4px]'>
+              <span className='mr-[6px] xl:mr-0 xl:mb-[4px]'>
                 {likeCount?.length}
               </span>
             </div>
@@ -155,7 +155,7 @@ const ReviewLikes = ({ review }: Props) => {
 
           {/* 토글버튼 */}
           <div>
-            <div className='w-[24px] h-[24px] mr-[4px] md:mr-0 md:w-[34px] md:h-[34px]'>
+            <div className='w-[24px] h-[24px] mr-[4px] xl:mr-0 xl:w-[34px] xl:h-[34px]'>
               <Image
                 src='/images/icons/share.svg'
                 alt='share button'
@@ -173,7 +173,7 @@ const ReviewLikes = ({ review }: Props) => {
               <div
                 className={`${isShown ? 'visible' : 'invisible'} opacity-${
                   isShown ? '100' : '0'
-                } absolute w-[50px] h-[50px] bg-slate-300 top-[20px] md:top-[-65px] left-[-70px] md:left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
+                } absolute w-[50px] h-[50px] bg-slate-300 top-[20px] xl:top-[-65px] left-[-70px] xl:left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
               >
                 <RiKakaoTalkFill
                   size={24}
@@ -190,7 +190,7 @@ const ReviewLikes = ({ review }: Props) => {
               <div
                 className={`${isShown ? 'visible' : 'invisible'} opacity-${
                   isShown ? '100' : '0'
-                } absolute w-[50px] h-[50px] bg-slate-300 top-[20px] md:top-[-10px] left-[-16px] md:left-[44px] rounded-full flex justify-center items-center transition-all duration-200 ease-in-out`}
+                } absolute w-[50px] h-[50px] bg-slate-300 top-[20px] xl:top-[-10px] left-[-16px] xl:left-[44px] rounded-full flex justify-center items-center transition-all duration-200 ease-in-out`}
               >
                 <FaPaperclip
                   size={24}

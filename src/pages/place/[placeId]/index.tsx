@@ -98,7 +98,7 @@ const PlacePage = () => {
   return (
     <MainWrapper>
       <Seo title={placeInfo.place_name} />
-      <div className='flex justify-between w-full md:hidden'>
+      <div className='flex justify-between w-full sm:hidden'>
         <PlaceDetailHeader
           placeId={placeId}
           placeInfo={placeInfo}
@@ -109,9 +109,9 @@ const PlacePage = () => {
         />
       </div>
       {/* 이미지 캐러셀 */}
-      <div className='flex flex-col items-center justify-start h-auto md:h-[500px] mb-[50px] mt-[10px] md:mt-[80px] md:flex-row md:justify-between'>
+      <div className='flex flex-col items-center justify-start h-auto sm:h-[500px] mb-[50px] mt-[10px] sm:mt-[80px] sm:flex-row sm:justify-between'>
         {imgList && (
-          <div className='w-full mb-[20px] md:w-[48%]'>
+          <div className='w-full mb-[20px] sm:w-[48%]'>
             <CarouselThumb
               slideData={
                 imgList.length !== 0
