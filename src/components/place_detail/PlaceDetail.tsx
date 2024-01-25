@@ -1,36 +1,26 @@
-import { getBookmark } from '@/apis/bookmarks';
-import { RootState } from '@/redux/config/configStore';
 import { Tables } from '@/types/supabase';
-import { useQuery } from '@tanstack/react-query';
-import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { Chip } from '@nextui-org/react';
-import { RiKakaoTalkFill } from 'react-icons/ri';
-import { shareKakao } from '@/utils/shareKaKao';
-import { useBookmarks } from '@/hooks/useBookmarks';
+import PlaceDetailHeader from './placeDetailHeader';
+import { ShowAlertType, ToggleBookmarkType } from '@/pages/place/[placeId]';
 
-interface PlaceInfoAllData {
+export interface PlaceInfoAllData {
   placeId: string;
   placeInfo: Tables<'places'>;
+  isBookmarked: boolean;
+  isLoggedIn: boolean;
+  toggleBookmark: ToggleBookmarkType;
+  showAlert: ShowAlertType;
 }
 
-const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
-  const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { place_name, tel, address, working_hours, holidays } = placeInfo;
-  const { insertBookmark, deleteBookmark } = useBookmarks(userId, placeId);
-
-  const { data: bookmarkState } = useQuery({
-    queryKey: ['bookmark', userId, placeId],
-    queryFn: () => getBookmark({ userId, placeId }),
-    enabled: !!userId,
-  });
-
-  useEffect(() => {
-    setIsBookmarked(bookmarkState ? bookmarkState.length > 0 : false);
-  }, [bookmarkState]);
+const PlaceDetail = ({
+  placeInfo,
+  placeId,
+  isBookmarked,
+  isLoggedIn,
+  toggleBookmark,
+  showAlert,
+}: PlaceInfoAllData) => {
+  const { tel, address, working_hours, holidays } = placeInfo;
 
   const isInfoArray = [
     placeInfo.is_audio_guide,
@@ -54,117 +44,18 @@ const PlaceDetail = ({ placeInfo, placeId }: PlaceInfoAllData) => {
     '휠체어 대여',
   ];
 
-  // 버튼 토글
-  const toggleBookmark = () => {
-    if (isBookmarked) {
-      setIsBookmarked(false);
-      deleteBookmark({ userId, placeId });
-      toastSuccess('북마크가 해제되었습니다');
-    } else {
-      setIsBookmarked(true);
-      insertBookmark({ userId, placeId });
-      toastSuccess('북마크에 추가되었습니다');
-    }
-  };
-
-  // 모달
-  const showAlert = () => {
-    toastWarn('로그인 후 이용해 주세요');
-  };
-
   return (
-    <section className='flex flex-col justify-between w-[90%] h-auto md:h-[500px] md:w-[48%]'>
+    <section className='flex flex-col justify-between w-full h-auto md:h-[500px] md:w-[48%] '>
       <div>
-        <div className='flex justify-between w-full'>
-          <h1 className='text-2xl font-bold md:text-3xl mt-[10px] mb-[10px] md:mb-[30px]'>
-            {place_name}
-          </h1>
-          <div className='flex'>
-            {isLoggedIn ? (
-              isBookmarked ? (
-                <>
-                  {/* <Image
-                    src='/images/icons/bookmark.svg'
-                    alt='bookmark'
-                    width={34}
-                    height={34}
-                    className='cursor-pointer mr-[10px]'
-                    onClick={toggleBookmark}
-                  /> */}
-                  <FaBookmark
-                    className='cursor-pointer mr-[10px]'
-                    size='34px'
-                    onClick={toggleBookmark}
-                  />
-                  <RiKakaoTalkFill
-                    className='cursor-pointer '
-                    size='34px'
-                    onClick={() =>
-                      shareKakao({
-                        address: placeInfo?.address,
-                        place_name: placeInfo?.place_name,
-                        placeId,
-                      })
-                    }
-                  />
-                </>
-              ) : (
-                <>
-                  {/* <Image
-                    src='/images/icons/bookmark.svg'
-                    alt='bookmark'
-                    width={34}
-                    height={34}
-                    className='cursor-pointer mr-[10px]'
-                    onClick={toggleBookmark}
-                  /> */}
-                  <FaRegBookmark
-                    className='cursor-pointer mr-[10px]'
-                    size='34px'
-                    onClick={toggleBookmark}
-                  />
-                  <RiKakaoTalkFill
-                    className='cursor-pointer '
-                    size='34px'
-                    onClick={() =>
-                      shareKakao({
-                        address: placeInfo?.address,
-                        place_name: placeInfo?.place_name,
-                        placeId,
-                      })
-                    }
-                  />
-                </>
-              )
-            ) : (
-              <>
-                {/* <Image
-                  src='/images/icons/bookmark.svg'
-                  alt='bookmark'
-                  width={34}
-                  height={34}
-                  className='cursor-pointer'
-                  onClick={showAlert}
-                /> */}
-                <FaRegBookmark
-                  className='cursor-pointer'
-                  size='34px'
-                  onClick={showAlert}
-                />
-                <RiKakaoTalkFill
-                  className='cursor-pointer '
-                  size='34px'
-                  onClick={() =>
-                    shareKakao({
-                      address: placeInfo?.address,
-                      place_name: placeInfo?.place_name,
-                      placeId,
-                    })
-                  }
-                />
-              </>
-            )}
-          </div>
+        <div className='justify-between w-full hidden md:inline-flex'>
+          <PlaceDetailHeader
+            placeId={placeId}
+            placeInfo={placeInfo}
+            isLoggedIn={isLoggedIn}
+            isBookmarked={isBookmarked}
+            toggleBookmark={toggleBookmark}
+            showAlert={showAlert}
+          />
         </div>
         <div className='mb-[30px] md:mb-0'>
           <p className='text-md md:text-xl'>주소 : {address}</p>
