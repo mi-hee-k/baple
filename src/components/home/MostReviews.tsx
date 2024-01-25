@@ -17,7 +17,7 @@ interface Props {
 }
 
 const MostReviews = ({ initialData }: Props) => {
-  const { isTablet } = useViewport();
+  const { isMobile } = useViewport();
   const { data: topReviewedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topReviewedPlacesList'],
@@ -41,7 +41,7 @@ const MostReviews = ({ initialData }: Props) => {
       <Swiper
         loop={true} // 슬라이드 루프
         spaceBetween={20}
-        slidesPerView={isTablet ? 2 : 4}
+        slidesPerView={isMobile ? 1 : 4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
         autoplay={true}

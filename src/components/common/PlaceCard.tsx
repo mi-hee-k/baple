@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
+import { Card, CardBody, CardFooter } from '@nextui-org/react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import type { PlacesForPlaceCard } from '@/types/types';
@@ -10,7 +11,6 @@ interface Props {
 
 const PlaceCard = ({ place }: Props) => {
   const router = useRouter();
-  // console.log('placeCardProps', place);
   const {
     bookmarks_count,
     reviews_count,
@@ -32,26 +32,26 @@ const PlaceCard = ({ place }: Props) => {
         // key={index}
         isPressable
         onPress={() => router.push(`/place/${unique_place_id}`)}
-        className='w-full h-full flex flex-col items-center rounded-3xl'
+        className='w-full h-full flex flex-col items-center rounded-3xl aspect-auto'
       >
-        <CardBody className='overflow-visible rounded-3xl flex items-center'>
+        <CardBody className='overflow-visible rounded-3xl flex items-center '>
           <Image
             // radius='lg'
-            // width='100%'
-            // height='100%'
+            width={100}
+            height={100}
             alt={place_name}
             className='w-full object-cover h-80 rounded-3xl shadow-xl'
             src={imgURL}
           />
         </CardBody>
-        <CardFooter className='flex flex-col'>
+        <CardFooter className='flex flex-col w-full'>
           <div className='flex flex-col items-start w-full'>
             <span className='text-sm'>{city}</span>
             <span className='text-base font-bold'>{place_name}</span>
           </div>
           <div className='flex gap-2 w-full justify-end'>
             <span className='flex gap-1 items-center justify-center'>
-              <img
+              <Image
                 src='/images/icons/write_select.svg'
                 width={25}
                 height={25}
@@ -61,7 +61,7 @@ const PlaceCard = ({ place }: Props) => {
               {reviews_count}
             </span>
             <span className='flex gap-2 items-center justify-center'>
-              <img
+              <Image
                 src='/images/icons/bookmark_select.svg'
                 width={20}
                 height={20}
