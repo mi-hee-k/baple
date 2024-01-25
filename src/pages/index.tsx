@@ -10,7 +10,7 @@ import Carousel from '@/components/common/Carousel';
 import { getTopBookmarkedPlaces, getTopReviewedPlaces } from '@/apis/places';
 import { PlacesForPlaceCard } from '@/types/types';
 
-const inter = Inter({ subsets: ['latin'] });
+// const inter = Inter({ subsets: ['latin'] });
 
 const imgList = [
   'https://dummyimage.com/1200x400/b8b8b8/fff&text=BAPLE',
@@ -24,19 +24,15 @@ interface Props {
 }
 
 const Home = ({ topBookmarked, topReviewed }: Props) => {
-  const { username, userId } = useSelector((state: RootState) => state.auth);
+  // const { username, userId } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
   return (
-    <>
-      {isLoaded && (
-        <div className='container'>
-          <Seo title='Home' />
-        </div>
-      )}
+    <div>
+      <Seo title='Home' />
       <section className='mb-[80px]'>
         <Carousel
           slideData={imgList} // imgList가 없으면 빈배열
@@ -50,7 +46,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
         <MostBookmarks initialData={topBookmarked} />
         <Spacer y={20} />
       </div>
-    </>
+    </div>
   );
 };
 

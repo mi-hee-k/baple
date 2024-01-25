@@ -21,12 +21,8 @@ export const useReviews = (
   const reviewDelteMutate = useMutation({
     mutationFn: deleteReview,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['reviews', placeId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['reviews', currentUserId],
-      });
+      queryClient.invalidateQueries({ queryKey: ['reviews', placeId] });
+      queryClient.invalidateQueries({ queryKey: ['reviews', currentUserId] });
     },
     onError: () => {
       toastError('문제가 발생하여 삭제하지 못했습니다');
