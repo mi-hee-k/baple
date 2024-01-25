@@ -36,16 +36,16 @@ const PlacesModal = ({
     console.log('hello');
   }, [places]);
   return (
-    <div className='absolute w-[100vw] h-[100%] '>
+    <div className='absolute flex w-[100%] h-[100%] bg-slate-400 z-10'>
       <div
-        className={` absolute flex flex-col bg-white bg-opacity-50 transition-all right-${
+        className={` absolute flex flex-col bg-white bg-opacity-50 transition-all bottom-[10px] z-10 sm:w-[80vh]  w-[90vw] h-[83vh] sm:h-[90vh] rounded-l-[20px] right-${
           isModalVisible ? '0' : '[-90%]'
-        } sm:right-${
-          isModalVisible ? '0' : '0'
-        } bottom-[10px] z-10 sm:w-[335px] w-[90vw] h-[83vh] sm:h-[90vh] rounded-l-[20px]`}
+        } sm:right-${isModalVisible ? '[-90%]' : ''}
+
+        `}
       >
         <button
-          className='flex absolute sm:w-[50px] w-[10px] h-[50px]  top-[50%] left-[-10px] sm:left-[-50px] bg-slate-500 items-center justify-center rounded-l-[20px]'
+          className='flex absolute sm:w-[50px] w-[10px] h-[50px] z-10 top-[50%] left-[-10px] sm:left-[-50px] bg-slate-500 items-center justify-center rounded-l-[20px]'
           onClick={() => setIsModalVisible(!isModalVisible)}
         >
           {isModalVisible ? '>' : '<'}

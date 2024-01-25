@@ -10,12 +10,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 import { PlacesForPlaceCard } from '@/types/types';
+import { useViewport } from '@/hooks/useViewport';
 
 interface Props {
   initialData: PlacesForPlaceCard[];
 }
 
 const MostBookmarks = ({ initialData }: Props) => {
+  const { isMobile } = useViewport();
   const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topBookmarkedPlacesList'],
@@ -28,13 +30,18 @@ const MostBookmarks = ({ initialData }: Props) => {
   }
 
   return (
-    <div className='w-[1050px] p-1'>
-      <p>가장 많이 북마크 된 장소</p>
+    <div className='w-[90%] p-1'>
+      <div className='flex flex-col gap-2'>
+        <span className='text-2xl text-primary font-bold'>
+          많은 사람들이 즐겨 찾는 장소
+        </span>
+        <span className='font-light'>많은 사람들이 즐겨 찾았어요!</span>
+      </div>
       <Spacer y={4} />
       <Swiper
         loop={true} // 슬라이드 루프
-        spaceBetween={1}
-        slidesPerView={4}
+        spaceBetween={20}
+        slidesPerView={isMobile ? 1 : 4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
         autoplay={true}
