@@ -71,21 +71,21 @@ const MyTabs = () => {
         <Tab key='liked' title='내가 좋아요한 리뷰'>
           <Card>
             <CardBody>
-              {writtenReviews?.length === 0 && (
+              {likedReviews?.length === 0 && (
                 <div className='flex justify-center w-full'>
                   좋아요한 리뷰가 없습니다. 😢
                 </div>
               )}
               {!isMobile && (
                 <div className='flex flex-col gap-1'>
-                  {writtenReviews?.map((review, idx) => (
+                  {likedReviews?.map((review, idx) => (
                     <ReviewCard2 review={review} key={idx} />
                   ))}
                 </div>
               )}
               {isMobile && (
                 <div className='flex flex-col gap-1'>
-                  {writtenReviews?.map((review, idx) => (
+                  {likedReviews?.map((review, idx) => (
                     <ReviewCardMobile review={review} key={idx} />
                   ))}
                 </div>
@@ -97,21 +97,21 @@ const MyTabs = () => {
         <Tab key='written' title='내가 작성한 리뷰'>
           <Card>
             <CardBody>
-              {likedReviews?.length === 0 && (
+              {writtenReviews?.length === 0 && (
                 <div className='flex justify-center w-full'>
                   작성한 리뷰가 없습니다. 😢
                 </div>
               )}
               {!isMobile && (
                 <div className='flex flex-col gap-1'>
-                  {likedReviews?.map((review, idx) => (
+                  {writtenReviews?.map((review, idx) => (
                     <ReviewCard2 review={review} key={idx} />
                   ))}
                 </div>
               )}
               {isMobile && (
                 <div className='flex flex-col gap-1'>
-                  {likedReviews?.map((review, idx) => (
+                  {writtenReviews?.map((review, idx) => (
                     <ReviewCardMobile review={review} key={idx} />
                   ))}
                 </div>
