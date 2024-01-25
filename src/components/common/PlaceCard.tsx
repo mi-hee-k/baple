@@ -37,8 +37,8 @@ const PlaceCard = ({ place }: Props) => {
         <CardBody className='overflow-visible rounded-3xl flex items-center '>
           <Image
             // radius='lg'
-            // width='100%'
-            // height='100%'
+            width={25}
+            height={25}
             alt={place_name}
             className='w-full object-cover h-80 rounded-3xl shadow-xl'
             src={imgURL}
