@@ -1,5 +1,6 @@
 import PlaceCard from '@/components/common/PlaceCard';
 import PlaceCard2 from '@/components/common/PlaceCard2';
+import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { supabase } from '@/libs/supabase';
 import { Tables } from '@/types/supabase';
@@ -142,10 +143,10 @@ const PlacesPage = () => {
               ))}
             </div>
           </div>
-
           <div ref={ref}></div>
         </div>
       </div>
+      <TopButton />
     </MainWrapper>
   );
 };
