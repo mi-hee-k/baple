@@ -2,6 +2,7 @@ import { ReviewsFromRPC } from '@/types/types';
 import { Pagination, Spacer } from '@nextui-org/react';
 import React from 'react';
 import ReviewCard2 from '../common/ReviewCard2';
+import ReviewCardMobile from '../common/ReviewCardMobile';
 
 interface Props {
   reviews: ReviewsFromRPC[] | undefined;
@@ -33,6 +34,10 @@ const PaiginatedReviews = ({ reviews }: Props) => {
         total={pages}
         onChange={(page) => setPage(page)}
       />
+      <Spacer y={5} />
+      {items?.map((review, idx) => (
+        <ReviewCardMobile key={idx} review={review} />
+      ))}
       <Spacer y={5} />
     </div>
   );
