@@ -5,7 +5,7 @@ import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
 import type { ReviewsFromRPC } from '@/types/types';
 import { useRouter } from 'next/router';
-import CommentIcon from 'images/icons/comment.svg';
+// import CommentIcon from 'images/icons/comment.svg';
 
 interface Props {
   review: ReviewsFromRPC;
@@ -66,7 +66,7 @@ const ReviewCard2 = ({ review }: Props) => {
             <div className='flex justify-end gap-3'>
               <span className='flex gap-1'>
                 <Image
-                  src='/images/icons/comment.svg'
+                  src='/images/icons/comment_select.svg'
                   width={20}
                   height={20}
                   alt='comment icon'
@@ -75,7 +75,7 @@ const ReviewCard2 = ({ review }: Props) => {
               </span>
               <span className='flex gap-1'>
                 <Image
-                  src='/images/icons/filled-heart.svg'
+                  src='/images/icons/heart_select.svg'
                   width={20}
                   height={20}
                   alt='likes icon'

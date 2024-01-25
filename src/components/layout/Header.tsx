@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getUserDataById } from '@/apis/users';
 import Image from 'next/image';
+import { useMobile } from '@/hooks/useMobile';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const Header = () => {
   // const [userId, setUserId] = useState('');
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);
+  const isMobile = useMobile();
+  console.log('isMobile', isMobile);
 
   useEffect(() => {
     setIsLoaded(true);
