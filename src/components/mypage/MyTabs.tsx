@@ -71,26 +71,23 @@ const MyTabs = () => {
         <Tab key='liked' title='내가 좋아요한 리뷰'>
           <Card>
             <CardBody>
-              {!isMobile && likedReviews?.length !== 0 ? (
-                <div className='flex flex-col gap-1'>
-                  {likedReviews?.map((review, idx) => (
-                    <ReviewCard2 review={review} key={idx} />
-                  ))}
-                </div>
-              ) : (
+              {writtenReviews?.length === 0 && (
                 <div className='flex justify-center w-full'>
                   좋아요한 리뷰가 없습니다. 😢
                 </div>
               )}
-              {isMobile && likedReviews?.length !== 0 ? (
+              {!isMobile && (
                 <div className='flex flex-col gap-1'>
-                  {likedReviews?.map((review, idx) => (
-                    <ReviewCardMobile review={review} key={idx} />
+                  {writtenReviews?.map((review, idx) => (
+                    <ReviewCard2 review={review} key={idx} />
                   ))}
                 </div>
-              ) : (
-                <div className='flex justify-center w-full'>
-                  좋아요한 리뷰가 없습니다. 😢
+              )}
+              {isMobile && (
+                <div className='flex flex-col gap-1'>
+                  {writtenReviews?.map((review, idx) => (
+                    <ReviewCardMobile review={review} key={idx} />
+                  ))}
                 </div>
               )}
             </CardBody>
@@ -100,15 +97,23 @@ const MyTabs = () => {
         <Tab key='written' title='내가 작성한 리뷰'>
           <Card>
             <CardBody>
-              {writtenReviews?.length !== 0 ? (
-                <div className='flex flex-col gap-1'>
-                  {writtenReviews?.map((review, idx) => (
-                    <ReviewCard2 key={idx} review={review} />
-                  ))}
-                </div>
-              ) : (
+              {likedReviews?.length === 0 && (
                 <div className='flex justify-center w-full'>
                   작성한 리뷰가 없습니다. 😢
+                </div>
+              )}
+              {!isMobile && (
+                <div className='flex flex-col gap-1'>
+                  {likedReviews?.map((review, idx) => (
+                    <ReviewCard2 review={review} key={idx} />
+                  ))}
+                </div>
+              )}
+              {isMobile && (
+                <div className='flex flex-col gap-1'>
+                  {likedReviews?.map((review, idx) => (
+                    <ReviewCardMobile review={review} key={idx} />
+                  ))}
                 </div>
               )}
             </CardBody>
