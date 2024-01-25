@@ -7,6 +7,7 @@ import { Tables } from '@/types/supabase';
 import { PlacesForSearch } from '@/types/types';
 import { Button, Input, Spacer } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -96,7 +97,8 @@ const PlacesPage = () => {
       color='primary'
       radius='full'
       size='lg'
-      variant={selected.includes(value) ? 'solid' : 'ghost'}
+      variant={selected.includes(value) ? 'solid' : 'bordered'}
+      className='w-28 md:w-full'
     >
       {label}
     </Button>
@@ -104,47 +106,50 @@ const PlacesPage = () => {
 
   return (
     <MainWrapper>
-      <div className='flex gap-6'>
+      <div className='flex justify-center my-10'>
+        <Input
+          placeholder='장소이름을 검색하세요'
+          value={searchValue}
+          onValueChange={setSearchValue}
+          className='rounded-3xl w-96'
+        />
+        <Button
+          color='primary'
+          type='submit'
+          className='h-auto'
+          onClick={handleClickSearch}
+        >
+          {/* <Image
+            src='/images/icons/search.svg'
+            width={30}
+            height={30}
+            alt='bookmark_icon'
+            className='object-cover'
+          /> */}
+          검색
+        </Button>
+      </div>
+      <div className='flex gap-6 flex-col md:flex md:flex-row'>
         {/* 태그 */}
-        <div className='flex w-[20%]'>
-          <div className='flex flex-col gap-4 w-full mt-[50px]'>
-            {checkboxButton('is_paid', '# 입장료')}
-            {checkboxButton('is_easy_door', '# 장애인용 출입문')}
-            {checkboxButton('is_wheelchair_rental', '# 휠체어 대여')}
-            {checkboxButton('is_guide_dog', '# 안내견 동반')}
-            {checkboxButton('is_braille_guide', '# 점자 가이드')}
-            {checkboxButton('is_audio_guide', '# 오디오 가이드')}
-            {checkboxButton('is_disabled_toilet', '# 장애인용 화장실')}
-            {checkboxButton('is_disabled_parking', '# 장애인용 주차장')}
+        <div className='grid grid-cols-3 place-items-center md:flex md:flex-col gap-4 '>
+          {checkboxButton('is_paid', '입장료')}
+          {checkboxButton('is_easy_door', '장애인용 출입문')}
+          {checkboxButton('is_wheelchair_rental', '휠체어 대여')}
+          {checkboxButton('is_guide_dog', '안내견 동반')}
+          {checkboxButton('is_braille_guide', '점자 가이드')}
+          {checkboxButton('is_audio_guide', '오디오 가이드')}
+          {checkboxButton('is_disabled_toilet', '장애인용 화장실')}
+          {checkboxButton('is_disabled_parking', '장애인용 주차장')}
+        </div>
+        {/* 카드 */}
+        <div className='flex justify-center'>
+          <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-3'>
+            {searchedPlaces.map((place, idx) => (
+              <PlaceCard key={idx} place={place} />
+            ))}
           </div>
         </div>
-        {/* 검색창 */}
-        <div className='w-[70%]'>
-          <div className='flex justify-center mb-4 mt-10 w-full'>
-            <Input
-              placeholder='검색어를 입력하세요'
-              value={searchValue}
-              onValueChange={setSearchValue}
-            />
-            <Button
-              color='primary'
-              type='submit'
-              className='h-[56px] ml-2'
-              onClick={handleClickSearch}
-            >
-              검색
-            </Button>
-          </div>
-          {/* 카드 */}
-          <div className='flex justify-center'>
-            <div className='grid lg:grid-cols-3 sm:grid-cols-2 gap-[3rem] w-full'>
-              {searchedPlaces.map((place, idx) => (
-                <PlaceCard key={idx} place={place} />
-              ))}
-            </div>
-          </div>
-          <div ref={ref}></div>
-        </div>
+        <div ref={ref}></div>
       </div>
       <TopButton />
     </MainWrapper>
