@@ -182,7 +182,7 @@ const ReviewWritePage = () => {
                   src={image.imageUrl}
                   alt={`Selected Image ${index}`}
                   fill
-                  style={{ objectFit: 'cover' }}
+                  className='object-cover'
                 />
                 <button
                   onClick={() => handleRemoveImage(index)}
