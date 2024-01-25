@@ -44,7 +44,6 @@ const Header = () => {
       const email = session?.user.email;
       const avatarUrl = session?.user.user_metadata.avatar_url;
       const username = session?.user.user_metadata.user_name;
-      console.log(event, session);
       if (event === 'INITIAL_SESSION' && session !== null) {
         setCurrentUser(session?.user);
         dispatch(

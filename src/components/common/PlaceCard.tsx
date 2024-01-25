@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, CardBody, CardFooter } from '@nextui-org/react';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import type { PlacesForPlaceCard } from '@/types/types';
+import Image from 'next/image';
 
 interface Props {
   place: PlacesForPlaceCard;
@@ -37,8 +37,8 @@ const PlaceCard = ({ place }: Props) => {
         <CardBody className='overflow-visible rounded-3xl flex items-center '>
           <Image
             // radius='lg'
-            width={100}
-            height={100}
+            width={25}
+            height={25}
             alt={place_name}
             className='w-full object-cover h-80 rounded-3xl shadow-xl'
             src={imgURL}
@@ -53,8 +53,8 @@ const PlaceCard = ({ place }: Props) => {
             <span className='flex gap-1 items-center justify-center'>
               <Image
                 src='/images/icons/write_select.svg'
-                width={25}
-                height={25}
+                width={20}
+                height={20}
                 alt='write_icon'
                 // className='object-cover'
               />
