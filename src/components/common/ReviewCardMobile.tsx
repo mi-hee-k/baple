@@ -2,8 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { ReviewsFromRPC } from '@/types/types';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { formatDate } from '@/utils/dateFormatter';
+import { Image } from '@nextui-org/react';
 
 interface Props {
   review: ReviewsFromRPC;
@@ -33,8 +34,8 @@ const ReviewCardMobile = ({ review }: Props) => {
               key={url}
               alt='review images'
               src={url}
-              height={100}
-              width={100}
+              height={90}
+              width={90}
               className='w-[100px] h-[100px] transition-all object-cover object-center rounded-md'
             />
           ))}
