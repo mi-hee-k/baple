@@ -98,9 +98,9 @@ const Header = () => {
       {isLoaded ? (
         <header className='py-2 font-bold sticky top-0 z-20 shadow-xl bg-white'>
           <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
-            <nav className='flex sm:flex w-full justify-between items-center'>
+            <nav className='flex md:flex w-full justify-between items-center'>
               {isLoggedIn ? (
-                <div className='block sm:hidden w-full'></div>
+                <div className='block md:hidden w-full'></div>
               ) : null}
               <div className='flex w-full justify-center '>
                 <Link href='/' className='flex justify-center'>
@@ -111,7 +111,7 @@ const Header = () => {
                     height={50}
                   />
                 </Link>
-                <div className='hidden sm:flex gap-16 items-center w-full justify-center'>
+                <div className='hidden md:flex gap-16 items-center w-full justify-center'>
                   <Link
                     href='/nearby'
                     className={` ${
@@ -146,7 +146,7 @@ const Header = () => {
               </div>
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
-                  <span className='hidden sm:block'>
+                  <span className='hidden md:block'>
                     반가워요 {user?.user_name}님!
                   </span>
                   <Dropdown>
@@ -171,7 +171,7 @@ const Header = () => {
                   </Dropdown>
                 </div>
               ) : (
-                <div className='hidden sm:flex gap-4 w-full justify-end'>
+                <div className='hidden md:flex gap-4 w-full justify-end'>
                   <Link href='/login'>
                     <Button variant='solid' color='primary'>
                       로그인
