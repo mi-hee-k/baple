@@ -32,15 +32,15 @@ const PlaceCard = ({ place }: Props) => {
         // key={index}
         isPressable
         onPress={() => router.push(`/place/${unique_place_id}`)}
-        className='w-[304px] h-[390px] flex flex-col items-center rounded-3xl'
+        className='w-full h-full flex flex-col items-center rounded-3xl'
       >
         <CardBody className='overflow-visible rounded-3xl flex items-center'>
           <Image
-            radius='lg'
-            width='100%'
-            height={20}
+            // radius='lg'
+            // width='100%'
+            // height='100%'
             alt={place_name}
-            className='w-[266px] object-cover h-[266px] rounded-3xl shadow-xl'
+            className='w-full object-cover h-80 rounded-3xl shadow-xl'
             src={imgURL}
           />
         </CardBody>

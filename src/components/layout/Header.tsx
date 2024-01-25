@@ -16,7 +16,6 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getUserDataById } from '@/apis/users';
 import Image from 'next/image';
-import { useMobile } from '@/hooks/useMobile';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -25,8 +24,6 @@ const Header = () => {
   // const [userId, setUserId] = useState('');
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);
-  const isMobile = useMobile();
-  console.log('isMobile', isMobile);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -105,7 +102,7 @@ const Header = () => {
               {isLoggedIn ? (
                 <div className='block md:hidden w-full'></div>
               ) : null}
-              <div className='flex w-full justify-center gap-2'>
+              <div className='flex w-full justify-center '>
                 <Link href='/' className='flex justify-center'>
                   <Image
                     src='/images/icons/basic-logo.svg'
@@ -114,7 +111,7 @@ const Header = () => {
                     height={50}
                   />
                 </Link>
-                <div className='hidden md:flex gap-10 items-center w-full justify-center'>
+                <div className='hidden md:flex gap-16 items-center w-full justify-center'>
                   <Link
                     href='/nearby'
                     className={` ${

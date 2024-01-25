@@ -10,12 +10,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 import { PlacesForPlaceCard } from '@/types/types';
+import { useMobile } from '@/hooks/useMobile';
 
 interface Props {
   initialData: PlacesForPlaceCard[];
 }
 
 const MostReviews = ({ initialData }: Props) => {
+  const isMobile = useMobile();
   const { data: topReviewedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topReviewedPlacesList'],
@@ -39,7 +41,7 @@ const MostReviews = ({ initialData }: Props) => {
       <Swiper
         loop={true} // 슬라이드 루프
         spaceBetween={20}
-        slidesPerView={4}
+        slidesPerView={isMobile ? 2 : 4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
         autoplay={true}
