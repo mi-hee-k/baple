@@ -96,9 +96,8 @@ const PlacesPage = () => {
       onClick={() => handleCheckboxClick(value)}
       color='primary'
       radius='full'
-      size='lg'
       variant={selected.includes(value) ? 'solid' : 'bordered'}
-      className='w-28 md:w-full'
+      className='w-full md:w-36'
     >
       {label}
     </Button>
@@ -106,32 +105,32 @@ const PlacesPage = () => {
 
   return (
     <MainWrapper>
-      <div className='flex justify-center my-10'>
-        <Input
+      <div className='flex justify-center w-full sm:w-[60%] m-auto mt-10 mb-4 sm:mb-8 bg-primary p-[2px] rounded-full overflow-hidden'>
+        {/* 검색창 */}
+        <input
           placeholder='장소이름을 검색하세요'
           value={searchValue}
-          onValueChange={setSearchValue}
-          className='rounded-3xl w-96'
+          onChange={(e) => setSearchValue(e.target.value)}
+          className='rounded-full w-[80%] sm:w-full p-2 px-4 placeholder:text-md focus:outline-none'
         />
         <Button
           color='primary'
           type='submit'
-          className='h-auto'
+          className='h-auto w-[20%] rounded-r-full'
           onClick={handleClickSearch}
         >
-          {/* <Image
+          <Image
             src='/images/icons/search.svg'
-            width={30}
-            height={30}
+            width={24}
+            height={24}
             alt='bookmark_icon'
             className='object-cover'
-          /> */}
-          검색
+          />
         </Button>
       </div>
       <div className='flex gap-6 flex-col md:flex md:flex-row'>
         {/* 태그 */}
-        <div className='grid grid-cols-3 place-items-center md:flex md:flex-col gap-4 '>
+        <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4 '>
           {checkboxButton('is_paid', '입장료')}
           {checkboxButton('is_easy_door', '장애인용 출입문')}
           {checkboxButton('is_wheelchair_rental', '휠체어 대여')}
