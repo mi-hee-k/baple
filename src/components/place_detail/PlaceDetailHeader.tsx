@@ -1,5 +1,3 @@
-import { ShowAlertType, ToggleBookmarkType } from '@/pages/place/[placeId]';
-import { Tables } from '@/types/supabase';
 import { shareKakao } from '@/utils/shareKaKao';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';

@@ -80,6 +80,10 @@ const ReviewLikes = ({ review }: Props) => {
   // 토글 공유 버튼
   const toggleShareBtn = () => {
     setIsShown((prev) => !prev);
+    if (!isShown) {
+      const time = setTimeout((isShown) => setIsShown(false), 5000);
+      return () => clearTimeout(time);
+    }
   };
 
   // 클립보드 url 복사
