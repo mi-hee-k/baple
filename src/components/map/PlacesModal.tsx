@@ -36,15 +36,21 @@ const PlacesModal = ({
     console.log('hello');
   }, [places]);
   return (
-    <div>
-      <div className='absolute flex flex-col bg-white bg-opacity-50 right-0 bottom-[10px] z-10 w-[335px] h-[90vh] rounded-l-[20px]'>
+    <div className='absolute w-[100vw] h-[100%] '>
+      <div
+        className={` absolute flex flex-col bg-white bg-opacity-50 transition-all right-${
+          isModalVisible ? '0' : '[-90%]'
+        } sm:right-${
+          isModalVisible ? '0' : '0'
+        } bottom-[10px] z-10 sm:w-[335px] w-[90vw] h-[83vh] sm:h-[90vh] rounded-l-[20px]`}
+      >
         <button
-          className='flex absolute w-[50px] h-[50px] top-[50%] left-[-50px] bg-slate-500 items-center justify-center rounded-l-[20px]'
+          className='flex absolute sm:w-[50px] w-[10px] h-[50px]  top-[50%] left-[-10px] sm:left-[-50px] bg-slate-500 items-center justify-center rounded-l-[20px]'
           onClick={() => setIsModalVisible(!isModalVisible)}
         >
-          {isModalVisible ? '<' : '>'}
+          {isModalVisible ? '>' : '<'}
         </button>
-        <div className='h-[50px] w-[335px] flex justify-center items-center text-[18px]  bg-white  rounded-l-[20px] shadow-xl'>
+        <div className='h-[50px] w-full flex justify-center items-center text-[18px]  bg-white  rounded-l-[20px] shadow-xl'>
           <p className='font-bold text-[20px]'>
             {cityName}&nbsp;
             {regionName}
@@ -56,7 +62,7 @@ const PlacesModal = ({
         {places?.slice(offset, offset + limit).map((place) => {
           return (
             <Link key={place.id} href={`/place/${place?.id}`}>
-              <div className='w-[320px] bg-white flex h-[100px] m-2 rounded-[80px] p-4 shadow-xl '>
+              <div className='w-full  bg-white flex h-[5rem] md:h-[6rem] m-2 rounded-[80px] p-4 shadow-xl '>
                 <MapPlaceCard place={place} />
               </div>
             </Link>

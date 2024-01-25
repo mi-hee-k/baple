@@ -149,11 +149,10 @@ const NearByPage = () => {
 
   return (
     <div
-      style={{ position: 'relative', display: 'flex' }}
-      // className='overflow-hidden'
+      // style={{ position: 'relative', display: 'flex' }}
+      className='overflow-hidden flex relative'
     >
-      <Seo title='내 근처 장소' />
-
+      <Seo title='내 주변 장소' />
       {!mylocation.isLoading ? (
         <Map // 지도를 표시할 Container
           center={location.center}
@@ -162,6 +161,7 @@ const NearByPage = () => {
             width: '100%',
             height: '93vh',
           }}
+          // className='relative flex'
           level={8} // 지도의 확대 레벨
           maxLevel={8}
           draggable={true}
@@ -195,15 +195,13 @@ const NearByPage = () => {
           {place?.map((place) => (
             <EventMarkerContainer key={place.id} place={place} />
           ))}
-          {!isModalVisible ? (
-            place?.length !== 0 ? (
-              <PlacesModal
-                cityName={cityName}
-                regionName={regionName}
-                isModalVisible={isModalVisible}
-                setIsModalVisible={setIsModalVisible}
-              />
-            ) : null
+          {place?.length !== 0 ? (
+            <PlacesModal
+              cityName={cityName}
+              regionName={regionName}
+              isModalVisible={isModalVisible}
+              setIsModalVisible={setIsModalVisible}
+            />
           ) : null}
 
           <MylocationButton mylocation={mylocation} setLocation={setLocation} />

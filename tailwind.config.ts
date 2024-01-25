@@ -98,6 +98,9 @@ module.exports = {
     'invisible',
     'opacity-100',
     'opacity-0',
+    'right-[35px]',
+    'right-[-90%]',
+    'right-0',
   ],
 };
 
