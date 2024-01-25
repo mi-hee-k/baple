@@ -24,6 +24,9 @@ export const useBookmarks = (userId: string, placeId: string) => {
       queryClient.invalidateQueries({
         queryKey: ['bookmark', userId, placeId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['topBookmarkedPlacesList'],
+      });
     },
   });
 
@@ -46,6 +49,9 @@ export const useBookmarks = (userId: string, placeId: string) => {
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ['bookmark', userId, placeId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['topBookmarkedPlacesList'],
       });
     },
   });

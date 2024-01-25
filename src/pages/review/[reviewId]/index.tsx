@@ -14,6 +14,7 @@ import ReviewUpperSection from '@/components/review_details/ReviewUpperSection';
 import { getAllComments } from '@/apis/comments';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
+import { useViewport } from '@/hooks/useViewport';
 
 const ReviewPage = () => {
   const router = useRouter();
@@ -23,6 +24,8 @@ const ReviewPage = () => {
   const { userId: currentUserId } = useSelector(
     (state: RootState) => state.auth,
   );
+
+  const { isTablet } = useViewport();
 
   const { data: comments } = useQuery({
     queryKey: ['comments', reviewId],
@@ -69,7 +72,7 @@ const ReviewPage = () => {
             <Carousel
               slideData={imgUrl}
               slideHeight={'300px'}
-              slidesPerView={4}
+              slidesPerView={isTablet ? 2 : 3}
             />
           )}
           <Spacer y={10} />
