@@ -14,32 +14,23 @@ interface Props {
 const ReviewBody = ({ review, isEditing, setIsEditing }: Props) => {
   const { id, created_at, content, user_id, place_id } = review;
   const [editValue, setEditValue] = useState(content);
-
   const { updateReview } = useReviews(setIsEditing, place_id, undefined, id);
-
   const editDoneButtonHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-
     updateReview({ id, editValue });
-
     toastSuccess('수정 완료되었습니다');
   };
 
   return (
     <>
       {!isEditing && (
-        <textarea
-          className='w-full min-h-[200px] text-black bg-white resize-none'
-          value={content}
-          disabled
-          draggable={false}
-        />
+        <div className='break-all whitespace-pre-wrap'>{content}</div>
       )}
       {isEditing && (
         <form onSubmit={editDoneButtonHandler}>
           <div className='flex flex-col items-center'>
             <textarea
-              className='w-full h-[300px] text-black resize-none'
+              className='w-full h-[300px] text-black resize-none p-1'
               onChange={(e) => {
                 console.log(e.target.value);
                 setEditValue(e.target.value);
