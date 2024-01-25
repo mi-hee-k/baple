@@ -36,11 +36,11 @@ const PlacesModal = ({
     console.log('hello');
   }, [places]);
   return (
-    <div className='absolute flex w-[100%] h-[100%] bg-slate-400 z-10'>
+    <div className={`absolute  w-[50%] sm:w-[50%] h-[100%] bg-slate-400 z-10`}>
       <div
-        className={` absolute flex flex-col bg-white bg-opacity-50 transition-all bottom-[10px] z-10 sm:w-[80vh]  w-[90vw] h-[83vh] sm:h-[90vh] rounded-l-[20px] right-${
-          isModalVisible ? '0' : '[-90%]'
-        } sm:right-${isModalVisible ? '[-90%]' : ''}
+        className={` absolute flex flex-col bg-white bg-opacity-50 transition-all bottom-[10px] z-10 sm:w-[20rem]  w-[90vw] h-[83vh] sm:h-[90vh] rounded-l-[20px] right-${
+          isModalVisible ? '0' : '[-20rem]'
+        } 
 
         `}
       >
