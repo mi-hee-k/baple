@@ -28,7 +28,7 @@ const CommentCard = ({ comment }: Props) => {
       showCancelButton: true,
       confirmButtonText: '삭제',
       cancelButtonText: '취소',
-      confirmButtonColor: '#FFD029',
+      confirmButtonColor: '#7b4cff',
     }).then((result) => {
       if (result.isConfirmed) {
         deleteComment(commentId);
