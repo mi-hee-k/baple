@@ -59,19 +59,27 @@ const ReviewUpperSection = ({
       <div className='flex justify-between items-center gap-4 py-5'>
         <div className='flex  items-center gap-4'>
           <Avatar
-            className='w-[88px] h-[88px]'
+            className='sm:w-[88px] sm:h-[88px] w-[45px] h-[45px]'
             showFallback
             src={review.users.avatar_url || undefined}
           />
-          <p className='text-[25px]'>{review.users.user_name}</p>
+          <p className='sm:text-[25px] text-[18px]'>{review.users.user_name}</p>
         </div>
-        <div className={`flex gap-5 ${showDelEditBtn ? '' : 'hidden'}`}>
-          <Button size='sm' color='primary' onClick={reviewDelete}>
+        <div
+          className={`flex sm:gap-5 gap-2 ${showDelEditBtn ? '' : 'hidden'}`}
+        >
+          <Button
+            size='sm'
+            color='primary'
+            className='min-w-[50px] sm:min-w-[68px]'
+            onClick={reviewDelete}
+          >
             삭제
           </Button>
           <Button
             size='sm'
             color='primary'
+            className='min-w-[50px] sm:min-w-[68px]'
             onClick={() => {
               setIsEditing((prev) => !prev);
             }}
