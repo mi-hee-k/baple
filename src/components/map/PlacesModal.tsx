@@ -38,9 +38,7 @@ const PlacesModal = ({
       <div
         className={` absolute flex flex-col bg-white bg-opacity-50 transition-all bottom-[10px] z-10 sm:w-[20rem] w-[20rem]  h-[83vh] sm:h-[90vh] rounded-l-[20px] right-${
           isModalVisible ? '0' : '[-20rem]'
-        } 
-
-        `}
+        }`}
       >
         <button
           className='flex absolute sm:w-[50px] w-[20px] h-[50px] z-10 top-[50%] left-[-20px] sm:left-[-50px] bg-primary text-white sm:text-2xl text-sm font-black items-center justify-center rounded-l-[20px]'
@@ -48,8 +46,8 @@ const PlacesModal = ({
         >
           {isModalVisible ? '>' : '<'}
         </button>
-        <div className='h-[50px] w-full flex justify-center items-center text-[18px]  bg-white  rounded-l-[20px] shadow-xl'>
-          <p className='font-bold text-[20px]'>
+        <div className='h-[50px] w-full flex justify-center items-center text-[15px]  bg-white  rounded-l-[20px] shadow-xl'>
+          <p className='font-bold text-[18px]'>
             {cityName}&nbsp;
             {regionName}
           </p>
@@ -60,7 +58,7 @@ const PlacesModal = ({
         {places?.slice(offset, offset + limit).map((place) => {
           return (
             <Link key={place.id} href={`/place/${place?.id}`}>
-              <div className='w-full  bg-white flex h-[5rem] md:h-[6rem] m-2 rounded-[80px] p-4 shadow-xl '>
+              <div className='w-full  bg-white flex h-[4.5rem] sm:h-[6rem] sm:m-2 m-1 rounded-[80px] p-4 shadow-xl '>
                 <MapPlaceCard place={place} />
               </div>
             </Link>
