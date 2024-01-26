@@ -29,7 +29,6 @@ const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
           onClick={(marker) => {
             map.panTo(marker.getPosition());
             setIsVisible(true);
-            console.log(isVisible);
           }}
           image={{
             src: '/images/icons/marker.svg', // 마커이미지의 주소입니다

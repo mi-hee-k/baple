@@ -17,7 +17,6 @@ const PlacesModal = ({
   isModalVisible: boolean;
 }) => {
   const places = useSelector((state: RootState) => state.placesData);
-  console.log(places);
 
   // 현재 페이지
   const [page, setPage] = useState(1);
@@ -33,7 +32,6 @@ const PlacesModal = ({
   useEffect(() => {
     // 전체데이터가 변할 때마다 게시물 수 업데이트
     setPage(1);
-    console.log('hello');
   }, [places]);
   return (
     <div className={`absolute  w-[100%] h-[100%]`}>
@@ -45,7 +43,7 @@ const PlacesModal = ({
         `}
       >
         <button
-          className='flex absolute sm:w-[50px] w-[10px] h-[50px] z-10 top-[50%] left-[-10px] sm:left-[-50px] bg-slate-500 items-center justify-center rounded-l-[20px]'
+          className='flex absolute sm:w-[50px] w-[20px] h-[50px] z-10 top-[50%] left-[-20px] sm:left-[-50px] bg-primary text-white sm:text-2xl text-sm font-black items-center justify-center rounded-l-[20px]'
           onClick={() => setIsModalVisible(!isModalVisible)}
         >
           {isModalVisible ? '>' : '<'}
