@@ -71,8 +71,7 @@ module.exports = {
     }),
   ],
   safelist: [
-    'h-[200px]',
-    'h-[300px]',
+    'h-[400px]',
     'visible',
     'invisible',
     'opacity-100',
