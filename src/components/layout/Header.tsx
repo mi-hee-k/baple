@@ -108,7 +108,7 @@ const Header = () => {
                     src='/images/icons/basic-logo.svg'
                     alt='main logo'
                     width={100}
-                    height={50}
+                    height={100}
                   />
                 </Link>
                 <div className='hidden md:flex gap-16 items-center w-full justify-center '>

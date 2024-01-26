@@ -11,6 +11,7 @@ import { getMyBookmarkedPlaces } from '@/apis/places';
 import PlaceCard from '../common/PlaceCard';
 import ReviewCardMobile from '../common/ReviewCardMobile';
 import { useViewport } from '@/hooks/useViewport';
+import PlaceCard3 from '../common/PlaceCard3';
 
 const MyTabs = () => {
   const { userId } = useSelector((state: RootState) => state.auth);
