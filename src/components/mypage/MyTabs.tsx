@@ -51,7 +51,7 @@ const MyTabs = () => {
           <Card>
             <CardBody>
               {bookmarkedPlaces?.length !== 0 ? (
-                <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-12'>
+                <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 gap-12'>
                   {bookmarkedPlaces?.map((place, idx) => (
                     <PlaceCard key={idx} place={place} />
                   ))}
