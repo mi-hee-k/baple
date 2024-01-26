@@ -15,7 +15,7 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import { useEffect, useState } from 'react';
-import { Button, Divider } from '@nextui-org/react';
+import { Button, Divider, Spacer } from '@nextui-org/react';
 import CarouselThumb from '@/components/common/Carousel_Thumb';
 import PaiginatedReviews from '@/components/place_detail/PaiginatedReviews';
 import { useSelector } from 'react-redux';
@@ -254,6 +254,7 @@ const PlacePage = () => {
             />
           )}
         </div>
+        <Spacer y={10} />
       </section>
     </MainWrapper>
   );
