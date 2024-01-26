@@ -4,16 +4,16 @@ import { Switch } from '@nextui-org/react';
 
 const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
+
   useEffect(() => {
     setMounted(true);
   }, []);
   const themeToggleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.checked);
     if (e.target.checked) {
       setTheme('baple');
     } else {
-      setTheme('soviet');
+      setTheme('color_blind');
     }
   };
   if (!mounted) return null;

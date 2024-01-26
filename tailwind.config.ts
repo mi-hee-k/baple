@@ -67,14 +67,14 @@ module.exports = {
             },
           },
         },
-        soviet: {
+        color_blind: {
           extend: 'dark',
 
           colors: {
             background: 'black',
             foreground: 'white',
             primary: {
-              DEFAULT: 'red',
+              DEFAULT: '#66b6ff',
               foreground: 'white',
             },
 
