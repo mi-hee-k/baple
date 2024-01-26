@@ -71,7 +71,7 @@ const ReviewUpperSection = ({
           <Button
             size='sm'
             color='primary'
-            className='min-w-[50px] md:min-w-[68px]'
+            className='min-w-[50px] sm:min-w-[68px]'
             onClick={reviewDelete}
           >
             삭제
@@ -79,7 +79,7 @@ const ReviewUpperSection = ({
           <Button
             size='sm'
             color='primary'
-            className='min-w-[50px] md:min-w-[68px]'
+            className='min-w-[50px] sm:min-w-[68px]'
             onClick={() => {
               setIsEditing((prev) => !prev);
             }}
