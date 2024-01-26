@@ -49,7 +49,7 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
         <strong className='ml-2 text-lg'>댓글</strong>
         <span className='px-[10px] flex items-center'>
           <Image
-            src='/images/icons/comment.svg'
+            src='/images/icons/comment_select.svg'
             width={20}
             height={20}
             alt='comment icon'
