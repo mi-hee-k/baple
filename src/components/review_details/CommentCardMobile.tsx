@@ -5,6 +5,7 @@ import { useComments } from '@/hooks/useComments';
 import { RootState } from '@/redux/config/configStore';
 import { useSelector } from 'react-redux';
 import { Avatar, Input } from '@nextui-org/react';
+import { formatDate } from '@/utils/dateFormatter';
 
 interface Props {
   comment: CommentsWithUser;
@@ -37,16 +38,21 @@ const CommentCardMobile = ({ comment }: Props) => {
 
   return (
     <div className='flex flex-col gap-y-2 border-b-1 py-2 border-t-1'>
-      <section className='flex gap-x-2 items-center'>
-        <Avatar
-          src={comment.users?.avatar_url}
-          showFallback
-          className='h-100px h-[30px] w-[30px]'
-          radius='full'
-          // size='lg'
-        />
+      <section className='flex gap-x-2 justify-between items-center'>
+        <div className='flex gap-x-2 items-center'>
+          <Avatar
+            src={comment.users?.avatar_url}
+            showFallback
+            className='h-100px h-[30px] w-[30px]'
+            radius='full'
+            // size='lg'
+          />
+          <strong>{comment.users?.user_name}</strong>
+        </div>
 
-        <strong> {comment.users?.user_name}</strong>
+        <span className='text-[12px] text-gray-500'>
+          {formatDate(comment.created_at)}
+        </span>
       </section>
       <section>
         {isEditing ? (
@@ -64,7 +70,7 @@ const CommentCardMobile = ({ comment }: Props) => {
           {isEditing ? (
             <div className='flex gap-3 mr-6'>
               <button
-                className='border rounded w-12 border-primary text-primary'
+                className='border rounded w-10 h-6 border-primary text-[12px] text-primary'
                 onClick={() => {
                   updateComment({ commentId: comment.id, newContent });
                   setIsEditing(false);
@@ -73,7 +79,7 @@ const CommentCardMobile = ({ comment }: Props) => {
                 저장
               </button>
               <button
-                className='border rounded w-12 border-primary text-primary'
+                className='border rounded w-10 h-6 border-primary text-[12px] text-primary'
                 onClick={() => setIsEditing(false)}
               >
                 취소
@@ -82,13 +88,13 @@ const CommentCardMobile = ({ comment }: Props) => {
           ) : (
             <div className='flex gap-3 mr-6'>
               <button
-                className='border rounded w-12 border-primary text-primary'
+                className='border rounded w-10 h-6 border-primary text-[12px] text-primary'
                 onClick={() => setIsEditing(true)}
               >
                 수정
               </button>
               <button
-                className={`border rounded w-12 border-primary text-primary`}
+                className='border rounded w-10 h-6 border-primary text-[12px] text-primary'
                 onClick={deleteBtnHandler.bind(null, comment.id)}
               >
                 삭제

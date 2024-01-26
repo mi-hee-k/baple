@@ -3,9 +3,10 @@ import { Avatar, Spacer } from '@nextui-org/react';
 import Link from 'next/link';
 import { formatDate } from '@/utils/dateFormatter';
 import Image from 'next/image';
-import type { ReviewsFromRPC } from '@/types/types';
 import { useRouter } from 'next/router';
 import { useViewport } from '@/hooks/useViewport';
+
+import type { ReviewsFromRPC } from '@/types/types';
 
 interface Props {
   review: ReviewsFromRPC;
