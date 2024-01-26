@@ -206,7 +206,12 @@ const NearByPage = () => {
         </Map>
       ) : (
         <div className='w-[100%] h-[90vh] flex items-center justify-center'>
-          <Spinner label='로딩중!' color='primary' />
+          <Spinner
+            label='로딩중!'
+            color='primary'
+            size='lg'
+            labelColor='primary'
+          />
         </div>
       )}
     </div>
