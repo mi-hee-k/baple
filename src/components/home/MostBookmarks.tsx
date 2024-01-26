@@ -17,7 +17,7 @@ interface Props {
 }
 
 const MostBookmarks = ({ initialData }: Props) => {
-  const { isMobile } = useViewport();
+  const { isMobile, isTablet } = useViewport();
   const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topBookmarkedPlacesList'],
@@ -30,7 +30,7 @@ const MostBookmarks = ({ initialData }: Props) => {
   }
 
   return (
-    <div className='w-[90%] p-1'>
+    <div className='w-full'>
       <div className='flex flex-col gap-2'>
         <span className='text-2xl text-primary font-bold'>
           많은 사람들이 즐겨 찾는 장소
@@ -40,8 +40,8 @@ const MostBookmarks = ({ initialData }: Props) => {
       <Spacer y={4} />
       <Swiper
         loop={true} // 슬라이드 루프
-        spaceBetween={100}
-        slidesPerView={isMobile ? 1 : 4}
+        spaceBetween={5}
+        slidesPerView={isMobile ? 1 : isTablet ? 2 : 4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
         autoplay={true}
