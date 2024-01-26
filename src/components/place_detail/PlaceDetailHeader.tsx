@@ -79,7 +79,7 @@ const PlaceDetailHeader = ({
               alt='bookmark'
               width={isMobile ? 24 : 34}
               height={isMobile ? 24 : 34}
-              className='cursor-pointer'
+              className='cursor-pointer mr-[10px]'
               onClick={showAlert}
             />
 

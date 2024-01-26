@@ -214,7 +214,7 @@ const PlacePage = () => {
           ) : (
             <Button
               color='primary'
-              className='px-8 py-2 rounded-full'
+              className='px-8 py-2 rounded-full text-sm sm:text-md'
               onClick={() => toastWarn('로그인 후 이용해주세요')}
             >
               리뷰 작성하기
