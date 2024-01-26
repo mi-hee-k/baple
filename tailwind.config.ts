@@ -76,7 +76,9 @@ module.exports = {
     'invisible',
     'opacity-100',
     'opacity-0',
-    'h-[${textareaHeight}px]',
+    'right-[-20rem]',
+    'right-[20rem]',
+    'right-0',
   ],
 };
 
