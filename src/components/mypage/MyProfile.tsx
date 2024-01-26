@@ -74,10 +74,10 @@ const MyProfile = () => {
   const previewImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFile = e.target.files[0];
-      if (selectedFile.size > 1024 * 1024) {
+      if (selectedFile?.size > 1024 * 1024) {
         return toastWarn('최대 1MB까지 업로드 가능합니다.');
       }
-      const imgUrl = URL.createObjectURL(selectedFile);
+      const imgUrl = URL?.createObjectURL(selectedFile);
       setNewAvatar(selectedFile);
       setImagePreview(imgUrl);
       setIsCheckedAvatar(true);

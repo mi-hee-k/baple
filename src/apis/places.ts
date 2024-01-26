@@ -1,5 +1,5 @@
 import { supabase } from '@/libs/supabase';
-import { PlacesForPlaceCard } from '@/types/types';
+import { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
 import { QueryFunction } from '@tanstack/react-query';
 
 export const getPlaceInfo = async (id: string) => {
@@ -81,7 +81,7 @@ export const getMyBookmarkedPlaces = async (userId: string) => {
     throw error;
   }
 
-  return data as PlacesForPlaceCard[];
+  return data as PlacesForSearch[];
 };
 
 export const getTopReviewedPlaces = async () => {
