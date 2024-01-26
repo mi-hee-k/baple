@@ -52,7 +52,7 @@ const BoardPage = () => {
         <h2 className='text-2xl sm:text-3xl font-bold'>게시판</h2>
       </header>
 
-      <Divider className='bg-primary h-0.5 mb-[18px]' />
+      <Divider className='h-0.5 mb-[18px]' />
       <table className='w-[96%] m-auto h-auto'>
         <thead>
           <tr className='text-lg sm:text-xl'>
@@ -106,7 +106,7 @@ const BoardPage = () => {
         />
       </div>
       <Spacer y={8} />
-      <Divider className='bg-primary h-0.5 mb-[18px]' />
+      <Divider className='h-0.5 mb-[18px]' />
       <div className='text-right mb-6 sm:mb-0'>
         {userInfo.userId ? (
           <Button

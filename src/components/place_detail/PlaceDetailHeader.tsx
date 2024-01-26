@@ -16,7 +16,7 @@ const PlaceDetailHeader = ({
   const { isMobile } = useViewport();
   return (
     <>
-      <h1 className='text-2xl font-bold sm:text-3xl'>{placeInfo.place_name}</h1>
+      <h1 className='text-2xl font-bold md:text-3xl'>{placeInfo.place_name}</h1>
       <div className='flex'>
         {isLoggedIn ? (
           isBookmarked ? (

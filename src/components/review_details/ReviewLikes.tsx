@@ -5,8 +5,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
-import { FaShareAlt } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { FaPaperclip } from 'react-icons/fa';
 import { Tables } from '@/types/supabase';

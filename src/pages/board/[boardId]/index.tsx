@@ -53,7 +53,7 @@ const BoardPostPage = () => {
         </span>
       </header>
 
-      <Divider className='bg-primary h-0.5' />
+      <Divider className='h-0.5' />
 
       <Spacer y={8} />
       <div className='flex justify-between px-4'>
@@ -77,7 +77,7 @@ const BoardPostPage = () => {
         <p className='break-all whitespace-pre-wrap'>{post.content}</p>
       </div>
       <Spacer y={5} />
-      <Divider className='bg-primary h-0.5' />
+      <Divider className='h-0.5' />
       <Spacer y={5} />
       {userInfo.userId === post.user_id ? (
         <div className='flex justify-end gap-5 mb-6 sm:md-0'>
