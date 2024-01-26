@@ -9,10 +9,10 @@ import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 import { useViewport } from '@/hooks/useViewport';
 
-import type { PlacesForPlaceCard } from '@/types/types';
+import type { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
 
 interface Props {
-  initialData: PlacesForPlaceCard[];
+  initialData: PlacesForSearch[];
 }
 
 const MostBookmarks = ({ initialData }: Props) => {

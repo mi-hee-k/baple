@@ -120,7 +120,7 @@ const PlacesPage = () => {
           onClick={handleClickSearch}
         >
           <Image
-            src='/images/icons/search.svg'
+            src='/images/icons/search_white.svg'
             width={24}
             height={24}
             alt='search_icon'
