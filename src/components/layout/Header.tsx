@@ -162,9 +162,14 @@ const Header = () => {
                     <DropdownMenu aria-label='Static Actions'>
                       <DropdownItem
                         key='mypage'
-                        href={`/user/${currentUser.id}`}
+                        // href={`/user/${currentUser.id}`}
                       >
-                        마이페이지
+                        <Link
+                          className='block'
+                          href={`/user/${currentUser.id}`}
+                        >
+                          마이페이지
+                        </Link>
                       </DropdownItem>
                       <DropdownItem key='logout' onClick={logOutHandler}>
                         로그아웃
