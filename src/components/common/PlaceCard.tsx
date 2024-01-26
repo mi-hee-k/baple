@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 import { useRouter } from 'next/router';
-import type { PlacesForPlaceCard } from '@/types/types';
+import type { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
 import NextImage from 'next/image'; // 모듈명 변경
 
 interface Props {
-  place: PlacesForPlaceCard;
+  place: PlacesForSearch;
 }
 
 const PlaceCard = ({ place }: Props) => {
@@ -17,6 +17,8 @@ const PlaceCard = ({ place }: Props) => {
     image_url,
     place_name,
     unique_place_id,
+    is_audio_guide,
+    is_braille_guide,
   } = place;
 
   const imgURL =
