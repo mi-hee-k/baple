@@ -71,11 +71,11 @@ const PlaceDetail = ({
           </p>
         </div>
       </div>
-      <div className='flex gap-2  flex-wrap w-full'>
+      <div className='flex gap-2 flex-wrap w-full'>
         {isInfoArray.map((item, index) => (
-          <div key={index} className='w-full lg:w-[32%]'>
+          <div key={index} className='w-[48%] lg:w-[32%]'>
             {item ? (
-              <Chip className='bg-primary text-white rounded-full py-2 text-md md:text-base w-full max-w-full text-center'>
+              <Chip className='bg-primary text-white rounded-full text-md sm:text-base w-full max-w-full text-center'>
                 <div className='flex justify-center'>
                   <Image
                     src={`/images/icons/${infoDetails[index].icon}.svg`}
@@ -88,7 +88,7 @@ const PlaceDetail = ({
                 </div>
               </Chip>
             ) : (
-              <Chip className='rounded-full text-md md:text-base w-full max-w-full text-center'>
+              <Chip className='rounded-full text-md sm:text-base w-full max-w-full text-center'>
                 <div className='flex justify-center'>
                   <Image
                     src={`/images/icons/${infoDetails[index].icon}.svg`}
