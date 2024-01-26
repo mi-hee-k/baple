@@ -32,7 +32,7 @@ const PagiNation = ({
           <button
             key={pageNumber}
             onClick={() => setPage(pageNumber)}
-            className={pageNumber === page ? 'text-[#FFD029]' : ''}
+            className={pageNumber === page ? 'text-primary' : ''}
           >
             {pageNumber}
           </button>

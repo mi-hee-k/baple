@@ -71,7 +71,6 @@ const NearByPage = () => {
           .then((res) => {
             setRegionName(res.data.documents[0]?.address.region_2depth_name);
             setCityName(res.data.documents[0]?.address.region_1depth_name);
-            console.log(res.data.documents[0]?.address);
           });
       } catch (error) {
         console.log(error);
@@ -96,7 +95,6 @@ const NearByPage = () => {
       if (places !== null) {
         setplace(places);
         dispatch(placesData(places));
-        console.log('데이터가 fecthing 되었습니다');
       }
       if (error) console.log('error');
     };
