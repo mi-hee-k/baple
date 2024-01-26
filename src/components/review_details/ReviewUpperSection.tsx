@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { useReviews } from '@/hooks/useReviews';
+import { formatDate } from '@/utils/dateFormatter';
 
 interface Props {
   review: ReviewWithPlaceAndUser;
@@ -63,7 +64,14 @@ const ReviewUpperSection = ({
             showFallback
             src={review.users.avatar_url || undefined}
           />
-          <p className='sm:text-[25px] text-[18px]'>{review.users.user_name}</p>
+          <div className='flex flex-col'>
+            <p className='sm:text-[25px] text-[18px]'>
+              {review.users.user_name}
+            </p>
+            <span className='text-gray-500'>
+              {formatDate(review.created_at)}
+            </span>
+          </div>
         </div>
         <div
           className={`flex sm:gap-5 gap-2 ${showDelEditBtn ? '' : 'hidden'}`}
