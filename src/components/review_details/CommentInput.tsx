@@ -7,6 +7,7 @@ import { useForm, FieldErrors, FieldValues } from 'react-hook-form';
 import { toastWarn } from '@/libs/toastifyAlert';
 import { useComments } from '@/hooks/useComments';
 import Image from 'next/image';
+import { commentsAlert } from '@/apis/commentAlert';
 
 interface Props {
   reviewId: string;
@@ -33,6 +34,7 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
     }
     const newCommentData = new newComment(reviewId, userId, comment);
     insertComment(newCommentData);
+    commentsAlert();
     setComment('');
   };
 
