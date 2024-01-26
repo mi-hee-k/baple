@@ -1,4 +1,3 @@
-import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
 import EventMarkerContainer from '@/components/map/MarkerContainer';
 import MylocationButton from '@/components/map/MylocationButton';
@@ -10,10 +9,8 @@ import { Tables } from '@/types/supabase';
 import { Maplocation } from '@/types/types';
 import { Spinner } from '@nextui-org/react';
 import axios from 'axios';
-import Script from 'next/script';
 import React, { useEffect, useState } from 'react';
 import {
-  CustomOverlayMap,
   Map,
   MapMarker,
   MapTypeControl,
@@ -46,6 +43,7 @@ const NearByPage = () => {
   const [regionName, setRegionName] = useState<string>('');
   const [cityName, setCityName] = useState<string>('');
   const [place, setplace] = useState<Tables<'places'>[] | null>([]);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   // console.log('windowkakao', window.kakao);
@@ -151,8 +149,8 @@ const NearByPage = () => {
 
   return (
     <div
-      style={{ position: 'relative', display: 'flex' }}
-      // className='overflow-y-hidden'
+      // style={{ position: 'relative', display: 'flex' }}
+      className='overflow-hidden flex relative'
     >
       <Seo title='내 주변 장소' />
       {!mylocation.isLoading ? (
@@ -163,8 +161,9 @@ const NearByPage = () => {
             width: '100%',
             height: '93vh',
           }}
+          // className='relative flex'
           level={8} // 지도의 확대 레벨
-          maxLevel={8}
+          minLevel={8}
           draggable={true}
           zoomable={true}
           keyboardShortcuts={true}
@@ -197,7 +196,12 @@ const NearByPage = () => {
             <EventMarkerContainer key={place.id} place={place} />
           ))}
           {place?.length !== 0 ? (
-            <PlacesModal cityName={cityName} regionName={regionName} />
+            <PlacesModal
+              cityName={cityName}
+              regionName={regionName}
+              isModalVisible={isModalVisible}
+              setIsModalVisible={setIsModalVisible}
+            />
           ) : null}
 
           <MylocationButton mylocation={mylocation} setLocation={setLocation} />
