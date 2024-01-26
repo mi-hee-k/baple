@@ -4,14 +4,17 @@ import { useSelector } from 'react-redux';
 import MapPlaceCard from './MapPlaceCard';
 import PagiNation from './PagiNation';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 
 const PlacesModal = ({
   regionName,
   cityName,
+  setIsModalVisible,
+  isModalVisible,
 }: {
   regionName: string;
   cityName: string;
+  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalVisible: boolean;
 }) => {
   const places = useSelector((state: RootState) => state.placesData);
   console.log(places);
@@ -33,37 +36,43 @@ const PlacesModal = ({
     console.log('hello');
   }, [places]);
   return (
-    <>
-      <motion.div
-        className='z-12'
-        drag='x'
-        dragConstraints={{ left: 0, right: 300 }}
+    <div className={`absolute  w-[100%] h-[100%]`}>
+      <div
+        className={` absolute flex flex-col bg-white bg-opacity-50 transition-all bottom-[10px] z-10 sm:w-[20rem] w-[20rem]  h-[83vh] sm:h-[90vh] rounded-l-[20px] right-${
+          isModalVisible ? '0' : '[-20rem]'
+        } 
+
+        `}
       >
-        <div className='absolute flex flex-col bg-white bg-opacity-50 right-0 bottom-[10px] z-10 w-[25rem] h-[90vh] rounded-tl-[20px]'>
-          <div className='h-[50px] w-[400px] flex justify-center items-center text-[18px]  bg-white  rounded-tl-[20px] shadow-xl'>
-            <p className='font-bold text-[20px]'>
-              {cityName}&nbsp;
-              {regionName}
-            </p>
-            의 추천장소 입니다
-          </div>
-
-          {/* 맵으로 장소카드 컴포넌트 만들어 뿌려주기 */}
-          {places?.slice(offset, offset + limit).map((place) => {
-            return (
-              <Link key={place.id} href={`/place/${place?.id}`}>
-                <div className='w-[390px] bg-white flex h-[100px] m-2 rounded-[80px] p-4 shadow-xl '>
-                  <MapPlaceCard place={place} />
-                </div>
-              </Link>
-            );
-          })}
-
-          {/*  페이지네이션 컴포넌트 만들어 주기(숫자 버튼) */}
-          <PagiNation page={page} setPage={setPage} numPages={numPages} />
+        <button
+          className='flex absolute sm:w-[50px] w-[10px] h-[50px] z-10 top-[50%] left-[-10px] sm:left-[-50px] bg-slate-500 items-center justify-center rounded-l-[20px]'
+          onClick={() => setIsModalVisible(!isModalVisible)}
+        >
+          {isModalVisible ? '>' : '<'}
+        </button>
+        <div className='h-[50px] w-full flex justify-center items-center text-[18px]  bg-white  rounded-l-[20px] shadow-xl'>
+          <p className='font-bold text-[20px]'>
+            {cityName}&nbsp;
+            {regionName}
+          </p>
+          의 추천장소 입니다
         </div>
-      </motion.div>
-    </>
+
+        {/* 맵으로 장소카드 컴포넌트 만들어 뿌려주기 */}
+        {places?.slice(offset, offset + limit).map((place) => {
+          return (
+            <Link key={place.id} href={`/place/${place?.id}`}>
+              <div className='w-full  bg-white flex h-[5rem] md:h-[6rem] m-2 rounded-[80px] p-4 shadow-xl '>
+                <MapPlaceCard place={place} />
+              </div>
+            </Link>
+          );
+        })}
+
+        {/*  페이지네이션 컴포넌트 만들어 주기(숫자 버튼) */}
+        <PagiNation page={page} setPage={setPage} numPages={numPages} />
+      </div>
+    </div>
   );
 };
 
