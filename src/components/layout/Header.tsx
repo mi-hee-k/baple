@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getUserDataById } from '@/apis/users';
 import Image from 'next/image';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -144,6 +145,7 @@ const Header = () => {
                   </Link>
                 </div>
               </div>
+              <ThemeSwitcher />
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
                   <span className='hidden sm:block'>
