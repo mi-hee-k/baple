@@ -79,7 +79,6 @@ module.exports = {
     'right-[-20rem]',
     'right-[20rem]',
     'right-0',
-    'h-[${textareaHeight}px]',
   ],
 };
 
