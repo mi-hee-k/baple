@@ -70,7 +70,17 @@ module.exports = {
       },
     }),
   ],
-  safelist: ['h-[400px]', 'visible', 'invisible', 'opacity-100', 'opacity-0'],
+  safelist: [
+    'h-[400px]',
+    'visible',
+    'invisible',
+    'opacity-100',
+    'opacity-0',
+    'right-[-20rem]',
+    'right-[20rem]',
+    'right-0',
+    'h-[${textareaHeight}px]',
+  ],
 };
 
 // export default config;
