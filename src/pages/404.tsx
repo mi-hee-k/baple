@@ -12,7 +12,7 @@ export default function Custom404() {
   };
 
   return (
-    <div className='flex items-center justify-center h-screen bg-gradient-conic from-pink-500 via-purple-500 to-blue-500'>
+    <div className='flex items-center justify-center h-screen'>
       <div className='text-center'>
         <div className='animate-appearance-in'>
           <h1 className='text-5xl font-bold mb-4'>
@@ -25,7 +25,7 @@ export default function Custom404() {
           </p>
           <button
             onClick={goToMainPage}
-            className='mt-4 inline-block px-6 py-3 bg-white text-purple-700 rounded-full font-semibold transition duration-300 hover:bg-purple-800 hover:text-white'
+            className='mt-4 inline-block px-6 py-3 hover:bg-purple-800 hover:text-white animate-pulse'
           >
             메인 페이지로 돌아가기
           </button>
