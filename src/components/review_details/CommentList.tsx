@@ -2,6 +2,7 @@ import React from 'react';
 import CommentCard from './CommentCard';
 import { Spacer } from '@nextui-org/react';
 import { CommentsWithUser } from '@/types/types';
+import CommentCardMobile from './CommentCardMobile';
 
 interface Props {
   comments: CommentsWithUser[] | undefined;
@@ -21,6 +22,9 @@ const CommentList = ({ comments }: Props) => {
     <section className='flex flex-col gap-y-2'>
       {comments?.map((comment) => (
         <CommentCard key={comment.id} comment={comment} />
+      ))}
+      {comments?.map((comment) => (
+        <CommentCardMobile key={comment.id} comment={comment} />
       ))}
       <Spacer y={10} />
     </section>
