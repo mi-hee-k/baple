@@ -163,7 +163,7 @@ const NearByPage = () => {
           }}
           // className='relative flex'
           level={8} // 지도의 확대 레벨
-          maxLevel={8}
+          minLevel={8}
           draggable={true}
           zoomable={true}
           keyboardShortcuts={true}

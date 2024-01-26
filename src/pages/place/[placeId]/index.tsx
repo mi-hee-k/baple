@@ -143,8 +143,8 @@ const PlacePage = () => {
             height: '500px',
             display: toggle === 'map' ? 'block' : 'none',
           }}
-          level={5}
-          maxLevel={5}
+          level={8}
+          maxLevel={8}
         >
           <MapMarker
             position={placePosition}
