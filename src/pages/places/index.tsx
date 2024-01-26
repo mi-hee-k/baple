@@ -123,8 +123,7 @@ const PlacesPage = () => {
             src='/images/icons/search.svg'
             width={24}
             height={24}
-            alt='bookmark_icon'
-            className='object-cover'
+            alt='search_icon'
           />
         </Button>
       </div>
