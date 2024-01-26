@@ -10,6 +10,7 @@ import { Spacer } from '@nextui-org/react';
 import { useViewport } from '@/hooks/useViewport';
 
 import type { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
+import PlaceCard3 from '../common/PlaceCard3';
 
 interface Props {
   initialData: PlacesForSearch[];
@@ -39,7 +40,7 @@ const MostBookmarks = ({ initialData }: Props) => {
       <Spacer y={4} />
       <Swiper
         loop={true} // 슬라이드 루프
-        spaceBetween={20}
+        spaceBetween={100}
         slidesPerView={isMobile ? 1 : 4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
@@ -49,7 +50,7 @@ const MostBookmarks = ({ initialData }: Props) => {
         {topBookmarkedPlacesList?.map((place) => {
           return (
             <SwiperSlide key={place.unique_place_id}>
-              <PlaceCard key={place.unique_place_id} place={place} />
+              <PlaceCard3 key={place.unique_place_id} place={place} />
             </SwiperSlide>
           );
         })}
