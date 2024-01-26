@@ -187,7 +187,7 @@ const PlaceCard = ({ place }: Props) => {
         ) : null}
       </div> */}
       <Link href={`/place/${unique_place_id}`}>
-        <div className='relative w-full h-72  mx-auto transition-all ring-2 ring-gray-100 rounded-lg overflow-hidden shadow-md hover:ring-4 hover:ring-primary '>
+        <div className='relative w-72 h-56  mx-auto transition-all ring-2 ring-gray-100 rounded-lg overflow-hidden shadow-md hover:ring-4 hover:ring-primary '>
           <NextImage src={imgURL} alt='place image' fill={true} sizes='12rem' />
           <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 place-items-start pb-16 px-5 pt-5'>
             {is_paid ? (
@@ -231,7 +231,7 @@ const PlaceCard = ({ place }: Props) => {
               </Chip>
             ) : null}
           </div>
-          <div className='absolute h-[4rem]  w-full bottom-0 p-2  text-white bg-black bg-opacity-25 backdrop-blur-sm'>
+          <div className='absolute h-[4rem]  w-full bottom-0 p-2  text-black bg-white bg-opacity-80 backdrop-blur-sm'>
             <div className='flex'>
               <p className='text-xs mt-1 w-full whitespace-nowrap text-ellipsis overflow-hidden'>
                 {city}
