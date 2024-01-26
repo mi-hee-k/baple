@@ -137,6 +137,7 @@ const PlacePage = () => {
         <Map
           center={placePosition}
           draggable={false}
+          zoomable={true}
           style={{
             // 지도의 크기
             width: '100%',
@@ -144,7 +145,7 @@ const PlacePage = () => {
             display: toggle === 'map' ? 'block' : 'none',
           }}
           level={8}
-          maxLevel={8}
+          minLevel={8}
         >
           <MapMarker
             position={placePosition}
