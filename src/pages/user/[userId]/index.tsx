@@ -41,7 +41,7 @@ const UserPage = () => {
     <>
       {isLoaded ? (
         <div className='flex m-8 flex-col justify-center items-center'>
-          <Seo title={`${user?.user_name}님의 페이지`} />
+          <Seo title={`${user?.user_name}님의 페이지 | `} />
           <MyProfile />
           <MyTabs />
         </div>

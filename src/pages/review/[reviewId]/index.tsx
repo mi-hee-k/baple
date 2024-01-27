@@ -67,15 +67,13 @@ const ReviewPage = () => {
     return (
       <>
         <MainWrapper>
-          <Seo title='리뷰' />
+          <Seo />
           <ReviewUpperSection
             review={review}
             setIsEditing={setIsEditing}
             isEditing={isEditing}
             currentUserId={currentUserId}
           />
-
-          <Seo title='Review' />
           <ReviewLikes review={review} />
           {review?.images_url && (
             <Carousel

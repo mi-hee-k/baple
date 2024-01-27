@@ -106,7 +106,7 @@ const PlacePage = () => {
 
   return (
     <MainWrapper>
-      <Seo title={placeInfo.place_name} />
+      <Seo title={`${placeInfo.place_name} | `} />
       <div className='flex items-center justify-between w-full mb-[20px] sm:hidden'>
         <PlaceDetailHeader
           placeId={placeId}

@@ -55,7 +55,7 @@ const LogInPage = () => {
   };
   return (
     <>
-      <Seo title='Login' />
+      <Seo />
 
       <div className='h-screen flex flex-col justify-center items-center gap-4'>
         <Link href='/' className='text-3xl font-black'>
