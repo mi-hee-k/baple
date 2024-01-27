@@ -11,7 +11,7 @@ import { useInView } from 'react-intersection-observer';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
-  const [checkboxChanged, setCheckboxChanged] = useState(false);
+  // const [checkboxChanged, setCheckboxChanged] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -100,7 +100,7 @@ const PlacesPage = () => {
         ? prevSelected.filter((item) => item !== value)
         : [...prevSelected, value],
     );
-    setCheckboxChanged(true);
+    // setCheckboxChanged(true);
   };
   console.log('selected', selected);
   const checkboxButton = (value: string, label: string) => (
