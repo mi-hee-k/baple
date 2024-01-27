@@ -18,7 +18,7 @@ const PlacesPage = () => {
   const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const pageSize = 20;
+  const pageSize = 21;
 
   useEffect(() => {
     handleSearch();

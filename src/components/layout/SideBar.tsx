@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useRouter } from 'next/router';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const SideBar = () => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
@@ -20,7 +21,7 @@ const SideBar = () => {
     <>
       {isLoaded && (
         <div className='z-50 fixed top-0 left-0 right-0'>
-          <div className='z-50 absolute md:hidden bg-yellow'>
+          <div className='z-50 absolute md:hidden'>
             <RxHamburgerMenu
               className={`cursor-pointer ${
                 isSidebarOpened ? 'hidden' : 'block'
@@ -102,6 +103,10 @@ const SideBar = () => {
                   </Link>
                 </>
               )}
+              <div className='flex items-center gap-2'>
+                <span>고대비모드</span>
+                <ThemeSwitcher />
+              </div>
             </div>
           </div>
         </div>
