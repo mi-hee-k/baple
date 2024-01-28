@@ -37,7 +37,6 @@ const PlacesPage = () => {
         (currentPage - 1) * pageSize,
         currentPage * pageSize - 1,
       );
-      console.log('검색데이터', data);
       setSearchedPlaces([...data]);
     };
     fetchFilteredData();
@@ -162,7 +161,7 @@ const PlacesPage = () => {
         </div>
         {/* 카드 */}
         <div className='flex justify-center'>
-          <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-3 places-items-center md:w-[100%] '>
+          <div className='grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 gap-3 places-items-center md:w-full'>
             {searchedPlaces.map((place, idx) => (
               <PlaceCard key={idx} place={place} />
             ))}
