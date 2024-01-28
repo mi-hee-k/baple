@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-export default function Custom404() {
+const Custom404 = () => {
   const router = useRouter();
 
   const goToMainPage = () => {
@@ -12,9 +12,9 @@ export default function Custom404() {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
-      <div className='text-center mx-4 md:mx-8 lg:mx-16 xl:mx-32'>
-        <div className='flex-shrink-0 flex items-center justify-center mb-4'>
+    <div className='flex flex-col items-center justify-center h-screen overflow-hidden'>
+      <div className='text-center mx-2 md:mx-8 lg:mx-16 xl:mx-32'>
+        <div className='flex-shrink-0 flex items-center justify-center mb-2'>
           <Image
             src='/images/icons/character.svg'
             alt='character logo'
@@ -24,9 +24,9 @@ export default function Custom404() {
           <Image
             src='/images/icons/character.svg'
             alt='character logo'
-            width={80}
-            height={80}
-            className='ml-1 mt-6'
+            width={70}
+            height={70}
+            className='ml-2 mt-9'
           />
         </div>
 
@@ -47,4 +47,6 @@ export default function Custom404() {
       </div>
     </div>
   );
-}
+};
+
+export default Custom404;
