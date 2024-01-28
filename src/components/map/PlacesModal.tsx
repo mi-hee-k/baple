@@ -41,7 +41,7 @@ const PlacesModal = ({
         }`}
       >
         <button
-          className='flex absolute sm:w-[50px] w-[60px] h-[60px] z-10 top-[50%] left-[-60px] sm:left-[-50px] bg-white bg-opacity-70 text-primary sm:text-2xl text-2xl font-black items-center justify-center rounded-l-[20px]'
+          className='flex absolute sm:w-[50px] w-[40px] h-[60px] z-10 top-[50%] left-[-40px] sm:left-[-50px] bg-white bg-opacity-70 text-primary sm:text-2xl text-2xl font-black items-center justify-center rounded-l-[20px]'
           onClick={() => setIsModalVisible(!isModalVisible)}
         >
           {isModalVisible ? '>' : '<'}

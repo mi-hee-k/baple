@@ -33,12 +33,14 @@ const PlacesPage = () => {
           query = query.in(checkbox, [true]);
         });
       }
+      console.log('Query:', query);
+
       const { data, error } = await query.range(
         (currentPage - 1) * pageSize,
         currentPage * pageSize - 1,
       );
       console.log('검색데이터', data);
-      await setSearchedPlaces([...data]);
+      setSearchedPlaces([...data]);
     };
     fetchFilteredData();
   }, [selected]);
@@ -163,7 +165,7 @@ const PlacesPage = () => {
         {/* 카드 */}
         <div className='flex justify-center'>
           <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-3 places-items-center md:w-[100%] '>
-            {searchedPlaces.map((place, idx) => (
+            {searchedPlaces?.map((place, idx) => (
               <PlaceCard key={idx} place={place} />
             ))}
           </div>
