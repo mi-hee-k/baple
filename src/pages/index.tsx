@@ -18,9 +18,9 @@ import { useRouter } from 'next/router';
 // const inter = Inter({ subsets: ['latin'] });
 
 const imgList = [
-  'https://dummyimage.com/1200x400/b8b8b8/fff&text=BAPLE',
-  'https://dummyimage.com/1200x400/000000/fff&text=BAPLE',
-  'https://dummyimage.com/1200x400/f0c518/000000&text=BAPLE',
+  'https://velog.velcdn.com/images/jetiiin/post/53bf0230-ed13-4bd3-a643-5b053bc664fa/image.png',
+  'https://velog.velcdn.com/images/jetiiin/post/baa72e93-0b63-4624-aa52-a584b12fe09a/image.png',
+  'https://velog.velcdn.com/images/jetiiin/post/2b79044d-826f-4b35-b6d1-c2eeee7f92a6/image.png',
 ];
 
 interface Props {
