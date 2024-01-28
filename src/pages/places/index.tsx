@@ -3,6 +3,8 @@ import PlaceCard2 from '@/components/common/PlaceCard2';
 import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { supabase } from '@/libs/supabase';
+import { RootState } from '@/redux/config/configStore';
+import { setSearchValue } from '@/redux/modules/searchValueSlice';
 import { Tables } from '@/types/supabase';
 import { PlacesForSearch } from '@/types/types';
 import { Button, Input, Spacer } from '@nextui-org/react';
@@ -10,15 +12,19 @@ import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [checkboxChanged, setCheckboxChanged] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  // const [searchValue, setSearchValue] = useState('');
   const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const pageSize = 20;
+
+  const searchValue = useSelector((state: RootState) => state.searchValue);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     handleSearch();
@@ -30,6 +36,13 @@ const PlacesPage = () => {
       setCheckboxChanged(false);
     }
   }, [checkboxChanged, selected]);
+
+  useEffect(() => {
+    //클린업함수 -> 언마운트 될때 redux state 빈 스트링으로 초기화
+    return () => {
+      dispatch(setSearchValue(''));
+    };
+  }, [dispatch]);
 
   const handleSearch = () => {
     setSearchedPlaces([]);
@@ -110,7 +123,7 @@ const PlacesPage = () => {
         <input
           placeholder='장소이름을 검색하세요'
           value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => dispatch(setSearchValue(e.target.value))}
           className='rounded-full w-[80%] sm:w-full p-2 px-4 placeholder:text-md focus:outline-none'
         />
         <Button
