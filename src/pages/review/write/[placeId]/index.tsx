@@ -33,21 +33,18 @@ const ReviewWritePage = () => {
     enabled: placeId !== undefined,
   });
 
-  console.log('placeInfo', placeInfo);
-
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     const selectedImageArray = [...selectedImages];
     const selectedFileArray = [...selectedFiles];
     if (files) {
-      console.log('files', files);
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.size > 1024 * 1024) {
           return toastWarn('최대 1MB까지 업로드 가능합니다.');
         }
         const imageUrl = URL.createObjectURL(file);
-        console.log('imageUrl', imageUrl);
+
         if (selectedImageArray.length < 3) {
           selectedImageArray.push({ file, imageUrl });
           selectedFileArray.push(file);
@@ -60,8 +57,6 @@ const ReviewWritePage = () => {
     }
   };
 
-  console.log('selectedImages', selectedImages);
-  console.log('selectedFiles', selectedFiles);
   const queryClient = useQueryClient();
 
   const { insertReview } = useReviews(undefined, placeId as string);
@@ -99,7 +94,7 @@ const ReviewWritePage = () => {
         const { data: imageData } = supabase.storage
           .from('review_images')
           .getPublicUrl(fileData.path);
-        console.log('imageData', imageData);
+
         publicUrlList.push(imageData.publicUrl);
       }
       if (placeInfo?.image_url === null) {
