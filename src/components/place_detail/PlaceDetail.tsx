@@ -58,17 +58,25 @@ const PlaceDetail = ({
             showAlert={showAlert}
           />
         </div>
-        <div className='mb-[30px] md:mb-0'>
-          <p className='text-md md:text-xl'>주소 : {address}</p>
-          <p className='text-md md:text-xl'>
-            전화 : {tel === '' ? '정보없음' : tel}
-          </p>
-          <p className='text-md md:text-xl'>
-            운영시간 : {working_hours === 'null' ? '정보없음' : working_hours}
-          </p>
-          <p className='text-md md:text-xl'>
-            휴무일 : {holidays === 'null' ? '정보없음' : holidays}
-          </p>
+        <div className='flex'>
+          <div className='mb-[30px] md:mb-0 w-1/4'>
+            <p className='md:text-xl font-bold mb-1 md:mb-2'>주소</p>
+            <p className='md:text-xl font-bold mb-1 md:mb-2'>전화</p>
+            <p className='md:text-xl font-bold mb-1 md:mb-2'>운영시간</p>
+            <p className='md:text-xl font-bold mb-1 md:mb-2'>휴무일</p>
+          </div>
+          <div className='mb-[30px] md:mb-0 w-3/4'>
+            <p className='md:text-xl mb-1 md:mb-2'>{address}</p>
+            <p className='md:text-xl mb-1 md:mb-2'>
+              {tel === '' ? '정보없음' : tel}
+            </p>
+            <p className='md:text-xl mb-1 md:mb-2'>
+              {working_hours === 'null' ? '정보없음' : working_hours}
+            </p>
+            <p className='md:text-xl mb-1 md:mb-2'>
+              {holidays === 'null' ? '정보없음' : holidays}
+            </p>
+          </div>
         </div>
       </div>
       <div className='flex gap-2 flex-wrap w-full'>
