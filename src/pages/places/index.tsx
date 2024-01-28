@@ -1,77 +1,92 @@
+// src/pages/places/index.tsx
 import PlaceCard from '@/components/common/PlaceCard';
 import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
 import { supabase } from '@/libs/supabase';
-import { RootState } from '@/redux/config/configStore';
-import { setSearchValue } from '@/redux/modules/searchValueSlice';
-import { Tables } from '@/types/supabase';
 import { PlacesForSearch } from '@/types/types';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { RootState } from '@/redux/config/configStore';
+import { setSearchValue } from '@/redux/modules/searchValueSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
-  // const [checkboxChanged, setCheckboxChanged] = useState(false);
-  // const [searchValue, setSearchValue] = useState('');
   const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 21;
   const searchValue = useSelector((state: RootState) => state.searchValue);
   const dispatch = useDispatch();
 
-  const fetchFilteredData = async () => {
-    setSearchedPlaces([]);
-    setCurrentPage(1);
+  useEffect(() => {
+    const fetchFilteredData = async () => {
+      setSearchedPlaces((prev) => []);
+      setCurrentPage(1);
+      let query = supabase.rpc('search_places', {
+        p_search_value: searchValue,
+      });
+      if (selected.length > 0) {
+        selected.forEach((checkbox) => {
+          query = query.in(checkbox, [true]);
+        });
+      }
+      const { data, error } = await query.range(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize - 1,
+      );
+      console.log('검색데이터', data);
+      setSearchedPlaces([...data]);
+    };
+    fetchFilteredData();
+  }, [selected]);
 
+  useEffect(() => {
+    //클린업함수 -> 언마운트 될때 redux state 빈 스트링으로 초기화
+    return () => {
+      dispatch(setSearchValue(''));
+    };
+  }, [dispatch]);
+
+  const handleClickSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchedPlaces((prev) => prev);
+    setCurrentPage(1);
     let query = supabase.rpc('search_places', {
       p_search_value: searchValue,
     });
-
     if (selected.length > 0) {
       selected.forEach((checkbox) => {
         query = query.in(checkbox, [true]);
       });
     }
-
     const { data, error } = await query.range(
       (currentPage - 1) * pageSize,
       currentPage * pageSize - 1,
     );
-
-    if (!error && data.length > 0) {
-      setSearchedPlaces((prev) => [...prev, ...data]);
-    }
-  };
-
-  const handleClickSearch = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSearchedPlaces([]);
-    setCurrentPage(1);
-    await fetchFilteredData();
+    setSearchedPlaces([...data]);
   };
 
   const loadMoreData = async () => {
     let query = supabase.rpc('search_places', {
       p_search_value: searchValue,
     });
-
     if (selected.length > 0) {
       selected.forEach((checkbox) => {
         query = query.in(checkbox, [true]);
       });
     }
-
     const { data, error } = await query.range(
       (currentPage - 1) * pageSize,
       currentPage * pageSize - 1,
     );
-
-    if (!error && data.length > 0) {
-      setSearchedPlaces((prev) => [...prev, ...data]);
+    if (!error) {
+      if (data.length === 0) {
+        return;
+      }
+      setSearchedPlaces([...searchedPlaces, ...data]);
       setCurrentPage((prev) => prev + 1);
     }
   };
@@ -79,7 +94,8 @@ const PlacesPage = () => {
   const { ref } = useInView({
     threshold: 1,
     onChange: (inView) => {
-      if (inView) loadMoreData();
+      if (!inView) return;
+      loadMoreData();
     },
   });
 
@@ -90,7 +106,7 @@ const PlacesPage = () => {
         : [...prevSelected, value],
     );
   };
-
+  console.log('selected', selected);
   const checkboxButton = (value: string, label: string) => (
     <Button
       key={value}
@@ -103,16 +119,6 @@ const PlacesPage = () => {
       {label}
     </Button>
   );
-
-  useEffect(() => {
-    fetchFilteredData();
-  }, [selected]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(setSearchValue(''));
-    };
-  }, [dispatch]);
 
   return (
     <MainWrapper>
@@ -132,6 +138,7 @@ const PlacesPage = () => {
           color='primary'
           type='submit'
           className='h-auto w-[20%] rounded-r-full'
+          // onClick={handleClickSearch}
         >
           <Image
             src='/images/icons/search_white.svg'
@@ -162,7 +169,7 @@ const PlacesPage = () => {
           </div>
         </div>
       </div>
-      <div ref={ref} className='h-16'></div>
+      <div ref={ref}></div>
       <TopButton />
     </MainWrapper>
   );
