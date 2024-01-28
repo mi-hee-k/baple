@@ -114,7 +114,11 @@ const Header = () => {
               <div className='flex w-full justify-center '>
                 <Link href='/' className='flex justify-center'>
                   <Image
-                    src='/images/icons/basic-logo.svg'
+                    src={`/images/icons/${
+                      theme === 'baple'
+                        ? 'basic-logo.svg'
+                        : '/CBicons/CBbasic-logo.svg'
+                    }`}
                     alt='main logo'
                     width={100}
                     height={100}

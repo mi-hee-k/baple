@@ -24,12 +24,15 @@ import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import PlaceDetailHeader from '@/components/place_detail/PlaceDetailHeader';
 import { getBookmark } from '@/apis/bookmarks';
 import { useBookmarks } from '@/hooks/useBookmarks';
+import { useTheme } from 'next-themes';
 
 export type ToggleBookmarkType = () => void;
 export type ShowAlertType = () => void;
 
 const PlacePage = () => {
   const router = useRouter();
+  const { theme } = useTheme();
+
   const placeId: string = router.query.placeId as string;
   const [toggle, setToggle] = useState('map');
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
@@ -159,7 +162,9 @@ const PlacePage = () => {
           <MapMarker
             position={placePosition}
             image={{
-              src: '/images/icons/marker.svg', // 마커이미지의 주소입니다
+              src: `/images/icons/${
+                theme === 'baple' ? 'marker.svg' : 'CBicons/CBmarker.svg'
+              }`, // 마커이미지의 주소입니다
               size: {
                 width: 44,
                 height: 40,
