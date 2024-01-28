@@ -2,6 +2,8 @@ import { Tables } from '@/types/supabase';
 import { useEffect, useRef, useState } from 'react';
 import { CustomOverlayMap, MapMarker, useMap } from 'react-kakao-maps-sdk';
 import PlaceCard2 from '../common/PlaceCard2';
+import PlaceCard3 from '../common/PlaceCard3';
+import PlaceCard from '../common/PlaceCard';
 
 const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
   const map = useMap();
@@ -48,6 +50,7 @@ const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
             zIndex={2}
           >
             <PlaceCard2 place={place} />
+            {/* <PlaceCard place={place} /> */}
           </CustomOverlayMap>
         </div>
       )}
