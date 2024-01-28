@@ -14,6 +14,7 @@ import { getAllComments } from '@/apis/comments';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useViewport } from '@/hooks/useViewport';
+import _ from 'lodash';
 
 const ReviewPage = () => {
   const router = useRouter();
@@ -29,6 +30,10 @@ const ReviewPage = () => {
   const { data: comments } = useQuery({
     queryKey: ['comments', reviewId],
     queryFn: () => getAllComments(reviewId),
+    select: (data) => {
+      const descComments = _.orderBy(data, 'created_at', 'desc');
+      return { descComments };
+    },
   });
 
   const {
@@ -61,7 +66,7 @@ const ReviewPage = () => {
 
   if (review) {
     const imgUrl = review.images_url as string[];
-    const commentsCount = comments?.length;
+    const commentsCount = comments?.descComments.length;
     console.log('commentsCount', commentsCount);
     return (
       <>
@@ -95,7 +100,7 @@ const ReviewPage = () => {
           <Spacer y={1} />
 
           <div className='flex flex-col'>
-            <CommentList comments={comments} />
+            <CommentList comments={comments?.descComments} />
           </div>
         </MainWrapper>
       </>

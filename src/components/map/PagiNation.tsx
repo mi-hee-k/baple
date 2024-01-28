@@ -20,7 +20,7 @@ const PagiNation = ({
       {currentPageGroup > 1 && (
         <button
           onClick={() => setPage(startRange - 1)}
-          className='화살표 스타일'
+          className='화살표 스타일 text-[#1e1e1e]'
         >
           {'<'}
         </button>
@@ -33,7 +33,9 @@ const PagiNation = ({
             key={pageNumber}
             onClick={() => setPage(pageNumber)}
             className={
-              pageNumber === page ? 'text-primary font-bold ' : 'text-[22px]'
+              pageNumber === page
+                ? 'text-primary font-bold '
+                : ' text-[#1e1e1e] text-[22px]'
             }
           >
             {pageNumber}
@@ -42,7 +44,10 @@ const PagiNation = ({
       })}
 
       {currentPageGroup < totalPages && (
-        <button onClick={() => setPage(endRange + 1)} className='화살표 스타일'>
+        <button
+          onClick={() => setPage(endRange + 1)}
+          className='화살표 스타일 text-[#1e1e1e]'
+        >
           {'>'}
         </button>
       )}
