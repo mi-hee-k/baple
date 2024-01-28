@@ -8,7 +8,7 @@ import MostBookmarks from '@/components/home/MostBookmarks';
 import { Button, Spacer } from '@nextui-org/react';
 import Carousel from '@/components/common/Carousel';
 import { getTopBookmarkedPlaces, getTopReviewedPlaces } from '@/apis/places';
-import { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
+import { PlacesForSearch } from '@/types/types';
 import TopButton from '@/components/common/TopButton';
 import Image from 'next/image';
 import MainWrapper from '@/components/layout/MainWrapper';
@@ -35,7 +35,6 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-
   const dispatch = useDispatch();
   const router = useRouter();
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,7 +68,6 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
             color='primary'
             type='submit'
             className='h-auto w-[20%] rounded-r-full'
-            // onClick={handleClickSearch}
           >
             <Image
               src='/images/icons/search_white.svg'

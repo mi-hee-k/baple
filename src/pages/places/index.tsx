@@ -3,17 +3,20 @@ import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
 import { supabase } from '@/libs/supabase';
+import { RootState } from '@/redux/config/configStore';
+import { setSearchValue } from '@/redux/modules/searchValueSlice';
+import { Tables } from '@/types/supabase';
 import { PlacesForSearch } from '@/types/types';
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { RootState } from '@/redux/config/configStore';
-import { setSearchValue } from '@/redux/modules/searchValueSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
+  // const [checkboxChanged, setCheckboxChanged] = useState(false);
+  // const [searchValue, setSearchValue] = useState('');
   const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 21;
