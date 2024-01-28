@@ -11,6 +11,7 @@ import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useViewport } from '@/hooks/useViewport';
+import Seo from '@/components/layout/Seo';
 
 const BoardPage = () => {
   const router = useRouter();
@@ -57,6 +58,7 @@ const BoardPage = () => {
 
   return (
     <MainWrapper>
+      <Seo />
       <header className='flex mt-[50px] mb-3 sm:mb-6 justify-between'>
         <h2 className='text-2xl sm:text-3xl font-bold'>게시판</h2>
       </header>
