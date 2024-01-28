@@ -180,7 +180,7 @@ const PlaceCard = ({ place }: Props) => {
         ) : null}
       </div> */}
       <Link href={`/place/${unique_place_id}`}>
-        <div className='relative w-[12.6rem] h-[9.6rem] mx-auto sm:w-[19rem] sm:h-[14.5rem] transition-all ring-2 ring-gray-100 rounded-3xl overflow-hidden shadow-md hover:ring-4 hover:ring-primary '>
+        <div className='relative w-[9.5rem] h-[7.25rem] mx-auto sm:w-[19rem] sm:h-[14.5rem] transition-all ring-2 ring-gray-100 rounded-3xl overflow-hidden shadow-md hover:ring-4 hover:ring-primary '>
           <NextImage
             src={imgURL}
             alt='place_image'
