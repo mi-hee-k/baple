@@ -13,7 +13,7 @@ import TopButton from '@/components/common/TopButton';
 import Image from 'next/image';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { setSearchValue } from '@/redux/modules/searchValueSlice';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 // const inter = Inter({ subsets: ['latin'] });
 
