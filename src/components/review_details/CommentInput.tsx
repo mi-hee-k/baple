@@ -8,6 +8,7 @@ import { toastWarn } from '@/libs/toastifyAlert';
 import { useComments } from '@/hooks/useComments';
 import Image from 'next/image';
 import { commentsAlert } from '@/apis/commentAlert';
+import { useTheme } from 'next-themes';
 
 interface Props {
   reviewId: string;
@@ -25,7 +26,7 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
   const { insertComment } = useComments(userId as string, placeId);
 
   const [comment, setComment] = useState('');
-
+  const { theme } = useTheme();
   const submitComment = async () => {
     // e.preventDefault();
     if (!isLoggedIn) {
@@ -51,7 +52,11 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
         <strong className='ml-2 text-lg'>댓글</strong>
         <span className='px-[10px] flex items-center'>
           <Image
-            src='/images/icons/comment_select.svg'
+            src={`/images/icons/${
+              theme === 'baple'
+                ? 'comment_select.svg'
+                : 'CBicons/CBcomment_select.svg'
+            }`}
             width={20}
             height={20}
             alt='comment icon'
