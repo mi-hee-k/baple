@@ -4,6 +4,7 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 import { PlaceInfoAllData } from './PlaceDetail';
 import Image from 'next/image';
 import { useViewport } from '@/hooks/useViewport';
+import { useTheme } from 'next-themes';
 
 const PlaceDetailHeader = ({
   placeId,
@@ -14,6 +15,7 @@ const PlaceDetailHeader = ({
   showAlert,
 }: PlaceInfoAllData) => {
   const { isMobile } = useViewport();
+  const { theme } = useTheme();
   return (
     <>
       <h1 className='text-2xl font-bold md:text-3xl'>{placeInfo.place_name}</h1>
@@ -22,7 +24,11 @@ const PlaceDetailHeader = ({
           isBookmarked ? (
             <>
               <Image
-                src='/images/icons/bookmark_select.svg'
+                src={`/images/icons/${
+                  theme === 'baple'
+                    ? 'bookmark_select.svg'
+                    : 'CBicons/CBbookmark_select_.svg'
+                }`}
                 alt='bookmark'
                 width={isMobile ? 24 : 34}
                 height={isMobile ? 24 : 34}
@@ -31,7 +37,11 @@ const PlaceDetailHeader = ({
               />
 
               <Image
-                src='/images/icons/share_select.svg'
+                src={`/images/icons/${
+                  theme === 'baple'
+                    ? 'share_select.svg'
+                    : 'CBicons/CBshare_select.svg'
+                }`}
                 alt='kakao share'
                 width={isMobile ? 24 : 34}
                 height={isMobile ? 24 : 34}
@@ -57,7 +67,11 @@ const PlaceDetailHeader = ({
               />
 
               <Image
-                src='/images/icons/share_select.svg'
+                src={`/images/icons/${
+                  theme === 'baple'
+                    ? 'share_select.svg'
+                    : 'CBicons/CBshare_select.svg'
+                }`}
                 alt='kakao share'
                 width={isMobile ? 24 : 34}
                 height={isMobile ? 24 : 34}
@@ -84,7 +98,11 @@ const PlaceDetailHeader = ({
             />
 
             <Image
-              src='/images/icons/share_select.svg'
+              src={`/images/icons/${
+                theme === 'baple'
+                  ? 'share_select.svg'
+                  : 'CBicons/CBshare_select.svg'
+              }`}
               alt='kakao share'
               width={isMobile ? 24 : 34}
               height={isMobile ? 24 : 34}
