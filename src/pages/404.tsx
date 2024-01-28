@@ -25,7 +25,7 @@ export default function Custom404() {
           </p>
           <button
             onClick={goToMainPage}
-            className='mt-4 inline-block px-6 py-3 hover:text-white animate-pulse'
+            className='mt-4 text-white px-6 py-3 bg-primary animate-pulse'
           >
             메인 페이지로 돌아가기
           </button>
