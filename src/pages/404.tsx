@@ -1,5 +1,3 @@
-// Custom404.jsx
-
 import React from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -18,12 +16,12 @@ export default function Custom404() {
           <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold mb-4 whitespace-normal animate-appearance-in text-purple'>
             404 Error <br />
           </h1>
-          <div className='flex-shrink-0 mb-8'>
+          <div className='flex-shrink-0 mb-10 ml-2'>
             <Image
               src='/images/icons/character.svg'
               alt='character logo'
-              width={60} // 조절 가능
-              height={60} // 조절 가능
+              width={60}
+              height={60}
             />
           </div>
         </div>
