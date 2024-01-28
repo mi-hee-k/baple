@@ -104,7 +104,7 @@ const SideBar = () => {
                 </>
               )}
               <div className='flex items-center gap-2'>
-                <span>고대비모드</span>
+                <span>색약 모드</span>
                 <ThemeSwitcher />
               </div>
             </div>
