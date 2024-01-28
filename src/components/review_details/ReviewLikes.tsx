@@ -89,7 +89,7 @@ const ReviewLikes = ({ review }: Props) => {
 
   // 클립보드 url 복사
   const copyClipboard = () => {
-    const baseUrl = 'http://localhost:3000';
+    const baseUrl = `${process.env.NEXT_PUBLIC_BASEURL}`;
     const currentPath = router.asPath;
     navigator.clipboard.writeText(`${baseUrl}${currentPath}`);
     showCopyAlert();
