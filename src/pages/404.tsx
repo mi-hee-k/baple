@@ -30,7 +30,7 @@ const Custom404 = () => {
           />
         </div>
 
-        <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold mb-4 whitespace-normal animate-appearance-in text-purple'>
+        <h1 className='text-4xl sm:text-5xl md:text-6xl font-bold mb-4 whitespace-normal animate-appearance-in text-primary'>
           404 Not Found <br />
         </h1>
         <div>
@@ -39,7 +39,7 @@ const Custom404 = () => {
           </p>
           <button
             onClick={goToMainPage}
-            className='inline-block px-6 py-3 text-base sm:text-lg hover:text-purple animate-pulse'
+            className='inline-block px-6 py-3 text-base sm:text-lg hover:text-primary animate-pulse'
           >
             메인 페이지로 돌아가기
           </button>
