@@ -28,6 +28,7 @@ const PlacesPage = () => {
 
   useEffect(() => {
     handleSearch();
+    loadMoreData();
   }, [selected]);
 
   useEffect(() => {
