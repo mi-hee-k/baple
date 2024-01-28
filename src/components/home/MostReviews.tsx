@@ -2,13 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import { getTopReviewedPlaces } from '@/apis/places';
 import PlaceCard from '../common/PlaceCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { Spacer } from '@nextui-org/react';
 import { useViewport } from '@/hooks/useViewport';
-
 import type { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
 import PlaceCard3 from '../common/PlaceCard3';
 
@@ -44,7 +43,7 @@ const MostReviews = ({ initialData }: Props) => {
         slidesPerView={isMobile ? 1 : isTablet ? 2 : 4}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
-        // autoplay={true}
+        autoplay={true}
         className=''
         allowTouchMove={false}
       >
