@@ -128,7 +128,9 @@ const PlacePage = () => {
               slideData={
                 imgList.length !== 0
                   ? imgList
-                  : ['https://dummyimage.com/600x400/000/fff.png&text=baple']
+                  : [
+                      'https://velog.velcdn.com/images/jetiiin/post/6cd59108-3d13-449c-814b-4ee50af9fc9f/image.png',
+                    ]
               } // imgList가 없으면 빈배열
             />
           </div>

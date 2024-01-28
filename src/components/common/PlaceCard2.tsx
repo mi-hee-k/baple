@@ -19,7 +19,7 @@ const PlaceCard2 = ({ place }: Props) => {
   const imgURL =
     place.image_url !== null
       ? place.image_url
-      : 'https://dummyimage.com/600x400/cccccc/000000&text=baple';
+      : 'https://velog.velcdn.com/images/jetiiin/post/6cd59108-3d13-449c-814b-4ee50af9fc9f/image.png';
 
   const { data: bookmarksData, isLoading: isBookmarksLoading } = useQuery({
     queryKey: ['bookmarks', place.id],
