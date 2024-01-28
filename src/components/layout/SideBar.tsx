@@ -46,8 +46,8 @@ const SideBar = () => {
             />
           )}
           <div
-            className={`bg-${
-              theme === 'baple' ? 'gray-200' : 'gray-900'
+            className={`${
+              theme === 'baple' ? 'bg-gray-200' : 'bg-gray-900'
             } bg-opacity-90 h-screen w-[300px] md:hidden fixed top-0 left-0 transition-transform transform ${
               isSidebarOpened ? 'translate-x-0' : '-translate-x-full'
             } ease-in-out duration-300 z-40`}
