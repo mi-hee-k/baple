@@ -41,7 +41,7 @@ const ReviewUpperSection = ({
       confirmButtonColor: '#7b4cff',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteReview(review.id);
+        deleteReview({ reviewId: review.id, imagesUrl: review.images_url });
         router.back();
         toastSuccess('삭제 완료');
       }

@@ -1,6 +1,7 @@
 import { supabase } from '@/libs/supabase';
 
 import type {
+  Json,
   ReviewUpdateParams,
   ReviewWithPlaceAndUser,
   ReviewsFromRPC,
@@ -106,7 +107,13 @@ export const getPlacesByReviewCount = async () => {
 };
 
 //리뷰 삭제
-export const deleteReview = async (reviewId: string) => {
+export const deleteReview = async ({
+  reviewId,
+  imagesUrl,
+}: {
+  reviewId: string;
+  imagesUrl?: Json;
+}) => {
   const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
   if (error) {
     throw error;
