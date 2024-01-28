@@ -7,6 +7,8 @@ import Link from 'next/link';
 import Swal from 'sweetalert2';
 import { useReviews } from '@/hooks/useReviews';
 import ReviewLikes from './ReviewLikes';
+import { useQuery } from '@tanstack/react-query';
+import { getPlaceInfo } from '@/apis/places';
 
 interface Props {
   review: ReviewWithPlaceAndUser;
@@ -31,6 +33,11 @@ const ReviewUpperSection = ({
     currentUserId as string,
   );
 
+  // const { data } = useQuery({
+  //   queryKey: ['placeInfo', review.place_id],
+  //   queryFn: () => getPlaceInfo(review.place_id),
+  // });
+
   const reviewDelete = () => {
     Swal.fire({
       icon: 'warning',
@@ -41,16 +48,32 @@ const ReviewUpperSection = ({
       confirmButtonColor: '#7b4cff',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteReview({
-          reviewId: review.id,
-          imagesUrl: review.images_url as string[],
-        });
+        if (review.images_url) {
+          if (review.images_url.includes(review.places.image_url)) {
+            console.log('장소대표이미지가 포함된 경우');
+            deleteReview({
+              reviewId: review.id,
+            });
+          } else {
+            console.log(
+              '이미지가 있지만 장소대표이미지에 포함되지 않은 경우  또는 이미지가 없는 경우',
+            );
+            deleteReview({
+              reviewId: review.id,
+              imagesUrl: review.images_url as string[],
+            });
+          }
+        }
+
         router.back();
         toastSuccess('삭제 완료');
       }
     });
   };
   console.log('리뷰!', review);
+  // console.log('data의 이미지', data?.image_url);
+  console.log('장소대표이미지', review.places.image_url);
+  console.log('리뷰이미지', review.images_url);
   return (
     <>
       <Spacer y={10} />
