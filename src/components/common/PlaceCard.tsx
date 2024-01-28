@@ -13,6 +13,7 @@ import type { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
 import NextImage from 'next/image'; // 모듈명 변경
 import { MdPhotoCameraBack } from 'react-icons/md';
 import Link from 'next/link';
+import { useTheme } from 'next-themes';
 
 interface Props {
   place: PlacesForSearch;
@@ -41,6 +42,8 @@ const PlaceCard = ({ place }: Props) => {
     image_url !== null
       ? image_url
       : 'https://dummyimage.com/600x400/cccccc/000000&text=baple';
+
+  const { theme } = useTheme();
 
   return (
     <div className='m-1'>
@@ -239,7 +242,11 @@ const PlaceCard = ({ place }: Props) => {
               <div className='flex gap-2 w-full justify-end'>
                 <span className='flex gap-1 items-center justify-center'>
                   <NextImage
-                    src='/images/icons/write_select.svg'
+                    src={`/images/icons/${
+                      theme === 'baple'
+                        ? 'write_select.svg'
+                        : 'CBicons/CBwrite_select.svg'
+                    }`}
                     width={20}
                     height={20}
                     alt='write_icon'
@@ -249,7 +256,11 @@ const PlaceCard = ({ place }: Props) => {
                 </span>
                 <span className='flex gap-2 items-center justify-center'>
                   <NextImage
-                    src='/images/icons/bookmark_select.svg'
+                    src={`/images/icons/${
+                      theme === 'baple'
+                        ? 'bookmark_select.svg'
+                        : 'CBicons/CBbookmark_select_.svg'
+                    }`}
                     width={15}
                     height={15}
                     alt='bookmark_icon'
