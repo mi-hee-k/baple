@@ -17,6 +17,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getUserDataById } from '@/apis/users';
 import Image from 'next/image';
 import ThemeSwitcher from './ThemeSwitcher';
+import { useViewport } from '@/hooks/useViewport';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Header = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   // const [userId, setUserId] = useState('');
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { isMobile } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -97,7 +99,7 @@ const Header = () => {
   return (
     <>
       {isLoaded ? (
-        <header className='py-2 font-bold sticky top-0 z-20 shadow-xl bg-white bg-opacity-95'>
+        <header className='py-2 font-bold sticky top-0 z-20 shadow-xl bg-white bg-opacity-95 '>
           <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
             <nav className='flex sm:flex w-full justify-between items-center'>
               {isLoggedIn ? (
@@ -112,10 +114,10 @@ const Header = () => {
                     height={100}
                   />
                 </Link>
-                <div className='hidden md:flex gap-16 items-center w-full justify-center '>
+                <div className='hidden md:flex gap-16 items-center w-full justify-center'>
                   <Link
                     href='/nearby'
-                    className={`hover:text-primary ${
+                    className={`hover:text-primary w-auto ${
                       router.pathname === '/nearby'
                         ? 'text-primary'
                         : 'text-gray-500'
@@ -145,9 +147,10 @@ const Header = () => {
                   </Link>
                 </div>
               </div>
-              <ThemeSwitcher />
+
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
+                  {isMobile ? null : <ThemeSwitcher />}
                   <span className='hidden sm:block'>
                     반가워요 {user?.user_name}님!
                   </span>
@@ -179,6 +182,7 @@ const Header = () => {
                 </div>
               ) : (
                 <div className='hidden sm:flex gap-4 w-full justify-end'>
+                  {isMobile ? null : <ThemeSwitcher />}
                   <Link href='/login'>
                     <Button variant='solid' color='primary'>
                       로그인

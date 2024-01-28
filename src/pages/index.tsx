@@ -46,7 +46,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
   const [localSearchValue, setLocalSearchValue] = useState('');
   return (
     <div>
-      <Seo title='Home' />
+      <Seo />
       <Carousel
         slideData={imgList} // imgList가 없으면 빈배열
         slidesPerView={1} // 보여줄 슬라이스 수

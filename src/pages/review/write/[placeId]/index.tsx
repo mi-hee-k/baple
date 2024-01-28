@@ -128,9 +128,8 @@ const ReviewWritePage = () => {
 
   return (
     <div className='min-h-screen py-20'>
-      <Seo title='리뷰 작성' />
+      <Seo />
       <div className='p-4 sm:p-10 max-w-screen-sm mx-auto shadow'>
-        <Seo title='리뷰 작성' />
         <div className='mb-10 text-2xl font-semibold'>
           <div className='border-b-3 border-yellow-400'>
             {placeInfo?.place_name}

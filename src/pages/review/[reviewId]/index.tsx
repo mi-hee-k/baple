@@ -66,8 +66,7 @@ const ReviewPage = () => {
     return (
       <>
         <MainWrapper>
-          <Seo title='Review' />
-
+          <Seo />
           <ReviewUpperSection
             review={review}
             setIsEditing={setIsEditing}

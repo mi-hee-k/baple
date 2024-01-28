@@ -150,7 +150,7 @@ const NearByPage = () => {
       // style={{ position: 'relative', display: 'flex' }}
       className='overflow-hidden flex relative'
     >
-      <Seo title='내 주변 장소' />
+      <Seo />
       {!mylocation.isLoading ? (
         <Map // 지도를 표시할 Container
           center={location.center}
