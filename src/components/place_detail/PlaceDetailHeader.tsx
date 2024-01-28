@@ -16,7 +16,7 @@ const PlaceDetailHeader = ({
   const { isMobile } = useViewport();
   return (
     <>
-      <h1 className='text-2xl font-bold sm:text-3xl'>{placeInfo.place_name}</h1>
+      <h1 className='text-2xl font-bold md:text-3xl'>{placeInfo.place_name}</h1>
       <div className='flex'>
         {isLoggedIn ? (
           isBookmarked ? (
@@ -79,7 +79,7 @@ const PlaceDetailHeader = ({
               alt='bookmark'
               width={isMobile ? 24 : 34}
               height={isMobile ? 24 : 34}
-              className='cursor-pointer'
+              className='cursor-pointer mr-[10px]'
               onClick={showAlert}
             />
 

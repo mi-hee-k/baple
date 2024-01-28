@@ -9,7 +9,6 @@ import { getReviewById } from '@/apis/reviews';
 import { Spacer, Spinner } from '@nextui-org/react';
 import Seo from '@/components/layout/Seo';
 import { useRouter } from 'next/router';
-import ReviewLikes from '@/components/review_details/ReviewLikes';
 import ReviewUpperSection from '@/components/review_details/ReviewUpperSection';
 import { getAllComments } from '@/apis/comments';
 import { useSelector } from 'react-redux';
@@ -67,16 +66,14 @@ const ReviewPage = () => {
     return (
       <>
         <MainWrapper>
-          <Seo title='리뷰' />
+          <Seo title='Review' />
+
           <ReviewUpperSection
             review={review}
             setIsEditing={setIsEditing}
             isEditing={isEditing}
             currentUserId={currentUserId}
           />
-
-          <Seo title='Review' />
-          <ReviewLikes review={review} />
           {review?.images_url && (
             <Carousel
               slideData={imgUrl}
