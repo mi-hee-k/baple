@@ -147,6 +147,8 @@ const PlacePage = () => {
           center={placePosition}
           draggable={false}
           // zoomable={true}
+          scrollwheel={false}
+          keyboardShortcuts={true}
           style={{
             // 지도의 크기
             width: '100%',
