@@ -5,6 +5,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
+import { FaShareAlt } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { FaPaperclip } from 'react-icons/fa';
 import { Tables } from '@/types/supabase';
@@ -94,7 +96,7 @@ const ReviewLikes = ({ review }: Props) => {
 
   return (
     <div className='relative'>
-      <div className='absolute right-[100px] top-[20px] xl:left-[-90px] z-10'>
+      <div className='absolute right-[100px] top-[245px] xl:left-[-90px] z-10'>
         {/* 좋아요 */}
         <div className='flex xl:flex-col justify-center items-center absolute xl:fixed top-[-250px] xl:top-[120px] w-[100px] xl:w-auto h-[40px] xl:h-auto p-3 rounded-full border border-gray-200 shadow-sm'>
           {isLoggedIn ? (
