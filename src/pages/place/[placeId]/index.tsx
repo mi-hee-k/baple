@@ -118,9 +118,9 @@ const PlacePage = () => {
         />
       </div>
       {/* 이미지 캐러셀 */}
-      <div className='flex flex-col items-center justify-start h-auto sm:h-[500px] mb-[50px] mt-[10px] sm:mt-[80px] sm:flex-row sm:justify-between'>
+      <div className='flex flex-col items-center justify-start h-auto md:h-[500px] mb-[50px] mt-[10px] md:mt-[80px] md:flex-row md:justify-between'>
         {imgList && (
-          <div className='w-full mb-[20px] sm:w-[48%]'>
+          <div className='w-full mb-[30px] md:mb-0 md:mr-[30px] md:w-[40%]'>
             <CarouselThumb
               slideData={
                 imgList.length !== 0
@@ -223,7 +223,8 @@ const PlacePage = () => {
             </Button>
           ) : (
             <Button
-              className='bg-primary px-8 py-2 rounded-full text-black'
+              color='primary'
+              className='px-8 py-2 rounded-full text-sm sm:text-md'
               onClick={() => toastWarn('로그인 후 이용해주세요')}
             >
               리뷰 작성하기
