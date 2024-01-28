@@ -1,5 +1,6 @@
 import { getPost } from '@/apis/boards';
 import MainWrapper from '@/components/layout/MainWrapper';
+import Seo from '@/components/layout/Seo';
 import { useBoards } from '@/hooks/useBoards';
 import { toastSuccess } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
@@ -53,6 +54,7 @@ const BoardPostPage = () => {
 
   return (
     <MainWrapper>
+      <Seo />
       <header className='flex flex-col sm:flex-row mt-[50px] mb-3 sm:mb-6 items-start sm:items-center'>
         <h2 className='text-2xl mr-3 sm:mr-5 sm:text-3xl font-bold order-2 sm:order-1'>
           {post.title}

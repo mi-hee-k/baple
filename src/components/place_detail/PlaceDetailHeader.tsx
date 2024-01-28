@@ -48,7 +48,7 @@ const PlaceDetailHeader = ({
           ) : (
             <>
               <Image
-                src='/images/icons/bookmark.svg'
+                src='/images/icons/bookmark_select_.svg'
                 alt='bookmark'
                 width={isMobile ? 24 : 34}
                 height={isMobile ? 24 : 34}
@@ -75,7 +75,7 @@ const PlaceDetailHeader = ({
         ) : (
           <>
             <Image
-              src='/images/icons/bookmark.svg'
+              src='/images/icons/bookmark_select.svg'
               alt='bookmark'
               width={isMobile ? 24 : 34}
               height={isMobile ? 24 : 34}
