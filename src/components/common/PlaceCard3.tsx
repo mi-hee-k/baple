@@ -78,7 +78,7 @@ const PlaceCard3 = ({ place }: Props) => {
             </span>
             <span className='flex gap-2 items-center justify-center'>
               <NextImage
-                src='/images/icons/bookmark_select_.svg'
+                src='/images/icons/bookmark_select.svg'
                 width={20}
                 height={20}
                 alt='bookmark_icon'
