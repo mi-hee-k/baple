@@ -47,17 +47,17 @@ const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
       />
 
       {isVisible && (
-        <div ref={overlayRef}>
-          <CustomOverlayMap
-            position={{ lat: place.lat, lng: place.lng }}
-            key={place.id}
-            yAnchor={1.15}
-            zIndex={2}
-          >
+        <CustomOverlayMap
+          position={{ lat: place.lat, lng: place.lng }}
+          key={place.id}
+          yAnchor={1.3}
+          zIndex={2}
+        >
+          <div ref={overlayRef}>
             <PlaceCard2 place={place} />
-            {/* <PlaceCard place={place} /> */}
-          </CustomOverlayMap>
-        </div>
+          </div>
+          {/* <PlaceCard place={place} /> */}
+        </CustomOverlayMap>
       )}
     </>
   );
