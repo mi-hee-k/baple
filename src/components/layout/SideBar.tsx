@@ -6,12 +6,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useRouter } from 'next/router';
 import ThemeSwitcher from './ThemeSwitcher';
+import { useTheme } from 'next-themes';
 
 const SideBar = () => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -48,7 +50,9 @@ const SideBar = () => {
             />
           )}
           <div
-            className={`bg-gray-200 bg-opacity-90 h-screen w-[300px] md:hidden fixed top-0 left-0 transition-transform transform ${
+            className={`${
+              theme === 'baple' ? 'bg-gray-200' : 'bg-gray-900'
+            } bg-opacity-90 h-screen w-[300px] md:hidden fixed top-0 left-0 transition-transform transform ${
               isSidebarOpened ? 'translate-x-0' : '-translate-x-full'
             } ease-in-out duration-300 z-40`}
           >
