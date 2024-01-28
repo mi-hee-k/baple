@@ -52,21 +52,23 @@ const PlaceCard3 = ({ place }: Props) => {
         isPressable
         isHoverable
         onPress={() => router.push(`/place/${unique_place_id}`)}
-        className='w-[19rem] h-[24.5rem] flex flex-col items-center rounded-3xl aspect-auto '
+        className='w-[9.5rem] h-[16rem] sm:w-[19rem] sm:h-[24.5rem] flex flex-col items-center rounded-3xl aspect-auto '
       >
         <CardBody className='overflow-visible rounded-3xl flex items-center'>
           <Image
             width='16.5rem'
             height='16.5rem'
             alt={place_name}
-            className='object-cover rounded-3xl shadow-xl w-[16.5rem] h-[16.5rem]'
+            className='object-cover rounded-3xl shadow-xl w-[8.25rem] h-[8.25rem] sm:w-[16.5rem] sm:h-[16.5rem]'
             src={imgURL}
           />
         </CardBody>
         <CardFooter className='flex flex-col w-full'>
           <div className='flex flex-col items-start w-full'>
-            <span className='text-sm'>{city}</span>
-            <span className='text-base font-bold'>{place_name}</span>
+            <span className='text-xs sm:text-sm'>{city}</span>
+            <span className='text-sm sm:text-base font-bold whitespace-nowrap text-ellipsis overflow-hidden'>
+              {place_name}
+            </span>
           </div>
           <div className='flex gap-2 w-full justify-end'>
             <span className='flex gap-1 items-center justify-center'>
