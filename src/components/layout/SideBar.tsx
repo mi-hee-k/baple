@@ -17,6 +17,10 @@ const SideBar = () => {
     setIsLoaded(true);
   }, []);
 
+  useEffect(() => {
+    setIsSidebarOpened(false);
+  }, [router.pathname]);
+
   return (
     <>
       {isLoaded && (
@@ -56,7 +60,7 @@ const SideBar = () => {
                   router.pathname === '/nearby' ? 'text-primary' : ''
                 }`}
               >
-                주변 장소
+                내 주변 장소
               </Link>
               <Link
                 href='/places'
