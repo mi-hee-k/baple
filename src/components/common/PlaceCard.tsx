@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Chip,
-  Image,
-} from '@nextui-org/react';
+import { Chip } from '@nextui-org/react';
 import { useRouter } from 'next/router';
-import type { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
+import type { PlacesForSearch } from '@/types/types';
 import NextImage from 'next/image'; // 모듈명 변경
-import { MdPhotoCameraBack } from 'react-icons/md';
 import Link from 'next/link';
 
 interface Props {
@@ -187,9 +177,14 @@ const PlaceCard = ({ place }: Props) => {
         ) : null}
       </div> */}
       <Link href={`/place/${unique_place_id}`}>
-        <div className='relative w-[19rem] h-[14.5rem]  mx-auto transition-all ring-2 ring-gray-100 rounded-lg overflow-hidden shadow-md hover:ring-4 hover:ring-primary '>
-          <NextImage src={imgURL} alt='place image' fill={true} sizes='12rem' />
-          <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 place-items-start pb-16 px-5 pt-5'>
+        <div className='relative w-[12.6rem] h-[9.6rem] mx-auto sm:w-[19rem] sm:h-[14.5rem] transition-all ring-2 ring-gray-100 rounded-3xl overflow-hidden shadow-md hover:ring-4 hover:ring-primary '>
+          <NextImage
+            src={imgURL}
+            alt='place_image'
+            fill={true}
+            className='rounded-3xl'
+          />
+          <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 place-items-start pb-16 px-5 pt-5 rounded-xl'>
             {is_paid ? (
               <Chip size='sm' variant='solid'>
                 입장료
@@ -231,7 +226,7 @@ const PlaceCard = ({ place }: Props) => {
               </Chip>
             ) : null}
           </div>
-          <div className='absolute h-[4rem]  w-full bottom-0 p-2  text-black bg-white bg-opacity-80 backdrop-blur-sm'>
+          <div className='absolute h-[4rem]  w-full bottom-0 p-2  text-black bg-white bg-opacity-90'>
             <div className='flex'>
               <p className='text-xs mt-1 w-full whitespace-nowrap text-ellipsis overflow-hidden'>
                 {city}
