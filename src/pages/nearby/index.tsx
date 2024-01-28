@@ -161,7 +161,7 @@ const NearByPage = () => {
           }}
           // className='relative flex'
           level={8} // 지도의 확대 레벨
-          minLevel={8}
+          minLevel={11}
           draggable={true}
           zoomable={true}
           keyboardShortcuts={true}
@@ -209,7 +209,7 @@ const NearByPage = () => {
       ) : (
         <div className='w-[100%] h-[90vh] flex items-center justify-center'>
           <Spinner
-            label='로딩중!'
+            label='현재위치 불러오는중 혹은 현재위치 사용불가'
             color='primary'
             size='lg'
             labelColor='primary'

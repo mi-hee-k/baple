@@ -33,6 +33,8 @@ const PlacesPage = () => {
           query = query.in(checkbox, [true]);
         });
       }
+      console.log('Query:', query);
+
       const { data, error } = await query.range(
         (currentPage - 1) * pageSize,
         currentPage * pageSize - 1,
