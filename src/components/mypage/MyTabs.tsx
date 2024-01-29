@@ -13,7 +13,6 @@ import { useViewport } from '@/hooks/useViewport';
 import PlaceCard3 from '../common/PlaceCard3';
 import Image from 'next/image';
 import _ from 'lodash';
-import MainWrapper from '../layout/MainWrapper';
 
 const MyTabs = () => {
   const { userId } = useSelector((state: RootState) => state.auth);
