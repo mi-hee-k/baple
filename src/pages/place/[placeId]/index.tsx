@@ -12,6 +12,7 @@ import {
   MapMarker,
   MapTypeControl,
   Roadview,
+  RoadviewComponent,
   RoadviewMarker,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
@@ -33,7 +34,7 @@ export type ShowAlertType = () => void;
 const PlacePage = () => {
   const router = useRouter();
   const { theme } = useTheme();
-  const roadviewRef = useRef();
+  const roadviewRef = useRef<kakao.maps.Roadview | null>(null);
   const placeId: string = router.query.placeId as string;
   const [toggle, setToggle] = useState('map');
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
@@ -77,6 +78,7 @@ const PlacePage = () => {
     lng: placeInfo?.lng,
   };
 
+  console.log({ placePosition });
   // 버튼 토글
   const toggleBookmark = () => {
     if (isBookmarked) {
@@ -107,6 +109,14 @@ const PlacePage = () => {
       </div>
     );
   }
+
+  const Content = () => {
+    return (
+      <div>
+        asdfasdfasdfadsfasdfasdfasdfasdlkfjasldfkjlasjdf;lkjsa;lfkjas;ldkfj;lsdkjflksjd;lfakjs;
+      </div>
+    );
+  };
 
   return (
     <MainWrapper>
@@ -198,6 +208,7 @@ const PlacePage = () => {
             width: '100%',
             height: '300px',
           }}
+          ref={roadviewRef}
         >
           {/* <RoadviewMarker position={placePosition} /> */}
           {toggle === 'roadview' && (
@@ -216,14 +227,20 @@ const PlacePage = () => {
               {placeInfo.place_name}
             </div>
           </RoadviewMarker> */}
-          {/* <CustomOverlayRoadview
+          <CustomOverlayRoadview
             position={placePosition}
             xAnchor={0.5}
             yAnchor={0.5}
             onCreate={(overlay) => {
               const roadview = roadviewRef.current;
-              const projection = roadview?.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
+
+              if (!roadview) {
+                return;
+              }
+
+              const projection = roadview.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
               // 커스텀오버레이의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
+              console.log(overlay.getPosition());
               const viewpoint = projection.viewpointFromCoords(
                 overlay.getPosition(),
                 overlay.getAltitude(),
@@ -231,8 +248,8 @@ const PlacePage = () => {
               roadview.setViewpoint(viewpoint); //커스텀 오버레이를 로드뷰의 가운데에 오도록 로드뷰의 시점을 변화 시킵니다.
             }}
           >
-            adsfasdfasdfasdfasdfasfasd
-          </CustomOverlayRoadview> */}
+            <Content />
+          </CustomOverlayRoadview>
         </Roadview>
       </section>
 
