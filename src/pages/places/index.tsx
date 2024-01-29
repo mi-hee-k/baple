@@ -33,7 +33,7 @@ const PlacesPage = () => {
           query = query.in(checkbox, [true]);
         });
       }
-      console.log('Query:', query);
+      // console.log('Query:', query);
 
       const { data, error } = await query.range(
         (currentPage - 1) * pageSize,
@@ -107,7 +107,7 @@ const PlacesPage = () => {
         : [...prevSelected, value],
     );
   };
-  console.log('selected', selected);
+  // console.log('selected', selected);
   const checkboxButton = (value: string, label: string) => (
     <Button
       key={value}
