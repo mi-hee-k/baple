@@ -50,14 +50,12 @@ const ReviewUpperSection = ({
       if (result.isConfirmed) {
         if (review.images_url) {
           if (review.images_url.includes(review.places.image_url)) {
-            console.log('장소대표이미지가 포함된 경우');
+            // 이미지에 장소 대표 이미지가 포함된 경우
             deleteReview({
               reviewId: review.id,
             });
           } else {
-            console.log(
-              '이미지가 있지만 장소대표이미지에 포함되지 않은 경우  또는 이미지가 없는 경우',
-            );
+            // 이미지가 있지만 장소대표이미지에 포함되지 않은 경우  또는 이미지가 없는 경우
             deleteReview({
               reviewId: review.id,
               imagesUrl: review.images_url as string[],
@@ -70,10 +68,7 @@ const ReviewUpperSection = ({
       }
     });
   };
-  console.log('리뷰!', review);
-  // console.log('data의 이미지', data?.image_url);
-  console.log('장소대표이미지', review.places.image_url);
-  console.log('리뷰이미지', review.images_url);
+
   return (
     <>
       <Spacer y={10} />
