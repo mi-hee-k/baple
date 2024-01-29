@@ -46,11 +46,16 @@ const NearByPage = () => {
   const [regionName, setRegionName] = useState<string>('');
   const [cityName, setCityName] = useState<string>('');
   const [place, setplace] = useState<Tables<'places'>[] | null>([]);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(
-    isMobile ? false : true,
-  );
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (isMobile) {
+      setIsModalVisible(false);
+    } else {
+      setIsModalVisible(true);
+    }
+  }, [isMobile]);
   // console.log('windowkakao', window.kakao);
   /**
    * 현재 할것
