@@ -3,6 +3,7 @@ import EventMarkerContainer from '@/components/map/MarkerContainer';
 import MylocationButton from '@/components/map/MylocationButton';
 import MylocationOverlayMap from '@/components/map/MylocationOverlayMap';
 import PlacesModal from '@/components/map/PlacesModal';
+import { useViewport } from '@/hooks/useViewport';
 import { supabase } from '@/libs/supabase';
 import { placesData } from '@/redux/modules/placesDataSlice';
 import { Tables } from '@/types/supabase';
@@ -40,10 +41,14 @@ const NearByPage = () => {
     errMsg: null,
     isLoading: true,
   });
+
+  const { isMobile } = useViewport();
   const [regionName, setRegionName] = useState<string>('');
   const [cityName, setCityName] = useState<string>('');
   const [place, setplace] = useState<Tables<'places'>[] | null>([]);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(
+    isMobile ? false : true,
+  );
   const dispatch = useDispatch();
 
   // console.log('windowkakao', window.kakao);
