@@ -33,11 +33,6 @@ const ReviewUpperSection = ({
     currentUserId as string,
   );
 
-  // const { data } = useQuery({
-  //   queryKey: ['placeInfo', review.place_id],
-  //   queryFn: () => getPlaceInfo(review.place_id),
-  // });
-
   const reviewDelete = () => {
     Swal.fire({
       icon: 'warning',
