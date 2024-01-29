@@ -86,7 +86,7 @@ const PlaceDetail = ({
               <Chip className='bg-primary text-white rounded-full text-md sm:text-base w-full max-w-full text-center'>
                 <div className='flex justify-center'>
                   <Image
-                    src={`/images/icons/place_icons/${infoDetails[index].icon}_black.svg`}
+                    src={`/images/icons/place_icons/${infoDetails[index].icon}_white.svg`}
                     alt='icon'
                     width={18}
                     height={18}
@@ -99,7 +99,7 @@ const PlaceDetail = ({
               <Chip className='rounded-full text-md sm:text-base w-full max-w-full text-center'>
                 <div className='flex justify-center'>
                   <Image
-                    src={`/images/icons/place_icons/${infoDetails[index].icon}_white.svg`}
+                    src={`/images/icons/place_icons/${infoDetails[index].icon}_black.svg`}
                     alt='icon'
                     width={18}
                     height={18}
