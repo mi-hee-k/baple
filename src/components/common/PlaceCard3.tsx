@@ -46,7 +46,7 @@ const PlaceCard3 = ({ place }: Props) => {
   const { theme } = useTheme();
 
   return (
-    <div className='m-1 flex basis-[30%]'>
+    <div className='m-1 flex'>
       <Card
         shadow='sm'
         isPressable

@@ -50,110 +50,106 @@ const MyTabs = () => {
     );
 
   return (
-    <>
-      <div className='flex w-full flex-col'>
-        <Tabs
-          aria-label='Options'
-          color='primary'
-          className='w-full flex justify-center'
-          size={isMobile ? 'sm' : 'lg'}
-          variant='underlined'
-        >
-          <Tab key='bookmarked' title='북마크한 장소'>
-            <Card>
-              <CardBody>
-                {bookmarkedPlaces?.length !== 0 ? (
-                  <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 places-items-center '>
-                    {bookmarkedPlaces?.map((place, idx) => (
-                      <PlaceCard key={idx} place={place} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className='flex flex-col items-center gap-3 justify-center w-full my-5'>
-                    <Image
-                      src='/images/icons/character.svg'
-                      alt='main_character'
-                      width={100}
-                      height={100}
-                    />
-                    <span className='font-bold'>
-                      북마크한 장소가 없습니다. 😢
-                    </span>
-                  </div>
-                )}
-              </CardBody>
-            </Card>
-          </Tab>
-          <Tab key='liked' title='좋아요한 리뷰'>
-            <Card>
-              <CardBody>
-                {likedReviews?.length === 0 && (
-                  <div className='flex flex-col items-center gap-3 justify-center w-full my-5'>
-                    <Image
-                      src='/images/icons/character.svg'
-                      alt='main_character'
-                      width={100}
-                      height={100}
-                    />
-                    <span className='font-bold'>
-                      좋아요한 리뷰가 없습니다. 😢
-                    </span>
-                  </div>
-                )}
-                {!isMobile && (
-                  <div className='flex flex-col gap-1'>
-                    {likedReviews?.map((review, idx) => (
-                      <ReviewCard2 review={review} key={idx} />
-                    ))}
-                  </div>
-                )}
-                {isMobile && (
-                  <div className='flex flex-col gap-1'>
-                    {likedReviews?.map((review, idx) => (
-                      <ReviewCardMobile review={review} key={idx} />
-                    ))}
-                  </div>
-                )}
-              </CardBody>
-            </Card>
-          </Tab>
+    <div className='flex w-full flex-col'>
+      <Tabs
+        aria-label='Options'
+        color='primary'
+        className='w-full flex justify-center'
+        size={isMobile ? 'sm' : 'lg'}
+        variant='underlined'
+      >
+        <Tab key='bookmarked' title='북마크한 장소'>
+          <Card>
+            <CardBody>
+              {bookmarkedPlaces?.length !== 0 ? (
+                <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 places-items-center '>
+                  {bookmarkedPlaces?.map((place, idx) => (
+                    <PlaceCard key={idx} place={place} />
+                  ))}
+                </div>
+              ) : (
+                <div className='flex flex-col items-center gap-3 justify-center w-full my-5'>
+                  <Image
+                    src='/images/icons/character.svg'
+                    alt='main_character'
+                    width={100}
+                    height={100}
+                  />
+                  <span className='font-bold'>
+                    북마크한 장소가 없습니다. 😢
+                  </span>
+                </div>
+              )}
+            </CardBody>
+          </Card>
+        </Tab>
+        <Tab key='liked' title='좋아요한 리뷰'>
+          <Card>
+            <CardBody>
+              {likedReviews?.length === 0 && (
+                <div className='flex flex-col items-center gap-3 justify-center w-full my-5'>
+                  <Image
+                    src='/images/icons/character.svg'
+                    alt='main_character'
+                    width={100}
+                    height={100}
+                  />
+                  <span className='font-bold'>
+                    좋아요한 리뷰가 없습니다. 😢
+                  </span>
+                </div>
+              )}
+              {!isMobile && (
+                <div className='flex flex-col gap-1'>
+                  {likedReviews?.map((review, idx) => (
+                    <ReviewCard2 review={review} key={idx} />
+                  ))}
+                </div>
+              )}
+              {isMobile && (
+                <div className='flex flex-col gap-1'>
+                  {likedReviews?.map((review, idx) => (
+                    <ReviewCardMobile review={review} key={idx} />
+                  ))}
+                </div>
+              )}
+            </CardBody>
+          </Card>
+        </Tab>
 
-          <Tab key='written' title='작성한 리뷰'>
-            <Card>
-              <CardBody>
-                {writtenReviews?.length === 0 && (
-                  <div className='flex flex-col items-center gap-3 justify-center w-full my-5'>
-                    <Image
-                      src='/images/icons/character.svg'
-                      alt='main_character'
-                      width={100}
-                      height={100}
-                    />
-                    <span className='font-bold'>
-                      작성한 리뷰가 없습니다. 😢
-                    </span>
-                  </div>
-                )}
-                {!isMobile && (
-                  <div className='flex flex-col gap-1'>
-                    {writtenReviews?.map((review, idx) => (
-                      <ReviewCard2 review={review} key={idx} />
-                    ))}
-                  </div>
-                )}
-                {isMobile && (
-                  <div className='flex flex-col gap-1'>
-                    {writtenReviews?.map((review, idx) => (
-                      <ReviewCardMobile review={review} key={idx} />
-                    ))}
-                  </div>
-                )}
-              </CardBody>
-            </Card>
-          </Tab>
-        </Tabs>
-      </div>
-    </>
+        <Tab key='written' title='작성한 리뷰'>
+          <Card>
+            <CardBody>
+              {writtenReviews?.length === 0 && (
+                <div className='flex flex-col items-center gap-3 justify-center w-full my-5'>
+                  <Image
+                    src='/images/icons/character.svg'
+                    alt='main_character'
+                    width={100}
+                    height={100}
+                  />
+                  <span className='font-bold'>작성한 리뷰가 없습니다. 😢</span>
+                </div>
+              )}
+              {!isMobile && (
+                <div className='flex flex-col gap-1'>
+                  {writtenReviews?.map((review, idx) => (
+                    <ReviewCard2 review={review} key={idx} />
+                  ))}
+                </div>
+              )}
+              {isMobile && (
+                <div className='flex flex-col gap-1'>
+                  {writtenReviews?.map((review, idx) => (
+                    <ReviewCardMobile review={review} key={idx} />
+                  ))}
+                </div>
+              )}
+            </CardBody>
+          </Card>
+        </Tab>
+      </Tabs>
+    </div>
   );
 };
 

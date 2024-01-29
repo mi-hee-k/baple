@@ -28,12 +28,6 @@ const MostReviews = ({ initialData }: Props) => {
     return <p>데이터 불러오는중...</p>;
   }
 
-  const slidesPerCardView = () => {
-    if (isMobile) {
-      return 2;
-    }
-  };
-
   return (
     <div className='w-full '>
       <div className='flex flex-col gap-2'>
