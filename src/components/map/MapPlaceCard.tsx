@@ -7,7 +7,15 @@ const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
     condition: boolean | null | undefined,
     text: string,
   ) => {
-    return condition ? <p className='mr-[1px]'>{text}</p> : null;
+    return condition ? (
+      <Image
+        src={place?.image_url || '/images/icons/character.svg'}
+        alt='이미지'
+        className='mr-[1px] mt-[1px]'
+        width={20}
+        height={20}
+      />
+    ) : null;
   };
 
   return (
