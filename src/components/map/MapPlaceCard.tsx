@@ -11,7 +11,7 @@ const MapPlaceCard = ({ place }: { place: Tables<'places'> | null }) => {
       <Image
         src={iconImage}
         alt='이미지'
-        className='mr-[1px] mt-[1px]'
+        className='mr-[10px] mt-[3px] sm:mt-[10px]'
         width={20}
         height={20}
       />
