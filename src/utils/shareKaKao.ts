@@ -5,6 +5,7 @@ interface Props {
 }
 
 export const shareKakao = async ({ address, place_name, placeId }: Props) => {
+  console.log(process.env.NEXT_PUBLIC_BASEURL);
   await window.Kakao.Share.sendDefault({
     objectType: 'location',
     address: `${address}`,
@@ -15,6 +16,7 @@ export const shareKakao = async ({ address, place_name, placeId }: Props) => {
       imageUrl:
         'https://velog.velcdn.com/images/jetiiin/post/3e477527-5e73-4a52-a8de-c0d1dec00f8a/image.png',
       link: {
+        mobileWebUrl: `${process.env.NEXT_PUBLIC_BASEURL}/place/${placeId}`,
         webUrl: `${process.env.NEXT_PUBLIC_BASEURL}/place/${placeId}`,
       },
     },
@@ -22,7 +24,8 @@ export const shareKakao = async ({ address, place_name, placeId }: Props) => {
       {
         title: '웹으로 보기',
         link: {
-          webUrl: `${process.env.NEXT_PUBLIC_BASEURL}/place/${placeId}`,
+          mobileWebUrl: `https://baple.vercel.app/place/${placeId}`,
+          webUrl: `https://baple.vercel.app/place/${placeId}`,
         },
       },
     ],
