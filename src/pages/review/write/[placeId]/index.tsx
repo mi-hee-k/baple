@@ -28,8 +28,6 @@ const ReviewWritePage = () => {
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
 
-  console.log('모달오픈?', modalOpen);
-
   const { placeId } = router.query;
 
   const { data: placeInfo } = useQuery({
