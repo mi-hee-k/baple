@@ -18,7 +18,7 @@ import { getUserDataById } from '@/apis/users';
 import Image from 'next/image';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useViewport } from '@/hooks/useViewport';
-import { useTheme } from 'next-themes';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Header = () => {
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { isMobile } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
-  const { theme } = useTheme();
+  const { baple } = useCurrentTheme();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -103,7 +103,7 @@ const Header = () => {
       {isLoaded ? (
         <header
           className={`py-2 font-bold sticky top-0 z-20 shadow-xl bg-${
-            theme === 'baple' ? 'white' : 'secondary'
+            baple ? 'white' : 'secondary'
           } bg-opacity-95 `}
         >
           <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
@@ -115,9 +115,7 @@ const Header = () => {
                 <Link href='/' className='flex justify-center'>
                   <Image
                     src={`/images/icons/${
-                      theme === 'baple'
-                        ? 'basic-logo.svg'
-                        : '/CBicons/CBbasic-logo.svg'
+                      baple ? 'basic-logo.svg' : '/CBicons/CBbasic-logo.svg'
                     }`}
                     alt='main logo'
                     width={100}

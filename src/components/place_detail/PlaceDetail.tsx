@@ -3,7 +3,7 @@ import { Chip } from '@nextui-org/react';
 import { ShowAlertType, ToggleBookmarkType } from '@/pages/place/[placeId]';
 import PlaceDetailHeader from './PlaceDetailHeader';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 export interface PlaceInfoAllData {
   placeId: string;
@@ -45,7 +45,8 @@ const PlaceDetail = ({
     { icon: '입장료', label: '입장료' },
     { icon: '휠체어대여가능', label: '휠체어 대여' },
   ];
-  const { theme } = useTheme();
+  const { baple } = useCurrentTheme();
+
   return (
     <section className='flex flex-col justify-between w-full h-auto md:h-[500px] md:w-[60%] '>
       <div>
@@ -86,14 +87,14 @@ const PlaceDetail = ({
             {item ? (
               <Chip
                 className={`bg-primary text-${
-                  theme === 'baple' ? 'white' : 'black'
+                  baple ? 'white' : 'black'
                 } rounded-full text-md sm:text-base w-full max-w-full text-center`}
               >
                 <div className='flex justify-center'>
                   <Image
                     src={`/images/icons/place_icons/${
                       infoDetails[index].icon
-                    }_${theme === 'baple' ? 'white' : 'black'}.svg`}
+                    }_${baple ? 'white' : 'black'}.svg`}
                     alt='icon'
                     width={18}
                     height={18}
@@ -108,7 +109,7 @@ const PlaceDetail = ({
                   <Image
                     src={`/images/icons/place_icons/${
                       infoDetails[index].icon
-                    }_${theme === 'baple' ? 'black' : 'white'}.svg`}
+                    }_${baple ? 'black' : 'white'}.svg`}
                     alt='icon'
                     width={18}
                     height={18}

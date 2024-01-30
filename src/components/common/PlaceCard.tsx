@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import type { PlacesForSearch } from '@/types/types';
 import NextImage from 'next/image'; // 모듈명 변경
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 interface Props {
   place: PlacesForSearch;
@@ -33,7 +33,7 @@ const PlaceCard = ({ place }: Props) => {
       ? image_url
       : 'https://velog.velcdn.com/images/jetiiin/post/6cd59108-3d13-449c-814b-4ee50af9fc9f/image.png';
 
-  const { theme } = useTheme();
+  const { baple } = useCurrentTheme();
 
   return (
     <div className='my-2'>
@@ -238,9 +238,7 @@ const PlaceCard = ({ place }: Props) => {
                 <span className='flex gap-1 items-center justify-center'>
                   <NextImage
                     src={`/images/icons/${
-                      theme === 'baple'
-                        ? 'write_select.svg'
-                        : 'CBicons/CBwrite_select.svg'
+                      baple ? 'write_select.svg' : 'CBicons/CBwrite_select.svg'
                     }`}
                     width={20}
                     height={20}
@@ -252,7 +250,7 @@ const PlaceCard = ({ place }: Props) => {
                 <span className='flex gap-2 items-center justify-center'>
                   <NextImage
                     src={`/images/icons/${
-                      theme === 'baple'
+                      baple
                         ? 'bookmark_select.svg'
                         : 'CBicons/CBbookmark_select_.svg'
                     }`}

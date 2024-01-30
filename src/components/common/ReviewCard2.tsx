@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useViewport } from '@/hooks/useViewport';
 
 import type { ReviewsFromRPC } from '@/types/types';
-import { useTheme } from 'next-themes';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 interface Props {
   review: ReviewsFromRPC;
@@ -28,7 +28,7 @@ const ReviewCard2 = ({ review }: Props) => {
   } = review;
   const { isTablet } = useViewport();
 
-  const { theme } = useTheme();
+  const { baple } = useCurrentTheme();
 
   return (
     <Link className='w-full' href={`/review/${unique_review_id}`}>
@@ -77,7 +77,7 @@ const ReviewCard2 = ({ review }: Props) => {
               <span className='flex gap-1'>
                 <Image
                   src={`/images/icons/${
-                    theme === 'baple'
+                    baple
                       ? 'comment_select.svg'
                       : 'CBicons/CBcomment_select.svg'
                   }`}
@@ -90,9 +90,7 @@ const ReviewCard2 = ({ review }: Props) => {
               <span className='flex gap-1'>
                 <Image
                   src={`/images/icons/${
-                    theme === 'baple'
-                      ? 'heart_select.svg'
-                      : 'CBicons/CBfilled-heart.svg'
+                    baple ? 'heart_select.svg' : 'CBicons/CBfilled-heart.svg'
                   }`}
                   width={20}
                   height={20}
