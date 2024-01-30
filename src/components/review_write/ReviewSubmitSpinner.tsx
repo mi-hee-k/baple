@@ -2,7 +2,11 @@ import { Spacer, Spinner } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
 import React from 'react';
 
-const ReviewSubmitSpinner = () => {
+interface Props {
+  message: string;
+}
+
+const ReviewSubmitSpinner = ({ message }: Props) => {
   const { theme } = useTheme();
   return (
     <div
@@ -15,7 +19,7 @@ const ReviewSubmitSpinner = () => {
       >
         <Spinner size='lg' />
         <Spacer y={10} />
-        <p>업로드중.. 잠시만 기다려주세요 😜</p>
+        <p>{message}</p>
       </div>
       <div className='absolute w-[100%] h-[100%] bg-gray-900 opacity-50'></div>
     </div>
