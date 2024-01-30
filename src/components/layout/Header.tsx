@@ -104,7 +104,7 @@ const Header = () => {
         <header
           className={`py-2 font-bold sticky top-0 z-20 shadow-xl bg-${
             theme === 'baple' ? 'white' : 'secondary'
-          } bg-opacity-95 `}
+          } bg-opacity-95 w-[100vw]`}
         >
           <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
             <nav className='flex sm:flex w-full justify-between items-center'>
