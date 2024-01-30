@@ -69,8 +69,9 @@ const UpdatePasswordPage = () => {
           height={50}
         />
       </Link>
-      <span>비밀번호 변경</span>
-      <span>새로운 비밀번호를 입력해 주세요</span>
+      <div className='flex flex-col text-center gap-2 text-sm'>
+        <span>새로운 비밀번호를 입력해 주세요</span>
+      </div>
       <Input
         label='비밀번호'
         variant='bordered'
