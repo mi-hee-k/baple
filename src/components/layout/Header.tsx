@@ -147,7 +147,7 @@ const Header = () => {
                       router.pathname === '/board' ? 'text-primary' : ''
                     }`}
                   >
-                    게시판
+                    건의 게시판
                   </Link>
                 </div>
               </div>
