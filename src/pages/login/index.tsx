@@ -94,6 +94,7 @@ const LogInPage = () => {
             label='Password'
             variant='bordered'
             placeholder='비밀번호를 입력해주세요'
+            maxLength={20}
             endContent={
               <button
                 className='focus:outline-none'
