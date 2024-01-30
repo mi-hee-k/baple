@@ -53,7 +53,11 @@ const PlacesModal = ({
         >
           <Image
             className='flex absolute  w-[40px] h-[40px] z-10 right-[-10px] sm:h-[60px]'
-            src={'images/icons/button_내주변장소.svg'}
+            src={
+              isModalVisible
+                ? 'images/icons/button_내주변장소_오.svg'
+                : 'images/icons/button_내주변장소_왼.svg'
+            }
             width={60}
             height={60}
             alt='버튼'
