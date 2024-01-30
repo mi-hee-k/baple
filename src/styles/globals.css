@@ -62,7 +62,7 @@ body {
   color: #66b6ff;
 }
 
-#test .slick-arrow {
+/* #test .slick-arrow {
   width: 40px;
   height: 40px;
 }
@@ -81,7 +81,7 @@ body {
 .slick-next::before {
   opacity: 0;
   display: none;
-}
+} */
 
 /* .swiper-scrollbar {
   background: #fff !important;
