@@ -89,7 +89,7 @@ const PlaceDetail = ({
               <span className='w-3/4 md:text-xl'>정보없음</span>
             ) : (
               <Link target='_blank' href={`http://${homepage}`}>
-                <span className='w-3/4 md:text-xl text-gray-600'>
+                <span className='w-3/4 md:text-xl text-gray-600 hover:text-primary'>
                   🔗 바로가기
                 </span>
               </Link>
