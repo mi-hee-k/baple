@@ -27,7 +27,6 @@ import PlaceDetailHeader from '@/components/place_detail/PlaceDetailHeader';
 import { getBookmark } from '@/apis/bookmarks';
 import { useBookmarks } from '@/hooks/useBookmarks';
 import { useTheme } from 'next-themes';
-import Carousel_Test from '@/components/common/Carousel_Test';
 
 export type ToggleBookmarkType = () => void;
 export type ShowAlertType = () => void;
@@ -134,11 +133,6 @@ const PlacePage = () => {
       </div>
       {/* 이미지 캐러셀 */}
       <div className='flex flex-col items-center justify-start h-auto md:h-[500px] mb-[50px] mt-[10px] md:mt-[80px] md:flex-row md:justify-between'>
-        {/* <Carousel_Test
-          imgList={
-            imgList.length !== 0 ? imgList : ['/images/default_image2.png']
-          }
-        /> */}
         {imgList && (
           <div className='w-full mb-[30px] md:mb-0 md:mr-[30px] md:w-[40%]'>
             <CarouselThumb
