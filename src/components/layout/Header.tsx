@@ -124,7 +124,15 @@ const Header = () => {
                     height={100}
                   />
                 </Link>
-                <div className='hidden md:flex gap-16 items-center w-[100%] justify-center bg-red-200'>
+                <div className='hidden md:flex gap-16 items-center w-[65vw] justify-start pl-10'>
+                  <Link
+                    href='/about'
+                    className={`hover:text-primary ${
+                      router.pathname === '/about' ? 'text-primary' : ''
+                    }`}
+                  >
+                    배플 소개
+                  </Link>
                   <Link
                     href='/nearby'
                     className={`hover:text-primary w-auto ${
@@ -148,14 +156,6 @@ const Header = () => {
                     }`}
                   >
                     건의 게시판
-                  </Link>
-                  <Link
-                    href='/board'
-                    className={`hover:text-primary ${
-                      router.pathname === '/board' ? 'text-primary' : ''
-                    }`}
-                  >
-                    배플 소개
                   </Link>
                 </div>
               </div>

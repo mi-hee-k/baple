@@ -59,6 +59,14 @@ const SideBar = () => {
             {/* Content of the sidebar */}
             <div className={`flex flex-col m-16 gap-5`}>
               <Link
+                href='/about'
+                className={` ${
+                  router.pathname === '/about' ? 'text-primary' : ''
+                }`}
+              >
+                배플 소개
+              </Link>
+              <Link
                 href='/nearby'
                 className={` ${
                   router.pathname === '/nearby' ? 'text-primary' : ''
@@ -80,7 +88,7 @@ const SideBar = () => {
                   router.pathname.startsWith('/board') ? 'text-primary' : ''
                 }`}
               >
-                게시판
+                건의 게시판
               </Link>
               {isLoggedIn ? (
                 <Link
