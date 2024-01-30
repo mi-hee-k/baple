@@ -37,7 +37,7 @@ const ReviewCard2 = ({ review }: Props) => {
           {isTablet ? (
             ''
           ) : (
-            <section className='flex flex-col w-[15%] gap-y-2 min-w-[118px] items-center justify-center'>
+            <section className='flex flex-col w-[127px] gap-y-2 min-w-[118px] items-center justify-center'>
               <Avatar
                 showFallback
                 src={user_avatar_url}
