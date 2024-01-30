@@ -80,7 +80,7 @@ const SideBar = () => {
                   router.pathname.startsWith('/board') ? 'text-primary' : ''
                 }`}
               >
-                게시판
+                건의 게시판
               </Link>
               {isLoggedIn ? (
                 <Link
