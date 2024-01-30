@@ -51,12 +51,10 @@ const UpdatePasswordPage = () => {
     if (data) {
       toastSuccess('비밀번호 변경 성공!');
       router.push('/');
-      console.log('비번변경성공', data);
-    }
-    if (error) {
+    } else {
       toastError('비밀번호 변경 실패!');
-      console.log('비번변경실패', error);
     }
+    if (error) throw error;
   };
   return (
     <form
