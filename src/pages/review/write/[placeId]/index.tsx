@@ -139,9 +139,11 @@ const ReviewWritePage = () => {
     router.replace(`/place/${placeId}`);
   };
 
+  const modalMessage = '업로드중.. 잠시만 기다려주세요 😜';
+
   return (
     <>
-      {modalOpen && <ReviewSubmitSpinner />}
+      {modalOpen && <ReviewSubmitSpinner message={modalMessage} />}
       <div className='min-h-screen py-20'>
         <Seo />
         <div className='p-4 sm:p-10 max-w-screen-sm mx-auto shadow'>
