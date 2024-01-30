@@ -112,8 +112,8 @@ const PlacePage = () => {
 
   const Content = () => {
     return (
-      <div>
-        asdfasdfasdfadsfasdfasdfasdfasdlkfjasldfkjlasjdf;lkjsa;lfkjas;ldkfj;lsdkjflksjd;lfakjs;
+      <div className='bg-white w-[250px] h-[100px] rounded-[20px] flex items-center justify-center text-[20px] font-bold'>
+        <p>{placeInfo.place_name}</p>
       </div>
     );
   };
@@ -159,34 +159,33 @@ const PlacePage = () => {
 
       {/* 지도 */}
       <section className='mb-[30px] relative'>
-        <Map
-          center={placePosition}
-          draggable={false}
-          // zoomable={true}
-          scrollwheel={false}
-          keyboardShortcuts={true}
-          style={{
-            // 지도의 크기
-            width: '100%',
-            height: '300px',
-            display: toggle === 'map' ? 'block' : 'none',
-          }}
-          level={4}
-          minLevel={8}
-        >
-          <MapMarker
-            position={placePosition}
-            image={{
-              src: `/images/icons/${
-                theme === 'baple' ? 'marker.svg' : 'CBicons/CBmarker.svg'
-              }`, // 마커이미지의 주소입니다
-              size: {
-                width: 44,
-                height: 40,
-              },
+        {toggle === 'map' && (
+          <Map
+            center={placePosition}
+            draggable={false}
+            // zoomable={true}
+            scrollwheel={false}
+            keyboardShortcuts={true}
+            style={{
+              // 지도의 크기
+              width: '100%',
+              height: '300px',
             }}
-          />
-          {toggle === 'map' && (
+            level={4}
+            minLevel={8}
+          >
+            <MapMarker
+              position={placePosition}
+              image={{
+                src: `/images/icons/${
+                  theme === 'baple' ? 'marker.svg' : 'CBicons/CBmarker.svg'
+                }`, // 마커이미지의 주소입니다
+                size: {
+                  width: 44,
+                  height: 40,
+                },
+              }}
+            />
             <Button
               className='absolute flex z-10 top-[3px] left-[130px] w-[90px] h-[32px] justify-center'
               variant='solid'
@@ -196,22 +195,21 @@ const PlacePage = () => {
             >
               로드맵 보기
             </Button>
-          )}
-          <MapTypeControl position={'TOPLEFT'} />
-          <ZoomControl position={'LEFT'} />
-        </Map>
+            <MapTypeControl position={'TOPLEFT'} />
+            <ZoomControl position={'LEFT'} />
+          </Map>
+        )}
 
-        <Roadview
-          position={{ ...placePosition, radius: 200 }}
-          style={{
-            display: toggle === 'roadview' ? 'block' : 'none',
-            width: '100%',
-            height: '300px',
-          }}
-          ref={roadviewRef}
-        >
-          {/* <RoadviewMarker position={placePosition} /> */}
-          {toggle === 'roadview' && (
+        {toggle === 'roadview' && (
+          <Roadview
+            position={{ ...placePosition, radius: 200 }}
+            style={{
+              width: '100%',
+              height: '300px',
+            }}
+            ref={roadviewRef}
+          >
+            {/* <RoadviewMarker position={placePosition} /> */}
             <Button
               className='absolute top-[5px] left-[5px] z-10 flex w-[90px] h-[32px] justify-center'
               variant='solid'
@@ -221,36 +219,31 @@ const PlacePage = () => {
             >
               지도
             </Button>
-          )}
-          {/* <RoadviewMarker position={placePosition}>
-            <div className='flex justify-center items-center rounded-[20px]'>
-              {placeInfo.place_name}
-            </div>
-          </RoadviewMarker> */}
-          <CustomOverlayRoadview
-            position={placePosition}
-            xAnchor={0.5}
-            yAnchor={0.5}
-            onCreate={(overlay) => {
-              const roadview = roadviewRef.current;
+            <CustomOverlayRoadview
+              position={placePosition}
+              xAnchor={0.5}
+              yAnchor={0.5}
+              onCreate={(overlay) => {
+                const roadview = roadviewRef.current;
 
-              if (!roadview) {
-                return;
-              }
+                if (!roadview) {
+                  return;
+                }
 
-              const projection = roadview.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
-              // 커스텀오버레이의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
-              console.log(overlay.getPosition());
-              const viewpoint = projection.viewpointFromCoords(
-                overlay.getPosition(),
-                overlay.getAltitude(),
-              );
-              roadview.setViewpoint(viewpoint); //커스텀 오버레이를 로드뷰의 가운데에 오도록 로드뷰의 시점을 변화 시킵니다.
-            }}
-          >
-            <Content />
-          </CustomOverlayRoadview>
-        </Roadview>
+                const projection = roadview.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
+                // 커스텀오버레이의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
+                console.log(overlay.getPosition());
+                const viewpoint = projection.viewpointFromCoords(
+                  overlay.getPosition(),
+                  overlay.getAltitude(),
+                );
+                roadview.setViewpoint(viewpoint); //커스텀 오버레이를 로드뷰의 가운데에 오도록 로드뷰의 시점을 변화 시킵니다.
+              }}
+            >
+              <Content />
+            </CustomOverlayRoadview>
+          </Roadview>
+        )}
       </section>
 
       {/* 리뷰 */}
