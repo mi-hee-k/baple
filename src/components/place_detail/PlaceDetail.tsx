@@ -4,6 +4,7 @@ import { ShowAlertType, ToggleBookmarkType } from '@/pages/place/[placeId]';
 import PlaceDetailHeader from './PlaceDetailHeader';
 import Image from 'next/image';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
+import Link from 'next/link';
 
 export interface PlaceInfoAllData {
   placeId: string;
@@ -42,7 +43,7 @@ const PlaceDetail = ({
     { icon: '장애인화장실', label: '장애인 화장실' },
     { icon: '장애인출입문', label: '장애인용 출입문' },
     { icon: '안내견동반', label: '안내견 동반' },
-    { icon: '입장료', label: '입장료' },
+    { icon: '입장료', label: '입장료 있음' },
     { icon: '휠체어대여가능', label: '휠체어 대여' },
   ];
   const { baple } = useCurrentTheme();
@@ -60,25 +61,40 @@ const PlaceDetail = ({
             showAlert={showAlert}
           />
         </div>
-        <div className='flex'>
-          <div className='mb-[30px] md:mb-0 w-1/4'>
-            <p className='md:text-xl font-bold mb-1 md:mb-2'>주소</p>
-            <p className='md:text-xl font-bold mb-1 md:mb-2'>전화</p>
-            <p className='md:text-xl font-bold mb-1 md:mb-2'>운영시간</p>
-            <p className='md:text-xl font-bold mb-1 md:mb-2'>휴무일</p>
+        <div className='flex flex-col mb-3 md:mb-0 mx-2 md:my-0'>
+          <div className='flex w-full mb-1 md:mb-2'>
+            <span className='md:text-xl font-bold w-1/4'>주소</span>
+            <span className='w-3/4 md:text-xl'>{address}</span>
           </div>
-          <div className='mb-[30px] md:mb-0 w-3/4'>
-            <p className='md:text-xl mb-1 md:mb-2'>{address}</p>
-            <p className='md:text-xl mb-1 md:mb-2'>
+          <div className='flex w-full mb-1 md:mb-2'>
+            <span className='md:text-xl font-bold w-1/4'>전화</span>
+            <span className='w-3/4 md:text-xl'>
               {tel === '' ? '정보없음' : tel}
-            </p>
-            <p className='md:text-xl mb-1 md:mb-2'>
+            </span>
+          </div>
+          <div className='flex w-full mb-1 md:mb-2'>
+            <span className='md:text-xl font-bold w-1/4'>운영시간</span>
+            <span className='w-3/4 md:text-xl'>
               {working_hours === 'null' ? '정보없음' : working_hours}
-            </p>
-            <p className='md:text-xl mb-1 md:mb-2'>
+            </span>
+          </div>
+          <div className='flex w-full mb-1 md:mb-2'>
+            <span className='md:text-xl font-bold w-1/4'>휴무일</span>
+            <span className='w-3/4 md:text-xl'>
               {holidays === 'null' ? '정보없음' : holidays}
-            </p>
-            <p className='md:text-xl mb-1 md:mb-2'>{homepage}</p>
+            </span>
+          </div>
+          <div className='flex w-full mb-1 md:mb-2'>
+            <span className='md:text-xl font-bold w-1/4'>홈페이지</span>
+            {homepage === '정보없음' ? (
+              <span className='w-3/4 md:text-xl'>정보없음</span>
+            ) : (
+              <Link target='_blank' href={`http://${homepage}`}>
+                <span className='w-3/4 md:text-xl text-gray-600 hover:text-primary'>
+                  🔗 바로가기
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
