@@ -26,7 +26,7 @@ const Header = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   // const [userId, setUserId] = useState('');
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { isMobile } = useViewport();
+  const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
 
@@ -107,9 +107,9 @@ const Header = () => {
           } bg-opacity-95 `}
         >
           <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
-            <nav className='flex sm:flex w-full justify-between items-center'>
+            <nav className='flex md:flex w-full justify-between items-center'>
               {isLoggedIn ? (
-                <div className='block sm:hidden w-full'></div>
+                <div className='block md:hidden w-full'></div>
               ) : null}
               <div className='flex w-full justify-center '>
                 <Link href='/' className='flex justify-center'>
@@ -122,7 +122,15 @@ const Header = () => {
                     height={100}
                   />
                 </Link>
-                <div className='hidden md:flex gap-16 items-center w-full justify-center'>
+                <div className='hidden md:flex gap-16 items-center w-[65vw] justify-start pl-10'>
+                  <Link
+                    href='/about'
+                    className={`hover:text-primary ${
+                      router.pathname === '/about' ? 'text-primary' : ''
+                    }`}
+                  >
+                    배플 소개
+                  </Link>
                   <Link
                     href='/nearby'
                     className={`hover:text-primary w-auto ${
@@ -152,8 +160,8 @@ const Header = () => {
 
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
-                  {isMobile ? null : <ThemeSwitcher />}
-                  <span className='hidden sm:block'>
+                  {isTablet ? null : <ThemeSwitcher />}
+                  <span className='hidden md:block'>
                     반가워요 {user?.user_name}님!
                   </span>
                   <Dropdown>
@@ -183,7 +191,7 @@ const Header = () => {
                   </Dropdown>
                 </div>
               ) : (
-                <div className='hidden sm:flex gap-4 w-full justify-end '>
+                <div className='hidden md:flex gap-4 w-full justify-end '>
                   {isMobile ? null : <ThemeSwitcher />}
                   <Link href='/login'>
                     <Button variant='solid' color='primary'>
