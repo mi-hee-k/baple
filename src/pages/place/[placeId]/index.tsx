@@ -78,7 +78,7 @@ const PlacePage = () => {
     lng: placeInfo?.lng,
   };
 
-  console.log({ placePosition });
+  // console.log({ imgList });
   // 버튼 토글
   const toggleBookmark = () => {
     if (isBookmarked) {
