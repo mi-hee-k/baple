@@ -15,7 +15,7 @@ import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import { shareKakao } from '@/utils/shareKaKao';
 import Image from 'next/image';
 import { useLikes } from '@/hooks/useLikes';
-import { useTheme } from 'next-themes';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 interface Props {
   review: Tables<'reviews'>;
@@ -94,7 +94,7 @@ const ReviewLikes = ({ review }: Props) => {
     navigator.clipboard.writeText(`${baseUrl}${currentPath}`);
     showCopyAlert();
   };
-  const { theme } = useTheme();
+  const { baple } = useCurrentTheme();
 
   return (
     <div className='relative'>
@@ -107,9 +107,7 @@ const ReviewLikes = ({ review }: Props) => {
                 <div className='w-[24px] h-[24px] mr-[6px] xl:mr-0 xl:w-[34px] xl:h-[34px] xl:mb-[4px]'>
                   <Image
                     src={`/images/icons/${
-                      theme === 'baple'
-                        ? 'filled-heart.svg'
-                        : 'CBicons/CBfilled-heart.svg'
+                      baple ? 'filled-heart.svg' : 'CBicons/CBfilled-heart.svg'
                     }`}
                     alt=''
                     width={34}
@@ -164,9 +162,7 @@ const ReviewLikes = ({ review }: Props) => {
             <div className='w-[24px] h-[24px] mr-[4px] xl:mr-0 xl:w-[34px] xl:h-[34px]'>
               <Image
                 src={`/images/icons/${
-                  theme === 'baple'
-                    ? 'share_select.svg'
-                    : 'CBicons/CBshare_select.svg'
+                  baple ? 'share_select.svg' : 'CBicons/CBshare_select.svg'
                 }`}
                 alt='share button'
                 width={34}

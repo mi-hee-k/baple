@@ -11,7 +11,7 @@ import { useViewport } from '@/hooks/useViewport';
 
 import type { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
 import PlaceCard3 from '../common/PlaceCard3';
-import { useTheme } from 'next-themes';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 interface Props {
   initialData: PlacesForSearch[];
@@ -19,7 +19,8 @@ interface Props {
 
 const MostBookmarks = ({ initialData }: Props) => {
   const { isMobile, isTablet } = useViewport();
-  const { theme } = useTheme();
+  const { baple } = useCurrentTheme();
+
   const { data: topBookmarkedPlacesList, isLoading: placesListLoading } =
     useQuery({
       queryKey: ['topBookmarkedPlacesList'],
@@ -48,7 +49,7 @@ const MostBookmarks = ({ initialData }: Props) => {
         modules={[Navigation, Autoplay]}
         autoplay={true}
         allowTouchMove={false}
-        id={`${theme === 'baple' ? 'baple' : 'color_blind'}`}
+        id={`${baple ? 'baple' : 'color_blind'}`}
       >
         {topBookmarkedPlacesList?.map((place) => {
           return (
