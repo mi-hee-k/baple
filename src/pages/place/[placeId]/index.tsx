@@ -112,7 +112,7 @@ const PlacePage = () => {
 
   const Content = () => {
     return (
-      <div className='bg-white  text-black w-[250px] h-[100px] rounded-[20px] flex items-center justify-center text-[20px] font-bold'>
+      <div className='bg-white  text-black w-[250px] h-[100px] rounded-[20px] flex items-center justify-center text-[20px] font-bold text-wrap p-4'>
         <p>{placeInfo.place_name}</p>
       </div>
     );

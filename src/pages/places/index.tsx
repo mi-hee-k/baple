@@ -23,7 +23,7 @@ const PlacesPage = () => {
 
   useEffect(() => {
     const fetchFilteredData = async () => {
-      setSearchedPlaces((prev) => []);
+      // setSearchedPlaces((prev) => []);
       setCurrentPage(1);
       let query = supabase.rpc('search_places', {
         p_search_value: searchValue,
@@ -35,10 +35,7 @@ const PlacesPage = () => {
       }
       // console.log('Query:', query);
 
-      const { data, error } = await query.range(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize - 1,
-      );
+      const { data, error } = await query.range(0, pageSize);
       setSearchedPlaces([...data]);
     };
     fetchFilteredData();
@@ -63,10 +60,7 @@ const PlacesPage = () => {
         query = query.in(checkbox, [true]);
       });
     }
-    const { data, error } = await query.range(
-      (currentPage - 1) * pageSize,
-      currentPage * pageSize - 1,
-    );
+    const { data, error } = await query.range(0, pageSize);
     setSearchedPlaces([...data]);
   };
 
