@@ -26,7 +26,7 @@ const Header = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   // const [userId, setUserId] = useState('');
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { isMobile } = useViewport();
+  const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { theme } = useTheme();
 
@@ -104,12 +104,12 @@ const Header = () => {
         <header
           className={`py-2 font-bold sticky top-0 z-20 shadow-xl bg-${
             theme === 'baple' ? 'white' : 'secondary'
-          } bg-opacity-95 w-[100vw]`}
+          } bg-opacity-95 w-[100vw] h-16`}
         >
           <div className='m-auto flex items-center min-h-[48px] w-[90%]'>
-            <nav className='flex sm:flex w-full justify-between items-center'>
+            <nav className='flex md:flex w-full justify-between items-center'>
               {isLoggedIn ? (
-                <div className='block sm:hidden w-full'></div>
+                <div className='block md:hidden w-full'></div>
               ) : null}
               <div className='flex w-full justify-center '>
                 <Link href='/' className='flex justify-center'>
@@ -124,7 +124,7 @@ const Header = () => {
                     height={100}
                   />
                 </Link>
-                <div className='hidden md:flex gap-16 items-center w-full justify-center'>
+                <div className='hidden md:flex gap-16 items-center w-[100%] justify-center bg-red-200'>
                   <Link
                     href='/nearby'
                     className={`hover:text-primary w-auto ${
@@ -147,15 +147,23 @@ const Header = () => {
                       router.pathname === '/board' ? 'text-primary' : ''
                     }`}
                   >
-                    게시판
+                    건의 게시판
+                  </Link>
+                  <Link
+                    href='/board'
+                    className={`hover:text-primary ${
+                      router.pathname === '/board' ? 'text-primary' : ''
+                    }`}
+                  >
+                    배플 소개
                   </Link>
                 </div>
               </div>
 
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
-                  {isMobile ? null : <ThemeSwitcher />}
-                  <span className='hidden sm:block'>
+                  {isTablet ? null : <ThemeSwitcher />}
+                  <span className='hidden md:block'>
                     반가워요 {user?.user_name}님!
                   </span>
                   <Dropdown>
@@ -185,7 +193,7 @@ const Header = () => {
                   </Dropdown>
                 </div>
               ) : (
-                <div className='hidden sm:flex gap-4 w-full justify-end '>
+                <div className='hidden md:flex gap-4 w-full justify-end '>
                   {isMobile ? null : <ThemeSwitcher />}
                   <Link href='/login'>
                     <Button variant='solid' color='primary'>
