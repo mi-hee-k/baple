@@ -57,7 +57,7 @@ const PlacePage = () => {
       return { recentOrder, likesOrder };
     },
   });
-
+  console.log('placeInfo', placeInfo);
   const { data: bookmarkState } = useQuery({
     queryKey: ['bookmark', userId, placeId],
     queryFn: () => getBookmark({ userId, placeId }),
@@ -137,11 +137,7 @@ const PlacePage = () => {
           <div className='w-full mb-[30px] md:mb-0 md:mr-[30px] md:w-[40%]'>
             <CarouselThumb
               slideData={
-                imgList.length !== 0
-                  ? imgList
-                  : [
-                      'https://velog.velcdn.com/images/jetiiin/post/6cd59108-3d13-449c-814b-4ee50af9fc9f/image.png',
-                    ]
+                imgList.length !== 0 ? imgList : ['/images/default_image2.png']
               } // imgList가 없으면 빈배열
             />
           </div>
