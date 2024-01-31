@@ -22,6 +22,8 @@ const PlacesPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // if (selected.length === 0) return;
+    console.log('12313');
     const fetchFilteredData = async () => {
       // setSearchedPlaces((prev) => []);
       setCurrentPage(1);
@@ -35,7 +37,7 @@ const PlacesPage = () => {
       }
       // console.log('Query:', query);
 
-      const { data, error } = await query.range(0, pageSize);
+      const { data, error } = await query.range(0, pageSize - 1);
       setSearchedPlaces([...data]);
     };
     fetchFilteredData();
@@ -50,7 +52,7 @@ const PlacesPage = () => {
 
   const handleClickSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchedPlaces((prev) => prev);
+    // setSearchedPlaces((prev) => prev);
     setCurrentPage(1);
     let query = supabase.rpc('search_places', {
       p_search_value: searchValue,
@@ -60,11 +62,13 @@ const PlacesPage = () => {
         query = query.in(checkbox, [true]);
       });
     }
-    const { data, error } = await query.range(0, pageSize);
+    const { data, error } = await query.range(0, pageSize - 1);
     setSearchedPlaces([...data]);
+    console.log(searchedPlaces);
   };
 
   const loadMoreData = async () => {
+    console.log('loadMoreData', 111);
     let query = supabase.rpc('search_places', {
       p_search_value: searchValue,
     });
@@ -81,7 +85,13 @@ const PlacesPage = () => {
       if (data.length === 0) {
         return;
       }
-      setSearchedPlaces([...searchedPlaces, ...data]);
+
+      // currentPage가 1일 경우에는 기존 데이터를 리셋
+      if (currentPage === 1) {
+        setSearchedPlaces([...data]);
+      } else {
+        setSearchedPlaces([...searchedPlaces, ...data]);
+      }
       setCurrentPage((prev) => prev + 1);
     }
   };
@@ -164,7 +174,7 @@ const PlacesPage = () => {
           </div>
         </div>
       </div>
-      <div ref={ref}></div>
+      <div ref={ref} className='bg-black w-11 h-11'></div>
       <TopButton />
     </MainWrapper>
   );

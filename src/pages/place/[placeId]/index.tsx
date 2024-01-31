@@ -114,6 +114,7 @@ const PlacePage = () => {
     return (
       <div className='bg-white  text-black w-[250px] h-[100px] rounded-[20px] flex items-center justify-center text-[20px] font-bold text-wrap p-4'>
         <p>{placeInfo.place_name}</p>
+        <div className='w-5 h-5 bg-white absolute bottom-[-10px] rotate-45'></div>
       </div>
     );
   };
