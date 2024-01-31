@@ -1,5 +1,7 @@
 import { supabase } from '@/libs/supabase';
 import { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
+import { QueryFunction } from '@tanstack/react-query';
+import { format } from 'path';
 
 export const getPlaceInfo = async (id: string) => {
   const { data: placeInfo, error } = await supabase
@@ -71,6 +73,7 @@ export const fetchPlacesData = async ({
   return data;
 };
 */
+type QueryKey = ['places', string, string[]];
 
 export const fetchPlacesData = async ({
   pageParam = 1,
