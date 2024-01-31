@@ -111,11 +111,17 @@ export const fetchPlacesData = async ({
     p_search_value: searchValue,
   });
 
-  // if (selected as string[]) {
-  //       selected.forEach((select) => {
-  //         query = query.in(select, [true]);
-  //       });
-  //     }
+  if (selected) {
+    // selected가 배열이면 forEach 실행
+    if (Array.isArray(selected)) {
+      selected.forEach((select) => {
+        query = query.in(select, [true]);
+      });
+    } else {
+      // selected가 배열이 아니면 단일 값으로 처리
+      query = query.in(selected, [true]);
+    }
+  }
 
   const { data } = await query.range((pageParam - 1) * 20, pageParam * 20 - 1);
 
