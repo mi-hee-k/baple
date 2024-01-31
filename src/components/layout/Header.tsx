@@ -160,7 +160,7 @@ const Header = () => {
 
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
-                  {isTablet ? null : <ThemeSwitcher />}
+                  {/* {isTablet ? null : <ThemeSwitcher />} */}
                   <span className='hidden md:block'>
                     반가워요 {user?.user_name}님!
                   </span>
@@ -186,6 +186,9 @@ const Header = () => {
                       </DropdownItem>
                       <DropdownItem key='logout' onClick={logOutHandler}>
                         로그아웃
+                      </DropdownItem>
+                      <DropdownItem key='mode'>
+                        색맹모드 <ThemeSwitcher />
                       </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
