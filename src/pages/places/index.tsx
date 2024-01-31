@@ -174,7 +174,7 @@ const PlacesPage = () => {
           </div>
         </div>
       </div>
-      <div ref={ref} className='bg-black w-11 h-11'></div>
+      <div ref={ref} className='bg-black w-11 h-11 '></div>
       <TopButton />
     </MainWrapper>
   );

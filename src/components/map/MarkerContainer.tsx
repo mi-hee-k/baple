@@ -6,7 +6,7 @@ import PlaceCard3 from '../common/PlaceCard3';
 import PlaceCard from '../common/PlaceCard';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
-const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
+const MarkerContainer = ({ place }: { place: Tables<'places'> }) => {
   const map = useMap();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
@@ -61,4 +61,4 @@ const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
   );
 };
 
-export default EventMarkerContainer;
+export default MarkerContainer;

@@ -218,8 +218,8 @@ const PlacePage = () => {
             </Button>
             <CustomOverlayRoadview
               position={placePosition}
-              xAnchor={0.5}
-              yAnchor={0.5}
+              xAnchor={1.1}
+              yAnchor={1.1}
               onCreate={(overlay) => {
                 const roadview = roadviewRef.current;
 
