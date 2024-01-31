@@ -73,18 +73,20 @@ export const fetchPlacesData = async ({
   return data;
 };
 */
+type QueryKey = ['places', string, string[]];
 
 export const fetchPlacesData = async ({
   pageParam = 1,
   queryKey,
 }: {
   pageParam?: number;
-  queryKey: string[];
+  queryKey: (string | string[])[];
 }) => {
-  const pageSize = 20;
+  // const pageSize = 20;
   console.log('pageParam', pageParam);
-  const [_, searchValue] = queryKey;
+  const [_, searchValue, selected] = queryKey;
   console.log('searchValue', searchValue);
+  console.log('selected', selected);
   let result;
   const { data: explainData, error } = await supabase
     .rpc('search_places', {
@@ -108,6 +110,13 @@ export const fetchPlacesData = async ({
   let query = supabase.rpc('search_places', {
     p_search_value: searchValue,
   });
+
+  // if (selected as string[]) {
+  //       selected.forEach((select) => {
+  //         query = query.in(select, [true]);
+  //       });
+  //     }
+
   const { data } = await query.range((pageParam - 1) * 20, pageParam * 20 - 1);
 
   const resultPlaces = {
