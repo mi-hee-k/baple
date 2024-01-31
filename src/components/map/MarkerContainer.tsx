@@ -48,7 +48,7 @@ const EventMarkerContainer = ({ place }: { place: Tables<'places'> }) => {
         <CustomOverlayMap
           position={{ lat: place.lat, lng: place.lng }}
           key={place.id}
-          yAnchor={1.3}
+          yAnchor={1.2}
           zIndex={2}
         >
           <div ref={overlayRef}>
