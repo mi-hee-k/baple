@@ -26,7 +26,6 @@ const BoardPage = () => {
       return posts.map((post) => ({
         ...post,
         user_name: post.users.user_name,
-        created_at: formatDate(post.created_at),
       }));
     },
   });
@@ -98,7 +97,7 @@ const BoardPage = () => {
                   : item.place_name}
               </td>
               <td className='text-center hidden lg:table-cell'>
-                {item.created_at.slice(0, 11)}
+                {formatDate(item.created_at)?.slice(0, 11)}
               </td>
             </tr>
           ))}
