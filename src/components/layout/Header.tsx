@@ -36,7 +36,6 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userId);
     supabase
       .channel('custom-filter-channel')
       .on(
@@ -48,7 +47,8 @@ const Header = () => {
           filter: `received_id=eq.${userId}`,
         },
         (payload) => {
-          toastSuccess('댓글이 달렸습니다');
+          const msg = payload.new.message;
+          toastSuccess(`${msg}라는 댓글이 달렸습니다`);
         },
       )
       .subscribe();

@@ -47,7 +47,7 @@ const CommentInput = ({
       type: 'comment',
       sender_id: userId,
       received_id: reviewUserId,
-      message: '댓글이 등록되었습니다',
+      message: comment,
     };
     insertComment(newCommentData);
     insertCommentAlarm(newCommentAlarmInfo);
