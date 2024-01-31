@@ -37,14 +37,9 @@ const PlaceDetailHeader = ({
                 onClick={toggleBookmark}
               />
 
-              <Image
-                src={`/images/icons/${
-                  baple ? 'share_select.svg' : 'CBicons/CBshare_select.svg'
-                }`}
-                alt='kakao share'
-                width={isMobile ? 24 : 34}
-                height={isMobile ? 24 : 34}
-                className='cursor-pointer'
+              <RiKakaoTalkFill
+                size={isMobile ? 34 : 40}
+                className='cursor-pointer text-primary'
                 onClick={() =>
                   shareKakao({
                     address: placeInfo?.address,
@@ -67,14 +62,9 @@ const PlaceDetailHeader = ({
                 onClick={toggleBookmark}
               />
 
-              <Image
-                src={`/images/icons/${
-                  baple ? 'share_select.svg' : 'CBicons/CBshare_select.svg'
-                }`}
-                alt='kakao share'
-                width={isMobile ? 24 : 34}
-                height={isMobile ? 24 : 34}
-                className='cursor-pointer'
+              <RiKakaoTalkFill
+                size={isMobile ? 34 : 40}
+                className='cursor-pointer text-primary'
                 onClick={() =>
                   shareKakao({
                     address: placeInfo?.address,
@@ -98,14 +88,9 @@ const PlaceDetailHeader = ({
               onClick={showAlert}
             />
 
-            <Image
-              src={`/images/icons/${
-                baple ? 'share_select.svg' : 'CBicons/CBshare_select.svg'
-              }`}
-              alt='kakao share'
-              width={isMobile ? 24 : 34}
-              height={isMobile ? 24 : 34}
-              className='cursor-pointer'
+            <RiKakaoTalkFill
+              size={isMobile ? 34 : 40}
+              className='cursor-pointer text-primary'
               onClick={() =>
                 shareKakao({
                   address: placeInfo?.address,
