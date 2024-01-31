@@ -57,7 +57,7 @@ const PlacePage = () => {
       return { recentOrder, likesOrder };
     },
   });
-  console.log('placeInfo', placeInfo);
+  // console.log('placeInfo', placeInfo);
   const { data: bookmarkState } = useQuery({
     queryKey: ['bookmark', userId, placeId],
     queryFn: () => getBookmark({ userId, placeId }),

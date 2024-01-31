@@ -306,7 +306,7 @@ export interface Database {
           id: string;
           images_url: string[] | null;
           place_id: string;
-          user_id: string | null;
+          user_id: string;
         };
         Insert: {
           content?: string | null;
@@ -314,7 +314,7 @@ export interface Database {
           id?: string;
           images_url?: Json | null;
           place_id?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Update: {
           content?: string | null;
@@ -322,7 +322,7 @@ export interface Database {
           id?: string;
           images_url?: Json | null;
           place_id?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Relationships: [
           {

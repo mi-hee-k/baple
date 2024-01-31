@@ -8,15 +8,22 @@ import { toastWarn } from '@/libs/toastifyAlert';
 import { useComments } from '@/hooks/useComments';
 import Image from 'next/image';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
+import { useAlarm } from '@/hooks/useAlarm';
 // import { commentsAlert } from '@/apis/commentAlert';
 
 interface Props {
   reviewId: string;
+  reviewUserId: string;
   commentsCount: number | undefined;
   placeId: string | undefined;
 }
 
-const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
+const CommentInput = ({
+  reviewId,
+  reviewUserId,
+  placeId,
+  commentsCount,
+}: Props) => {
   const {
     register,
     handleSubmit,
@@ -24,6 +31,7 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
   } = useForm({ mode: 'onSubmit' });
   const { isLoggedIn, userId } = useSelector((state: RootState) => state.auth);
   const { insertComment } = useComments(userId as string, placeId);
+  const { insertCommentAlarm } = useAlarm();
 
   const [comment, setComment] = useState('');
   const { baple } = useCurrentTheme();
@@ -35,8 +43,14 @@ const CommentInput = ({ reviewId, placeId, commentsCount }: Props) => {
       return;
     }
     const newCommentData = new newComment(reviewId, userId, comment);
+    const newCommentAlarmInfo = {
+      type: 'comment',
+      sender_id: userId,
+      received_id: reviewUserId,
+      message: '댓글이 등록되었습니다',
+    };
     insertComment(newCommentData);
-    // commentsAlert();
+    insertCommentAlarm(newCommentAlarmInfo);
     setComment('');
   };
 

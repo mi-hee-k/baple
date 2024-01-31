@@ -68,7 +68,7 @@ const BoardPage = () => {
           <tr className='text-lg sm:text-xl'>
             <th>카테고리</th>
             <th>제목</th>
-            <th className='hidden md:table-cell lg:table-cell'>작성자</th>
+            <th className='hidden lg:table-cell'>작성자</th>
             <th className='hidden lg:table-cell'>장소</th>
             <th className='hidden lg:table-cell'>작성일</th>
           </tr>
@@ -88,7 +88,7 @@ const BoardPage = () => {
                     : item.title
                   : item.title}
               </td>
-              <td className='text-center hidden md:table-cell lg:table-cell'>
+              <td className='text-center hidden lg:table-cell'>
                 {item.users.user_name}
               </td>
               <td className='text-center hidden lg:table-cell whitespace-nowrap'>

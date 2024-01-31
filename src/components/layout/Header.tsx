@@ -19,6 +19,7 @@ import Image from 'next/image';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useViewport } from '@/hooks/useViewport';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
+import { toastSuccess } from '@/libs/toastifyAlert';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,25 @@ const Header = () => {
 
   useEffect(() => {
     setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    console.log(userId);
+    supabase
+      .channel('custom-filter-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'alarm',
+          filter: `received_id=eq.${userId}`,
+        },
+        (payload) => {
+          toastSuccess('댓글이 달렸습니다');
+        },
+      )
+      .subscribe();
   }, []);
 
   const {

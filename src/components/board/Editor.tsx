@@ -1,4 +1,4 @@
-import { getPost, insertNewPost, updatePost } from '@/apis/boards';
+import { getPost } from '@/apis/boards';
 import { useBoards } from '@/hooks/useBoards';
 import { toastWarn } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
