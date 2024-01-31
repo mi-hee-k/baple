@@ -1,6 +1,9 @@
 import { getPost } from '@/apis/boards';
+import QuillNoSSRWrapper from '@/components/common/QuillEditor';
+import TuiViewer from '@/components/common/TuiViewer';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
+import { viewModeModules } from '@/constants/quillconfig';
 import { useBoards } from '@/hooks/useBoards';
 import { toastSuccess } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
@@ -9,6 +12,8 @@ import { Avatar, Button, Divider, Spacer, Spinner } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useRef } from 'react';
+import ReactQuill from 'react-quill';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
@@ -22,6 +27,7 @@ const BoardPostPage = () => {
     queryKey: ['posts', boardId],
     queryFn: () => getPost(boardId),
   });
+  const quillInstance = useRef<ReactQuill>(null);
 
   const delPost = () => {
     Swal.fire({
@@ -87,7 +93,19 @@ const BoardPostPage = () => {
       </div>
 
       <div className='w-full min-h-[200px] p-4 rounded-md sm:mt-2'>
-        <p className='break-all whitespace-pre-wrap'>{post.content}</p>
+        {/* <p className='break-all whitespace-pre-wrap'>{post.content}</p>
+        <p>~~~~~~~~~아아 너무 힘들다(구분선)~~~~~~~~~~~~~~~~</p>
+        <div
+          id='boardcontent'
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+        <p>~~~~~~~~~아아 너무 힘들다(구분선)~~~~~~~~~~~~~~~~</p> */}
+        <QuillNoSSRWrapper
+          forwardedRef={quillInstance}
+          modules={viewModeModules}
+          readOnly
+          value={post.content}
+        />
       </div>
       <Spacer y={5} />
       <Divider className='h-0.5' />

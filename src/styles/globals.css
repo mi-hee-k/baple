@@ -74,3 +74,6 @@ body {
 /* .swiper-scrollbar-drag {
   color: #fff;
 } */
+.ql-container.ql-snow.ql-disabled {
+  border: none;
+}

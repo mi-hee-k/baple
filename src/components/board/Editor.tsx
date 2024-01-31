@@ -5,9 +5,12 @@ import { RootState } from '@/redux/config/configStore';
 import { Button, Input, Textarea, Spacer, Divider } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import QuillNoSSRWrapper from '../common/QuillEditor';
+import ReactQuill from 'react-quill';
+import { editModeModules } from '@/constants/quillconfig';
 
 const categoryList = ['신규장소', '불편사항'];
 
@@ -41,6 +44,14 @@ const Editor = ({ isEdit }: Props) => {
     setInputs({
       ...inputs,
       [e.target.name]: e.target.value,
+    });
+  };
+  const quillInstance = useRef<ReactQuill>(null);
+
+  const quillValueChangeHandler = (contents: string) => {
+    setInputs({
+      ...inputs,
+      content: contents,
     });
   };
 
@@ -165,7 +176,7 @@ const Editor = ({ isEdit }: Props) => {
             maxLength={16}
           />
         </div>
-        <Textarea
+        {/* <Textarea
           type='text'
           variant='bordered'
           minRows={10}
@@ -174,6 +185,12 @@ const Editor = ({ isEdit }: Props) => {
           name='content'
           value={inputs.content}
           onChange={inputChange}
+        /> */}
+        <QuillNoSSRWrapper
+          forwardedRef={quillInstance}
+          value={inputs.content}
+          onChange={quillValueChangeHandler}
+          modules={editModeModules}
         />
         <Spacer y={6} />
         <Divider className='h-0.5 mb-[30px]' />
