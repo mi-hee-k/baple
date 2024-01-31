@@ -1,6 +1,7 @@
 import { supabase } from '@/libs/supabase';
 import { PlacesForPlaceCard, PlacesForSearch } from '@/types/types';
 import { QueryFunction } from '@tanstack/react-query';
+import { format } from 'path';
 
 export const getPlaceInfo = async (id: string) => {
   const { data: placeInfo, error } = await supabase
@@ -72,6 +73,53 @@ export const fetchPlacesData = async ({
   return data;
 };
 */
+
+export const fetchPlacesData = async ({
+  pageParam = 1,
+  queryKey,
+}: {
+  pageParam?: number;
+  queryKey: string[];
+}) => {
+  const pageSize = 20;
+  console.log('pageParam', pageParam);
+  const [_, searchValue] = queryKey;
+  console.log('searchValue', searchValue);
+  let result;
+  const { data: explainData, error } = await supabase
+    .rpc('search_places', {
+      p_search_value: searchValue,
+    })
+    // .from('places')
+    // .select()
+    // .ilike('place_name', `%${searchValue}%`)
+    // .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
+    .explain({ format: 'json', analyze: true });
+  console.log('explainData', explainData);
+
+  if (Array.isArray(explainData)) {
+    result = explainData
+      .map((item) => item.Plan)
+      .map((item: any) => item.Plans)
+      .map((item) => item[0])
+      .map((item) => item)[0];
+  }
+  console.log('result', result);
+  let query = supabase.rpc('search_places', {
+    p_search_value: searchValue,
+  });
+  const { data } = await query.range((pageParam - 1) * 20, pageParam * 20 - 1);
+
+  const resultPlaces = {
+    total_length: result['Actual Rows'],
+    data: data,
+    page: pageParam,
+    total_pages: Math.ceil(result['Actual Rows'] / 20),
+  };
+  console.log('resultPlaces', resultPlaces);
+  if (resultPlaces) return resultPlaces;
+};
+
 export const getMyBookmarkedPlaces = async (userId: string) => {
   const { data, error } = await supabase.rpc('get_bookmarked_places', {
     p_user_id: userId,

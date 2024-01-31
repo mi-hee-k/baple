@@ -12,91 +12,127 @@ import { useInView } from 'react-intersection-observer';
 import { RootState } from '@/redux/config/configStore';
 import { setSearchValue } from '@/redux/modules/searchValueSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { fetchPlacesData } from '@/apis/places';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [searchedPlaces, setSearchedPlaces] = useState<PlacesForSearch[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  // const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 21;
   const searchValue = useSelector((state: RootState) => state.searchValue);
   const dispatch = useDispatch();
+  let currentPage = 1;
 
-  useEffect(() => {
-    const fetchFilteredData = async () => {
-      setSearchedPlaces((prev) => []);
-      setCurrentPage(1);
-      let query = supabase.rpc('search_places', {
-        p_search_value: searchValue,
-      });
-      if (selected.length > 0) {
-        selected.forEach((checkbox) => {
-          query = query.in(checkbox, [true]);
-        });
-      }
-      // console.log('Query:', query);
+  // useEffect(() => {
+  //   const fetchFilteredData = async () => {
+  //     setSearchedPlaces((prev) => []);
+  //     setCurrentPage(1);
+  //     let query = supabase.rpc('search_places', {
+  //       p_search_value: searchValue,
+  //     });
+  //     if (selected.length > 0) {
+  //       selected.forEach((checkbox) => {
+  //         query = query.in(checkbox, [true]);
+  //       });
+  //     }
+  //     // console.log('Query:', query);
 
-      const { data, error } = await query.range(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize - 1,
-      );
-      setSearchedPlaces([...data]);
-    };
-    fetchFilteredData();
-  }, [selected]);
+  //     const { data, error } = await query.range(
+  //       (currentPage - 1) * pageSize,
+  //       currentPage * pageSize - 1,
+  //     );
+  //     setSearchedPlaces([...data]);
+  //   };
+  //   fetchFilteredData();
+  // }, [selected]);
 
-  useEffect(() => {
-    //클린업함수 -> 언마운트 될때 redux state 빈 스트링으로 초기화
-    return () => {
-      dispatch(setSearchValue(''));
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   //클린업함수 -> 언마운트 될때 redux state 빈 스트링으로 초기화
+  //   return () => {
+  //     dispatch(setSearchValue(''));
+  //   };
+  // }, [dispatch]);
 
   const handleClickSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchedPlaces((prev) => prev);
-    setCurrentPage(1);
-    let query = supabase.rpc('search_places', {
-      p_search_value: searchValue,
-    });
-    if (selected.length > 0) {
-      selected.forEach((checkbox) => {
-        query = query.in(checkbox, [true]);
-      });
-    }
-    const { data, error } = await query.range(
-      (currentPage - 1) * pageSize,
-      currentPage * pageSize - 1,
-    );
-    setSearchedPlaces([...data]);
+    // setSearchedPlaces((prev) => prev);
+    // // setCurrentPage(1);
+    // let query = supabase.rpc('search_places', {
+    //   p_search_value: searchValue,
+    // });
+    // if (selected.length > 0) {
+    //   selected.forEach((checkbox) => {
+    //     query = query.in(checkbox, [true]);
+    //   });
+    // }
+    // const { data, error } = await query.range(
+    //   (currentPage - 1) * pageSize,
+    //   currentPage * pageSize - 1,
+    // );
+    // setSearchedPlaces([...data]);
+    currentPage = 1; // 검색 시 페이지 초기화
+
+    refetch(); // 검색어가 바뀌었으므로 새로운 데이터 가져오기
   };
 
-  const loadMoreData = async () => {
-    let query = supabase.rpc('search_places', {
-      p_search_value: searchValue,
-    });
-    if (selected.length > 0) {
-      selected.forEach((checkbox) => {
-        query = query.in(checkbox, [true]);
-      });
-    }
-    const { data, error } = await query.range(
-      (currentPage - 1) * pageSize,
-      currentPage * pageSize - 1,
-    );
-    if (!error) {
-      if (data.length === 0) {
-        return;
+  // const loadMoreData = async () => {
+  //   let query = supabase.rpc('search_places', {
+  //     p_search_value: searchValue,
+  //   });
+  //   if (selected.length > 0) {
+  //     selected.forEach((checkbox) => {
+  //       query = query.in(checkbox, [true]);
+  //     });
+  //   }
+  //   const { data, error } = await query.range(
+  //     (currentPage - 1) * pageSize,
+  //     currentPage * pageSize - 1,
+  //   );
+  //   if (!error) {
+  //     if (data.length === 0) {
+  //       return;
+  //     }
+  //     setSearchedPlaces([...searchedPlaces, ...data]);
+  //     setCurrentPage((prev) => prev + 1);
+  //   }
+  // };
+
+  const {
+    data: places,
+    hasNextPage,
+    fetchNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ['places', searchValue],
+    queryFn: fetchPlacesData,
+    initialPageParam: currentPage, // 초기 페이지 값 설정
+    getNextPageParam: (lastPage, allPages) => {
+      // const totalPage = allPages.flat().length;
+      console.log('lastPage', lastPage);
+      console.log('allPages', allPages);
+      // console.log('totalPage', totalPage);
+      // console.log('lastPage.ActualRows', lastPage['Actual Rows']);
+      // return totalPage < pageSize * currentPage ? currentPage + 1 : undefined;
+      if (lastPage) {
+        if (lastPage?.page < lastPage?.total_pages) {
+          return lastPage.page + 1;
+        }
       }
-      setSearchedPlaces([...searchedPlaces, ...data]);
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
+    },
+    select: (data) => {
+      return data.pages.map((pageData) => pageData?.data).flat();
+    },
+    enabled: false,
+  });
+
+  console.log('places!!!!', places);
 
   const { ref } = useInView({
     threshold: 1,
     onChange: (inView) => {
-      if (!inView) return;
-      loadMoreData();
+      if (!inView || !hasNextPage) return;
+      fetchNextPage();
     },
   });
 
@@ -107,7 +143,7 @@ const PlacesPage = () => {
         : [...prevSelected, value],
     );
   };
-  // console.log('selected', selected);
+
   const checkboxButton = (value: string, label: string) => (
     <Button
       key={value}
@@ -164,13 +200,18 @@ const PlacesPage = () => {
         {/* 카드 */}
         <div className='flex justify-center w-full'>
           <div className='grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 sm:gap-3 places-items-center w-full md:w-full'>
-            {searchedPlaces.map((place, idx) => (
+            {/* {searchedPlaces.map((place, idx) => (
+              <PlaceCard key={idx} place={place} />
+            ))} */}
+            {places?.map((place, idx) => (
               <PlaceCard key={idx} place={place} />
             ))}
           </div>
         </div>
       </div>
-      <div ref={ref}></div>
+      <div ref={ref} className='bg-blue w-full'>
+        Trigger Fetch here
+      </div>
       <TopButton />
     </MainWrapper>
   );
