@@ -74,6 +74,16 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
             slideHeight={'400px'} // 캐러셀 높이
           />
           <MainWrapper>
+            <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center   gap-4 my-6'>
+              {generateBtns('is_paid', '입장료')}
+              {generateBtns('is_easy_door', '장애인용 출입문')}
+              {generateBtns('is_wheelchair_rental', '휠체어 대여')}
+              {generateBtns('is_guide_dog', '안내견 동반')}
+              {generateBtns('is_braille_guide', '점자 가이드')}
+              {generateBtns('is_audio_guide', '오디오 가이드')}
+              {generateBtns('is_disabled_toilet', '장애인용 화장실')}
+              {generateBtns('is_disabled_parking', '장애인용 주차장')}
+            </div>
             {/* 검색창 */}
             <form
               onSubmit={handleClickSearchBtn}
@@ -98,16 +108,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
                 />
               </Button>
             </form>
-            <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center  md:flex gap-4 my-6'>
-              {generateBtns('is_paid', '입장료')}
-              {generateBtns('is_easy_door', '장애인용 출입문')}
-              {generateBtns('is_wheelchair_rental', '휠체어 대여')}
-              {generateBtns('is_guide_dog', '안내견 동반')}
-              {generateBtns('is_braille_guide', '점자 가이드')}
-              {generateBtns('is_audio_guide', '오디오 가이드')}
-              {generateBtns('is_disabled_toilet', '장애인용 화장실')}
-              {generateBtns('is_disabled_parking', '장애인용 주차장')}
-            </div>
+
             <div className='flex flex-col w-full justify-center items-center'>
               <MostReviews initialData={topReviewed} />
               <Spacer y={10} />
