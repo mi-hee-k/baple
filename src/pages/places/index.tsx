@@ -12,14 +12,17 @@ import { setSearchValue } from '@/redux/modules/searchValueSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPlacesData } from '@/apis/places';
+import { PlacesForSearch } from '@/types/types';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const searchValue = useSelector((state: RootState) => state.searchValue);
   const [realSearch, setRealSearch] = useState(searchValue);
+
+  // const [placesData, setPlacesData] = useState();
   console.log({ realSearch });
   const dispatch = useDispatch();
-  let currentPage = 1;
+  const currentPage = 1;
 
   useEffect(() => {
     //클린업함수 -> 언마운트 될때 redux state 빈 스트링으로 초기화
@@ -28,7 +31,7 @@ const PlacesPage = () => {
     };
   }, [dispatch]);
 
-  const handleClickSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClickSearchBtn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setRealSearch(searchValue);
@@ -43,7 +46,7 @@ const PlacesPage = () => {
     queryKey: ['places', realSearch, selected],
     queryFn: fetchPlacesData,
     initialPageParam: currentPage, // 초기 페이지 값 설정
-    getNextPageParam: (lastPage) => {
+    getNextPageParam: (lastPage, pages) => {
       if (lastPage) {
         if (lastPage?.page < lastPage?.total_pages) {
           return lastPage.page + 1;
@@ -51,31 +54,31 @@ const PlacesPage = () => {
       }
     },
     select: (data) => {
+      console.log('data', data);
       return data.pages.map((pageData) => pageData?.data).flat();
+      // return data.pages;
     },
   });
 
-  console.log('places!!!!', places);
-
   const { ref } = useInView({
-    threshold: 1,
+    threshold: 0,
     onChange: (inView) => {
       if (!inView || !hasNextPage) return;
       fetchNextPage();
     },
   });
 
-  const handleCheckboxClick = (value: string) => {
+  const handleClickBtns = (value: string) => {
     setSelected((prevSelected) =>
       prevSelected.includes(value)
         ? prevSelected.filter((item) => item !== value)
         : [...prevSelected, value],
     );
   };
-  const checkboxButton = (value: string, label: string) => (
+  const generateBtns = (value: string, label: string) => (
     <Button
       key={value}
-      onClick={() => handleCheckboxClick(value)}
+      onClick={() => handleClickBtns(value)}
       color='primary'
       radius='full'
       variant={selected.includes(value) ? 'solid' : 'bordered'}
@@ -89,7 +92,7 @@ const PlacesPage = () => {
     <MainWrapper>
       <Seo />
       <form
-        onSubmit={handleClickSearch}
+        onSubmit={handleClickSearchBtn}
         className='flex justify-center w-full sm:w-[60%] m-auto mt-10 mb-4 sm:mb-8 bg-primary p-[2px] rounded-full overflow-hidden'
       >
         <input
@@ -112,17 +115,21 @@ const PlacesPage = () => {
           />
         </Button>
       </form>
-      <div className='flex gap-6 flex-col md:flex md:flex-row'>
+      {/* <span>
+        {places !== undefined ? places[0]?.total_length?.toString() : '0'}개의
+        검색 결과를 찾았어요!
+      </span> */}
+      <div className='flex gap-6 flex-col md:flex md:flex-row relative'>
         {/* 태그 */}
         <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4'>
-          {checkboxButton('is_paid', '입장료')}
-          {checkboxButton('is_easy_door', '장애인용 출입문')}
-          {checkboxButton('is_wheelchair_rental', '휠체어 대여')}
-          {checkboxButton('is_guide_dog', '안내견 동반')}
-          {checkboxButton('is_braille_guide', '점자 가이드')}
-          {checkboxButton('is_audio_guide', '오디오 가이드')}
-          {checkboxButton('is_disabled_toilet', '장애인용 화장실')}
-          {checkboxButton('is_disabled_parking', '장애인용 주차장')}
+          {generateBtns('is_paid', '입장료')}
+          {generateBtns('is_easy_door', '장애인용 출입문')}
+          {generateBtns('is_wheelchair_rental', '휠체어 대여')}
+          {generateBtns('is_guide_dog', '안내견 동반')}
+          {generateBtns('is_braille_guide', '점자 가이드')}
+          {generateBtns('is_audio_guide', '오디오 가이드')}
+          {generateBtns('is_disabled_toilet', '장애인용 화장실')}
+          {generateBtns('is_disabled_parking', '장애인용 주차장')}
         </div>
         {/* 카드 */}
         <div className='flex justify-center w-full'>
@@ -132,10 +139,20 @@ const PlacesPage = () => {
             ))}
           </div>
         </div>
+        {places?.length === 0 ? (
+          <div className='absolute w-full h-full mx-auto flex flex-col gap-3 justify-center items-center '>
+            <Image
+              src='/images/icons/character.svg'
+              alt='main_character'
+              width={100}
+              height={100}
+            />
+            <span className='text-lg'>검색 결과가 없습니다 😅</span>
+          </div>
+        ) : null}
       </div>
-      <div ref={ref} className='bg-blue w-full'>
-        Trigger Fetch here
-      </div>
+
+      <div ref={ref} className='bg-blue w-full h-6'></div>
       <TopButton />
     </MainWrapper>
   );
