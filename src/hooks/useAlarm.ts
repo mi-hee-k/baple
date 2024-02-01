@@ -2,6 +2,7 @@ import {
   getCommentAlarm,
   insertNewCommentAlarm,
   updateCommentAlarm,
+  updateCommentAllAlarm,
 } from '@/apis/commentAlarm';
 import { RootState } from '@/redux/config/configStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -31,9 +32,17 @@ export const useAlarm = () => {
     },
   });
 
+  const updateCommentAllAlarmMutation = useMutation({
+    mutationFn: updateCommentAllAlarm,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alarm', userId] });
+    },
+  });
+
   return {
     insertCommentAlarm: insertCommentAlarmMutation.mutate,
     updateCommentAlarm: updateCommentAlarmMutation.mutate,
+    updateCommentAllAlarm: updateCommentAllAlarmMutation.mutate,
     alarmData,
   };
 };

@@ -24,6 +24,7 @@ import { VscBell, VscBellDot } from 'react-icons/vsc';
 import AlarmModal from '../common/AlarmModal';
 import { useAlarm } from '@/hooks/useAlarm';
 import { RealtimeChannel } from '@supabase/supabase-js';
+import { userInfo } from 'os';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -35,12 +36,14 @@ const Header = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
   const [alarmState, setAlarmState] = useState(false);
+  const { alarmData } = useAlarm();
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
   const queryClient = useQueryClient();
+
   useEffect(() => {
     if (!userId) return;
     const subscription: RealtimeChannel = supabase
@@ -57,9 +60,21 @@ const Header = () => {
           queryClient.invalidateQueries({
             queryKey: ['alarm', userId],
           });
-          const msg = payload.new.message;
           setAlarmState(true);
-          // toastSuccess(`${msg}라는 댓글이 달렸습니다`);
+        },
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'alarm',
+          filter: `received_id=eq.${userId}`,
+        },
+        (payload) => {
+          queryClient.invalidateQueries({
+            queryKey: ['alarm', userId],
+          });
         },
       )
       .subscribe();
@@ -67,6 +82,12 @@ const Header = () => {
       subscription.unsubscribe();
     };
   }, [userId]);
+
+  useEffect(() => {
+    if (alarmData?.length === 0) {
+      setAlarmState(false);
+    }
+  }, [alarmData]);
 
   const {
     data: user,
@@ -131,10 +152,6 @@ const Header = () => {
     if (error) throw error;
     router.push('/');
   };
-
-  // const toggleAlarm = () => {
-  //   setAlarmState((prev) => !prev);
-  // };
 
   return (
     <>

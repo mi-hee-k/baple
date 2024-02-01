@@ -2,17 +2,11 @@ import { useAlarm } from '@/hooks/useAlarm';
 import { RootState } from '@/redux/config/configStore';
 import {
   Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@nextui-org/react';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
 import { VscBell, VscBellDot } from 'react-icons/vsc';
 import { useSelector } from 'react-redux';
 
@@ -21,56 +15,46 @@ interface Props {
 }
 
 const AlarmModal = ({ alarmState }: Props) => {
-  const { alarmData, updateCommentAlarm } = useAlarm();
+  const { alarmData, updateCommentAlarm, updateCommentAllAlarm } = useAlarm();
   const router = useRouter();
+  const { userId } = useSelector((state: RootState) => state.auth);
 
-  const readAlarm = (id: string, reviewId: string) => {
-    updateCommentAlarm(id);
+  const readAlarm = (AlarmId: string, reviewId: string) => {
+    updateCommentAlarm(AlarmId);
     router.push(`/review/${reviewId}`);
+  };
+
+  const readAllAlarm = (userId: string) => {
+    updateCommentAllAlarm(userId);
   };
 
   return (
     <>
-      <Dropdown>
-        <DropdownTrigger>
-          {alarmState ? (
-            <Button variant='bordered'>
-              <VscBellDot size={25} className='cursor-pointer' />
-            </Button>
-          ) : (
-            <Button variant='bordered'>
-              <VscBell size={25} className='cursor-pointer' />
-            </Button>
-          )}
-        </DropdownTrigger>
-        <DropdownMenu aria-label='Static Actions' items={alarmData}>
-          {(alarm) => (
-            <DropdownItem
-              key={alarm.id}
-              onClick={() => readAlarm(alarm.id, alarm.review_id)}
-            >
-              💬 내 리뷰에 댓글이 달렸습니다.
-            </DropdownItem>
-          )}
-        </DropdownMenu>
-      </Dropdown>
-      {/* <Popover showArrow placement='bottom'>
+      <Popover showArrow placement='bottom'>
         <PopoverTrigger>
-          {alarmState ? (
-            <Button variant='bordered'>
+          <Button variant='bordered'>
+            {alarmState ? (
               <VscBellDot size={25} className='cursor-pointer' />
-            </Button>
-          ) : (
-            <Button variant='bordered'>
+            ) : (
               <VscBell size={25} className='cursor-pointer' />
-            </Button>
-          )}
+            )}
+          </Button>
         </PopoverTrigger>
-        <PopoverContent className='p-1'>
-          <Button size='sm'>모두 읽음</Button>
-          <div className='w-[200px] h-auto bg-white p-4 rounded-lg'>야호</div>
+        <PopoverContent className='p-4 flex gap-2'>
+          <Button size='sm' onClick={() => readAllAlarm(userId)}>
+            모두 읽음
+          </Button>
+          {alarmData?.map((item) => (
+            <div
+              key={item.id}
+              className='w-[200px] h-auto bg-white p-2 rounded-lg cursor-pointer hover:bg-slate-200 transition-background'
+              onClick={() => readAlarm(item.id, item.review_id)}
+            >
+              💬 새로운 댓글이 있습니다.
+            </div>
+          ))}
         </PopoverContent>
-      </Popover> */}
+      </Popover>
     </>
   );
 };

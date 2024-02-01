@@ -38,3 +38,15 @@ export const updateCommentAlarm = async (alarmId: string) => {
     .eq('id', alarmId)
     .select();
 };
+
+// 모두 읽음 처리
+export const updateCommentAllAlarm = async (receivedId: string) => {
+  console.log(receivedId);
+  await supabase
+    .from('alarm')
+    .update({
+      read: true,
+    })
+    .eq('received_id', receivedId)
+    .select();
+};
