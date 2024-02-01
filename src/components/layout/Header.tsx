@@ -24,7 +24,11 @@ import { VscBell, VscBellDot } from 'react-icons/vsc';
 import AlarmModal from '../common/AlarmModal';
 import { useAlarm } from '@/hooks/useAlarm';
 import { RealtimeChannel } from '@supabase/supabase-js';
+<<<<<<< HEAD
 import { userInfo } from 'os';
+=======
+import Swal from 'sweetalert2';
+>>>>>>> 5aed3cbd648a19d9f8d7a0d7a7072d5c2e62a3f0
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -178,14 +182,14 @@ const Header = () => {
                   />
                 </Link>
                 <div className='hidden md:flex gap-16 items-center w-[65vw] justify-start pl-10'>
-                  <Link
-                    href='/about'
+                  <div
                     className={`hover:text-primary ${
                       router.pathname === '/about' ? 'text-primary' : ''
                     }`}
+                    onClick={() => Swal.fire('준비중입니다!')}
                   >
                     배플 소개
-                  </Link>
+                  </div>
                   <Link
                     href='/nearby'
                     className={`hover:text-primary w-auto ${
