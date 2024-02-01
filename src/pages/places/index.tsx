@@ -12,17 +12,20 @@ import { saveSearchValue } from '@/redux/modules/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPlacesData } from '@/apis/places';
-import { PlacesForSearch } from '@/types/types';
 import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
+import _ from 'lodash';
 
 const PlacesPage = () => {
   // const [selected, setSelected] = useState<string[]>([]);
   const searchValue = useSelector((state: RootState) => state.search);
   const selectedBtn = useSelector((state: RootState) => state.selectedBtn);
   const [realSearch, setRealSearch] = useState(searchValue);
+  const [isSortedByBookmarks, setIsSortedByBookmarks] = useState(false);
+  const [isSorted, setIsSorted] = useState(false);
 
   console.log({ realSearch });
   console.log('searchValue', searchValue);
+
   const dispatch = useDispatch();
   const currentPage = 1;
 
@@ -57,11 +60,15 @@ const PlacesPage = () => {
     },
     select: (data) => {
       console.log('data', data);
-      return data.pages.map((pageData) => pageData?.data).flat();
-      // return data.pages;
+      // return data.pages.map((pageData) => pageData?.data).flat();
+      const result = data.pages.map((pageData) => pageData?.data).flat();
+      const sortedByBookmarks = _.orderBy(result, 'bookmarks_count', 'desc');
+      const sortedByReviews = _.orderBy(result, 'reviews_count', 'desc');
+      return { result, sortedByBookmarks, sortedByReviews };
     },
-    // enabled: !!searchValue,
   });
+
+  console.log('places', places);
 
   const { ref } = useInView({
     threshold: 0,
@@ -120,6 +127,30 @@ const PlacesPage = () => {
           />
         </Button>
       </form>
+      <div className='text-right mb-[20px] px-[10px]'>
+        <span
+          className={`mr-[20px] text-gray-500 text-sm cursor-pointer ${
+            isSortedByBookmarks ? 'border-b-2' : ''
+          }`}
+          onClick={() => {
+            setIsSortedByBookmarks(true);
+            setIsSorted(true);
+          }}
+        >
+          북마크순
+        </span>
+        <span
+          className={`text-gray-500 text-sm cursor-pointer ${
+            !isSortedByBookmarks ? 'border-b-2' : ''
+          }`}
+          onClick={() => {
+            setIsSortedByBookmarks(false);
+            setIsSorted(true);
+          }}
+        >
+          리뷰순
+        </span>
+      </div>
       <div className='flex gap-6 flex-col md:flex md:flex-row relative'>
         {/* 태그 */}
         <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4 md:fixed'>
@@ -135,10 +166,19 @@ const PlacesPage = () => {
         {/* 카드 */}
         {/* <div className='flex justify-center w-full'> */}
         <div className='relative grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 sm:gap-3 places-items-center w-full md:w-[75%] md:ml-48 '>
-          {places?.map((place, idx) => (
-            <PlaceCard key={idx} place={place} />
-          ))}
-          {places?.length === 0 ? (
+          {isSorted
+            ? null
+            : places?.result?.map((place, idx) => (
+                <PlaceCard key={idx} place={place} />
+              ))}
+          {isSortedByBookmarks
+            ? places?.sortedByBookmarks?.map((place, idx) => (
+                <PlaceCard key={idx} place={place} />
+              ))
+            : places?.sortedByReviews?.map((place, idx) => (
+                <PlaceCard key={idx} place={place} />
+              ))}
+          {places?.result.length === 0 ? (
             <div className='absolute inset-x-0 min-h-[30rem] flex justify-center flex-col gap-5 items-center '>
               <Image
                 src='/images/icons/character.svg'
