@@ -198,53 +198,52 @@ const Editor = ({ isEdit }: Props) => {
   const modalMessage = '사진 올리는중.. 잠시만 기다려주세요';
 
   return (
-    <>
-      <section className='flex justify-center'>
-        <form onSubmit={createPost} className='w-[100%]'>
+    <section className='flex justify-center'>
+      <form onSubmit={createPost} className='w-[100%]'>
+        <Input
+          type='text'
+          label='제목'
+          variant='bordered'
+          aria-label='제목'
+          className='mb-[10px]'
+          name='title'
+          value={inputs.title}
+          onChange={inputChange}
+          maxLength={20}
+        />
+        <div className='flex gap-2'>
+          <select
+            id='category'
+            className='mb-[10px] w-[40%] border-2 p-2 rounded-md border-[##ffe7eb] text-sm text-[#71717a]'
+            aria-label='카테고리 선택'
+            name='category'
+            value={inputs.category}
+            onChange={inputChange}
+          >
+            {categoryList.map((category) => (
+              <option
+                key={category}
+                value={category}
+                defaultValue={isEdit ? post?.category : undefined}
+                className='p-2 h-2'
+              >
+                {category}
+              </option>
+            ))}
+          </select>
           <Input
             type='text'
-            label='제목'
             variant='bordered'
-            aria-label='제목'
+            label='장소'
+            aria-label='장소'
+            name='place_name'
+            value={inputs.place_name}
             className='mb-[10px]'
-            name='title'
-            value={inputs.title}
             onChange={inputChange}
-            maxLength={20}
+            maxLength={16}
           />
-          <div className='flex gap-2'>
-            <select
-              id='category'
-              className='mb-[10px] w-[40%] border-2 p-2 rounded-md border-[##ffe7eb] text-sm text-[#71717a]'
-              aria-label='카테고리 선택'
-              name='category'
-              value={inputs.category}
-              onChange={inputChange}
-            >
-              {categoryList.map((category) => (
-                <option
-                  key={category}
-                  value={category}
-                  defaultValue={isEdit ? post?.category : undefined}
-                  className='p-2 h-2'
-                >
-                  {category}
-                </option>
-              ))}
-            </select>
-            <Input
-              type='text'
-              variant='bordered'
-              label='장소'
-              aria-label='장소'
-              name='place_name'
-              value={inputs.place_name}
-              className='mb-[10px]'
-              onChange={inputChange}
-              maxLength={16}
-            />
-          </div>
-          {/* <Textarea
+        </div>
+        {/* <Textarea
           type='text'
           variant='bordered'
           minRows={10}
@@ -254,47 +253,46 @@ const Editor = ({ isEdit }: Props) => {
           value={inputs.content}
           onChange={inputChange}
         /> */}
-          <div>
-            {modalOpen && <SpinnerModal message={modalMessage} />}
+        <div>
+          {modalOpen && <SpinnerModal message={modalMessage} />}
 
-            <QuillNoSSRWrapper
-              forwardedRef={quillInstance}
-              value={inputs.content}
-              onChange={quillValueChangeHandler}
-              modules={editModeModules}
-            />
-          </div>
+          <QuillNoSSRWrapper
+            forwardedRef={quillInstance}
+            value={inputs.content}
+            onChange={quillValueChangeHandler}
+            modules={editModeModules}
+          />
+        </div>
 
-          <Spacer y={6} />
-          <Divider className='h-0.5 mb-[30px]' />
+        <Spacer y={6} />
+        <Divider className='h-0.5 mb-[30px]' />
 
-          <div className='text-right mb-6 sm:mb-0'>
+        <div className='text-right mb-6 sm:mb-0'>
+          <Button
+            className='mr-[10px] rounded-full px-8'
+            onClick={() => router.back()}
+          >
+            취소
+          </Button>
+          {isEdit ? (
             <Button
-              className='mr-[10px] rounded-full px-8'
-              onClick={() => router.back()}
+              type='button'
+              className='bg-primary text-white rounded-full px-8'
+              onClick={editPost}
             >
-              취소
+              수정
             </Button>
-            {isEdit ? (
-              <Button
-                type='button'
-                className='bg-primary text-white rounded-full px-8'
-                onClick={editPost}
-              >
-                수정
-              </Button>
-            ) : (
-              <Button
-                type='submit'
-                className='bg-primary text-white rounded-full px-8'
-              >
-                등록
-              </Button>
-            )}
-          </div>
-        </form>
-      </section>
-    </>
+          ) : (
+            <Button
+              type='submit'
+              className='bg-primary text-white rounded-full px-8'
+            >
+              등록
+            </Button>
+          )}
+        </div>
+      </form>
+    </section>
   );
 };
 

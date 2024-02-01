@@ -16,7 +16,6 @@ import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
 import Seo from '@/components/layout/Seo';
 import { useReviews } from '@/hooks/useReviews';
 import imageCompression from 'browser-image-compression';
-import ReviewSubmitSpinner from '@/components/common/SpinnerModal';
 import SpinnerModal from '@/components/common/SpinnerModal';
 
 const ReviewWritePage = () => {

@@ -2,7 +2,6 @@ import { getPost } from '@/apis/boards';
 import QuillNoSSRWrapper from '@/components/common/QuillEditor';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
-import { viewModeModules } from '@/constants/quillconfig';
 import { useBoards } from '@/hooks/useBoards';
 import { toastSuccess } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
@@ -26,7 +25,12 @@ const BoardPostPage = () => {
     queryKey: ['posts', boardId],
     queryFn: () => getPost(boardId),
   });
+
+  //QUILL 관련 코드
   const quillInstance = useRef<ReactQuill>(null);
+  const viewModeModules = {
+    toolbar: false,
+  };
 
   const delPost = () => {
     Swal.fire({
