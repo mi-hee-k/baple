@@ -41,7 +41,11 @@ const AlarmModal = ({ alarmState }: Props) => {
           </Button>
         </PopoverTrigger>
         <PopoverContent className='p-4 flex gap-2'>
-          <Button size='sm' onClick={() => readAllAlarm(userId)}>
+          <Button
+            size='sm'
+            isDisabled={alarmData?.length === 0 ? true : false}
+            onClick={() => readAllAlarm(userId)}
+          >
             모두 읽음
           </Button>
           {alarmData?.map((item) => (
