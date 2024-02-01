@@ -10,6 +10,11 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  User,
+  Divider,
 } from '@nextui-org/react';
 import { RootState } from '@/redux/config/configStore';
 import { useRouter } from 'next/router';
@@ -219,37 +224,48 @@ const Header = () => {
                   <AlarmModal alarmState={alarmState} />
 
                   {/* 프로필 */}
-                  <span className='hidden md:block'>
+                  {/* <span className='hidden md:block'>
                     반가워요 {user?.user_name}님!
-                  </span>
-                  <Dropdown>
-                    <DropdownTrigger>
+                  </span> */}
+                  <Popover>
+                    <PopoverTrigger>
                       <Avatar
                         showFallback
                         src={user?.avatar_url}
                         className='hover:brightness-50 transition cursor-pointer'
                       />
-                    </DropdownTrigger>
-                    <DropdownMenu aria-label='Static Actions'>
-                      <DropdownItem
-                        key='mypage'
-                        // href={`/user/${currentUser.id}`}
-                      >
+                    </PopoverTrigger>
+                    <PopoverContent className='flex gap-3'>
+                      <div className='flex flex-col items-center mt-3'>
+                        <User
+                          name={`${user?.user_name}`}
+                          description={`${user?.email}`}
+                          avatarProps={{
+                            src: user?.avatar_url,
+                          }}
+                        />
+                      </div>
+                      <Divider className='my-2' />
+                      <div className='hover:bg-gray-200 transition-all w-full text-center rounded p-2'>
                         <Link
                           className='block'
                           href={`/user/${currentUser.id}`}
                         >
-                          마이페이지
+                          <span>마이페이지</span>
                         </Link>
-                      </DropdownItem>
-                      <DropdownItem key='logout' onClick={logOutHandler}>
+                      </div>
+                      <div
+                        onClick={logOutHandler}
+                        className='hover:bg-gray-200 transition-all w-full text-center rounded p-2'
+                      >
                         로그아웃
-                      </DropdownItem>
-                      <DropdownItem key='mode'>
-                        색맹모드 <ThemeSwitcher />
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                      </div>
+                      <div className='w-full flex justify-center items-center gap-2'>
+                        <span>색약모드</span>
+                        <ThemeSwitcher />
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               ) : (
                 <div className='hidden md:flex gap-4 w-full justify-end '>
