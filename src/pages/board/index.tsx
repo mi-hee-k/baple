@@ -2,7 +2,7 @@ import { getPosts } from '@/apis/boards';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { toastWarn } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
-import { formatDate } from '@/utils/dateFormatter';
+import { formatDateNoTime } from '@/utils/dateFormatter';
 import { Button, Divider, Spacer, Spinner } from '@nextui-org/react';
 import { Pagination } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
@@ -97,7 +97,7 @@ const BoardPage = () => {
                   : item.place_name}
               </td>
               <td className='text-center hidden lg:table-cell'>
-                {formatDate(item.created_at)?.slice(0, 11)}
+                {formatDateNoTime(item.created_at)}
               </td>
             </tr>
           ))}

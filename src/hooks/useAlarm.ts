@@ -1,17 +1,39 @@
-import { insertNewCommentAlarm } from '@/apis/commentAlarm';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  getCommentAlarm,
+  insertNewCommentAlarm,
+  updateCommentAlarm,
+} from '@/apis/commentAlarm';
+import { RootState } from '@/redux/config/configStore';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 
 export const useAlarm = () => {
   const queryClient = useQueryClient();
+  const { userId } = useSelector((state: RootState) => state.auth);
+
+  const { data: alarmData } = useQuery({
+    queryKey: ['alarm', userId],
+    queryFn: () => getCommentAlarm(userId),
+    enabled: !!userId,
+  });
 
   const insertCommentAlarmMutation = useMutation({
     mutationFn: insertNewCommentAlarm,
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ['alarm'] });
-    // },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alarm', userId] });
+    },
+  });
+
+  const updateCommentAlarmMutation = useMutation({
+    mutationFn: updateCommentAlarm,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['alarm', userId] });
+    },
   });
 
   return {
     insertCommentAlarm: insertCommentAlarmMutation.mutate,
+    updateCommentAlarm: updateCommentAlarmMutation.mutate,
+    alarmData,
   };
 };

@@ -45,9 +45,11 @@ const CommentInput = ({
     const newCommentData = new newComment(reviewId, userId, comment);
     const newCommentAlarmInfo = {
       type: 'comment',
+      review_id: reviewId,
       sender_id: userId,
       received_id: reviewUserId,
       message: comment,
+      read: false,
     };
     insertComment(newCommentData);
     insertCommentAlarm(newCommentAlarmInfo);

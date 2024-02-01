@@ -13,7 +13,7 @@ import {
 } from '@nextui-org/react';
 import { RootState } from '@/redux/config/configStore';
 import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserDataById } from '@/apis/users';
 import Image from 'next/image';
 import ThemeSwitcher from './ThemeSwitcher';
@@ -22,6 +22,8 @@ import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 import { toastSuccess } from '@/libs/toastifyAlert';
 import { VscBell, VscBellDot } from 'react-icons/vsc';
 import AlarmModal from '../common/AlarmModal';
+import { useAlarm } from '@/hooks/useAlarm';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -32,15 +34,16 @@ const Header = () => {
   const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
-  const [showModal, setShowModal] = useState(false);
-  const [alarmState, setAlarmState] = useState(true);
+  const [alarmState, setAlarmState] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
+  const queryClient = useQueryClient();
   useEffect(() => {
-    supabase
+    if (!userId) return;
+    const subscription: RealtimeChannel = supabase
       .channel('custom-filter-channel')
       .on(
         'postgres_changes',
@@ -51,13 +54,18 @@ const Header = () => {
           filter: `received_id=eq.${userId}`,
         },
         (payload) => {
-          console.log(payload);
+          queryClient.invalidateQueries({
+            queryKey: ['alarm', userId],
+          });
           const msg = payload.new.message;
-          setShowModal(true);
-          toastSuccess(`${msg}라는 댓글이 달렸습니다`);
+          setAlarmState(true);
+          // toastSuccess(`${msg}라는 댓글이 달렸습니다`);
         },
       )
       .subscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [userId]);
 
   const {

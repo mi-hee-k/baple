@@ -9,6 +9,36 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      alarm: {
+        Row: {
+          created_at: string;
+          id: string;
+          message: string | null;
+          read: boolean | null;
+          received_id: string | null;
+          sender_id: string | null;
+          type: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          message?: string | null;
+          read?: boolean | null;
+          received_id?: string | null;
+          sender_id?: string | null;
+          type?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          message?: string | null;
+          read?: boolean | null;
+          received_id?: string | null;
+          sender_id?: string | null;
+          type?: string | null;
+        };
+        Relationships: [];
+      };
       boards: {
         Row: {
           category: string | null;
