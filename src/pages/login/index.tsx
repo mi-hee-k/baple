@@ -98,9 +98,10 @@ const LogInPage = () => {
             height={50}
           />
         </Link>
-        <span>비밀번호 재설정</span>
-        <span>비밀번호를 찾고자 하는 이메일을 입력해주세요.</span>
-        <span>비밀번호 재설정을 위한 이메일을 보내드리겠습니다.</span>
+        <div className='flex flex-col text-center gap-2 text-sm'>
+          <span>비밀번호를 찾고자 하는 이메일을 입력해주세요.</span>
+          <span>비밀번호 재설정을 위한 이메일을 보내드리겠습니다.</span>
+        </div>
         <div>
           <Input
             isClearable
@@ -123,16 +124,18 @@ const LogInPage = () => {
             </p>
           )}
         </div>
-        <Button
-          color='primary'
-          type='submit'
-          isDisabled={!watchEmailForResetPw}
-        >
-          이메일 발송
-        </Button>
-        <Button color='primary' onClick={() => setIsResetPw(false)}>
-          취소
-        </Button>
+        <div className='flex gap-5'>
+          <Button
+            color='primary'
+            type='submit'
+            isDisabled={!watchEmailForResetPw}
+          >
+            이메일 발송
+          </Button>
+          <Button color='primary' onClick={() => setIsResetPw(false)}>
+            취소
+          </Button>
+        </div>
       </form>
     );
 
@@ -223,19 +226,17 @@ const LogInPage = () => {
               />
             </button>
           </div>
-
-          <p
-            className='w-full text-right text-gray-600 text-base cursor-pointer'
-            onClick={() => setIsResetPw(true)}
-          >
-            비밀번호 재설정
-          </p>
-
-          <Link href={'/signup'}>
-            <p className='w-full text-right text-gray-600 text-base'>
-              회원가입 하러 가기 &rarr;
+          <div className='flex w-full justify-around p-2'>
+            <p
+              className=' text-gray-600 text-sm cursor-pointer'
+              onClick={() => setIsResetPw(true)}
+            >
+              비밀번호 찾기
             </p>
-          </Link>
+            <Link href={'/signup'}>
+              <p className=' text-primary text-sm'>회원가입 하기</p>
+            </Link>
+          </div>
         </form>
       </div>
     </>
