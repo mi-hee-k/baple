@@ -159,8 +159,8 @@ const PlacePage = () => {
         {toggle === 'map' && (
           <Map
             center={placePosition}
-            draggable={false}
-            // zoomable={true}
+            draggable={true}
+            zoomable={true}
             scrollwheel={false}
             keyboardShortcuts={true}
             style={{
