@@ -62,7 +62,7 @@ const PlacesPage = () => {
     },
   });
 
-  console.log('places', places);
+  // console.log('places!!!!', places);
 
   const { ref } = useInView({
     threshold: 0,
