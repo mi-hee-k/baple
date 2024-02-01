@@ -32,7 +32,7 @@ const AlarmModal = ({ alarmState }: Props) => {
     <>
       <Popover showArrow placement='bottom'>
         <PopoverTrigger>
-          <Button variant='bordered'>
+          <Button variant='light'>
             {alarmState ? (
               <VscBellDot size={25} className='cursor-pointer' />
             ) : (
