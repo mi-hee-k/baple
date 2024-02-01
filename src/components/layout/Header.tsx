@@ -22,7 +22,6 @@ import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 import AlarmModal from '../common/AlarmModal';
 import { useAlarm } from '@/hooks/useAlarm';
 import { RealtimeChannel } from '@supabase/supabase-js';
-import { userInfo } from 'os';
 import Swal from 'sweetalert2';
 
 const Header = () => {
