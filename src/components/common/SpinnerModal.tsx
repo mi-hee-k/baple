@@ -6,11 +6,11 @@ interface Props {
   message: string;
 }
 
-const ReviewSubmitSpinner = ({ message }: Props) => {
+const SpinnerModal = ({ message }: Props) => {
   const { theme } = useTheme();
   return (
     <div
-      className={`w-[100%] h-[100%] fixed  z-10 flex justify-center items-center`}
+      className={`w-[100%] h-[100%] fixed top-0 left-0 z-10 flex justify-center items-center`}
     >
       <div
         className={`z-20 bg-${
@@ -26,4 +26,4 @@ const ReviewSubmitSpinner = ({ message }: Props) => {
   );
 };
 
-export default ReviewSubmitSpinner;
+export default SpinnerModal;

@@ -27,6 +27,7 @@ import PlaceDetailHeader from '@/components/place_detail/PlaceDetailHeader';
 import { getBookmark } from '@/apis/bookmarks';
 import { useBookmarks } from '@/hooks/useBookmarks';
 import { useTheme } from 'next-themes';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 export type ToggleBookmarkType = () => void;
 export type ShowAlertType = () => void;
@@ -63,6 +64,8 @@ const PlacePage = () => {
     queryFn: () => getBookmark({ userId, placeId }),
     enabled: !!userId,
   });
+
+  const { baple } = useCurrentTheme();
 
   useEffect(() => {
     setIsBookmarked(bookmarkState ? bookmarkState.length > 0 : false);
@@ -175,7 +178,7 @@ const PlacePage = () => {
               position={placePosition}
               image={{
                 src: `/images/icons/${
-                  theme === 'baple' ? 'marker.svg' : 'CBicons/CBmarker.svg'
+                  baple ? 'marker.svg' : 'CBicons/CBmarker.svg'
                 }`, // 마커이미지의 주소입니다
                 size: {
                   width: 44,
@@ -250,7 +253,9 @@ const PlacePage = () => {
           {isLoggedIn ? (
             <Button
               color='primary'
-              className='px-4 sm:px-8 py-2 rounded-full text-sm sm:text-md'
+              className={`px-4 text-${
+                baple ? 'white' : 'black'
+              } sm:px-8 py-2 rounded-full text-sm sm:text-md`}
               onClick={() => router.push(`/review/write/${placeId}`)}
             >
               리뷰 작성하기
@@ -258,7 +263,9 @@ const PlacePage = () => {
           ) : (
             <Button
               color='primary'
-              className='px-8 py-2 rounded-full text-sm sm:text-md'
+              className={`px-8 py-2 text-${
+                baple ? 'white' : 'black'
+              } rounded-full text-sm sm:text-md`}
               onClick={() => toastWarn('로그인 후 이용해주세요')}
             >
               리뷰 작성하기

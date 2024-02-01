@@ -4,13 +4,12 @@ import YouTube, { YouTubeProps } from 'react-youtube';
 
 const AboutPage = () => {
   const onPlayerReady: YouTubeProps['onReady'] = (event) => {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo();
   };
 
   const opts: YouTubeProps['opts'] = {
     height: '390',
-    width: '640',
+    width: '400',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
@@ -30,12 +29,26 @@ const AboutPage = () => {
             만들어가는 것입니다.
           </p>
         </section>
-        <YouTube
-          className='mt-[100px]'
-          videoId='2g811Eo7K8U'
-          opts={opts}
-          onReady={onPlayerReady}
-        />
+        <div className='flex flex-row '>
+          <YouTube
+            className='mt-[100px] mr-11'
+            videoId='2g811Eo7K8U'
+            opts={opts}
+            onReady={onPlayerReady}
+          />
+          <YouTube
+            className='mt-[100px] mr-11'
+            videoId='2g811Eo7K8U'
+            opts={opts}
+            onReady={onPlayerReady}
+          />
+          <YouTube
+            className='mt-[100px]'
+            videoId='2g811Eo7K8U'
+            opts={opts}
+            onReady={onPlayerReady}
+          />
+        </div>
         <p className='text-[30px] mt-[100px]'>장소 찾기와 공유하기</p>
         <div className='flex flex-row mt-[100px] w-full justify-center'>
           <div className='w-[30rem] h-[40rem] bg-black mr-[10rem]'></div>
