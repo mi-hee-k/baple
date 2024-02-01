@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic';
 
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-// import 'react-quill/dist/quill.bubble.css';
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;

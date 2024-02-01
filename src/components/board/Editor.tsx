@@ -5,12 +5,12 @@ import { RootState } from '@/redux/config/configStore';
 import { Button, Input, Textarea, Spacer, Divider } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import QuillNoSSRWrapper from '../common/QuillEditor';
 import ReactQuill from 'react-quill';
-import { editModeModules } from '@/constants/quillconfig';
+import { supabase } from '@/libs/supabase';
 
 const categoryList = ['신규장소', '불편사항'];
 
@@ -46,6 +46,8 @@ const Editor = ({ isEdit }: Props) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  //QUILL 관련 코드
   const quillInstance = useRef<ReactQuill>(null);
 
   const quillValueChangeHandler = (contents: string) => {
@@ -54,6 +56,56 @@ const Editor = ({ isEdit }: Props) => {
       content: contents,
     });
   };
+  //QUILL 이미지 핸들러
+  const imageHandler = async () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+    input.addEventListener('change', async () => {
+      //이미지를 담아 전송할 file을 만든다
+      const file = input.files?.[0] as File;
+      try {
+        const { data: fileData, error: fileError } = await supabase.storage
+          .from('board_images')
+          .upload(`${Date.now()}`, file);
+        if (fileError) {
+          console.error('이미지 업로드 에러', fileError.message);
+          return;
+        }
+        //이미지 업로드 후
+        //곧바로 업로드 된 이미지 url을 가져오기
+        const { data: uploadedIMG } = supabase.storage
+          .from('board_images')
+          .getPublicUrl(fileData.path);
+        //useRef를 사용해 에디터에 접근한 후
+        //에디터의 현재 커서 위치에 이미지 삽입
+        const editor = quillInstance!.current!.getEditor();
+        const range = editor.getSelection();
+        // 가져온 위치에 이미지를 삽입한다
+        editor.insertEmbed(range!.index, 'image', uploadedIMG.publicUrl);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  };
+  //QUILL config
+  const editModeModules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          ['image'],
+          [{ header: [1, 2, 3, 4, 5, false] }],
+          ['bold', 'underline', 'italic', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ color: [] }],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    };
+  }, []);
 
   // 유효성 검사
   const validateCheck = () => {
