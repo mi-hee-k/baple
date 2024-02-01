@@ -247,10 +247,7 @@ const Header = () => {
                       </div>
                       <Divider className='my-2' />
                       <div className='hover:bg-gray-200 transition-all w-full text-center rounded p-2'>
-                        <Link
-                          className='block'
-                          href={`/user/${currentUser.id}`}
-                        >
+                        <Link className='block' href={`/user`}>
                           <span>마이페이지</span>
                         </Link>
                       </div>
