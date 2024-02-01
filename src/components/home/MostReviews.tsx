@@ -46,7 +46,7 @@ const MostReviews = ({ initialData }: Props) => {
         // slidesPerView={2}
         navigation={true} // prev, next button
         modules={[Navigation, Autoplay]}
-        autoplay={true}
+        // autoplay={true}
         className=''
         allowTouchMove={false}
         id={`${baple ? 'baple' : 'color_blind'}`}
