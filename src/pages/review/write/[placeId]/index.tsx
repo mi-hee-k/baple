@@ -34,29 +34,6 @@ const ReviewWritePage = () => {
     enabled: placeId !== undefined,
   });
 
-  // const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const files = e.target.files;
-  //   const selectedImageArray = [...selectedImages];
-  //   const selectedFileArray = [...selectedFiles];
-  //   if (files) {
-  //     for (let i = 0; i < files.length; i++) {
-  //       const file = files[i];
-  //       if (file.size > 1024 * 1024) {
-  //         return toastWarn('최대 1MB까지 업로드 가능합니다.');
-  //       }
-  //       const imageUrl = URL.createObjectURL(file);
-
-  //       if (selectedImageArray.length < 3) {
-  //         selectedImageArray.push({ file, imageUrl });
-  //         selectedFileArray.push(file);
-  //       } else {
-  //         toastWarn('이미지는 최대 3장만 업로드 가능합니다.');
-  //       }
-  //     }
-  //     setSelectedImages(selectedImageArray);
-  //     setSelectedFiles(selectedFileArray);
-  //   }
-  // };
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     const selectedImageArray = [...selectedImages];
