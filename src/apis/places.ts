@@ -70,7 +70,7 @@ export const fetchPlacesData = async ({
   return data;
 };
 */
-type QueryKey = ['places', string, string[]];
+// type QueryKey = ['places', string, string[]];
 
 export const fetchPlacesData = async ({
   pageParam = 1,
@@ -79,7 +79,7 @@ export const fetchPlacesData = async ({
   pageParam?: number;
   queryKey: (string | string[])[];
 }) => {
-  const [_, searchValue, selected] = queryKey;
+  const [_, searchValue, selectedBtn] = queryKey;
   let result;
   const { data: explainData, error } = await supabase
     .rpc('search_places', {
@@ -90,6 +90,8 @@ export const fetchPlacesData = async ({
     // .ilike('place_name', `%${searchValue}%`)
     // .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
     .explain({ format: 'json', analyze: true });
+
+  console.log('explainData', explainData);
 
   if (Array.isArray(explainData)) {
     result = explainData
@@ -102,22 +104,22 @@ export const fetchPlacesData = async ({
     p_search_value: searchValue,
   });
 
-  if (selected) {
-    // selected가 배열이면 forEach 실행
-    if (Array.isArray(selected)) {
-      selected.forEach((select) => {
+  if (selectedBtn) {
+    // selectedBtn가 배열이면 forEach 실행
+    if (Array.isArray(selectedBtn)) {
+      selectedBtn.forEach((select) => {
         query = query.in(select, [true]);
       });
     } else {
-      // selected가 배열이 아니면 단일 값으로 처리
-      query = query.in(selected, [true]);
+      // selectedBtn가 배열이 아니면 단일 값으로 처리
+      query = query.in(selectedBtn, [true]);
     }
   }
 
-  const { data } = await query.range((pageParam - 1) * 20, pageParam * 20 - 1);
+  const { data } = await query.range((pageParam - 1) * 21, pageParam * 21 - 1);
 
   const resultPlaces = {
-    total_length: result['Actual Rows'],
+    total_length: result['Actual Rows'] as number,
     data: data,
     page: pageParam,
     total_pages: Math.ceil(result['Actual Rows'] / 20),

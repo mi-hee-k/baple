@@ -110,7 +110,8 @@ const ReviewWritePage = () => {
 
         publicUrlList.push(imageData.publicUrl);
       }
-      if (placeInfo?.image_url === null) {
+      // 장소대표이미지가 없는 경우 첫 리뷰어의 첫번째 사진으로 장소 대표이미지 등록
+      if (placeInfo?.image_url === '') {
         mutateToUpdate({ id: placeId as string, imageUrl: publicUrlList[0] });
       }
     }
