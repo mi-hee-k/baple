@@ -11,6 +11,9 @@ import Swal from 'sweetalert2';
 import QuillNoSSRWrapper from '../common/QuillEditor';
 import ReactQuill from 'react-quill';
 import { supabase } from '@/libs/supabase';
+import imageCompression from 'browser-image-compression';
+import ReviewSubmitSpinner from '../common/SpinnerModal';
+import SpinnerModal from '../common/SpinnerModal';
 
 const categoryList = ['신규장소', '불편사항'];
 
@@ -22,6 +25,8 @@ const Editor = ({ isEdit }: Props) => {
   const { userId } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
   const { insertPost, updatePost } = useBoards();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   const boardId: string = router.query.boardId as string;
   const [inputs, setInputs] = useState({
     title: '',
@@ -63,9 +68,17 @@ const Editor = ({ isEdit }: Props) => {
     input.setAttribute('accept', 'image/*');
     input.click();
     input.addEventListener('change', async () => {
+      setModalOpen(true); //모달 open
       //이미지를 담아 전송할 file을 만든다
-      const file = input.files?.[0] as File;
+      const rawfile = input.files?.[0] as File;
       try {
+        const options = {
+          maxSizeMB: 1, //storage 에 들어가는 사진은 절대로 1mb를 넘지 않음(확인완료)
+          maxWidthOrHeight: 1920,
+          useWebWorker: true, // 멀티쓰레드 사용 여부. 사용못할시 자동으로 싱글쓰레드로 동작
+        };
+        const file = await imageCompression(rawfile, options);
+
         const { data: fileData, error: fileError } = await supabase.storage
           .from('board_images')
           .upload(`${Date.now()}`, file);
@@ -82,9 +95,11 @@ const Editor = ({ isEdit }: Props) => {
         const range = editor.getSelection();
         // 가져온 위치에 이미지를 삽입
         editor.insertEmbed(range!.index, 'image', uploadedIMG.publicUrl);
+        setModalOpen(false); //모달 close
       } catch (error) {
         console.error(error);
         toastError('이미지 업로드에 실패했습니다. 다른 이미지로 시도해주세요');
+        setModalOpen(false); //모달 close
       }
     });
   };
@@ -180,54 +195,56 @@ const Editor = ({ isEdit }: Props) => {
       });
     }
   }, [isEdit, post]);
+  const modalMessage = '사진 올리는중.. 잠시만 기다려주세요';
 
   return (
-    <section className='flex justify-center'>
-      <form onSubmit={createPost} className='w-[100%]'>
-        <Input
-          type='text'
-          label='제목'
-          variant='bordered'
-          aria-label='제목'
-          className='mb-[10px]'
-          name='title'
-          value={inputs.title}
-          onChange={inputChange}
-          maxLength={20}
-        />
-        <div className='flex gap-2'>
-          <select
-            id='category'
-            className='mb-[10px] w-[40%] border-2 p-2 rounded-md border-[##ffe7eb] text-sm text-[#71717a]'
-            aria-label='카테고리 선택'
-            name='category'
-            value={inputs.category}
-            onChange={inputChange}
-          >
-            {categoryList.map((category) => (
-              <option
-                key={category}
-                value={category}
-                defaultValue={isEdit ? post?.category : undefined}
-                className='p-2 h-2'
-              >
-                {category}
-              </option>
-            ))}
-          </select>
+    <>
+      <section className='flex justify-center'>
+        <form onSubmit={createPost} className='w-[100%]'>
           <Input
             type='text'
+            label='제목'
             variant='bordered'
-            label='장소'
-            aria-label='장소'
-            name='place_name'
-            value={inputs.place_name}
+            aria-label='제목'
             className='mb-[10px]'
+            name='title'
+            value={inputs.title}
             onChange={inputChange}
-            maxLength={16}
+            maxLength={20}
           />
-        </div>
-        {/* <Textarea
+          <div className='flex gap-2'>
+            <select
+              id='category'
+              className='mb-[10px] w-[40%] border-2 p-2 rounded-md border-[##ffe7eb] text-sm text-[#71717a]'
+              aria-label='카테고리 선택'
+              name='category'
+              value={inputs.category}
+              onChange={inputChange}
+            >
+              {categoryList.map((category) => (
+                <option
+                  key={category}
+                  value={category}
+                  defaultValue={isEdit ? post?.category : undefined}
+                  className='p-2 h-2'
+                >
+                  {category}
+                </option>
+              ))}
+            </select>
+            <Input
+              type='text'
+              variant='bordered'
+              label='장소'
+              aria-label='장소'
+              name='place_name'
+              value={inputs.place_name}
+              className='mb-[10px]'
+              onChange={inputChange}
+              maxLength={16}
+            />
+          </div>
+          {/* <Textarea
           type='text'
           variant='bordered'
           minRows={10}
@@ -237,41 +254,47 @@ const Editor = ({ isEdit }: Props) => {
           value={inputs.content}
           onChange={inputChange}
         /> */}
-        <QuillNoSSRWrapper
-          forwardedRef={quillInstance}
-          value={inputs.content}
-          onChange={quillValueChangeHandler}
-          modules={editModeModules}
-        />
-        <Spacer y={6} />
-        <Divider className='h-0.5 mb-[30px]' />
+          <div>
+            {modalOpen && <SpinnerModal message={modalMessage} />}
 
-        <div className='text-right mb-6 sm:mb-0'>
-          <Button
-            className='mr-[10px] rounded-full px-8'
-            onClick={() => router.back()}
-          >
-            취소
-          </Button>
-          {isEdit ? (
+            <QuillNoSSRWrapper
+              forwardedRef={quillInstance}
+              value={inputs.content}
+              onChange={quillValueChangeHandler}
+              modules={editModeModules}
+            />
+          </div>
+
+          <Spacer y={6} />
+          <Divider className='h-0.5 mb-[30px]' />
+
+          <div className='text-right mb-6 sm:mb-0'>
             <Button
-              type='button'
-              className='bg-primary text-white rounded-full px-8'
-              onClick={editPost}
+              className='mr-[10px] rounded-full px-8'
+              onClick={() => router.back()}
             >
-              수정
+              취소
             </Button>
-          ) : (
-            <Button
-              type='submit'
-              className='bg-primary text-white rounded-full px-8'
-            >
-              등록
-            </Button>
-          )}
-        </div>
-      </form>
-    </section>
+            {isEdit ? (
+              <Button
+                type='button'
+                className='bg-primary text-white rounded-full px-8'
+                onClick={editPost}
+              >
+                수정
+              </Button>
+            ) : (
+              <Button
+                type='submit'
+                className='bg-primary text-white rounded-full px-8'
+              >
+                등록
+              </Button>
+            )}
+          </div>
+        </form>
+      </section>
+    </>
   );
 };
 

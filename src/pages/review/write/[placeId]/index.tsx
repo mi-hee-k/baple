@@ -16,7 +16,8 @@ import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
 import Seo from '@/components/layout/Seo';
 import { useReviews } from '@/hooks/useReviews';
 import imageCompression from 'browser-image-compression';
-import ReviewSubmitSpinner from '@/components/review_write/ReviewSubmitSpinner';
+import ReviewSubmitSpinner from '@/components/common/SpinnerModal';
+import SpinnerModal from '@/components/common/SpinnerModal';
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -143,7 +144,7 @@ const ReviewWritePage = () => {
 
   return (
     <>
-      {modalOpen && <ReviewSubmitSpinner message={modalMessage} />}
+      {modalOpen && <SpinnerModal message={modalMessage} />}
       <div className='min-h-screen py-20'>
         <Seo />
         <div className='p-4 sm:p-10 max-w-screen-sm mx-auto shadow'>

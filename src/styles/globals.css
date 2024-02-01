@@ -75,7 +75,7 @@ body {
   color: #fff;
 } */
 
-.ql-container {
+.ql-editor {
   min-height: 300px;
 }
 .ql-container.ql-snow.ql-disabled {

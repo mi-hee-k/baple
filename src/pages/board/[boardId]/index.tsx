@@ -1,6 +1,5 @@
 import { getPost } from '@/apis/boards';
 import QuillNoSSRWrapper from '@/components/common/QuillEditor';
-import TuiViewer from '@/components/common/TuiViewer';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
 import { viewModeModules } from '@/constants/quillconfig';
@@ -93,13 +92,6 @@ const BoardPostPage = () => {
       </div>
 
       <div className='w-full min-h-[200px] p-4 rounded-md sm:mt-2'>
-        {/* <p className='break-all whitespace-pre-wrap'>{post.content}</p>
-        <p>~~~~~~~~~아아 너무 힘들다(구분선)~~~~~~~~~~~~~~~~</p>
-        <div
-          id='boardcontent'
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-        <p>~~~~~~~~~아아 너무 힘들다(구분선)~~~~~~~~~~~~~~~~</p> */}
         <QuillNoSSRWrapper
           forwardedRef={quillInstance}
           modules={viewModeModules}

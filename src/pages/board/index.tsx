@@ -98,7 +98,7 @@ const BoardPage = () => {
                   : item.place_name}
               </td>
               <td className='text-center hidden lg:table-cell'>
-                {item.created_at.slice(0, 11)}
+                {/* {item.created_at.slice(0, 11)} */}
               </td>
             </tr>
           ))}
