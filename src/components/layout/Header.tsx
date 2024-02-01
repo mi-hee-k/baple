@@ -19,12 +19,9 @@ import Image from 'next/image';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useViewport } from '@/hooks/useViewport';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
-import { toastSuccess } from '@/libs/toastifyAlert';
-import { VscBell, VscBellDot } from 'react-icons/vsc';
 import AlarmModal from '../common/AlarmModal';
 import { useAlarm } from '@/hooks/useAlarm';
 import { RealtimeChannel } from '@supabase/supabase-js';
-import { userInfo } from 'os';
 
 const Header = () => {
   const dispatch = useDispatch();
