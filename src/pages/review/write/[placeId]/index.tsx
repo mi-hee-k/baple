@@ -16,6 +16,10 @@ import { getPlaceInfo, updatePlaceImage } from '@/apis/places';
 import Seo from '@/components/layout/Seo';
 import { useReviews } from '@/hooks/useReviews';
 import imageCompression from 'browser-image-compression';
+<<<<<<< HEAD
+=======
+import SpinnerModal from '@/components/common/SpinnerModal';
+>>>>>>> a5b8a2259afcfbfa4ed2f30f4350b8bf9d2b7e50
 
 const ReviewWritePage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -136,12 +140,94 @@ const ReviewWritePage = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className='min-h-screen py-20'>
       <Seo />
       <div className='p-4 sm:p-10 max-w-screen-sm mx-auto shadow'>
         <div className='mb-10 text-2xl font-semibold'>
           <div className='border-b-3 border-yellow-400'>
             {placeInfo?.place_name}
+=======
+    <>
+      {modalOpen && <SpinnerModal message={modalMessage} />}
+      <div className='min-h-screen py-20'>
+        <Seo />
+        <div className='p-4 sm:p-10 max-w-screen-sm mx-auto shadow'>
+          <div className='mb-10 text-2xl font-semibold'>
+            <div className='border-b-3 border-yellow-400'>
+              {placeInfo?.place_name}
+            </div>
+          </div>
+          <div>
+            <div className='flex items-center mb-5'>
+              <h2 className='text-xl mr-1 mb-2 '>리뷰를 작성해 주세요</h2>
+              <span className='text-red-500 text-2xl font-bold'>*</span>
+            </div>
+          </div>
+          <div className='mb-10'>
+            <Textarea
+              value={reviewText}
+              onChange={(event) => setReviewText(event.target.value)}
+              placeholder='다녀오신 장소에서 즐거운 시간을 보내셨나요? 
+          방문 경험을 사용자들과 공유해 주세요!
+          리뷰를 보는 사용자를 위해 욕설, 비방, 명예훼손성 표현은 주의해 주세요.'
+              className='w-full p-2 border rounded focus:outline-none focus:border-blue-500'
+            />
+          </div>
+          <div className='border-t-3 border-yellow-400 py-9 flex'>
+            <h2 className='text-xl'>
+              사진 첨부
+              <br />
+              <div className='text-sm'>최대 3장까지 첨부 가능합니다</div>
+            </h2>
+          </div>
+          <div className='mb-10 flex flex-col sm:flex-row gap-6'>
+            <label className='relative cursor-pointer'>
+              <input
+                type='file'
+                accept='image/*'
+                multiple
+                onChange={handleImageChange}
+                className='hidden'
+              />
+              <div className='w-24 h-24 bg-gray-200 flex items-center justify-center rounded'>
+                <span className='text-3xl'>+</span>
+              </div>
+            </label>
+            <div className='flex flex-wrap gap-4'>
+              {selectedImages.map((image, index) => (
+                <div
+                  key={index}
+                  className='image-preview relative inline-block w-24 h-24 mb-4 sm:mb-0 flex-shrink-0 flex-grow-0'
+                >
+                  <Image
+                    src={image.imageUrl}
+                    alt={`Selected Image ${index}`}
+                    fill
+                    className='object-cover'
+                  />
+                  <button
+                    onClick={() => handleRemoveImage(index)}
+                    className='delete-button absolute font-extrabold right-1 text-gray-200 hover:text-red-500 cursor-pointer'
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className='flex items-center justify-center'>
+            <Spacer x={2} />
+            <Button
+              color='primary'
+              variant='solid'
+              className='px-8'
+              onClick={onSubmitReview}
+              isDisabled={!reviewText}
+            >
+              등록하기
+            </Button>
+>>>>>>> a5b8a2259afcfbfa4ed2f30f4350b8bf9d2b7e50
           </div>
         </div>
         <div>
