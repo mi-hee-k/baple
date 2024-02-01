@@ -79,7 +79,7 @@ export const fetchPlacesData = async ({
   pageParam?: number;
   queryKey: (string | string[])[];
 }) => {
-  const [_, searchValue, selected] = queryKey;
+  const [_, searchValue, selectedBtn] = queryKey;
   let result;
   const { data: explainData, error } = await supabase
     .rpc('search_places', {
@@ -104,15 +104,15 @@ export const fetchPlacesData = async ({
     p_search_value: searchValue,
   });
 
-  if (selected) {
-    // selected가 배열이면 forEach 실행
-    if (Array.isArray(selected)) {
-      selected.forEach((select) => {
+  if (selectedBtn) {
+    // selectedBtn가 배열이면 forEach 실행
+    if (Array.isArray(selectedBtn)) {
+      selectedBtn.forEach((select) => {
         query = query.in(select, [true]);
       });
     } else {
-      // selected가 배열이 아니면 단일 값으로 처리
-      query = query.in(selected, [true]);
+      // selectedBtn가 배열이 아니면 단일 값으로 처리
+      query = query.in(selectedBtn, [true]);
     }
   }
 

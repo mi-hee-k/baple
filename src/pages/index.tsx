@@ -14,6 +14,7 @@ import Image from 'next/image';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { saveSearchValue } from '@/redux/modules/searchSlice';
 import { useRouter } from 'next/router';
+import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -30,21 +31,38 @@ interface Props {
 
 const Home = ({ topBookmarked, topReviewed }: Props) => {
   // const { username, userId } = useSelector((state: RootState) => state.auth);
+  const selectedBtn = useSelector((state: RootState) => state.selectedBtn);
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const [searchValue, setSearchValue] = useState('');
+  const dispatch = useDispatch();
+  const router = useRouter();
   useEffect(() => {
     setIsLoaded(true);
   }, []);
-  const dispatch = useDispatch();
-  const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleClickSearchBtn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(saveSearchValue(searchValue));
     router.push('/places');
   };
 
-  const [searchValue, setSearchValue] = useState('');
+  const handleClickBtns = (value: string) => {
+    dispatch(saveSelectedBtn(value));
+  };
+
+  const generateBtns = (value: string, label: string) => (
+    <Button
+      key={value}
+      onClick={() => handleClickBtns(value)}
+      color='primary'
+      radius='full'
+      variant={selectedBtn.includes(value) ? 'solid' : 'bordered'}
+      className='w-full md:w-36'
+    >
+      {label}
+    </Button>
+  );
+
   return (
     <>
       {isLoaded ? (
@@ -58,7 +76,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
           <MainWrapper>
             {/* 검색창 */}
             <form
-              onSubmit={handleSearch}
+              onSubmit={handleClickSearchBtn}
               className='flex justify-center w-full sm:w-[60%] m-auto mt-10 mb-4 sm:mb-8 bg-primary p-[2px] rounded-full overflow-hidden'
             >
               <input
@@ -80,6 +98,16 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
                 />
               </Button>
             </form>
+            <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center  md:flex gap-4 my-6'>
+              {generateBtns('is_paid', '입장료')}
+              {generateBtns('is_easy_door', '장애인용 출입문')}
+              {generateBtns('is_wheelchair_rental', '휠체어 대여')}
+              {generateBtns('is_guide_dog', '안내견 동반')}
+              {generateBtns('is_braille_guide', '점자 가이드')}
+              {generateBtns('is_audio_guide', '오디오 가이드')}
+              {generateBtns('is_disabled_toilet', '장애인용 화장실')}
+              {generateBtns('is_disabled_parking', '장애인용 주차장')}
+            </div>
             <div className='flex flex-col w-full justify-center items-center'>
               <MostReviews initialData={topReviewed} />
               <Spacer y={10} />

@@ -13,10 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPlacesData } from '@/apis/places';
 import { PlacesForSearch } from '@/types/types';
+import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
 
 const PlacesPage = () => {
-  const [selected, setSelected] = useState<string[]>([]);
+  // const [selected, setSelected] = useState<string[]>([]);
   const searchValue = useSelector((state: RootState) => state.search);
+  const selectedBtn = useSelector((state: RootState) => state.selectedBtn);
   const [realSearch, setRealSearch] = useState(searchValue);
 
   console.log({ realSearch });
@@ -43,7 +45,7 @@ const PlacesPage = () => {
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ['places', realSearch, selected],
+    queryKey: ['places', realSearch, selectedBtn],
     queryFn: fetchPlacesData,
     initialPageParam: currentPage, // 초기 페이지 값 설정
     getNextPageParam: (lastPage, pages) => {
@@ -70,19 +72,21 @@ const PlacesPage = () => {
   });
 
   const handleClickBtns = (value: string) => {
-    setSelected((prevSelected) =>
-      prevSelected.includes(value)
-        ? prevSelected.filter((item) => item !== value)
-        : [...prevSelected, value],
-    );
+    // setSelected((prevSelected) =>
+    //   prevSelected.includes(value)
+    //     ? prevSelected.filter((item) => item !== value)
+    //     : [...prevSelected, value],
+    // );
+    dispatch(saveSelectedBtn(value));
   };
+  console.log('selectedBtn', selectedBtn);
   const generateBtns = (value: string, label: string) => (
     <Button
       key={value}
       onClick={() => handleClickBtns(value)}
       color='primary'
       radius='full'
-      variant={selected.includes(value) ? 'solid' : 'bordered'}
+      variant={selectedBtn.includes(value) ? 'solid' : 'bordered'}
       className='w-full md:w-36'
     >
       {label}
