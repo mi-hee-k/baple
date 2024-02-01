@@ -7,6 +7,7 @@ import { RootState } from '@/redux/config/configStore';
 import { useRouter } from 'next/router';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
+import Swal from 'sweetalert2';
 
 const SideBar = () => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
@@ -58,14 +59,14 @@ const SideBar = () => {
           >
             {/* Content of the sidebar */}
             <div className={`flex flex-col m-16 gap-5`}>
-              <Link
-                href='/about'
-                className={` ${
+              <div
+                className={`hover:text-primary ${
                   router.pathname === '/about' ? 'text-primary' : ''
                 }`}
+                onClick={() => Swal.fire('준비중입니다!')}
               >
                 배플 소개
-              </Link>
+              </div>
               <Link
                 href='/nearby'
                 className={` ${
