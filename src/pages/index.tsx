@@ -74,7 +74,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
             slideHeight={'400px'} // 캐러셀 높이
           />
           <MainWrapper>
-            <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center   gap-4 my-6'>
+            <div className='grid grid-cols-2 sm:grid-cols-4 place-items-center gap-2 sm:w-[60%] mx-auto'>
               {generateBtns('is_paid', '입장료')}
               {generateBtns('is_easy_door', '장애인용 출입문')}
               {generateBtns('is_wheelchair_rental', '휠체어 대여')}
