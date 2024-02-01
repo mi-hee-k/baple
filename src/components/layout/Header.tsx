@@ -13,12 +13,18 @@ import {
 } from '@nextui-org/react';
 import { RootState } from '@/redux/config/configStore';
 import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserDataById } from '@/apis/users';
 import Image from 'next/image';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useViewport } from '@/hooks/useViewport';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
+import { toastSuccess } from '@/libs/toastifyAlert';
+import { VscBell, VscBellDot } from 'react-icons/vsc';
+import AlarmModal from '../common/AlarmModal';
+import { useAlarm } from '@/hooks/useAlarm';
+import { RealtimeChannel } from '@supabase/supabase-js';
+import { userInfo } from 'os';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -29,10 +35,59 @@ const Header = () => {
   const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
+  const [alarmState, setAlarmState] = useState(false);
+  const { alarmData } = useAlarm();
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (!userId) return;
+    const subscription: RealtimeChannel = supabase
+      .channel('custom-filter-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'alarm',
+          filter: `received_id=eq.${userId}`,
+        },
+        (payload) => {
+          queryClient.invalidateQueries({
+            queryKey: ['alarm', userId],
+          });
+          setAlarmState(true);
+        },
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'alarm',
+          filter: `received_id=eq.${userId}`,
+        },
+        (payload) => {
+          queryClient.invalidateQueries({
+            queryKey: ['alarm', userId],
+          });
+        },
+      )
+      .subscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [userId]);
+
+  useEffect(() => {
+    if (alarmData?.length === 0) {
+      setAlarmState(false);
+    }
+  }, [alarmData]);
 
   const {
     data: user,
@@ -161,6 +216,11 @@ const Header = () => {
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
                   {/* {isTablet ? null : <ThemeSwitcher />} */}
+
+                  {/* 실시간 알림 */}
+                  <AlarmModal alarmState={alarmState} />
+
+                  {/* 프로필 */}
                   <span className='hidden md:block'>
                     반가워요 {user?.user_name}님!
                   </span>

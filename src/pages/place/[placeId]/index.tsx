@@ -57,7 +57,7 @@ const PlacePage = () => {
       return { recentOrder, likesOrder };
     },
   });
-  console.log('placeInfo', placeInfo);
+  // console.log('placeInfo', placeInfo);
   const { data: bookmarkState } = useQuery({
     queryKey: ['bookmark', userId, placeId],
     queryFn: () => getBookmark({ userId, placeId }),
@@ -122,7 +122,7 @@ const PlacePage = () => {
   return (
     <MainWrapper>
       <Seo title={`${placeInfo.place_name} | `} />
-      <div className='flex items-center justify-between w-full mb-[20px] sm:hidden'>
+      <div className='flex items-center justify-between w-full mb-[20px] md:hidden'>
         <PlaceDetailHeader
           placeId={placeId}
           placeInfo={placeInfo}
