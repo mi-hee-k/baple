@@ -55,7 +55,7 @@ const PlacesPage = () => {
     },
   });
 
-  console.log('places!!!!', places);
+  // console.log('places!!!!', places);
 
   const { ref } = useInView({
     threshold: 1,
@@ -115,7 +115,7 @@ const PlacesPage = () => {
       <div className='flex gap-6 flex-col md:flex md:flex-row'>
         {/* 태그 */}
         <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4'>
-          {checkboxButton('is_paid', '입장료')}
+          {checkboxButton('is_paid', '입장료 무료')}
           {checkboxButton('is_easy_door', '장애인용 출입문')}
           {checkboxButton('is_wheelchair_rental', '휠체어 대여')}
           {checkboxButton('is_guide_dog', '안내견 동반')}

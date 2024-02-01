@@ -179,11 +179,13 @@ const ReviewLikes = ({ review }: Props) => {
               <div
                 className={`${isShown ? 'visible' : 'invisible'} opacity-${
                   isShown ? '100' : '0'
-                } absolute w-[50px] h-[50px] bg-slate-300 top-[20px] xl:top-[-65px] left-[-70px] xl:left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
+                } absolute w-[50px] h-[50px]  ${
+                  baple ? 'bg-slate-300' : 'bg-slate-900'
+                } top-[20px] xl:top-[-65px] left-[-70px] xl:left-[44px] rounded-full flex justify-center items-center transition-opacity duration-200 ease-in-out`}
               >
                 <RiKakaoTalkFill
                   size={24}
-                  className='cursor-pointer'
+                  className='cursor-pointer text-primary'
                   onClick={() =>
                     shareKakao({
                       address: placeInfo?.address,
@@ -196,11 +198,13 @@ const ReviewLikes = ({ review }: Props) => {
               <div
                 className={`${isShown ? 'visible' : 'invisible'} opacity-${
                   isShown ? '100' : '0'
-                } absolute w-[50px] h-[50px] bg-slate-300 top-[20px] xl:top-[-10px] left-[-16px] xl:left-[44px] rounded-full flex justify-center items-center transition-all duration-200 ease-in-out`}
+                } absolute w-[50px] h-[50px] ${
+                  baple ? 'bg-slate-300' : 'bg-slate-900'
+                } top-[20px] xl:top-[-10px] left-[-16px] xl:left-[44px] rounded-full flex justify-center items-center transition-all duration-200 ease-in-out`}
               >
                 <FaPaperclip
                   size={24}
-                  className='cursor-pointer'
+                  className='cursor-pointer text-primary'
                   onClick={copyClipboard}
                 />
               </div>
