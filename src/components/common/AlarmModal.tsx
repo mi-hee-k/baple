@@ -1,13 +1,43 @@
-import React from 'react';
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from '@nextui-org/react';
+import React, { useState } from 'react';
+import { VscBell, VscBellDot } from 'react-icons/vsc';
 
-const AlarmModal = () => {
+interface Props {
+  alarmState: boolean;
+}
+
+const AlarmModal = ({ alarmState }: Props) => {
+  console.log(alarmState);
   return (
-    <div className='w-[100%] h-[100%] fixed  z-10 flex justify-center items-center'>
-      <div className='z-20 bg-white rounded-md w-[300px] h-[200px] flex flex-col justify-center items-center opacity-100 absolute bg-opacity-100'>
-        <p>message</p>
-      </div>
-      <div className='absolute w-[100%] h-[100%] bg-gray-900 opacity-50'></div>
-    </div>
+    <>
+      <Dropdown>
+        <DropdownTrigger>
+          {alarmState ? (
+            <Button variant='bordered'>
+              <VscBellDot size={25} className='cursor-pointer' />
+            </Button>
+          ) : (
+            <Button variant='bordered'>
+              <VscBell size={25} className='cursor-pointer' />
+            </Button>
+          )}
+        </DropdownTrigger>
+        <DropdownMenu aria-label='Static Actions'>
+          <DropdownItem key='new'>New file</DropdownItem>
+          <DropdownItem key='copy'>Copy link</DropdownItem>
+          <DropdownItem key='edit'>Edit file</DropdownItem>
+          <DropdownItem key='delete' className='text-danger' color='danger'>
+            Delete file
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    </>
   );
 };
 

@@ -20,6 +20,8 @@ import ThemeSwitcher from './ThemeSwitcher';
 import { useViewport } from '@/hooks/useViewport';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 import { toastSuccess } from '@/libs/toastifyAlert';
+import { VscBell, VscBellDot } from 'react-icons/vsc';
+import AlarmModal from '../common/AlarmModal';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,8 @@ const Header = () => {
   const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
+  const [showModal, setShowModal] = useState(false);
+  const [alarmState, setAlarmState] = useState(true);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -47,12 +51,14 @@ const Header = () => {
           filter: `received_id=eq.${userId}`,
         },
         (payload) => {
+          console.log(payload);
           const msg = payload.new.message;
+          setShowModal(true);
           toastSuccess(`${msg}라는 댓글이 달렸습니다`);
         },
       )
       .subscribe();
-  }, []);
+  }, [userId]);
 
   const {
     data: user,
@@ -118,6 +124,10 @@ const Header = () => {
     router.push('/');
   };
 
+  // const toggleAlarm = () => {
+  //   setAlarmState((prev) => !prev);
+  // };
+
   return (
     <>
       {isLoaded ? (
@@ -181,6 +191,11 @@ const Header = () => {
               {currentUser ? (
                 <div className='flex gap-4 items-center w-full justify-end'>
                   {/* {isTablet ? null : <ThemeSwitcher />} */}
+
+                  {/* 실시간 알림 */}
+                  <AlarmModal alarmState={alarmState} />
+
+                  {/* 프로필 */}
                   <span className='hidden md:block'>
                     반가워요 {user?.user_name}님!
                   </span>
