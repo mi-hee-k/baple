@@ -57,6 +57,9 @@ const AlarmModal = ({ alarmState }: Props) => {
               💬 새로운 댓글이 있습니다.
             </div>
           ))}
+          {alarmData?.length === 0 && (
+            <div className='p-2 text-gray-400'>새로운 알림이 없습니다. </div>
+          )}
         </PopoverContent>
       </Popover>
     </>

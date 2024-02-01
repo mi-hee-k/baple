@@ -79,7 +79,7 @@ const Header = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [userId]);
+  }, [queryClient]);
 
   useEffect(() => {
     if (alarmData?.length === 0) {
