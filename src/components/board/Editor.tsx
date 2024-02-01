@@ -12,7 +12,6 @@ import QuillNoSSRWrapper from '../common/QuillEditor';
 import ReactQuill from 'react-quill';
 import { supabase } from '@/libs/supabase';
 import imageCompression from 'browser-image-compression';
-import ReviewSubmitSpinner from '../common/SpinnerModal';
 import SpinnerModal from '../common/SpinnerModal';
 
 const categoryList = ['신규장소', '불편사항'];
