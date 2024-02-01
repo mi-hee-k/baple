@@ -8,7 +8,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { RootState } from '@/redux/config/configStore';
-import { setSearchValue } from '@/redux/modules/searchValueSlice';
+import { saveSearchValue } from '@/redux/modules/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPlacesData } from '@/apis/places';
@@ -16,18 +16,18 @@ import { PlacesForSearch } from '@/types/types';
 
 const PlacesPage = () => {
   const [selected, setSelected] = useState<string[]>([]);
-  const searchValue = useSelector((state: RootState) => state.searchValue);
+  const searchValue = useSelector((state: RootState) => state.search);
   const [realSearch, setRealSearch] = useState(searchValue);
 
-  // const [placesData, setPlacesData] = useState();
   console.log({ realSearch });
+  console.log('searchValue', searchValue);
   const dispatch = useDispatch();
   const currentPage = 1;
 
   useEffect(() => {
     //클린업함수 -> 언마운트 될때 redux state 빈 스트링으로 초기화
     return () => {
-      dispatch(setSearchValue(''));
+      dispatch(saveSearchValue(''));
     };
   }, [dispatch]);
 
@@ -58,6 +58,7 @@ const PlacesPage = () => {
       return data.pages.map((pageData) => pageData?.data).flat();
       // return data.pages;
     },
+    // enabled: !!searchValue,
   });
 
   const { ref } = useInView({
@@ -98,7 +99,7 @@ const PlacesPage = () => {
         <input
           placeholder='장소이름을 검색하세요'
           value={searchValue}
-          onChange={(e) => dispatch(setSearchValue(e.target.value))}
+          onChange={(e) => dispatch(saveSearchValue(e.target.value))}
           className='rounded-full w-[80%] sm:w-full p-2 px-4 placeholder:text-md focus:outline-none'
           autoFocus
         />

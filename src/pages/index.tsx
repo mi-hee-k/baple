@@ -12,7 +12,7 @@ import { PlacesForSearch } from '@/types/types';
 import TopButton from '@/components/common/TopButton';
 import Image from 'next/image';
 import MainWrapper from '@/components/layout/MainWrapper';
-import { setSearchValue } from '@/redux/modules/searchValueSlice';
+import { saveSearchValue } from '@/redux/modules/searchSlice';
 import { useRouter } from 'next/router';
 
 // const inter = Inter({ subsets: ['latin'] });
@@ -37,13 +37,14 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
   }, []);
   const dispatch = useDispatch();
   const router = useRouter();
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(setSearchValue(localSearchValue));
+    dispatch(saveSearchValue(searchValue));
     router.push('/places');
   };
 
-  const [localSearchValue, setLocalSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   return (
     <>
       {isLoaded ? (
@@ -62,8 +63,8 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
             >
               <input
                 placeholder='장소이름을 검색하세요'
-                value={localSearchValue}
-                onChange={(e) => setLocalSearchValue(e.target.value)}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
                 className='rounded-full w-[80%] sm:w-full p-2 px-4 placeholder:text-md focus:outline-none'
               />
               <Button

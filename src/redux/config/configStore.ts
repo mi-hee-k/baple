@@ -1,11 +1,11 @@
 import auth from '../../redux/modules/authSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import placesData from '../modules/placesDataSlice';
-import searchValue from '../modules/searchValueSlice';
+import search from '../modules/searchSlice';
 
 export type RootState = ReturnType<typeof store.getState>;
 const store = configureStore({
-  reducer: { auth, placesData, searchValue },
+  reducer: { auth, placesData, search },
 });
 export default store;
 
