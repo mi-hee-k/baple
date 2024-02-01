@@ -120,13 +120,9 @@ const PlacesPage = () => {
           />
         </Button>
       </form>
-      {/* <span>
-        {places !== undefined ? places[0]?.total_length?.toString() : '0'}개의
-        검색 결과를 찾았어요!
-      </span> */}
       <div className='flex gap-6 flex-col md:flex md:flex-row relative'>
         {/* 태그 */}
-        <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4 md:fixed'>
           {generateBtns('is_paid', '입장료')}
           {generateBtns('is_easy_door', '장애인용 출입문')}
           {generateBtns('is_wheelchair_rental', '휠체어 대여')}
@@ -137,27 +133,27 @@ const PlacesPage = () => {
           {generateBtns('is_disabled_parking', '장애인용 주차장')}
         </div>
         {/* 카드 */}
-        <div className='flex justify-center w-full'>
-          <div className='grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 sm:gap-3 places-items-center w-full md:w-full'>
-            {places?.map((place, idx) => (
-              <PlaceCard key={idx} place={place} />
-            ))}
-          </div>
+        {/* <div className='flex justify-center w-full'> */}
+        <div className='relative grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 sm:gap-3 places-items-center w-full md:w-[75%] md:ml-48 '>
+          {places?.map((place, idx) => (
+            <PlaceCard key={idx} place={place} />
+          ))}
+          {places?.length === 0 ? (
+            <div className='absolute inset-x-0 min-h-[30rem] flex justify-center flex-col gap-5 items-center '>
+              <Image
+                src='/images/icons/character.svg'
+                alt='main_character'
+                width={100}
+                height={100}
+              />
+              <span className='text-lg'>검색 결과가 없습니다 😅</span>
+            </div>
+          ) : null}
         </div>
-        {places?.length === 0 ? (
-          <div className='absolute w-full h-full mx-auto flex flex-col gap-3 justify-center items-center '>
-            <Image
-              src='/images/icons/character.svg'
-              alt='main_character'
-              width={100}
-              height={100}
-            />
-            <span className='text-lg'>검색 결과가 없습니다 😅</span>
-          </div>
-        ) : null}
+        {/* </div> */}
       </div>
 
-      <div ref={ref} className='bg-blue w-full h-6'></div>
+      <div ref={ref} className=' w-full h-6'></div>
       <TopButton />
     </MainWrapper>
   );
