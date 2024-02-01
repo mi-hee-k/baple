@@ -42,8 +42,10 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
 
   const handleClickSearchBtn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(saveSearchValue(searchValue));
-    router.push('/places');
+    if (searchValue) {
+      dispatch(saveSearchValue(searchValue));
+      router.push('/places');
+    }
   };
 
   const handleClickBtns = (value: string) => {
