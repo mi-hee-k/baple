@@ -74,6 +74,10 @@ body {
 /* .swiper-scrollbar-drag {
   color: #fff;
 } */
+
+.ql-container {
+  min-height: 300px;
+}
 .ql-container.ql-snow.ql-disabled {
   border: none;
 }

@@ -1,6 +1,6 @@
 import { getPost, insertNewPost, updatePost } from '@/apis/boards';
 import { useBoards } from '@/hooks/useBoards';
-import { toastWarn } from '@/libs/toastifyAlert';
+import { toastError, toastWarn } from '@/libs/toastifyAlert';
 import { RootState } from '@/redux/config/configStore';
 import { Button, Input, Textarea, Spacer, Divider } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
@@ -73,19 +73,18 @@ const Editor = ({ isEdit }: Props) => {
           console.error('이미지 업로드 에러', fileError.message);
           return;
         }
-        //이미지 업로드 후
-        //곧바로 업로드 된 이미지 url을 가져오기
+        //업로드 된 이미지 url을 가져오기
         const { data: uploadedIMG } = supabase.storage
           .from('board_images')
           .getPublicUrl(fileData.path);
-        //useRef를 사용해 에디터에 접근한 후
         //에디터의 현재 커서 위치에 이미지 삽입
         const editor = quillInstance!.current!.getEditor();
         const range = editor.getSelection();
-        // 가져온 위치에 이미지를 삽입한다
+        // 가져온 위치에 이미지를 삽입
         editor.insertEmbed(range!.index, 'image', uploadedIMG.publicUrl);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        toastError('이미지 업로드에 실패했습니다. 다른 이미지로 시도해주세요');
       }
     });
   };
