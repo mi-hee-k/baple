@@ -11,8 +11,11 @@ const selectedBtnSlice = createSlice({
         ? state.filter((item) => item !== action.payload)
         : [...state, action.payload];
     },
+    resetSelectedBtn: (state) => {
+      return (state = []);
+    },
   },
 });
 
 export default selectedBtnSlice.reducer;
-export const { saveSelectedBtn } = selectedBtnSlice.actions;
+export const { saveSelectedBtn, resetSelectedBtn } = selectedBtnSlice.actions;
