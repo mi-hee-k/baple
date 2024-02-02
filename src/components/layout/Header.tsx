@@ -1,7 +1,7 @@
 import { supabase } from '@/libs/supabase';
 import { logInUser, logOutUser, updateUser } from '@/redux/modules/authSlice';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
@@ -33,7 +33,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<any>(null);
-  // const [userId, setUserId] = useState('');
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,12 +40,6 @@ const Header = () => {
   const [alarmState, setAlarmState] = useState(false);
   const { alarmData } = useAlarm();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  // const ref = useRef(null);
-
-  const handleMyPageClick = () => {
-    // 마이페이지 링크를 클릭할 때 팝오버를 닫습니다.
-    setIsPopoverOpen(false);
-  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -152,7 +145,6 @@ const Header = () => {
           }),
         );
         setCurrentUser(session?.user);
-        // setusername(username);
       }
     });
   }, [dispatch, user]);
