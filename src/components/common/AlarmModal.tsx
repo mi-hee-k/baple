@@ -7,6 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@nextui-org/react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { VscBell, VscBellDot } from 'react-icons/vsc';
 import { useSelector } from 'react-redux';
@@ -36,15 +37,15 @@ const AlarmModal = ({ alarmState }: Props) => {
     <>
       <Popover placement='bottom'>
         <PopoverTrigger>
-          <Button variant='light'>
+          <div className='w-[20px] sm:w-[40px]'>
             {alarmState ? (
               <VscBellDot size={25} className='cursor-pointer' />
             ) : (
               <VscBell size={25} className='cursor-pointer' />
             )}
-          </Button>
+          </div>
         </PopoverTrigger>
-        <PopoverContent className='py-4 flex gap-2'>
+        <PopoverContent className='p-4 sm:py-4 flex gap-2'>
           <Button
             size='sm'
             className={`rounded-full bg-primary ${
@@ -63,9 +64,33 @@ const AlarmModal = ({ alarmState }: Props) => {
               } p-2 text-xs sm:text-sm rounded-lg cursor-pointer hover:bg-slate-200 transition-background`}
               onClick={() => readAlarm(item.id, item.review_id)}
             >
-              {item.type === 'comment'
-                ? '💬 새로운 댓글이 있습니다.'
-                : '❤ 새로운 좋아요가 있습니다.'}
+              {item.type === 'comment' ? (
+                <div className='flex'>
+                  <Image
+                    src={`/images/icons/${
+                      baple ? 'heart_select' : 'CBIcons/CBfilled-heart'
+                    }.svg`}
+                    width={14}
+                    height={14}
+                    alt='likes icon'
+                    className='mr-2'
+                  />
+                  <span>새로운 댓글이 있습니다.</span>
+                </div>
+              ) : (
+                <div className='flex'>
+                  <Image
+                    src={`/images/icons/${
+                      baple ? 'comment_select' : 'CBicons/CBcomment_select'
+                    }.svg`}
+                    width={14}
+                    height={14}
+                    alt='likes icon'
+                    className='mr-2'
+                  />
+                  <span>새로운 좋아요가 있습니다.</span>
+                </div>
+              )}
             </div>
           ))}
         </PopoverContent>
