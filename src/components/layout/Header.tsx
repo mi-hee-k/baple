@@ -33,7 +33,7 @@ const Header = () => {
   const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
-  const [alarmState, setAlarmState] = useState(false);
+  const [alarmState, setAlarmState] = useState<boolean>();
   const { alarmData } = useAlarm();
 
   useEffect(() => {
@@ -41,6 +41,10 @@ const Header = () => {
   }, []);
 
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    setAlarmState(alarmData?.length === 0 ? false : true);
+  }, [alarmData?.length]);
 
   // 알림
   useEffect(() => {
