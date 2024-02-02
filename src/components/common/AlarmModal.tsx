@@ -1,4 +1,5 @@
 import { useAlarm } from '@/hooks/useAlarm';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 import { RootState } from '@/redux/config/configStore';
 import {
   Button,
@@ -11,29 +12,14 @@ import { VscBell, VscBellDot } from 'react-icons/vsc';
 import { useSelector } from 'react-redux';
 
 interface Props {
-  alarmState: boolean;
-}
-
-interface CombinedDataType {
-  id: string;
-  created_at: string;
-  received_id: string;
-  sender_id: string;
-  type: string;
-  read: boolean;
-  review_id: string;
-  like_id: string;
+  alarmState: boolean | undefined;
 }
 
 const AlarmModal = ({ alarmState }: Props) => {
-  const {
-    alarmData,
-    // likeAlarmData,
-    updateAlarm,
-    updateAllAlarm,
-  } = useAlarm();
+  const { alarmData, updateAlarm, updateAllAlarm } = useAlarm();
   const router = useRouter();
   const { userId } = useSelector((state: RootState) => state.auth);
+  const { baple } = useCurrentTheme();
 
   // 읽음 처리
   const readAlarm = (AlarmId: string, reviewId: string) => {
@@ -48,7 +34,7 @@ const AlarmModal = ({ alarmState }: Props) => {
 
   return (
     <>
-      <Popover showArrow placement='bottom'>
+      <Popover placement='bottom'>
         <PopoverTrigger>
           <Button variant='light'>
             {alarmState ? (
@@ -58,9 +44,12 @@ const AlarmModal = ({ alarmState }: Props) => {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className='p-4 flex gap-2'>
+        <PopoverContent className='py-4 flex gap-2'>
           <Button
             size='sm'
+            className={`rounded-full bg-primary ${
+              baple ? 'text-white' : 'text-black'
+            }`}
             isDisabled={alarmData?.length === 0 ? true : false}
             onClick={() => readAllAlarm(userId)}
           >
@@ -69,7 +58,9 @@ const AlarmModal = ({ alarmState }: Props) => {
           {alarmData?.map((item) => (
             <div
               key={item.id}
-              className='w-[200px] h-auto bg-white p-2 rounded-lg cursor-pointer hover:bg-slate-200 transition-background'
+              className={`w-[200px] sm:w-[220px] h-auto ${
+                baple ? 'bg-white' : 'bg-black'
+              } p-2 text-xs sm:text-sm rounded-lg cursor-pointer hover:bg-slate-200 transition-background`}
               onClick={() => readAlarm(item.id, item.review_id)}
             >
               {item.type === 'comment'
