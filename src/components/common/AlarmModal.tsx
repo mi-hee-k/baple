@@ -33,11 +33,13 @@ const AlarmModal = ({ alarmState }: Props) => {
     updateAllAlarm(userId);
   };
 
+  console.log(alarmData);
+
   return (
     <>
       <Popover placement='bottom'>
         <PopoverTrigger>
-          <div className='w-[20px] sm:w-[40px]'>
+          <div className='w-[20px] sm:mr-4'>
             {alarmState ? (
               <VscBellDot size={25} className='cursor-pointer' />
             ) : (
@@ -93,6 +95,11 @@ const AlarmModal = ({ alarmState }: Props) => {
               )}
             </div>
           ))}
+          {alarmData?.length === 0 && (
+            <div className={`p-2 ${baple ? 'text-gray-600' : 'text-white'}`}>
+              새로운 알림이 없습니다.
+            </div>
+          )}
         </PopoverContent>
       </Popover>
     </>
