@@ -46,7 +46,7 @@ const PlaceCard2 = ({ place }: Props) => {
         <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 place-items-start pb-16 px-5 pt-5 rounded-xl'>
           {place.is_paid ? (
             <Chip size='sm' variant='solid'>
-              입장료
+              입장료 있음
             </Chip>
           ) : null}
           {place.is_easy_door ? (
