@@ -13,6 +13,7 @@ import ReactQuill from 'react-quill';
 import { supabase } from '@/libs/supabase';
 import imageCompression from 'browser-image-compression';
 import SpinnerModal from '../common/SpinnerModal';
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
 const categoryList = ['신규장소', '불편사항'];
 
@@ -25,7 +26,7 @@ const Editor = ({ isEdit }: Props) => {
   const router = useRouter();
   const { insertPost, updatePost } = useBoards();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+  const { baple } = useCurrentTheme();
   const boardId: string = router.query.boardId as string;
   const [inputs, setInputs] = useState({
     title: '',
@@ -158,7 +159,7 @@ const Editor = ({ isEdit }: Props) => {
       showCancelButton: true,
       confirmButtonText: '등록',
       cancelButtonText: '취소',
-      confirmButtonColor: '#7b4cff',
+      confirmButtonColor: baple ? '#7b4cff' : '#66b6ff',
     }).then((result) => {
       if (result.isConfirmed) {
         insertPost(formData);
@@ -176,7 +177,7 @@ const Editor = ({ isEdit }: Props) => {
       showCancelButton: true,
       confirmButtonText: '수정',
       cancelButtonText: '취소',
-      confirmButtonColor: '#7b4cff',
+      confirmButtonColor: baple ? '#7b4cff' : '#66b6ff',
     }).then((result) => {
       if (result.isConfirmed) {
         updatePost({ boardId, editValue: formData });
