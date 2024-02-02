@@ -13,7 +13,10 @@ import Image from 'next/image';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { saveSearchValue } from '@/redux/modules/searchSlice';
 import { useRouter } from 'next/router';
-import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
+import {
+  resetSelectedBtn,
+  saveSelectedBtn,
+} from '@/redux/modules/seletedBtnSlice';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -38,6 +41,11 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  useEffect(() => {
+    dispatch(saveSearchValue(''));
+    dispatch(resetSelectedBtn());
+  }, [dispatch]);
 
   const handleClickSearchBtn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

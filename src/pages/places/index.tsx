@@ -3,7 +3,7 @@ import PlaceCard from '@/components/common/PlaceCard';
 import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
-import { Button, Card, Skeleton, Spinner } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -13,18 +13,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPlacesData } from '@/apis/places';
 import useLocalStorage from 'use-local-storage';
-import {
-  resetSelectedBtn,
-  saveSelectedBtn,
-} from '@/redux/modules/seletedBtnSlice';
-import _ from 'lodash';
+import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
 import SkeletonCard from '@/components/places/SkeletonCard';
+import { useRouter } from 'next/router';
 
 const PlacesPage = () => {
   const searchValue = useSelector((state: RootState) => state.search);
   const selectedBtn = useSelector((state: RootState) => state.selectedBtn);
   const [realSearch, setRealSearch] = useState(searchValue);
-
+  const router = useRouter();
   const dispatch = useDispatch();
   const currentPage = 1;
   const [scrollY] = useLocalStorage('places_list_scroll', 0);
@@ -32,15 +29,7 @@ const PlacesPage = () => {
   useEffect(() => {
     // 기본값이 "0"이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤시킨다.
     if (scrollY !== 0) window.scrollTo(0, scrollY);
-  }, []);
-
-  useEffect(() => {
-    //클린업함수 -> 언마운트 될때 redux state 빈 값으로 초기화
-    return () => {
-      dispatch(saveSearchValue(''));
-      dispatch(resetSelectedBtn());
-    };
-  }, [dispatch]);
+  }, [scrollY]);
 
   const handleClickSearchBtn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,11 +69,6 @@ const PlacesPage = () => {
   });
 
   const handleClickBtns = (value: string) => {
-    // setSelected((prevSelected) =>
-    //   prevSelected.includes(value)
-    //     ? prevSelected.filter((item) => item !== value)
-    //     : [...prevSelected, value],
-    // );
     dispatch(saveSelectedBtn(value));
   };
 
