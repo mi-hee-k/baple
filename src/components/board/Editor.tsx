@@ -26,13 +26,21 @@ const Editor = ({ isEdit }: Props) => {
   const router = useRouter();
   const { insertPost, updatePost } = useBoards();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  // const [imgArr, setImgArr] = useState<string[]>([]);
   const { baple } = useCurrentTheme();
   const boardId: string = router.query.boardId as string;
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<{
+    title: string;
+    category: string;
+    content: string;
+    place_name: string;
+    images: string[];
+  }>({
     title: '',
     category: '신규장소',
     content: '',
     place_name: '',
+    images: [],
   });
 
   const { data: post } = useQuery({
@@ -63,6 +71,12 @@ const Editor = ({ isEdit }: Props) => {
   };
   //QUILL 이미지 핸들러
   const imageHandler = async () => {
+    const fileName = Date.now().toString();
+    // setImgArr((prev) => [...prev, fileName]);
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      images: [...prevInputs.images, fileName],
+    }));
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
@@ -73,15 +87,15 @@ const Editor = ({ isEdit }: Props) => {
       const rawfile = input.files?.[0] as File;
       try {
         const options = {
-          maxSizeMB: 1, //storage 에 들어가는 사진은 절대로 1mb를 넘지 않음(확인완료)
+          maxSizeMB: 1,
           maxWidthOrHeight: 1920,
-          useWebWorker: true, // 멀티쓰레드 사용 여부. 사용못할시 자동으로 싱글쓰레드로 동작
+          useWebWorker: true,
         };
         const file = await imageCompression(rawfile, options);
 
         const { data: fileData, error: fileError } = await supabase.storage
           .from('board_images')
-          .upload(`${Date.now()}`, file);
+          .upload(fileName, file);
         if (fileError) {
           console.error('이미지 업로드 에러', fileError.message);
           return;
@@ -120,6 +134,9 @@ const Editor = ({ isEdit }: Props) => {
       },
     };
   }, []);
+  useEffect(() => {
+    console.log('이미지 어레이에 잘 들어갔나?', inputs);
+  }, [inputs]);
 
   // 유효성 검사
   const validateCheck = () => {
@@ -145,6 +162,7 @@ const Editor = ({ isEdit }: Props) => {
     content: inputs.content,
     placeName: inputs.place_name,
     userId,
+    attached_images: inputs.images,
   };
 
   const createPost = (e: React.FormEvent<HTMLFormElement>) => {
@@ -192,6 +210,7 @@ const Editor = ({ isEdit }: Props) => {
         category: post.category || '신규장소',
         content: post.content || '',
         place_name: post.place_name || '',
+        images: post.attached_images || [],
       });
     }
   }, [isEdit, post]);

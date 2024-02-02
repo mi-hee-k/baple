@@ -44,7 +44,11 @@ const BoardPostPage = () => {
       confirmButtonColor: baple ? '#7b4cff' : '#66b6ff',
     }).then((result) => {
       if (result.isConfirmed) {
-        deletePost({ userId: userInfo.userId, boardId });
+        deletePost({
+          userId: userInfo.userId,
+          boardId,
+          images: post.attached_images,
+        });
         toastSuccess('삭제 되었습니다');
       }
     });
