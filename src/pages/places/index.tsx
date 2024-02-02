@@ -12,6 +12,7 @@ import { saveSearchValue } from '@/redux/modules/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPlacesData } from '@/apis/places';
+import useLocalStorage from 'use-local-storage';
 import {
   resetSelectedBtn,
   saveSelectedBtn,
@@ -26,6 +27,12 @@ const PlacesPage = () => {
 
   const dispatch = useDispatch();
   const currentPage = 1;
+  const [scrollY] = useLocalStorage('places_list_scroll', 0);
+
+  useEffect(() => {
+    // 기본값이 "0"이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤시킨다.
+    if (scrollY !== 0) window.scrollTo(0, scrollY);
+  }, []);
 
   useEffect(() => {
     //클린업함수 -> 언마운트 될때 redux state 빈 값으로 초기화
@@ -80,7 +87,7 @@ const PlacesPage = () => {
     // );
     dispatch(saveSelectedBtn(value));
   };
-  console.log('status', status);
+
   const generateBtns = (value: string, label: string) => (
     <Button
       key={value}
