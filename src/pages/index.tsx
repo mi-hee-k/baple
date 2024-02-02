@@ -95,6 +95,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 className='rounded-full w-[80%] sm:w-full p-2 px-4 placeholder:text-md focus:outline-none'
+                autoFocus
               />
               <Button
                 color='primary'
