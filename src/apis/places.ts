@@ -80,15 +80,12 @@ export const fetchPlacesData = async ({
   queryKey: (string | string[])[];
 }) => {
   const [_, searchValue, selectedBtn] = queryKey;
+  const PAGESIZE = 21;
   let result;
   const { data: explainData, error } = await supabase
     .rpc('search_places', {
       p_search_value: searchValue,
     })
-    // .from('places')
-    // .select()
-    // .ilike('place_name', `%${searchValue}%`)
-    // .range((pageParam - 1) * pageSize, pageParam * pageSize - 1)
     .explain({ format: 'json', analyze: true });
 
   console.log('explainData', explainData);
@@ -116,13 +113,16 @@ export const fetchPlacesData = async ({
     }
   }
 
-  const { data } = await query.range((pageParam - 1) * 21, pageParam * 21 - 1);
+  const { data } = await query.range(
+    (pageParam - 1) * PAGESIZE,
+    pageParam * PAGESIZE - 1,
+  );
 
   const resultPlaces = {
     total_length: result['Actual Rows'] as number,
     data: data,
     page: pageParam,
-    total_pages: Math.ceil(result['Actual Rows'] / 20),
+    total_pages: Math.ceil(result['Actual Rows'] / PAGESIZE),
   };
 
   if (resultPlaces) return resultPlaces;

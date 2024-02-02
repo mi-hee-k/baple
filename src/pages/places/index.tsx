@@ -3,7 +3,7 @@ import PlaceCard from '@/components/common/PlaceCard';
 import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
-import { Button } from '@nextui-org/react';
+import { Button, Card, Skeleton } from '@nextui-org/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -17,6 +17,7 @@ import {
   saveSelectedBtn,
 } from '@/redux/modules/seletedBtnSlice';
 import _ from 'lodash';
+import SkeletonCard from '@/components/places/SkeletonCard';
 
 const PlacesPage = () => {
   const searchValue = useSelector((state: RootState) => state.search);
@@ -27,7 +28,7 @@ const PlacesPage = () => {
   const currentPage = 1;
 
   useEffect(() => {
-    //클린업함수 -> 언마운트 될때 redux state 빈 스트링으로 초기화
+    //클린업함수 -> 언마운트 될때 redux state 빈 값으로 초기화
     return () => {
       dispatch(saveSearchValue(''));
       dispatch(resetSelectedBtn());
@@ -44,7 +45,7 @@ const PlacesPage = () => {
     data: places,
     hasNextPage,
     fetchNextPage,
-    refetch,
+    status,
   } = useInfiniteQuery({
     queryKey: ['places', realSearch, selectedBtn],
     queryFn: fetchPlacesData,
@@ -62,8 +63,6 @@ const PlacesPage = () => {
     },
   });
 
-  // console.log('places!!!!', places);
-
   const { ref } = useInView({
     threshold: 0,
     onChange: (inView) => {
@@ -80,7 +79,7 @@ const PlacesPage = () => {
     // );
     dispatch(saveSelectedBtn(value));
   };
-  console.log('selectedBtn', selectedBtn);
+  console.log('status', status);
   const generateBtns = (value: string, label: string) => (
     <Button
       key={value}
@@ -135,9 +134,14 @@ const PlacesPage = () => {
         </div>
         {/* 카드 */}
         <div className='relative grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 sm:gap-3 places-items-center w-full md:w-[75%] md:ml-48 '>
-          {places?.map((place, idx) => (
-            <PlaceCard key={idx} place={place} />
-          ))}
+          {status === 'pending' ? (
+            <>
+              <SkeletonCard />
+              <SkeletonCard />
+            </>
+          ) : (
+            places?.map((place, idx) => <PlaceCard key={idx} place={place} />)
+          )}
 
           {places?.length === 0 ? (
             <div className='absolute inset-x-0 min-h-[30rem] flex justify-center flex-col gap-5 items-center '>
