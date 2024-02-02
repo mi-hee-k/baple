@@ -39,7 +39,7 @@ const Header = () => {
   const { isMobile, isTablet } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
-  const [alarmState, setAlarmState] = useState(false);
+  const [alarmState, setAlarmState] = useState<boolean>();
   const { alarmData } = useAlarm();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -50,6 +50,11 @@ const Header = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    setAlarmState(alarmData?.length === 0 ? false : true);
+  }, [alarmData?.length]);
+
+  // 알림
+  useEffect(() => {
     if (!userId) return;
     const subscription: RealtimeChannel = supabase
       .channel('custom-filter-channel')
@@ -58,12 +63,12 @@ const Header = () => {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'alarm',
+          table: 'alarms',
           filter: `received_id=eq.${userId}`,
         },
         (payload) => {
           queryClient.invalidateQueries({
-            queryKey: ['alarm', userId],
+            queryKey: ['alarms'],
           });
           setAlarmState(true);
         },
@@ -73,12 +78,12 @@ const Header = () => {
         {
           event: 'UPDATE',
           schema: 'public',
-          table: 'alarm',
+          table: 'alarms',
           filter: `received_id=eq.${userId}`,
         },
         (payload) => {
           queryClient.invalidateQueries({
-            queryKey: ['alarm', userId],
+            queryKey: ['alarms'],
           });
         },
       )
@@ -86,7 +91,7 @@ const Header = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [userId]);
+  }, [queryClient]);
 
   useEffect(() => {
     if (alarmData?.length === 0) {
