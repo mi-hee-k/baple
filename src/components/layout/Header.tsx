@@ -29,11 +29,7 @@ import { VscBell, VscBellDot } from 'react-icons/vsc';
 import AlarmModal from '../common/AlarmModal';
 import { useAlarm } from '@/hooks/useAlarm';
 import { RealtimeChannel } from '@supabase/supabase-js';
-<<<<<<< HEAD
-import { userInfo } from 'os';
-=======
 import Swal from 'sweetalert2';
->>>>>>> 5aed3cbd648a19d9f8d7a0d7a7072d5c2e62a3f0
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -158,6 +154,7 @@ const Header = () => {
   const logOutHandler = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
+    // window.history.replaceState({}, document.title, '/');
     router.push('/');
   };
 
