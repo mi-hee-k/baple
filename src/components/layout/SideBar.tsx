@@ -91,16 +91,7 @@ const SideBar = () => {
               >
                 건의 게시판
               </Link>
-              {isLoggedIn ? (
-                <Link
-                  href={`/user/${userId}`}
-                  className={` ${
-                    router.pathname.startsWith('/user') ? 'text-primary' : ''
-                  }`}
-                >
-                  마이페이지
-                </Link>
-              ) : (
+              {isLoggedIn ? null : (
                 <>
                   <Link
                     href='/login'
