@@ -3,7 +3,7 @@ import PlaceCard from '@/components/common/PlaceCard';
 import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
-import { Button, Card, Skeleton } from '@nextui-org/react';
+import { Button, Card, Skeleton, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -46,6 +46,7 @@ const PlacesPage = () => {
     hasNextPage,
     fetchNextPage,
     status,
+    isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ['places', realSearch, selectedBtn],
     queryFn: fetchPlacesData,
@@ -156,8 +157,12 @@ const PlacesPage = () => {
           ) : null}
         </div>
       </div>
-
       <div ref={ref} className=' w-full h-6'></div>
+      {isFetchingNextPage && (
+        <div className='w-full flex sm:ml-12 justify-center'>
+          <Spinner color='primary' size='lg' />
+        </div>
+      )}
       <TopButton />
     </MainWrapper>
   );
