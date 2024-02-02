@@ -12,7 +12,8 @@ import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useViewport } from '@/hooks/useViewport';
 import Seo from '@/components/layout/Seo';
-import { fetchedPosts } from '@/types/types';
+
+import type { fetchedPosts } from '@/types/types';
 
 interface Props {
   initialPostData: fetchedPosts[];
