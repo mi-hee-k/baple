@@ -35,39 +35,6 @@ const PlaceCard2 = ({ place }: Props) => {
   const { baple } = useCurrentTheme();
 
   return (
-    // <div className='m-1'>
-    //   <Card
-    //     shadow='sm'
-    //     // key={index}
-    //     isPressable
-    //     onPress={() => router.push(`/place/${place.id}`)}
-    //     className='p-2 w-[250px] h-[250px]'
-    //   >
-    //     <CardBody className='overflow-visible p-0'>
-    //       <Image
-    //         shadow='sm'
-    //         radius='lg'
-    //         width='100%'
-    //         height={230}
-    //         alt={place.place_name}
-    //         className='w-full object-cover h-[140px]'
-    //         src={imgURL || undefined}
-    //       />
-    //     </CardBody>
-    //     <CardFooter className='text-small justify-between'>
-    //       <div className='flex flex-col items-start'>
-    //         <strong className='mb-3'>{place.place_name}</strong>
-    //         <div className='flex justify-between w-[210px]'>
-    //           <div>
-    //             <span>📑{reviewsData?.length}</span>
-    //             <span>🔖{bookmarksData?.length}</span>
-    //           </div>
-    //           <span className='text-s'>{place.city}</span>
-    //         </div>
-    //       </div>
-    //     </CardFooter>
-    //   </Card>
-    // </div>
     <Link href={`/place/${place.id}`}>
       <div className='relative w-[12.6rem] h-[9.6rem] mx-auto sm:w-[19rem] sm:h-[14.5rem] transition-all ring-2 ring-gray-100 rounded-3xl overflow-hidden shadow-md hover:ring-4 hover:ring-primary '>
         <Image
