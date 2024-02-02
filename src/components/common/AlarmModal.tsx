@@ -33,8 +33,6 @@ const AlarmModal = ({ alarmState }: Props) => {
     updateAllAlarm(userId);
   };
 
-  console.log(alarmData);
-
   return (
     <>
       <Popover placement='bottom'>
