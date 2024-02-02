@@ -224,7 +224,13 @@ const Header = () => {
 
                   {/* 프로필 */}
 
-                  <Popover isOpen={isPopoverOpen}>
+                  <Popover
+                    isOpen={isPopoverOpen}
+                    shouldCloseOnInteractOutside={() => {
+                      setIsPopoverOpen(false);
+                      return true;
+                    }}
+                  >
                     <PopoverTrigger>
                       <Avatar
                         showFallback
