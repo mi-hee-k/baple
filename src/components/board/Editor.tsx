@@ -72,7 +72,6 @@ const Editor = ({ isEdit }: Props) => {
   //QUILL 이미지 핸들러
   const imageHandler = async () => {
     const fileName = Date.now().toString();
-    // setImgArr((prev) => [...prev, fileName]);
     setInputs((prevInputs) => ({
       ...prevInputs,
       images: [...prevInputs.images, fileName],
@@ -134,9 +133,6 @@ const Editor = ({ isEdit }: Props) => {
       },
     };
   }, []);
-  useEffect(() => {
-    console.log('이미지 어레이에 잘 들어갔나?', inputs);
-  }, [inputs]);
 
   // 유효성 검사
   const validateCheck = () => {
