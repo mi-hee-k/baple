@@ -37,8 +37,6 @@ const BoardPage = ({ initialPostData }: Props) => {
     },
   });
 
-  console.log(posts);
-
   const recentOrder = _.orderBy(posts, 'created_at', 'desc');
 
   const postsPerPage = 10;
