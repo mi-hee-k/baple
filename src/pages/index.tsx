@@ -135,12 +135,6 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
 
 export default Home;
 
-// export async function getServerSideProps() {
-//   const topBookmarked = await getTopBookmarkedPlaces();
-//   const topReviewed = await getTopReviewedPlaces();
-//   return { props: { topBookmarked, topReviewed } };
-// }
-
 export async function getStaticProps() {
   const topBookmarked = await getTopBookmarkedPlaces();
   const topReviewed = await getTopReviewedPlaces();
