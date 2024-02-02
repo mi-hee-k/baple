@@ -20,7 +20,7 @@ import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
 const imgList = [
   '/images/mainCarousel1.svg',
   '/images/mainCarousel2.svg',
-  'https://velog.velcdn.com/images/jetiiin/post/2b79044d-826f-4b35-b6d1-c2eeee7f92a6/image.png',
+  // 'https://velog.velcdn.com/images/jetiiin/post/2b79044d-826f-4b35-b6d1-c2eeee7f92a6/image.png',
 ];
 
 interface Props {
@@ -72,7 +72,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
           <Carousel
             slideData={imgList} // imgList가 없으면 빈배열
             slidesPerView={1} // 보여줄 슬라이스 수
-            slideHeight={'500px'} // 캐러셀 높이
+            slideHeight='full'
           />
           <MainWrapper>
             <div className='grid grid-cols-2 md:grid-cols-4 place-items-center gap-2 md:w-[60%] mx-auto'>

@@ -24,7 +24,6 @@ const Carousel = ({
   slideData: string[];
 }) => {
   SwiperCore.use([Navigation, Scrollbar, Autoplay]);
-
   return (
     <section id='imgCarousel' className={`swiper-container mb-[50px]`}>
       <Swiper
