@@ -68,7 +68,7 @@ const AlarmModal = ({ alarmState }: Props) => {
                 <div className='flex'>
                   <Image
                     src={`/images/icons/${
-                      baple ? 'heart_select' : 'CBIcons/CBfilled-heart'
+                      baple ? 'comment_select' : 'CBicons/CBcomment_select'
                     }.svg`}
                     width={14}
                     height={14}
@@ -81,7 +81,7 @@ const AlarmModal = ({ alarmState }: Props) => {
                 <div className='flex'>
                   <Image
                     src={`/images/icons/${
-                      baple ? 'comment_select' : 'CBicons/CBcomment_select'
+                      baple ? 'heart_select' : 'CBIcons/CBfilled-heart'
                     }.svg`}
                     width={14}
                     height={14}
