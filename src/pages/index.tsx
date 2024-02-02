@@ -84,7 +84,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
           />
           <MainWrapper>
             <div className='grid grid-cols-2 md:grid-cols-4 place-items-center gap-2 md:w-[60%] mx-auto'>
-              {generateBtns('is_paid', '입장료')}
+              {generateBtns('is_paid', '입장료 있음')}
               {generateBtns('is_easy_door', '장애인용 출입문')}
               {generateBtns('is_wheelchair_rental', '휠체어 대여')}
               {generateBtns('is_guide_dog', '안내견 동반')}

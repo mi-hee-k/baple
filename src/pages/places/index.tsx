@@ -115,7 +115,7 @@ const PlacesPage = () => {
       <div className='flex gap-6 flex-col md:flex md:flex-row relative'>
         {/* 태그 */}
         <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4 md:fixed'>
-          {generateBtns('is_paid', '입장료')}
+          {generateBtns('is_paid', '입장료 있음')}
           {generateBtns('is_easy_door', '장애인용 출입문')}
           {generateBtns('is_wheelchair_rental', '휠체어 대여')}
           {generateBtns('is_guide_dog', '안내견 동반')}
