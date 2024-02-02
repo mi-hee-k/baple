@@ -21,7 +21,9 @@ const CommentCard = ({ comment }: Props) => {
   const { userId: currentUserId } = useSelector(
     (state: RootState) => state.auth,
   );
-  const showBtn = comment.user_id == currentUserId ? true : false;
+  const showBtn = comment.user_id === currentUserId;
+
+  // console.log(newContent, '너 누구야!!');
 
   const deleteBtnHandler = (commentId: string) => {
     Swal.fire({
@@ -36,6 +38,23 @@ const CommentCard = ({ comment }: Props) => {
         deleteComment(commentId);
       }
     });
+  };
+
+  const updateBtnHandler = async () => {
+    const isCommentEmpty = !newContent.trim();
+    if (isCommentEmpty || /^\s+$/.test(newContent)) {
+      Swal.fire({
+        icon: 'error',
+        title: '공백 외 내용을 입력하세요.',
+      });
+    } else {
+      try {
+        await updateComment({ commentId: comment.id, newContent });
+        setIsEditing(false);
+      } catch (error) {
+        console.error('댓글 업데이트 실패:', error);
+      }
+    }
   };
 
   return (
@@ -74,10 +93,7 @@ const CommentCard = ({ comment }: Props) => {
                 <div className='flex gap-3 mr-6'>
                   <button
                     className='border rounded w-12 border-primary text-primary'
-                    onClick={() => {
-                      updateComment({ commentId: comment.id, newContent });
-                      setIsEditing(false);
-                    }}
+                    onClick={updateBtnHandler}
                   >
                     저장
                   </button>
