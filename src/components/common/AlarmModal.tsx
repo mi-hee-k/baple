@@ -14,18 +14,36 @@ interface Props {
   alarmState: boolean;
 }
 
+interface CombinedDataType {
+  id: string;
+  created_at: string;
+  received_id: string;
+  sender_id: string;
+  type: string;
+  read: boolean;
+  review_id: string;
+  like_id: string;
+}
+
 const AlarmModal = ({ alarmState }: Props) => {
-  const { alarmData, updateCommentAlarm, updateCommentAllAlarm } = useAlarm();
+  const {
+    alarmData,
+    // likeAlarmData,
+    updateAlarm,
+    updateAllAlarm,
+  } = useAlarm();
   const router = useRouter();
   const { userId } = useSelector((state: RootState) => state.auth);
 
+  // 읽음 처리
   const readAlarm = (AlarmId: string, reviewId: string) => {
-    updateCommentAlarm(AlarmId);
+    updateAlarm(AlarmId);
     router.push(`/review/${reviewId}`);
   };
 
+  // 모두 읽음 처리
   const readAllAlarm = (userId: string) => {
-    updateCommentAllAlarm(userId);
+    updateAllAlarm(userId);
   };
 
   return (
@@ -54,12 +72,11 @@ const AlarmModal = ({ alarmState }: Props) => {
               className='w-[200px] h-auto bg-white p-2 rounded-lg cursor-pointer hover:bg-slate-200 transition-background'
               onClick={() => readAlarm(item.id, item.review_id)}
             >
-              💬 새로운 댓글이 있습니다.
+              {item.type === 'comment'
+                ? '💬 새로운 댓글이 있습니다.'
+                : '❤ 새로운 좋아요가 있습니다.'}
             </div>
           ))}
-          {alarmData?.length === 0 && (
-            <div className='p-2 text-gray-400'>새로운 알림이 없습니다. </div>
-          )}
         </PopoverContent>
       </Popover>
     </>

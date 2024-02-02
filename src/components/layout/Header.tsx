@@ -42,6 +42,7 @@ const Header = () => {
 
   const queryClient = useQueryClient();
 
+  // 알림
   useEffect(() => {
     if (!userId) return;
     const subscription: RealtimeChannel = supabase
@@ -51,12 +52,12 @@ const Header = () => {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'alarm',
+          table: 'alarms',
           filter: `received_id=eq.${userId}`,
         },
         (payload) => {
           queryClient.invalidateQueries({
-            queryKey: ['alarm', userId],
+            queryKey: ['alarms'],
           });
           setAlarmState(true);
         },
@@ -66,12 +67,12 @@ const Header = () => {
         {
           event: 'UPDATE',
           schema: 'public',
-          table: 'alarm',
+          table: 'alarms',
           filter: `received_id=eq.${userId}`,
         },
         (payload) => {
           queryClient.invalidateQueries({
-            queryKey: ['alarm', userId],
+            queryKey: ['alarms'],
           });
         },
       )
