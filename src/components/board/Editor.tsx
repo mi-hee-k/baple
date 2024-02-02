@@ -258,16 +258,6 @@ const Editor = ({ isEdit }: Props) => {
             maxLength={16}
           />
         </div>
-        {/* <Textarea
-          type='text'
-          variant='bordered'
-          minRows={10}
-          label='내용 (장소에 대한 간략한 설명도 적어주세요 :)'
-          aria-label='내용'
-          name='content'
-          value={inputs.content}
-          onChange={inputChange}
-        /> */}
         <div>
           {modalOpen && <SpinnerModal message={modalMessage} />}
 
