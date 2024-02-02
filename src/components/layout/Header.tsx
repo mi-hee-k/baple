@@ -1,7 +1,7 @@
 import { supabase } from '@/libs/supabase';
 import { logInUser, logOutUser, updateUser } from '@/redux/modules/authSlice';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
@@ -40,6 +40,13 @@ const Header = () => {
   const { baple } = useCurrentTheme();
   const [alarmState, setAlarmState] = useState(false);
   const { alarmData } = useAlarm();
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  // const ref = useRef(null);
+
+  const handleMyPageClick = () => {
+    // 마이페이지 링크를 클릭할 때 팝오버를 닫습니다.
+    setIsPopoverOpen(false);
+  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -224,19 +231,18 @@ const Header = () => {
                   <AlarmModal alarmState={alarmState} />
 
                   {/* 프로필 */}
-                  {/* <span className='hidden md:block'>
-                    반가워요 {user?.user_name}님!
-                  </span> */}
-                  <Popover>
+
+                  <Popover isOpen={isPopoverOpen}>
                     <PopoverTrigger>
                       <Avatar
                         showFallback
                         src={user?.avatar_url}
                         className='hover:brightness-50 transition cursor-pointer'
+                        onClick={() => setIsPopoverOpen(!isPopoverOpen)}
                       />
                     </PopoverTrigger>
                     <PopoverContent className='flex gap-3'>
-                      <div className='flex flex-col items-center mt-3'>
+                      <div className='flex flex-col items-center mt-5'>
                         <User
                           name={`${user?.user_name}`}
                           description={`${user?.email}`}
@@ -246,14 +252,16 @@ const Header = () => {
                         />
                       </div>
                       <Divider className='my-2' />
-                      <div className='hover:bg-gray-200 transition-all w-full text-center rounded p-2'>
-                        <Link className='block' href={`/user`}>
-                          <span>마이페이지</span>
-                        </Link>
-                      </div>
+                      <Link
+                        href={`/user`}
+                        className='hover:bg-gray-200 brightness-30 transition-all w-full text-center rounded p-2 cursor-pointer'
+                        onClick={() => setIsPopoverOpen(false)}
+                      >
+                        마이페이지
+                      </Link>
                       <div
                         onClick={logOutHandler}
-                        className='hover:bg-gray-200 transition-all w-full text-center rounded p-2'
+                        className='hover:bg-gray-200 brightness-30 transition-all w-full text-center rounded p-2 cursor-pointer'
                       >
                         로그아웃
                       </div>

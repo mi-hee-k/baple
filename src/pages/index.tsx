@@ -1,4 +1,3 @@
-import { Inter } from 'next/font/google';
 import Seo from '@/components/layout/Seo';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
@@ -59,7 +58,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
       color='primary'
       radius='full'
       variant={selectedBtn.includes(value) ? 'solid' : 'bordered'}
-      className='w-full md:w-36'
+      className='w-full'
     >
       {label}
     </Button>
@@ -76,7 +75,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
             slideHeight={'400px'} // 캐러셀 높이
           />
           <MainWrapper>
-            <div className='grid grid-cols-2 sm:grid-cols-4 place-items-center gap-2 sm:w-[60%] mx-auto'>
+            <div className='grid grid-cols-2 md:grid-cols-4 place-items-center gap-2 md:w-[60%] mx-auto'>
               {generateBtns('is_paid', '입장료')}
               {generateBtns('is_easy_door', '장애인용 출입문')}
               {generateBtns('is_wheelchair_rental', '휠체어 대여')}

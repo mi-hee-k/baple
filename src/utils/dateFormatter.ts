@@ -1,5 +1,5 @@
 export function formatDate(inputDate: Date | string) {
-  const date = new Date(inputDate);
+  // const date = new Date(inputDate);
   const formattedDate = new Date(inputDate).toLocaleString('ko');
   if (formattedDate.length === 22) return `${formattedDate.slice(0, 19)}`;
   else if (formattedDate.length === 23) return `${formattedDate.slice(0, 20)}`;
