@@ -1,7 +1,7 @@
 import { Tables } from '@/types/supabase';
 import { Chip } from '@nextui-org/react';
 import { ShowAlertType, ToggleBookmarkType } from '@/pages/place/[placeId]';
-import PlaceDetailHeader from './PlaceDetailHeader';
+import PlaceDetailHeader from './PlaceDetailInfoHeader';
 import Image from 'next/image';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 import Link from 'next/link';

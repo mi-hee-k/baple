@@ -2,7 +2,7 @@ import { getPlaceInfo } from '@/apis/places';
 import { getReviewsByPlaceIdrpc } from '@/apis/reviews';
 import MainWrapper from '@/components/layout/MainWrapper';
 import { useQuery } from '@tanstack/react-query';
-import PlaceDetail from '@/components/place_detail/PlaceDetail';
+import PlaceDetail from '@/components/place_details/PlaceDetailInfo';
 import { useRouter } from 'next/router';
 import Seo from '@/components/layout/Seo';
 import _ from 'lodash';
@@ -17,24 +17,22 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import { useEffect, useRef, useState } from 'react';
-import { Button, Divider, Spacer, Spinner } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import CarouselThumb from '@/components/common/Carousel_Thumb';
-import PaiginatedReviews from '@/components/place_detail/PaiginatedReviews';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
-import PlaceDetailHeader from '@/components/place_detail/PlaceDetailHeader';
+import PlaceDetailHeader from '@/components/place_details/PlaceDetailInfoHeader';
 import { getBookmark } from '@/apis/bookmarks';
 import { useBookmarks } from '@/hooks/useBookmarks';
-import { useTheme } from 'next-themes';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
+import PlaceDetailReview from '@/components/place_details/placeDetailReview';
 
 export type ToggleBookmarkType = () => void;
 export type ShowAlertType = () => void;
 
 const PlacePage = () => {
   const router = useRouter();
-  const { theme } = useTheme();
   const roadviewRef = useRef<kakao.maps.Roadview | null>(null);
   const placeId: string = router.query.placeId as string;
   const [toggle, setToggle] = useState('map');
@@ -58,7 +56,9 @@ const PlacePage = () => {
       return { recentOrder, likesOrder };
     },
   });
-  // console.log('placeInfo', placeInfo);
+
+  console.log(reviews);
+
   const { data: bookmarkState } = useQuery({
     queryKey: ['bookmark', userId, placeId],
     queryFn: () => getBookmark({ userId, placeId }),
@@ -250,68 +250,12 @@ const PlacePage = () => {
         </section>
 
         {/* 리뷰 */}
-        <section>
-          <div className='flex mt-[100px] mb-[30px] justify-between'>
-            <h2 className='text-2xl sm:text-3xl font-bold'>방문자 리뷰</h2>
-            {isLoggedIn ? (
-              <Button
-                color='primary'
-                className={`px-4 text-${
-                  baple ? 'white' : 'black'
-                } sm:px-8 py-2 rounded-full text-sm sm:text-md`}
-                onClick={() => router.push(`/review/write/${placeId}`)}
-              >
-                리뷰 작성하기
-              </Button>
-            ) : (
-              <Button
-                color='primary'
-                className={`px-8 py-2 text-${
-                  baple ? 'white' : 'black'
-                } rounded-full text-sm sm:text-md`}
-                onClick={() => toastWarn('로그인 후 이용해주세요')}
-              >
-                리뷰 작성하기
-              </Button>
-            )}
-          </div>
-          <Divider className='h-0.5 mb-[30px]' />
-          <div className='text-right mb-[20px] px-[10px]'>
-            <span
-              className={`mr-[20px] text-gray-500 text-sm cursor-pointer ${
-                recentOrder ? 'border-b-2' : ''
-              }`}
-              onClick={() => {
-                setRecentOrder(true);
-              }}
-            >
-              최신순
-            </span>
-            <span
-              className={`text-gray-500 text-sm cursor-pointer ${
-                !recentOrder ? 'border-b-2' : ''
-              }`}
-              onClick={() => {
-                setRecentOrder(false);
-              }}
-            >
-              추천순
-            </span>
-          </div>
-          <div className='flex flex-col justify-center gap-y-5 items-center'>
-            {/* 리뷰카드 */}
-            {reviews?.likesOrder.length === 0 ? (
-              <p>등록된 리뷰가 없습니다</p>
-            ) : (
-              <PaiginatedReviews
-                reviews={
-                  recentOrder ? reviews?.recentOrder : reviews?.likesOrder
-                }
-              />
-            )}
-          </div>
-          <Spacer y={10} />
-        </section>
+        <PlaceDetailReview
+          placeId={placeId}
+          recentOrder={recentOrder}
+          setRecentOrder={setRecentOrder}
+          reviews={reviews}
+        />
       </MainWrapper>
     </>
   );
