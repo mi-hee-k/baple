@@ -295,6 +295,7 @@ const Editor = ({ isEdit }: Props) => {
             </Button>
           )}
         </div>
+        <Spacer y={10} />
       </form>
     </section>
   );
