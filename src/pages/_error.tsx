@@ -14,22 +14,22 @@ const CustomErrorPage = ({ statusCode }: Props) => {
     router.replace('/');
   };
 
-  React.useEffect(() => {
-    // 사용자가 주소창에 직접 입력한 경우
-    if (router.asPath.startsWith('/board')) {
-      toastAlert(
-        '  주소창에 직접 아무거나 입력해 보는 행동, 지켜보고 있습니다 👁️👄👁️',
-      );
-    } else if (router.asPath.startsWith('/place')) {
-      toastAlert(
-        '  주소창에 직접 아무거나 입력해 보는 행동, 지켜보고 있습니다 👁️👄👁️',
-      );
-    } else if (router.asPath.startsWith('/review')) {
-      toastAlert(
-        '  주소창에 직접 아무거나 입력해 보는 행동, 지켜보고 있습니다 👁️👄👁️',
-      );
-    }
-  }, [router.asPath]);
+  //   React.useEffect(() => {
+  //     // 사용자가 주소창에 직접 입력한 경우
+  //     if (router.asPath.startsWith('/board')) {
+  //       toastAlert(
+  //         '  주소창에 직접 아무거나 입력해 보는 행동, 지켜보고 있습니다 👁️👄👁️',
+  //       );
+  //     } else if (router.asPath.startsWith('/place')) {
+  //       toastAlert(
+  //         '  주소창에 직접 아무거나 입력해 보는 행동, 지켜보고 있습니다 👁️👄👁️',
+  //       );
+  //     } else if (router.asPath.startsWith('/review')) {
+  //       toastAlert(
+  //         '  주소창에 직접 아무거나 입력해 보는 행동, 지켜보고 있습니다 👁️👄👁️',
+  //       );
+  //     }
+  //   }, [router.asPath]);
 
   return (
     <div className='flex flex-col items-center justify-center h-screen overflow-hidden'>
