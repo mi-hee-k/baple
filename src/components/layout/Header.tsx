@@ -24,6 +24,7 @@ import AlarmModal from '../common/AlarmModal';
 import { useAlarm } from '@/hooks/useAlarm';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import Swal from 'sweetalert2';
+import { useAlarmSubscribe } from '@/hooks/useAlarmSubscribe';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -34,64 +35,14 @@ const Header = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
   const [alarmState, setAlarmState] = useState<boolean>();
-  const { alarmData } = useAlarm();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    setAlarmState(alarmData?.length === 0 ? false : true);
-  }, [alarmData?.length]);
-
-  // 알림
-  useEffect(() => {
-    if (!userId) return;
-    const subscription: RealtimeChannel = supabase
-      .channel('custom-filter-channel')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'alarms',
-          filter: `received_id=eq.${userId}`,
-        },
-        (payload) => {
-          queryClient.invalidateQueries({
-            queryKey: ['alarms'],
-          });
-          setAlarmState(true);
-        },
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'alarms',
-          filter: `received_id=eq.${userId}`,
-        },
-        (payload) => {
-          queryClient.invalidateQueries({
-            queryKey: ['alarms'],
-          });
-        },
-      )
-      .subscribe();
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [queryClient]);
-
-  useEffect(() => {
-    if (alarmData?.length === 0) {
-      setAlarmState(false);
-    }
-  }, [alarmData]);
+  // 실시간 알림
+  useAlarmSubscribe(setAlarmState);
 
   const {
     data: user,
