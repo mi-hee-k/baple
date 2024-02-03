@@ -40,6 +40,7 @@ const PlacePage = () => {
   const [recentOrder, setRecentOrder] = useState(true);
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { insertBookmark, deleteBookmark } = useBookmarks(userId, placeId);
+  const { baple } = useCurrentTheme();
 
   const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
     queryKey: ['placeInfo', placeId],
@@ -57,15 +58,11 @@ const PlacePage = () => {
     },
   });
 
-  console.log(reviews);
-
   const { data: bookmarkState } = useQuery({
     queryKey: ['bookmark', userId, placeId],
     queryFn: () => getBookmark({ userId, placeId }),
     enabled: !!userId,
   });
-
-  const { baple } = useCurrentTheme();
 
   useEffect(() => {
     setIsBookmarked(bookmarkState ? bookmarkState.length > 0 : false);
@@ -81,7 +78,6 @@ const PlacePage = () => {
     lng: placeInfo?.lng,
   };
 
-  // console.log({ imgList });
   // 버튼 토글
   const toggleBookmark = () => {
     if (isBookmarked) {
@@ -126,6 +122,7 @@ const PlacePage = () => {
     <>
       <MainWrapper>
         <Seo title={`${placeInfo.place_name} | `} />
+        {/* 장소 상세정보 - 모바일에서만 보임 */}
         <div className='flex items-center justify-between w-full mb-[20px] md:hidden'>
           <PlaceDetailHeader
             placeId={placeId}
@@ -138,8 +135,8 @@ const PlacePage = () => {
         </div>
         {/* 이미지 캐러셀 */}
         <div className='flex flex-col items-center justify-start h-auto md:h-[500px] mb-[50px] mt-[10px] md:mt-[80px] md:flex-row md:justify-between'>
-          {imgList && (
-            <div className='w-full mb-[30px] md:mb-0 md:mr-[30px] md:w-[40%]'>
+          <div className='w-full mb-[30px] md:mb-0 md:mr-[30px] md:w-[40%]'>
+            {imgList && (
               <CarouselThumb
                 slideData={
                   imgList.length !== 0
@@ -147,8 +144,8 @@ const PlacePage = () => {
                     : ['/images/default_image2.png']
                 } // imgList가 없으면 빈배열
               />
-            </div>
-          )}
+            )}
+          </div>
           {/* 장소 상세정보 */}
           <PlaceDetail
             placeInfo={placeInfo}
