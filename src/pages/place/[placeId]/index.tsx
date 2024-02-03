@@ -15,8 +15,8 @@ import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
 import PlaceDetailHeader from '@/components/place_details/PlaceDetailInfoHeader';
 import { getBookmark } from '@/apis/bookmarks';
 import { useBookmarks } from '@/hooks/useBookmarks';
-import PlaceDetailReview from '@/components/place_details/placeDetailReview';
-import PlaceDetailMap from '@/components/place_details/placeDetailMap';
+import PlaceDetailReview from '@/components/place_details/PlaceDetailReview';
+import PlaceDetailMap from '@/components/place_details/PlaceDetailMap';
 
 export type ToggleBookmarkType = () => void;
 export type ShowAlertType = () => void;

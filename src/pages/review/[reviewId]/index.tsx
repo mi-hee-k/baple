@@ -16,6 +16,7 @@ import { RootState } from '@/redux/config/configStore';
 import { useViewport } from '@/hooks/useViewport';
 import _ from 'lodash';
 import { useAlarmSubscribeComment } from '@/hooks/useAlarmSubscribeComment';
+import Custom404 from '@/pages/404';
 
 const ReviewPage = () => {
   const router = useRouter();
@@ -64,7 +65,7 @@ const ReviewPage = () => {
   }
 
   if (error) {
-    return <p>오류 발생...</p>;
+    return <Custom404 />;
   }
 
   if (review) {
