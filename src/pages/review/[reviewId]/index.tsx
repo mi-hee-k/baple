@@ -63,11 +63,20 @@ const ReviewPage = () => {
           });
         },
       )
+      .on(
+        'postgres_changes',
+        { event: 'DELETE', schema: 'public', table: 'comments' },
+        (payload) => {
+          queryClient.invalidateQueries({
+            queryKey: ['comments', reviewId],
+          });
+        },
+      )
       .subscribe();
     return () => {
       subscription.unsubscribe();
     };
-  }, [queryClient]);
+  }, []);
 
   if (isLoading) {
     return (
