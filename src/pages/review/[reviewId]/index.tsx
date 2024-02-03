@@ -17,6 +17,7 @@ import { useViewport } from '@/hooks/useViewport';
 import _ from 'lodash';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { supabase } from '@/libs/supabase';
+import Custom404 from '@/pages/404';
 
 const ReviewPage = () => {
   const router = useRouter();
@@ -83,7 +84,7 @@ const ReviewPage = () => {
   }
 
   if (error) {
-    return <p>오류 발생...</p>;
+    return <Custom404 />;
   }
 
   if (review) {
