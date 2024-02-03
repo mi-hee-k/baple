@@ -15,8 +15,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useViewport } from '@/hooks/useViewport';
 import _ from 'lodash';
-import { RealtimeChannel } from '@supabase/supabase-js';
-import { supabase } from '@/libs/supabase';
 import { useAlarmSubscribeComment } from '@/hooks/useAlarmSubscribeComment';
 
 const ReviewPage = () => {
@@ -27,7 +25,7 @@ const ReviewPage = () => {
     (state: RootState) => state.auth,
   );
 
-  const { isTablet, isMobile } = useViewport();
+  const { isMobile } = useViewport();
 
   const { data: comments } = useQuery({
     queryKey: ['comments', reviewId],

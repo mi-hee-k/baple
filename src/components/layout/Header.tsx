@@ -31,7 +31,7 @@ const Header = () => {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<any>(null);
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { isMobile, isTablet } = useViewport();
+  const { isMobile } = useViewport();
   const [isLoaded, setIsLoaded] = useState(false);
   const { baple } = useCurrentTheme();
   const [alarmState, setAlarmState] = useState<boolean>();
