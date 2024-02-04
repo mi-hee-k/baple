@@ -15,8 +15,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useViewport } from '@/hooks/useViewport';
 import _ from 'lodash';
-import { RealtimeChannel } from '@supabase/supabase-js';
-import { supabase } from '@/libs/supabase';
+import { useAlarmSubscribeComment } from '@/hooks/useAlarmSubscribeComment';
 import Custom404 from '@/pages/404';
 
 const ReviewPage = () => {
@@ -27,7 +26,7 @@ const ReviewPage = () => {
     (state: RootState) => state.auth,
   );
 
-  const { isTablet, isMobile } = useViewport();
+  const { isMobile } = useViewport();
 
   const { data: comments } = useQuery({
     queryKey: ['comments', reviewId],
@@ -49,26 +48,8 @@ const ReviewPage = () => {
 
   const placeId = review?.place_id;
 
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (!currentUserId) return;
-    const subscription: RealtimeChannel = supabase
-      .channel('custom-insert-channel')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'comments' },
-        (payload) => {
-          queryClient.invalidateQueries({
-            queryKey: ['comments', reviewId],
-          });
-        },
-      )
-      .subscribe();
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [queryClient]);
+  // 댓글 실시간
+  useAlarmSubscribeComment(currentUserId, reviewId);
 
   if (isLoading) {
     return (
