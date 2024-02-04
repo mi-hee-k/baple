@@ -100,7 +100,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
             {/* 검색창 */}
             <form
               onSubmit={handleClickSearchBtn}
-              className='flex justify-center w-full sm:w-[60%] m-auto mt-10 mb-4 sm:mb-8 bg-primary p-[2px] rounded-full overflow-hidden'
+              className='flex justify-center w-full md:w-[60%] m-auto mt-10 mb-4 sm:mb-8 bg-primary p-[2px] rounded-full overflow-hidden'
             >
               <div className='flex w-full max-w-xs flex-col gap-2'>
                 <select
