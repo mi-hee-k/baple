@@ -127,6 +127,17 @@ const PlacesPage = () => {
           />
         </Button>
       </form>
+      {places?.length === 0 ? (
+        <div className='absolute pt-40 sm:pt-0 w-[90%] min-h-[30rem] flex justify-center flex-col gap-5 items-center '>
+          <Image
+            src='/images/icons/character.svg'
+            alt='main_character'
+            width={100}
+            height={100}
+          />
+          <span className='text-lg'>검색 결과가 없습니다 😅</span>
+        </div>
+      ) : null}
       <div className='flex gap-6 flex-col md:flex md:flex-row relative'>
         {/* 태그 */}
         <div className='grid grid-cols-2 sm:grid-cols-3 place-items-center md:w-36 md:flex md:flex-col gap-4 md:fixed'>
@@ -140,6 +151,7 @@ const PlacesPage = () => {
           {generateBtns('is_disabled_parking', '장애인용 주차장')}
         </div>
         {/* 카드 */}
+
         <div className='relative grid grid-cols-2 lg:grid-cols-3 md:grid-cols-2 sm:gap-3 places-items-center w-full md:w-[75%] md:ml-48 '>
           {status === 'pending' ? (
             <>
@@ -149,18 +161,6 @@ const PlacesPage = () => {
           ) : (
             places?.map((place, idx) => <PlaceCard key={idx} place={place} />)
           )}
-
-          {places?.length === 0 ? (
-            <div className='absolute inset-x-0 min-h-[30rem] flex justify-center flex-col gap-5 items-center '>
-              <Image
-                src='/images/icons/character.svg'
-                alt='main_character'
-                width={100}
-                height={100}
-              />
-              <span className='text-lg'>검색 결과가 없습니다 😅</span>
-            </div>
-          ) : null}
         </div>
       </div>
       <div ref={ref} className=' w-full h-6'></div>

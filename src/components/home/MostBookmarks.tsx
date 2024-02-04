@@ -35,7 +35,7 @@ const MostBookmarks = ({ initialData }: Props) => {
     <div className='w-full'>
       <div className='flex gap-2 items-center'>
         <span className='text-2xl text-primary font-bold'>
-          많은 사람들이 즐겨 찾는 장소
+          사람들이 즐겨 찾는 장소
         </span>
         <Chip color='primary' size='md' variant='flat'>
           TOP 8
