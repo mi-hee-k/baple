@@ -96,6 +96,7 @@ const PlacesPage = () => {
       >
         <div className='flex w-full max-w-xs flex-col gap-2'>
           <select
+            defaultValue={selectedCity}
             className='max-w-xs bg-white rounded-bl-full rounded-tl-full p-3 w-full h-full'
             onChange={(e) => dispatch(saveSelectedCity(e.target.value))}
           >
