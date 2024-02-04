@@ -46,44 +46,44 @@ const PlaceCard = ({ place }: Props) => {
           fill={true}
           className='rounded-3xl'
         />
-        <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 place-items-center pb-16 px-5 rounded-xl '>
+        <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 place-items-center pb-16 px-5 rounded-xl'>
           {is_paid ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               입장료 있음
             </div>
           ) : null}
           {is_easy_door ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               장애인용 출입문
             </div>
           ) : null}
           {is_wheelchair_rental ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               휠체어 대여
             </div>
           ) : null}
           {is_guide_dog ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               안내견 동반
             </div>
           ) : null}
           {is_braille_guide ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white'>
               점자 가이드
             </div>
           ) : null}
           {is_disabled_parking ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white'>
               장애인용 주차장
             </div>
           ) : null}
           {is_audio_guide ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               오디오 가이드
             </div>
           ) : null}
           {is_disabled_toilet ? (
-            <div className='bg-primary text-xs p-1 rounded-xl w-24 text-center text-white '>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white'>
               장애인용 화장실
             </div>
           ) : null}
