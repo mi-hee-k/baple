@@ -131,16 +131,15 @@ const Header = () => {
                   />
                 </Link>
 
-                <Link href={'/about'}>베플소개</Link>
                 <div className='hidden md:flex gap-16 items-center w-[65vw] justify-start pl-10'>
-                  <div
+                  <Link
+                    href='/about'
                     className={`hover:text-primary ${
                       router.pathname === '/about' ? 'text-primary' : ''
                     }`}
-                    // onClick={() => Swal.fire('준비중입니다!')}
                   >
                     배플 소개
-                  </div>
+                  </Link>
                   <Link
                     href='/nearby'
                     className={`hover:text-primary w-auto ${
