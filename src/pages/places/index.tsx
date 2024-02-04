@@ -16,6 +16,7 @@ import useLocalStorage from 'use-local-storage';
 import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
 import SkeletonCard from '@/components/places/SkeletonCard';
 import { CITYS } from '@/utils/defaultValue';
+import { saveSelectedCity } from '@/redux/modules/selectedCitySlice';
 
 const PlacesPage = () => {
   const searchValue = useSelector((state: RootState) => state.search);
@@ -24,7 +25,8 @@ const PlacesPage = () => {
   const dispatch = useDispatch();
   const currentPage = 1;
   const [scrollY] = useLocalStorage('places_list_scroll', 0);
-  const [selectedCity, setSelectedCity] = useState('');
+  // const [selectedCity, setSelectedCity] = useState('');
+  const selectedCity = useSelector((state: RootState) => state.selectedCity);
 
   useEffect(() => {
     // 기본값이 "0"이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤시킨다.
@@ -95,7 +97,7 @@ const PlacesPage = () => {
         <div className='flex w-full max-w-xs flex-col gap-2'>
           <select
             className='max-w-xs bg-white rounded-bl-full rounded-tl-full p-3 w-full h-full'
-            onChange={(e) => setSelectedCity(e.target.value)}
+            onChange={(e) => dispatch(saveSelectedCity(e.target.value))}
           >
             {CITYS.map((city) => (
               <option key={city.key} value={city.value}>
