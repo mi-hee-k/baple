@@ -89,8 +89,8 @@ const AboutPage = () => {
 
       <section className='bg-[#efe9ff] w-full h-auto relative p-10 md:p-20'>
         <motion.div
-          initial={{ opacity: 0, x: '200px' }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, scale: 0.7 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: false }}
           transition={{ duration: 1 }}
         >
