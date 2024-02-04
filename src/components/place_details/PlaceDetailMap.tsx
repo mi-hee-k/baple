@@ -39,9 +39,9 @@ const PlaceDetailMap = ({ placeInfo }: Props) => {
       {toggle === 'map' && (
         <Map
           center={placePosition}
-          draggable={false}
-          // zoomable={true}
-          scrollwheel={false}
+          draggable={true}
+          zoomable={true}
+          scrollwheel={true}
           keyboardShortcuts={true}
           style={{
             // 지도의 크기
