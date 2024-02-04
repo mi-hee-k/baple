@@ -21,9 +21,7 @@ const CommentCard = ({ comment }: Props) => {
   const { userId: currentUserId } = useSelector(
     (state: RootState) => state.auth,
   );
-  const showBtn = comment.user_id === currentUserId;
-
-  // console.log(newContent, '너 누구야!!');
+  const showBtn = comment.user_id == currentUserId ? true : false;
 
   const deleteBtnHandler = (commentId: string) => {
     Swal.fire({
