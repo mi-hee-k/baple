@@ -15,7 +15,7 @@ import { fetchPlacesData } from '@/apis/places';
 import useLocalStorage from 'use-local-storage';
 import { saveSelectedBtn } from '@/redux/modules/seletedBtnSlice';
 import SkeletonCard from '@/components/places/SkeletonCard';
-import { useRouter } from 'next/router';
+import { CITYS } from '@/utils/defaultValue';
 
 const PlacesPage = () => {
   const searchValue = useSelector((state: RootState) => state.search);
@@ -25,26 +25,6 @@ const PlacesPage = () => {
   const currentPage = 1;
   const [scrollY] = useLocalStorage('places_list_scroll', 0);
   const [selectedCity, setSelectedCity] = useState('');
-
-  const citys = [
-    '강원특별자치도',
-    '경기',
-    '경남',
-    '경북',
-    '광주',
-    '대구',
-    '대전',
-    '부산',
-    '서울',
-    '세종특별자치시',
-    '울산',
-    '인천',
-    '전남',
-    '전북',
-    '제주특별자치도',
-    '충남',
-    '충북',
-  ];
 
   useEffect(() => {
     // 기본값이 "0"이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤시킨다.
@@ -108,27 +88,18 @@ const PlacesPage = () => {
   return (
     <MainWrapper>
       <Seo />
-
       <form
         onSubmit={handleClickSearchBtn}
         className='flex justify-center w-full sm:w-[60%] m-auto mt-10 mb-4 sm:mb-8 bg-primary p-[2px] rounded-full overflow-hidden'
       >
         <div className='flex w-full max-w-xs flex-col gap-2'>
           <select
-            // label='Favorite Animal'
-            // variant='underlined'
-            // placeholder='Select an animal'
-            // selectedKeys={[selectedValue]}
-            color='primary'
             className='max-w-xs bg-white rounded-bl-full rounded-tl-full p-3 w-full h-full'
             onChange={(e) => setSelectedCity(e.target.value)}
           >
-            <option key='default' value=''>
-              지역을 선택하세요
-            </option>
-            {citys.map((city) => (
-              <option key={city} value={city}>
-                {city}
+            {CITYS.map((city) => (
+              <option key={city.key} value={city.value}>
+                {city.key}
               </option>
             ))}
           </select>
