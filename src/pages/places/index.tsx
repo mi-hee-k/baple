@@ -120,11 +120,11 @@ const PlacesPage = () => {
             // placeholder='Select an animal'
             // selectedKeys={[selectedValue]}
             color='primary'
-            className='max-w-xs bg-white rounded-full p-2'
+            className='max-w-xs bg-white rounded-bl-full rounded-tl-full p-3 w-full h-full'
             onChange={(e) => setSelectedCity(e.target.value)}
           >
             <option key='default' value=''>
-              --지역을 선택해 주세요--
+              지역을 선택하세요
             </option>
             {citys.map((city) => (
               <option key={city} value={city}>
@@ -137,7 +137,7 @@ const PlacesPage = () => {
           placeholder='장소이름을 검색하세요'
           value={searchValue}
           onChange={(e) => dispatch(saveSearchValue(e.target.value))}
-          className='rounded-full w-[80%] sm:w-full p-2 px-4 placeholder:text-md focus:outline-none'
+          className='rounded-br-full rounded-tr-full w-full sm:w-full p-2 px-4 placeholder:text-md focus:outline-none'
           autoFocus
         />
         <Button
