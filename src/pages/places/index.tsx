@@ -3,7 +3,7 @@ import PlaceCard from '@/components/common/PlaceCard';
 import TopButton from '@/components/common/TopButton';
 import MainWrapper from '@/components/layout/MainWrapper';
 import Seo from '@/components/layout/Seo';
-import { Button, Spinner } from '@nextui-org/react';
+import { Button, Select, SelectItem, Spinner } from '@nextui-org/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -21,10 +21,30 @@ const PlacesPage = () => {
   const searchValue = useSelector((state: RootState) => state.search);
   const selectedBtn = useSelector((state: RootState) => state.selectedBtn);
   const [realSearch, setRealSearch] = useState(searchValue);
-  const router = useRouter();
   const dispatch = useDispatch();
   const currentPage = 1;
   const [scrollY] = useLocalStorage('places_list_scroll', 0);
+  const [selectedCity, setSelectedCity] = useState('');
+
+  const citys = [
+    '강원특별자치도',
+    '경기',
+    '경남',
+    '경북',
+    '광주',
+    '대구',
+    '대전',
+    '부산',
+    '서울',
+    '세종특별자치시',
+    '울산',
+    '인천',
+    '전남',
+    '전북',
+    '제주특별자치도',
+    '충남',
+    '충북',
+  ];
 
   useEffect(() => {
     // 기본값이 "0"이기 때문에 스크롤 값이 저장됐을 때에만 window를 스크롤시킨다.
@@ -44,7 +64,7 @@ const PlacesPage = () => {
     status,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['places', realSearch, selectedBtn],
+    queryKey: ['places', realSearch, selectedBtn, selectedCity],
     queryFn: fetchPlacesData,
     initialPageParam: currentPage, // 초기 페이지 값 설정
     getNextPageParam: (lastPage, pages) => {
@@ -55,7 +75,7 @@ const PlacesPage = () => {
       }
     },
     select: (data) => {
-      console.log('data', data);
+      console.log('data@', data);
       return data.pages.map((pageData) => pageData?.data).flat();
     },
   });
@@ -88,10 +108,31 @@ const PlacesPage = () => {
   return (
     <MainWrapper>
       <Seo />
+
       <form
         onSubmit={handleClickSearchBtn}
         className='flex justify-center w-full sm:w-[60%] m-auto mt-10 mb-4 sm:mb-8 bg-primary p-[2px] rounded-full overflow-hidden'
       >
+        <div className='flex w-full max-w-xs flex-col gap-2'>
+          <select
+            // label='Favorite Animal'
+            // variant='underlined'
+            // placeholder='Select an animal'
+            // selectedKeys={[selectedValue]}
+            color='primary'
+            className='max-w-xs bg-white rounded-full p-2'
+            onChange={(e) => setSelectedCity(e.target.value)}
+          >
+            <option key='default' value=''>
+              --지역을 선택해 주세요--
+            </option>
+            {citys.map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </div>
         <input
           placeholder='장소이름을 검색하세요'
           value={searchValue}
