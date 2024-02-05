@@ -29,9 +29,13 @@ const PlaceCard = ({ place }: Props) => {
     is_wheelchair_rental,
   } = place;
 
-  const imgURL = image_url !== '' ? image_url : '/images/default_image2.png';
-
   const { baple } = useCurrentTheme();
+  const defaultImage = baple
+    ? '/images/default3.png'
+    : '/images/default3_blue.png';
+
+  const imgURL = image_url !== '' ? image_url : defaultImage;
+
   const [scrollY, setScrollY] = useLocalStorage('places_list_scroll', 0);
 
   return (
