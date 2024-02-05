@@ -14,7 +14,7 @@ type Props = {
   place: Tables<'places'>;
 };
 
-const PlaceCard2 = ({ place }: Props) => {
+const MarkerPlaceCard = ({ place }: Props) => {
   const router = useRouter();
   // const imgURL = place.image_url;
   const { baple } = useCurrentTheme();
@@ -131,4 +131,4 @@ const PlaceCard2 = ({ place }: Props) => {
   );
 };
 
-export default PlaceCard2;
+export default MarkerPlaceCard;

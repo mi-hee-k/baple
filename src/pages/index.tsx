@@ -112,7 +112,7 @@ const Home = ({ topBookmarked, topReviewed }: Props) => {
             >
               <div className='flex w-full max-w-xs flex-col gap-2'>
                 <select
-                  className='max-w-xs bg-white rounded-bl-full rounded-tl-full p-3 w-full h-full'
+                  className='max-w-xs rounded-bl-full rounded-tl-full p-3 w-full h-full'
                   onChange={(e) => dispatch(saveSelectedCity(e.target.value))}
                 >
                   {CITYS.map((city) => (
