@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useViewport } from '@/hooks/useViewport';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 
-const PlaceDetailHeader = ({
+const PlaceDetailInfoHeader = ({
   placeId,
   placeInfo,
   isLoggedIn,
@@ -105,4 +105,4 @@ const PlaceDetailHeader = ({
   );
 };
 
-export default PlaceDetailHeader;
+export default PlaceDetailInfoHeader;
