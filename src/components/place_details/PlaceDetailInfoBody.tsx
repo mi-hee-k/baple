@@ -1,3 +1,4 @@
+import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 import { useViewport } from '@/hooks/useViewport';
 import { Tables } from '@/types/supabase';
 import Image from 'next/image';
@@ -12,12 +13,15 @@ interface Props {
 const PlaceDetailInfoBody = ({ placeInfo }: Props) => {
   const { tel, address, working_hours, holidays, homepage } = placeInfo;
   const { isMobile } = useViewport();
+  const { baple } = useCurrentTheme();
   return (
     <div className='flex flex-col mb-3 md:mb-0 mx-2 md:my-0'>
       <div className='flex w-full mb-1 md:mb-2'>
         <span className='flex items-start md:text-xl font-bold w-1/3'>
           <Image
-            src={'/images/icons/place_detail_icons/주소.svg'}
+            src={`/images/icons/place_detail_icons/${
+              baple ? '주소' : '주소_색약모드'
+            }.svg`}
             width={isMobile ? 18 : 24}
             height={isMobile ? 18 : 24}
             alt='address'
