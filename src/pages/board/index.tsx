@@ -10,9 +10,9 @@ import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import Seo from '@/components/layout/Seo';
+import BoardTable from '@/components/board/BoardTable';
 
 import type { fetchedPosts } from '@/types/types';
-import BoardTable from '@/components/board/BoardTable';
 
 interface Props {
   initialPostsData: fetchedPosts[];
@@ -66,7 +66,6 @@ const BoardPage = ({ initialPostsData }: Props) => {
       <header className='flex mt-[50px] mb-3 sm:mb-6 justify-between'>
         <h2 className='text-2xl sm:text-3xl font-bold'>게시판</h2>
       </header>
-
       <Divider className='h-0.5 mb-[18px]' />
       <BoardTable items={items} />
       <Spacer y={6} />

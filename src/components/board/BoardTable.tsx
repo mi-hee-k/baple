@@ -2,6 +2,7 @@ import { useViewport } from '@/hooks/useViewport';
 import { formatDateNoTime } from '@/utils/dateFormatter';
 import { useRouter } from 'next/router';
 import React from 'react';
+
 import type { fetchedPosts } from '@/types/types';
 
 interface Props {
