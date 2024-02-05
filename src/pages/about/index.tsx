@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Carousel from '@/components/common/Carousel';
-import YoutubeCard from '@/components/about/Youtube';
+import YoutubeCard from '@/components/about/YoutubeCard';
 import { Button } from '@nextui-org/react';
 import { useViewport } from '@/hooks/useViewport';
 import Link from 'next/link';
@@ -24,7 +24,7 @@ const AboutPage = () => {
         whileInView={{ opacity: 1 }}
         viewport={{ once: false }}
         transition={{ duration: 2 }}
-        className='h-[60rem] w-full items-center flex-col flex'
+        className='sm:h-[60rem] h-auto w-full items-center flex-col flex'
       >
         <Image
           src={'/images/aboutPage/about_LOGO.png'}
@@ -33,8 +33,10 @@ const AboutPage = () => {
           alt='이미지'
           className='relative sm:h-[162px] sm:w-[400px] h-[80px] w-[200px] z-10 mt-[100px]'
         />
-        <p className='mt-[200px] text-[30px] font-extrabold'>Team Mission</p>
-        <p className='w-[60%] text-center mt-[80px] font-bold text-[20px] break-words'>
+        <p className='sm:mt-[200px] mt-[100px] text-[30px] font-extrabold'>
+          Team Mission
+        </p>
+        <p className='w-[80%] sm:w-[60%] text-center mt-[80px] text-[18px] mb-[100px]  sm:text-[20px] break-words'>
           Baple은 Barrier Free와 Best Place를 결합해, 교통 약자들을 위한 배리어
           프리 정보를 소개하는 플랫폼입니다. 우리의 목표는 모든 사람이 쉽게
           이용할 수 있는 장소를 찾고 공유하며 더 나은 환경을 만들어가는
@@ -42,7 +44,7 @@ const AboutPage = () => {
         </p>
       </motion.div>
 
-      <div className='w-full h-[60rem] flex flex-col  items-center bg-[#EFEAFF]'>
+      <div className='w-full sm:h-[60rem]   h-auto flex flex-col  items-center bg-[#EFEAFF]'>
         <motion.div
           initial={{ opacity: 0, scale: 0.7 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -60,10 +62,10 @@ const AboutPage = () => {
           transition={{ duration: 1 }}
           className='w-[90%] sm:w-[50%]  '
         >
-          <p className='font-extrabold text-[30px] mt-[50px] mb-[10px]'>
+          <p className='font-extrabold text-[30px] mt-[50px] sm:mb-[10px] '>
             Barrier free?
           </p>
-          <p className='text-[20px] font-bold'>
+          <p className='text-[20px]  mb-[150px]'>
             배리어프리는 장벽을 뜻하는 배리어(Barrier)와 자유를 의미하는
             프리(Free) 의 합성어로, 장애인과 노약자 등 다양한 사회적 약자들이
             살기 좋은 사회를 만들기 위해 물리적, 제도적, 심리적 장벽을
