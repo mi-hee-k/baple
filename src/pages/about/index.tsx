@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useScroll } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import LastSectionImg from '../../../public/images/aboutPage/LastSectionImg.png';
 import mainLogo from '../../../public/images/aboutPage/about_LOGO.png';
