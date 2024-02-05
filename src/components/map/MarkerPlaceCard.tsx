@@ -48,44 +48,44 @@ const MarkerPlaceCard = ({ place }: Props) => {
         />
         <div className='absolute top-0 w-full h-full transition-opacity cursor-pointer backdrop-blur-sm backdrop-brightness-50 opacity-0 hover:opacity-100 grid grid-cols-2 place-items-start pb-16 px-5 pt-5 rounded-xl'>
           {place.is_paid ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               입장료 있음
-            </Chip>
+            </div>
           ) : null}
           {place.is_easy_door ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               장애인용 출입문
-            </Chip>
+            </div>
           ) : null}
           {place.is_wheelchair_rental ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               휠체어 대여
-            </Chip>
+            </div>
           ) : null}
           {place.is_guide_dog ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               안내견 동반
-            </Chip>
+            </div>
           ) : null}
           {place.is_braille_guide ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white'>
               점자 가이드
-            </Chip>
+            </div>
           ) : null}
           {place.is_disabled_parking ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white'>
               장애인용 주차장
-            </Chip>
+            </div>
           ) : null}
           {place.is_audio_guide ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white '>
               오디오 가이드
-            </Chip>
+            </div>
           ) : null}
           {place.is_disabled_toilet ? (
-            <Chip size='sm' variant='solid'>
+            <div className='bg-primary text-[0.6rem] sm:text-xs p-1 rounded-xl w-20 sm:w-24 text-center text-white'>
               장애인용 화장실
-            </Chip>
+            </div>
           ) : null}
         </div>
         <div className='absolute h-[4rem]  w-full bottom-0 p-2  text-black bg-white bg-opacity-90'>
