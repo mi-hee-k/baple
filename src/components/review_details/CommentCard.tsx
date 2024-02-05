@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 import type { CommentsWithUser } from '@/types/types';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
+import { toastWarn } from '@/libs/toastifyAlert';
 
 interface Props {
   comment: CommentsWithUser;
@@ -75,6 +76,13 @@ const CommentCard = ({ comment }: Props) => {
                   <button
                     className='border rounded w-12 border-primary text-primary'
                     onClick={() => {
+                      if (newContent === comment?.content) {
+                        toastWarn('수정할 내용을 입력하세요!');
+                        return;
+                      } else if (newContent === '') {
+                        toastWarn('수정할 내용을 입력하세요!');
+                        return;
+                      }
                       updateComment({ commentId: comment.id, newContent });
                       setIsEditing(false);
                     }}
