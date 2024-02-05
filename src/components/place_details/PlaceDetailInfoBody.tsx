@@ -16,7 +16,7 @@ const PlaceDetailInfoBody = ({ placeInfo }: Props) => {
   const { baple } = useCurrentTheme();
   return (
     <div className='flex flex-col mb-3 md:mb-0 mx-2 md:my-0'>
-      <div className='flex w-full mb-1 md:mb-2'>
+      <div className='flex w-full mb-2 md:mb-2'>
         <span className='flex items-start md:text-xl font-bold w-1/3'>
           <Image
             src={`/images/icons/place_detail_icons/${
@@ -31,7 +31,7 @@ const PlaceDetailInfoBody = ({ placeInfo }: Props) => {
         </span>
         <span className='w-2/3 md:text-xl'>{address}</span>
       </div>
-      <div className='flex w-full mb-1 md:mb-2'>
+      <div className='flex w-full mb-2 md:mb-2'>
         <span className='flex items-start md:text-xl font-bold w-1/3'>
           <Image
             src={'/images/icons/place_detail_icons/전화번호.svg'}
@@ -46,7 +46,7 @@ const PlaceDetailInfoBody = ({ placeInfo }: Props) => {
           {tel === '' ? '정보없음' : tel}
         </span>
       </div>
-      <div className='flex w-full mb-1 md:mb-2'>
+      <div className='flex w-full mb-2 md:mb-2'>
         <span className='flex items-start md:text-xl font-bold w-1/3'>
           <Image
             src={'/images/icons/place_detail_icons/운영시간.svg'}
@@ -61,7 +61,7 @@ const PlaceDetailInfoBody = ({ placeInfo }: Props) => {
           {working_hours === 'null' ? '정보없음' : working_hours}
         </span>
       </div>
-      <div className='flex w-full mb-1 md:mb-2'>
+      <div className='flex w-full mb-2 md:mb-2'>
         <span className='flex items-start md:text-xl font-bold w-1/3'>
           <Image
             src={'/images/icons/place_detail_icons/휴무일.svg'}
@@ -76,7 +76,7 @@ const PlaceDetailInfoBody = ({ placeInfo }: Props) => {
           {holidays === 'null' ? '정보없음' : holidays}
         </span>
       </div>
-      <div className='flex w-full mb-1 md:mb-2'>
+      <div className='flex w-full mb-2 md:mb-2'>
         <span className='flex items-start md:text-xl font-bold w-1/3'>
           <Image
             src={'/images/icons/place_detail_icons/홈페이지.svg'}
