@@ -12,7 +12,7 @@ import CarouselThumb from '@/components/common/Carousel_Thumb';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
-import PlaceDetailHeader from '@/components/place_details/PlaceDetailInfoHeader';
+import PlaceDetailInfoHeader from '@/components/place_details/PlaceDetailInfoHeader';
 import { useBookmarks } from '@/hooks/useBookmarks';
 import PlaceDetailReview from '@/components/place_details/PlaceDetailReview';
 import PlaceDetailMap from '@/components/place_details/PlaceDetailMap';
@@ -95,7 +95,7 @@ const PlacePage = () => {
         <Seo title={`${placeInfo.place_name} | `} />
         {/* 장소 상세정보 - 모바일에서만 보임 */}
         <div className='flex items-center justify-between w-full mb-[20px] md:hidden'>
-          <PlaceDetailHeader
+          <PlaceDetailInfoHeader
             placeId={placeId}
             placeInfo={placeInfo}
             isLoggedIn={isLoggedIn}
