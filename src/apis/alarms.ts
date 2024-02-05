@@ -1,7 +1,15 @@
 import { supabase } from '@/libs/supabase';
 import { Tables } from '@/types/supabase';
 
-interface AlarmInfoType extends Tables<'alarms'> {
+interface AlarmInfoType {
+  type: string;
+  review_id: string;
+  sender_id: string;
+  received_id: string;
+  read: boolean;
+}
+
+interface Props extends Tables<'alarms'> {
   review_id: string;
 }
 
@@ -13,7 +21,7 @@ export const insertNewAlarm = async (
 };
 
 // 알림 가져오기
-export const getAlarm = async (userId: string): Promise<AlarmInfoType[]> => {
+export const getAlarm = async (userId: string): Promise<Props[]> => {
   const { data, error } = await supabase
     .from('alarms')
     .select('*')
@@ -22,7 +30,7 @@ export const getAlarm = async (userId: string): Promise<AlarmInfoType[]> => {
   if (error) {
     throw error;
   }
-  return data as AlarmInfoType[];
+  return data as Props[];
 };
 
 // 읽음 처리
