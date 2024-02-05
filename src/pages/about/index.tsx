@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import LastSectionImg from '../../../public/images/aboutPage/LastSectionImg.png';
-import mainLogo from '../../../public/images/aboutPage/about_LOGO.png';
 import Carousel from '@/components/common/Carousel';
 import YoutubeCard from '@/components/about/Youtube';
 import { Button } from '@nextui-org/react';
@@ -29,7 +27,9 @@ const AboutPage = () => {
         className='h-[60rem] w-full items-center flex-col flex'
       >
         <Image
-          src={mainLogo}
+          src={'/images/aboutPage/about_LOGO.png'}
+          width={270}
+          height={106}
           alt='이미지'
           className='relative sm:h-[162px] sm:w-[400px] h-[80px] w-[200px] z-10 mt-[100px]'
         />
@@ -106,9 +106,9 @@ const AboutPage = () => {
           <div>
             <div>
               <Image
-                src={LastSectionImg}
-                width={0}
-                height={0}
+                src={'/images/aboutPage/lastSectionImg.png'}
+                width={800}
+                height={500}
                 sizes='100vw'
                 alt='이미지'
                 className='relative m-auto object-scale-down scale-90 sm:scale-100'
