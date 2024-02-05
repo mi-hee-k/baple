@@ -17,11 +17,15 @@ type Props = {
 const PlaceCard2 = ({ place }: Props) => {
   const router = useRouter();
   // const imgURL = place.image_url;
+  const { baple } = useCurrentTheme();
+  const defaultImage = baple
+    ? '/images/default3.png'
+    : '/images/default3_blue.png';
 
   const imgURL =
     (place?.image_url as string) !== ''
       ? (place?.image_url as string)
-      : '/images/default_image2.png';
+      : defaultImage;
 
   const { data: bookmarksData, isLoading: isBookmarksLoading } = useQuery({
     queryKey: ['bookmarks', place.id],
@@ -32,7 +36,6 @@ const PlaceCard2 = ({ place }: Props) => {
     queryKey: ['reviewsPC', place.id],
     queryFn: () => getReviewsByPlaceId(place.id),
   });
-  const { baple } = useCurrentTheme();
 
   return (
     <Link href={`/place/${place.id}`}>
