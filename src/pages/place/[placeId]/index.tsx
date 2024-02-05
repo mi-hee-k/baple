@@ -12,8 +12,7 @@ import CarouselThumb from '@/components/common/Carousel_Thumb';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { toastSuccess, toastWarn } from '@/libs/toastifyAlert';
-import PlaceDetailHeader from '@/components/place_details/PlaceDetailInfoHeader';
-import { getBookmark } from '@/apis/bookmarks';
+import PlaceDetailInfoHeader from '@/components/place_details/PlaceDetailInfoHeader';
 import { useBookmarks } from '@/hooks/useBookmarks';
 import PlaceDetailReview from '@/components/place_details/PlaceDetailReview';
 import PlaceDetailMap from '@/components/place_details/PlaceDetailMap';
@@ -29,7 +28,10 @@ const PlacePage = () => {
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [recentOrder, setRecentOrder] = useState(true);
   const { userId, isLoggedIn } = useSelector((state: RootState) => state.auth);
-  const { insertBookmark, deleteBookmark } = useBookmarks(userId, placeId);
+  const { bookmarkState, insertBookmark, deleteBookmark } = useBookmarks(
+    userId,
+    placeId,
+  );
 
   const { data: placeInfo, isLoading: placeInfoLoading } = useQuery({
     queryKey: ['placeInfo', placeId],
@@ -45,12 +47,6 @@ const PlacePage = () => {
       const likesOrder = _.orderBy(data, 'likes_count', 'desc');
       return { recentOrder, likesOrder };
     },
-  });
-
-  const { data: bookmarkState } = useQuery({
-    queryKey: ['bookmark', userId, placeId],
-    queryFn: () => getBookmark({ userId, placeId }),
-    enabled: !!userId,
   });
 
   useEffect(() => {
@@ -99,7 +95,7 @@ const PlacePage = () => {
         <Seo title={`${placeInfo.place_name} | `} />
         {/* 장소 상세정보 - 모바일에서만 보임 */}
         <div className='flex items-center justify-between w-full mb-[20px] md:hidden'>
-          <PlaceDetailHeader
+          <PlaceDetailInfoHeader
             placeId={placeId}
             placeInfo={placeInfo}
             isLoggedIn={isLoggedIn}
