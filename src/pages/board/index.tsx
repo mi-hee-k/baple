@@ -105,10 +105,11 @@ const BoardPage = ({ initialPostsData }: Props) => {
 
 export default BoardPage;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const initialPostsData = await getPosts();
 
   return {
     props: { initialPostsData },
+    revalidate: 10,
   };
 }
