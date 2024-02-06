@@ -28,7 +28,7 @@ const MarkerContainer = ({ place }: { place: Tables<'places'> }) => {
   return (
     <>
       <MapMarker
-        position={{ lat: place.lat, lng: place.lng }} // 마커를 표시할 위치
+        position={{ lat: place.lat, lng: place.lng }}
         onClick={(marker) => {
           map.panTo(marker.getPosition());
           setIsVisible(true);
