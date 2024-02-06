@@ -52,7 +52,6 @@ const MarkerContainer = ({ place }: { place: Tables<'places'> }) => {
           <div ref={overlayRef}>
             <MarkerPlaceCard place={place} />
           </div>
-          {/* <PlaceCard place={place} /> */}
         </CustomOverlayMap>
       )}
     </>

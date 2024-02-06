@@ -5,8 +5,8 @@ import MylocationOverlayMap from '@/components/map/MylocationOverlayMap';
 import PlacesModal from '@/components/map/PlacesModal';
 import { useViewport } from '@/hooks/useViewport';
 import { supabase } from '@/libs/supabase';
+import { RootState } from '@/redux/config/configStore';
 import { placesData } from '@/redux/modules/placesDataSlice';
-import { Tables } from '@/types/supabase';
 import { Maplocation } from '@/types/types';
 import { Spinner } from '@nextui-org/react';
 import axios from 'axios';
@@ -17,7 +17,7 @@ import {
   MapTypeControl,
   ZoomControl,
 } from 'react-kakao-maps-sdk';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NearByPage = () => {
   const [location, setLocation] = useState<Maplocation>({
@@ -40,9 +40,9 @@ const NearByPage = () => {
   const { isMobile } = useViewport();
   const [regionName, setRegionName] = useState<string>('');
   const [cityName, setCityName] = useState<string>('');
-  const [place, setplace] = useState<Tables<'places'>[] | null>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const places = useSelector((state: RootState) => state.placesData);
 
   useEffect(() => {
     if (isMobile) {
@@ -88,7 +88,6 @@ const NearByPage = () => {
         .eq('district', regionName)
         .eq('city', cityName);
       if (places !== null) {
-        setplace(places);
         dispatch(placesData(places));
       }
       if (error) throw 'error';
@@ -174,10 +173,10 @@ const NearByPage = () => {
           <MylocationOverlayMap mylocation={mylocation} />
 
           {/* 커스텀 오버레이를 뿌려줌 */}
-          {place?.map((place) => (
+          {places?.map((place) => (
             <MarkerContainer key={place.id} place={place} />
           ))}
-          {place?.length !== 0 ? (
+          {places?.length !== 0 ? (
             <PlacesModal
               cityName={cityName}
               regionName={regionName}
