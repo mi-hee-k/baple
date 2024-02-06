@@ -79,8 +79,7 @@ const CommentCard = ({ comment }: Props) => {
                       if (!newContent.trim()) {
                         toastWarn('수정할 내용을 입력하세요!');
                         return;
-                      }
-                      if (newContent === comment?.content) {
+                      } else if (newContent === comment?.content) {
                         toastWarn('내용이 변경되지 않았습니다!');
                         return;
                       }
