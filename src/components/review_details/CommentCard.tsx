@@ -4,6 +4,7 @@ import { formatDate } from '@/utils/dateFormatter';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useComments } from '@/hooks/useComments';
+import { toastWarn } from '@/libs/toastifyAlert';
 import Swal from 'sweetalert2';
 
 import type { CommentsWithUser } from '@/types/types';
@@ -36,23 +37,6 @@ const CommentCard = ({ comment }: Props) => {
         deleteComment(commentId);
       }
     });
-  };
-
-  const updateBtnHandler = async () => {
-    const isCommentEmpty = !newContent.trim();
-    if (isCommentEmpty || /^\s+$/.test(newContent)) {
-      Swal.fire({
-        icon: 'error',
-        title: '공백 외 내용을 입력하세요.',
-      });
-    } else {
-      try {
-        await updateComment({ commentId: comment.id, newContent });
-        setIsEditing(false);
-      } catch (error) {
-        console.error('댓글 업데이트 실패:', error);
-      }
-    }
   };
 
   return (
@@ -91,7 +75,18 @@ const CommentCard = ({ comment }: Props) => {
                 <div className='flex gap-3 mr-6'>
                   <button
                     className='border rounded w-12 border-primary text-primary'
-                    onClick={updateBtnHandler}
+                    onClick={() => {
+                      if (!newContent.trim()) {
+                        toastWarn('수정할 내용을 입력하세요!');
+                        return;
+                      }
+                      if (newContent === comment?.content) {
+                        toastWarn('내용이 변경되지 않았습니다!');
+                        return;
+                      }
+                      updateComment({ commentId: comment.id, newContent });
+                      setIsEditing(false);
+                    }}
                   >
                     저장
                   </button>
