@@ -117,7 +117,8 @@ const AboutPage = () => {
                 height={500}
                 sizes='100vw'
                 alt='이미지'
-                className='relative m-auto object-scale-down scale-90 sm:scale-100'
+                className='relative m-auto object-scale-down'
+                priority={true}
               />
             </div>
           </div>

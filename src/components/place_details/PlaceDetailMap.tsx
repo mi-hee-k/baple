@@ -109,7 +109,6 @@ const PlaceDetailMap = ({ placeInfo }: Props) => {
 
               const projection = roadview.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
               // 커스텀오버레이의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
-              console.log(overlay.getPosition());
               const viewpoint = projection.viewpointFromCoords(
                 overlay.getPosition(),
                 overlay.getAltitude(),
