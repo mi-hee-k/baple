@@ -57,7 +57,7 @@ const NearByPage = () => {
       setIsModalVisible(true);
     }
   }, [isMobile]);
-  // console.log('windowkakao', window.kakao);
+
   /**
    * 현재 할것
    * 1. 현재 위경도 값을 동적으로 변환 시키기 위해 sdk제공 코드 사용
@@ -84,7 +84,7 @@ const NearByPage = () => {
             setCityName(res.data.documents[0]?.address.region_1depth_name);
           });
       } catch (error) {
-        console.log(error);
+        throw error;
       }
     };
     // 초기값과 같지 않다면 실행
@@ -107,7 +107,7 @@ const NearByPage = () => {
         setplace(places);
         dispatch(placesData(places));
       }
-      if (error) console.log('error');
+      if (error) throw 'error';
     };
 
     /** 이유를 모르겠으나 regionName이 빈 문자열일때 fecthPlaceData가 작동을 한다(세종시 데이터를 가져옴) 초기 렌더링시 데이터를 두번을 가져오는건

@@ -111,7 +111,7 @@ const MarkerPlaceCard = ({ place }: Props) => {
                   src={`/images/icons/${
                     baple
                       ? 'bookmark_select.svg'
-                      : 'CBicons/CBbookmark_select_.svg'
+                      : 'CBicons/CBbookmark_select.svg'
                   }`}
                   width={15}
                   height={15}
