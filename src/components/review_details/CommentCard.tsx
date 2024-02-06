@@ -4,11 +4,11 @@ import { formatDate } from '@/utils/dateFormatter';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import { useComments } from '@/hooks/useComments';
+import { toastWarn } from '@/libs/toastifyAlert';
 import Swal from 'sweetalert2';
 
 import type { CommentsWithUser } from '@/types/types';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
-import { toastWarn } from '@/libs/toastifyAlert';
 
 interface Props {
   comment: CommentsWithUser;
@@ -76,11 +76,12 @@ const CommentCard = ({ comment }: Props) => {
                   <button
                     className='border rounded w-12 border-primary text-primary'
                     onClick={() => {
-                      if (newContent === comment?.content) {
+                      if (!newContent.trim()) {
                         toastWarn('수정할 내용을 입력하세요!');
                         return;
-                      } else if (newContent === '') {
-                        toastWarn('수정할 내용을 입력하세요!');
+                      }
+                      if (newContent === comment?.content) {
+                        toastWarn('내용이 변경되지 않았습니다!');
                         return;
                       }
                       updateComment({ commentId: comment.id, newContent });
