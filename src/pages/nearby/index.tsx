@@ -69,7 +69,7 @@ const NearByPage = () => {
             setCityName(res.data.documents[0]?.address.region_1depth_name);
           });
       } catch (error) {
-        console.log(error);
+        throw error;
       }
     };
     if (
@@ -91,7 +91,7 @@ const NearByPage = () => {
         setplace(places);
         dispatch(placesData(places));
       }
-      if (error) console.log('error');
+      if (error) throw 'error';
     };
 
     if (regionName !== '') fetchPlaceData();
