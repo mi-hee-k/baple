@@ -36,6 +36,9 @@ export const useBookmarks = (userId: string, placeId: string) => {
       queryClient.invalidateQueries({
         queryKey: ['topReviewedPlacesList'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['bookmarkRPC', userId],
+      });
     },
   });
 
