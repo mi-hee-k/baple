@@ -22,6 +22,7 @@ import { useViewport } from '@/hooks/useViewport';
 import { useCurrentTheme } from '@/hooks/useCurrentTheme';
 import AlarmModal from '../common/AlarmModal';
 import { useAlarmSubscribe } from '@/hooks/useAlarmSubscribe';
+import { useAlarm } from '@/hooks/useAlarm';
 
 const Header = () => {
   const dispatch = useDispatch();
