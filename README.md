@@ -103,13 +103,4 @@
 
 <img src="./public/images/aboutPage/Carousel5.png">
 
-## <b>팀원</b>
 
-| 팀원             | 블로그                                                                                           | GitHub                         |
-| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------------------ |
-| 민준혁           | https://velog.io/@alswnsgur119/posts                                                             | https://github.com/HIITMEMARIO |
-| 한혜원           | https://velog.io/@hw1635/posts                                                                   | https://github.com/hyewon-han  |
-| 김래준           | https://velog.io/@laejunkim/posts                                                                | https://github.com/Laejun-Kim  |
-| 김미희           | https://velog.io/@jetiiin/posts                                                                  | https://github.com/mi-hee-k    |
-| 장가을           | https://velog.io/@llafleek098/posts                                                              | https://github.com/llafleek098 |
-| 김나연(디자이너) | [포트폴리오](https://drive.google.com/file/d/1ZsFNEgxyDaVpqj3sslSyUkXrASFdGNHm/view?usp=sharing) | null                           |
